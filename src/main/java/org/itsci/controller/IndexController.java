@@ -9,7 +9,7 @@ public class IndexController {
     private static final Logger logging = Logger.getLogger(IndexController.class);
 
     @GetMapping("/")
-    public String home() {
+    public String index() {
         return "index";
     }
 }

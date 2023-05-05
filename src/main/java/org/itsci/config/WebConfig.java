@@ -15,7 +15,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@EnableAspectJAutoProxy
+//@EnableAspectJAutoProxy
 @ComponentScan(basePackages = "org.itsci")
 public class WebConfig implements WebMvcConfigurer {
 

@@ -3,6 +3,10 @@
 <html>
 <head>
     <title>Watcharin Sarachai's web page</title>
+    <meta name="description" content="Watcharin is a professor in the Information Technology Division at Maejo University located in Chiangmai, Thailand. With extensive experience in his field, he has dedicated his research to several major areas of interest and expertise, including Supervised Learning, Neural Networks, Artificial Intelligence, Object Recognition, the Internet of Things, and Embedded Systems.">
+    <meta name="keywords" content="Image Processing, Classification, Machine Learning">
+    <meta name="author" content="Watcharin Sarachai">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Vendor CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/core/vendor/bootstrap/bootstrap.css">
@@ -71,10 +75,10 @@
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>
+                        <h1 style="font-size: 1.8em; font-weight: 300; line-height: 42px; margin: 0 0 32px 0;">
                             <strong><span class="text-red">W</span></font>atcharin Sarachai, Ph.D. </strong> <small>(ดร.
                             วัชรินทร์ สาระไชย)</small>
-                        </h2>
+                        </h1>
                     </div>
                 </div>
                 <div class="row">
@@ -134,7 +138,7 @@
     <hr>
     <div class="panel panel-danger">
         <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-briefcase"></i> <strong>Work Experience</strong></h3>
+            <h2 class="panel-title"><i class="fa fa-briefcase"></i> <strong style="font-size: 26px;">Work Experience</strong></h2>
         </div>
         <div class="panel-body">
             <ul style="list-style-type: disc">
@@ -178,17 +182,17 @@
                     </ul>
                 </li>
 
-                <li>2006-2010 Developer, RoundBox Co., Ltd (USA)</li>
-                <li>2005-2006 Lead Programmer, Nimseeseng Leasing Co., Ltd</li>
-                <li>2004-2005 Lead Programmer, ThaiBCD Technology Co., Ltd</li>
-                <li>2001-2004 Mobile Game Developer, Jimmysoftware Co., Ltd</li>
+                <li style="margin-top: 6px;">2006-2010 Developer, RoundBox Co., Ltd (USA)</li>
+                <li style="margin-top: 6px;">2005-2006 Lead Programmer, Nimseeseng Leasing Co., Ltd</li>
+                <li style="margin-top: 6px;">2004-2005 Lead Programmer, ThaiBCD Technology Co., Ltd</li>
+                <li style="margin-top: 6px;">2001-2004 Mobile Game Developer, Jimmysoftware Co., Ltd</li>
             </ul>
         </div>
     </div>
     <br/>
     <div class="panel panel-danger">
         <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-briefcase"></i> <strong>Research Grants</strong></h3>
+            <h2 class="panel-title"><i class="fa fa-briefcase"></i> <strong style="font-size: 26px;">Research Grants</strong></h2>
         </div>
         <div class="panel-body">
             <ul style="list-style-type: disc">
@@ -205,12 +209,12 @@
     <hr>
     <div class="panel panel-danger">
         <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-trophy"></i> <strong>Awards</strong></h3>
+            <h2 class="panel-title"><i class="fa fa-trophy"></i> <strong style="font-size: 26px;">Awards</strong></h2>
         </div>
         <div class="panel-body">
             <ul style="list-style-type: disc">
                 <li>
-					<strong>Best Student Paper Award</strong>&nbsp;
+                    <strong>Best Student Paper Award</strong>&nbsp;
                     <a href="${pageContext.request.contextPath}/assets/images/awards/best-stu-paper-award.png" target="_blank">[1]</a>
                     <a href="${pageContext.request.contextPath}/assets/images/awards/awards7_49227244727_o.png" target="_blank">[2]</a>. In Intelligent Data Engineering
                     and Automated Learning–IDEAL 2019: 20th International Conference, Manchester, UK, November 14–16, 2019
@@ -221,51 +225,49 @@
     <hr>
     <div class="panel panel-danger">
         <div class="panel-heading">
-            <h3 class="panel-title">
-                <i class="fa fa-newspaper-o"></i> <strong>Publications</strong>
-            </h3>
+            <h2 class="panel-title">
+                <i class="fa fa-newspaper-o"></i> <strong style="font-size: 26px;">Publications</strong>
+            </h2>
         </div>
         <div class="panel-body">
             <ol type="1">
                 <p style="color: blue;">
-                <h3><b><i class="fa fa-bookmark"></i> Journal Publications</b></h3>
+                <h3 style="font-size: 1.1em;"><b><i class="fa fa-bookmark"></i> Journal Publications</b></h3>
                 </p>
-                </br>
                 <li><strong>Sarachai, W.</strong>, Bootkrajang, J., Chaijaruwanich, J., & Somhom, S. (2022).
                     <a href="https://link.springer.com/article/10.1007/s00138-021-01267-6" target="_blank">Orchid classification using
-                    homogeneous ensemble of small deep convolutional neural network.</a> Machine Vision and
+                        homogeneous ensemble of small deep convolutional neural network.</a> Machine Vision and
                     Applications, 33(1), 17.
                 </li>
                 <br>
                 <hr>
 
                 <p style="color: blue;">
-                <h3><b><i class="fa fa-bookmark"></i> Conference Publications</b></h3>
+                <h3 style="font-size: 1.1em;"><b><i class="fa fa-bookmark"></i> Conference Publications</b></h3>
                 </p>
-                </br>
                 <li>
                     <strong>Sarachai, W.</strong>, Bootkrajang, J., Chaijaruwanich, J., & Somhom, S. (2019).
                     <a href="https://link.springer.com/chapter/10.1007/978-3-030-33607-3_1" target="_blank">Orchids classification
-                    using spatial transformer network with adaptive scaling</a>. In Intelligent Data Engineering and
+                        using spatial transformer network with adaptive scaling</a>. In Intelligent Data Engineering and
                     Automated Learning–IDEAL 2019: 20th International Conference, Manchester, UK, November 14–16, 2019,
                     Proceedings, Part I 20 (pp. 1-10). Springer International Publishing.
                 </li>
                 <li><strong>Sarachai, W.</strong>, Ratnapinda, P., & Khumwichai, P. (2019, January).
                     <a href="https://ieeexplore.ieee.org/abstract/document/8692266" target="_blank">Smart notification system for
-                    detecting fan failure in evaporative cooling system of a poultry farm</a>. In 2019 Joint
+                        detecting fan failure in evaporative cooling system of a poultry farm</a>. In 2019 Joint
                     International Conference on Digital Arts, Media and Technology with ECTI Northern Section Conference
                     on Electrical, Electronics, Computer and Telecommunications Engineering (ECTI DAMT-NCON) (pp.
                     296-299). IEEE.
                 </li>
                 <li>Khumwichai, P., Ratnapinda, P., & <strong>Sarachai, W.</strong> (2019, July).
                     <a href="https://ieeexplore.ieee.org/abstract/document/8955137?casa_token=zTCvIpKu5uYAAAAA:qcr2zwJe3CfdxUxXdV9s2cA5zb7X2ZcEUGLGyTdRfKk0JUAGNeUZRMx4Q481mvsyi9uvk01TcbQ" target="_blank">Implementing
-                    Information Technology and Social Media for Promoting Tourism Pongyeang Subdistrict</a>, Chiang Mai,
+                        Information Technology and Social Media for Promoting Tourism Pongyeang Subdistrict</a>, Chiang Mai,
                     Thailand. In 2019 16th International Conference on Electrical Engineering/Electronics, Computer,
                     Telecommunications and Information Technology (ECTI-CON) (pp. 57-60). IEEE.
                 </li>
                 <li>Ratnapinda, P., <strong>Sarachai, W.</strong>, & Khumwichai, P. (2020, November).
                     <a href="https://ieeexplore.ieee.org/abstract/document/9268363?casa_token=0eDH_5EscoMAAAAA:wcogdpqSV303sh6gg9UMYrxJ5USwMopkXv2emwpCN-J6pBhg7X7hgjKLVR3H8Z4sWWR85U_NARs" target="_blank">Database
-                    system for royal thai orchid plantation in Chiang Mai province.</a> In 2020 17th International Joint
+                        system for royal thai orchid plantation in Chiang Mai province.</a> In 2020 17th International Joint
                     Conference on Computer Science and Software Engineering (JCSSE) (pp. 160-164). IEEE.
                 </li>
             </ol>

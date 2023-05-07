@@ -54,7 +54,7 @@
 <table id="itsci-logo">
     <tr>
         <td class="text-lf-vt">
-            <img src="${pageContext.request.contextPath}/assets/images/mju_logo_main-resize.png" height="100px"/>
+            <img src="${pageContext.request.contextPath}/assets/images/mju_logo_main-resize.png" height="100px" alt="Maejo University itsci-logo"/>
         </td>
     </tr>
     <tr>
@@ -65,11 +65,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-3" align="left">
+            <div class="col-md-3" style="text-align:left">
                 <a class="example-image-link"
                    href="${pageContext.request.contextPath}/assets/images/watcharin.png"
                    data-lightbox="index" data-title="Watcharin Sarachai, Ph.D.  (ดร.วัชรินทร์ สาระไชย)">
-                    <img class="example-image img-thumbnail" src="${pageContext.request.contextPath}/assets/images/watcharin.png" alt=""/>
+                    <img class="example-image img-thumbnail" src="${pageContext.request.contextPath}/assets/images/watcharin.png" alt="Watcharin Sarachai"/>
                 </a>
             </div>
             <div class="col-md-9">

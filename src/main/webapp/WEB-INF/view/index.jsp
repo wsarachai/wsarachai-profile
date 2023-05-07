@@ -2,7 +2,7 @@
          pageEncoding="UTF-8" %>
 <html>
 <head>
-    <title>Watcharin Sarachai's web page</title>
+    <title>Watcharin Sarachai - วัชรินทร์ สาระไชย</title>
     <meta name="description" content="Watcharin is a professor in the Information Technology Division at Maejo University located in Chiangmai, Thailand. With extensive experience in his field, he has dedicated his research to several major areas of interest and expertise, including Supervised Learning, Neural Networks, Artificial Intelligence, Object Recognition, the Internet of Things, and Embedded Systems.">
     <meta name="keywords" content="Image Processing, Classification, Machine Learning">
     <meta name="author" content="Watcharin Sarachai">

@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Watcharin Sarachai - วัชรินทร์ สาระไชย</title>
+    <!-- Meta Data -->
     <meta name="description" content="Watcharin is a professor in the Information Technology Division at Maejo University located in Chiangmai, Thailand. With extensive experience in his field, he has dedicated his research to several major areas of interest and expertise, including Supervised Learning, Neural Networks, Artificial Intelligence, Object Recognition, the Internet of Things, and Embedded Systems.">
     <meta name="keywords" content="Image Processing, Classification, Machine Learning">
     <meta name="author" content="Watcharin Sarachai">
@@ -54,7 +55,7 @@
 <table id="itsci-logo">
     <tr>
         <td class="text-lf-vt">
-            <img src="${pageContext.request.contextPath}/assets/images/mju_logo_main-resize.png" height="100px" alt="Maejo University itsci-logo"/>
+            <img src="${pageContext.request.contextPath}/assets/images/mju_logo_main-resize.png" height="100px" alt="Maejo University itsci-logo" />
         </td>
     </tr>
     <tr>
@@ -97,7 +98,7 @@
                     <div class="col-md-6" style="border-left: thin; border-left-style: dotted;">
                         <strong>
                             <a
-                                    href="http://www.itsci.mju.ac.th" target="_blank">Information
+                                    href="http://itsci.mju.ac.th" target="_blank">Information
                                 Technology Division</a>, </br> <a
                                 href="http://www.science.mju.ac.th" target="_blank">Faculty
                             of Science</a>, <a href="http://www.mju.ac.th" target="_blank">Maejo
@@ -116,7 +117,7 @@
     <hr>
     <div class="row">
         <div class="col-md-12">
-            <!-- 				<p class="drop-caps secundary"> -->
+            <!--                <p class="drop-caps secundary"> -->
             <p style="text-indent: 4em; text-align:justify">
                 Watcharin is a professor in the Information Technology Division at Maejo University in Chiangmai,
                 Thailand. He has an educational background, starting with a Diploma in Electrical, Major in Technique
@@ -136,6 +137,17 @@
         </div>
     </div>
     <hr>
+    <h3 class="panel-title"><i class="fa fa-book"></i> <strong>Teaching courses</strong></h3>
+    <br>
+    <div class="list-group">
+        <span class="list-group-item"><strong style="color: #B20102">10306103</strong> Software Development Process <a href="https://itsci.mju.ac.th/~watcharin/itsci-courses/10306103/2-2022" target="_blank">(2/2022)</a></span>
+        <span class="list-group-item"><strong style="color: #B20102">IT214</strong> Object Oriented Programming <a href="https://itsci.mju.ac.th/~watcharin/itsci-courses/IT214/2-2021" target="_blank">(2/2021)</a>, <a href="https://itsci.mju.ac.th/~watcharin/itsci-courses/IT214/2-2022" target="_blank">(2/2022)</a></span>
+        <span class="list-group-item"><strong style="color: #B20102">IT241</strong> Content Management System (1/2023)</span>
+        <span class="list-group-item"><strong style="color: #B20102">IT311</strong> Server Side Programming <a href="https://itsci.mju.ac.th/~watcharin/itsci-courses/IT311/1-2022" target="_blank">(1/2022)</a></span>
+        <span class="list-group-item"><strong style="color: #B20102">IT493</strong> Special Topic in information Technology (1/2022)</span>
+    </div>
+    <hr>
+
     <div class="panel panel-danger">
         <div class="panel-heading">
             <h2 class="panel-title"><i class="fa fa-briefcase"></i> <strong style="font-size: 26px;">Work Experience</strong></h2>

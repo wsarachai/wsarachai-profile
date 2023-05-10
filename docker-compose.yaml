@@ -3,7 +3,7 @@ services:
   mysql:
     image: "wsarachai/mysql-itsci:latest"
     volumes:
-      - /Users/watcharinsarachai/Documents/workspace/docker/mysql/data:/var/lib/mysql
+      - ./mysql-db:/var/lib/mysql
     #environment:
     #  - MYSQL_ROOT_PASSWORD='1234'
     env_file:
@@ -11,7 +11,7 @@ services:
     ports:
       - "3306:3306"
   tomcat:
-    image: "wsarachai/tomcat9-itsci"
+    image: "wsarachai/tomcat9-itsci:latest"
     volumes:
       - ./target:/usr/local/tomcat/webapps
     ports:

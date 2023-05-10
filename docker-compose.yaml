@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   mysql:
-    image: "wsarachai/mysql-itsci:latest"
+    image: "wsarachai/mysql-itsci:linux-amd64"
     volumes:
       - ./mysql-db:/var/lib/mysql
     #environment:
@@ -11,7 +11,7 @@ services:
     ports:
       - "3306:3306"
   tomcat:
-    image: "wsarachai/tomcat9-itsci:latest"
+    image: "wsarachai/tomcat9-itsci:linux-amd64"
     volumes:
       - ./target:/usr/local/tomcat/webapps
     ports:

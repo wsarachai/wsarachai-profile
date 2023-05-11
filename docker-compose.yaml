@@ -13,6 +13,7 @@ services:
       - ./env/mysql.env
     ports:
       - "3306:3306"
+
   tomcat:
     image: "wsarachai/tomcat9-itsci:linux-amd64"
     restart: always

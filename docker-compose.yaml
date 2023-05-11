@@ -1,7 +1,10 @@
 version: "3.8"
 services:
   mysql:
-    image: "wsarachai/mysql-itsci:linux-amd64"
+    image: "wsarachai/mysql-itsci:latest"
+    restart: always
+    command:
+      - "--collation-server=utf8mb4_unicode_ci"
     volumes:
       - ./mysql-db:/var/lib/mysql
     #environment:
@@ -11,7 +14,8 @@ services:
     ports:
       - "3306:3306"
   tomcat:
-    image: "wsarachai/tomcat9-itsci:linux-amd64"
+    image: "wsarachai/tomcat9-itsci:latest"
+    restart: always
     volumes:
       - ./target:/usr/local/tomcat/webapps
     ports:

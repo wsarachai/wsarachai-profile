@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><spring:message code="page.home" /></title>
+    <title><spring:message code="page.title" /></title>
     <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
 </head>
 <body>

@@ -1,13 +1,9 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
 <head>
-    <title>Watcharin Sarachai - วัชรินทร์ สาระไชย</title>
-    <!-- Meta Data -->
-    <meta name="description" content="Watcharin is a professor in the Information Technology Division at Maejo University located in Chiangmai, Thailand. With extensive experience in his field, he has dedicated his research to several major areas of interest and expertise, including Supervised Learning, Neural Networks, Artificial Intelligence, Object Recognition, the Internet of Things, and Embedded Systems.">
-    <meta name="keywords" content="Watcharin Sarachai, Information Technology, Maejo University, Image Processing, Classification, Machine Learning">
-    <meta name="author" content="Watcharin Sarachai">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><spring:message code="page.title" /></title>
+    <jsp:include page="/WEB-INF/view/layouts/header-meta.jsp"/>
     <!-- Vendor CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/core/vendor/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/core/vendor/fontawesome/css/font-awesome.css">
@@ -24,8 +20,7 @@
 
     <!-- Current Page CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/core/vendor/rs-plugin/css/settings.css" media="screen">
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/assets/core/vendor/circle-flip-slideshow/css/component.css" media="screen">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/core/vendor/circle-flip-slideshow/css/component.css" media="screen">
 
     <!-- Skin CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/skins/default.css">
@@ -88,7 +83,8 @@
                         </br> <i class="fa fa-google-plus-square"></i> <a
                             href="https://scholar.google.co.th/citations?user=DUg3W2QAAAAJ&hl=en"
                             target="_blank"><strong>Google Scholar Link</strong></a> </br>
-                        <i class="fa fa-envelope"></i> <strong>Email: watcharin_s@mju.ac.th</strong></br>
+                        <i class="fa fa-envelope"></i> <strong>Email: watcharin_s@mju.ac.th</strong>
+                        <br><i class="fa fa-calendar"></i> <a href="${pageContext.request.contextPath}/calendar"><strong>My Calendar</strong></a><br/>
 
                     </div>
                     <div class="col-md-6" style="border-left: thin; border-left-style: dotted;">
@@ -282,15 +278,7 @@
         </div>
     </div>
 </div>
-<footer id="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12" style="text-align: center; margin-top: 5px; margin-bottom: 5px; color: white;">
-                Information Technology Division, Faculty of Science, Maejo University<br> Sansai, Chiangmai 50290 THAILAND
-            </div>
-        </div>
-    </div>
-</footer>
+<jsp:include page="/WEB-INF/view/layouts/footer.jsp"/>
 
 <!-- Vendor -->
 <script src="${pageContext.request.contextPath}/assets/core/vendor/jquery/jquery.js"></script>

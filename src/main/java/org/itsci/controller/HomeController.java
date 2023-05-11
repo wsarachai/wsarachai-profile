@@ -20,9 +20,4 @@ public class HomeController {
     public String authenticated_home() {
         return "manage";
     }
-
-    @GetMapping("/calendar")
-    public String calendar() {
-        return "calendar";
-    }
 }

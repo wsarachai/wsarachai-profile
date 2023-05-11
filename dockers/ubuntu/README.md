@@ -4,14 +4,17 @@
 ## Build this image
    ```
    docker build -t wsarachai/ubuntu-itsci:latest .
+   docker build -t wsarachai/ubuntu-itsci:linux-amd64 --platform linux/amd64 .
    ```
 # push
     ```
     docker push wsarachai/ubuntu-itsci:latest
+    docker push wsarachai/ubuntu-itsci:linux-amd64
     ```
 ## # Create the container
     ```
     docker run --name ubuntu-itsci -it --rm wsarachai/ubuntu-itsci:latest
+    docker run --name ubuntu-itsci -it --rm wsarachai/ubuntu-itsci:linux-amd64
     ```
 ## Locales in Dockerfile
 Given that it is a minimal install of Ubuntu, this image only includes the C, C.UTF-8, and POSIX locales by default. For most uses requiring a UTF-8 locale, C.UTF-8 is likely sufficient (-e LANG=C.UTF-8 or ENV LANG C.UTF-8).

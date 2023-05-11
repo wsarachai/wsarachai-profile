@@ -28,4 +28,4 @@ replay_pid*
 .DS_Store
 
 target
-mysql-db
+misc-data/mysql-db

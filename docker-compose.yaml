@@ -1,12 +1,12 @@
 version: "3.8"
 services:
   mysql:
-    image: "wsarachai/mysql-itsci:latest"
+    image: "wsarachai/mysql-itsci:linux-amd64"
     restart: always
     command:
       - "--collation-server=utf8mb4_unicode_ci"
     volumes:
-      - ./mysql-db:/var/lib/mysql
+      - ./misc-data/mysql-db:/var/lib/mysql
     #environment:
     #  - MYSQL_ROOT_PASSWORD='1234'
     env_file:
@@ -14,7 +14,7 @@ services:
     ports:
       - "3306:3306"
   tomcat:
-    image: "wsarachai/tomcat9-itsci:latest"
+    image: "wsarachai/tomcat9-itsci:linux-amd64"
     restart: always
     volumes:
       - ./target:/usr/local/tomcat/webapps
@@ -22,3 +22,15 @@ services:
       - "8088:8080"
     depends_on:
       - mysql
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    volumes:
+      - ./misc-data/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
+    ports:
+      - "3333:80"
+    depends_on:
+      - mysql
+    environment:
+      - PMA_ARBITRARY=1

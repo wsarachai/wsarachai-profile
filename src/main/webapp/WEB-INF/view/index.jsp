@@ -85,7 +85,7 @@
                             target="_blank"><strong>Google Scholar Link</strong></a> </br>
                         <i class="fa fa-envelope"></i> <strong>Email: watcharin_s@mju.ac.th</strong>
                         <br><i class="fa fa-calendar"></i> <a href="${pageContext.request.contextPath}/calendar"><strong>My Calendar</strong></a>
-                        <br/><i class="fa fa-book"></i> <a href="https://itsci.mju.ac.th/~watcharin/wordpress/" target="_blank"><strong>Teaching courses</strong>
+                        <br/><i class="fa fa-book"></i> <a href="https://itsci.mju.ac.th/~watcharin/wordpress/courses/" target="_blank"><strong>Teaching courses</strong>
 
                     </div>
                     <div class="col-md-6" style="border-left: thin; border-left-style: dotted;">

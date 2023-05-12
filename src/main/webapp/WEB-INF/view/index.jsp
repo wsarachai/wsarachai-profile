@@ -84,7 +84,8 @@
                             href="https://scholar.google.co.th/citations?user=DUg3W2QAAAAJ&hl=en"
                             target="_blank"><strong>Google Scholar Link</strong></a> </br>
                         <i class="fa fa-envelope"></i> <strong>Email: watcharin_s@mju.ac.th</strong>
-                        <br><i class="fa fa-calendar"></i> <a href="${pageContext.request.contextPath}/calendar"><strong>My Calendar</strong></a><br/>
+                        <br><i class="fa fa-calendar"></i> <a href="${pageContext.request.contextPath}/calendar"><strong>My Calendar</strong></a>
+                        <br/><i class="fa fa-book"></i> <a href="https://itsci.mju.ac.th/~watcharin/wordpress/"><strong>Teaching courses</strong>
 
                     </div>
                     <div class="col-md-6" style="border-left: thin; border-left-style: dotted;">
@@ -127,16 +128,6 @@
                     Embedded Systems.</strong></span> </br>
             </p>
         </div>
-    </div>
-    <hr>
-    <h3 class="panel-title"><i class="fa fa-book"></i> <strong>Teaching courses</strong></h3>
-    <br>
-    <div class="list-group">
-        <span class="list-group-item"><strong style="color: #B20102">10306103</strong> Software Development Process <a href="https://itsci.mju.ac.th/~watcharin/itsci-courses/10306103/2-2022" target="_blank">(2/2022)</a></span>
-        <span class="list-group-item"><strong style="color: #B20102">IT214</strong> Object Oriented Programming <a href="https://itsci.mju.ac.th/~watcharin/itsci-courses/IT214/2-2021" target="_blank">(2/2021)</a>, <a href="https://itsci.mju.ac.th/~watcharin/itsci-courses/IT214/2-2022" target="_blank">(2/2022)</a></span>
-        <span class="list-group-item"><strong style="color: #B20102">IT241</strong> Content Management System (1/2023)</span>
-        <span class="list-group-item"><strong style="color: #B20102">IT311</strong> Server Side Programming <a href="https://itsci.mju.ac.th/~watcharin/itsci-courses/IT311/1-2022" target="_blank">(1/2022)</a></span>
-        <span class="list-group-item"><strong style="color: #B20102">IT493</strong> Special Topic in information Technology (1/2022)</span>
     </div>
     <hr>
 

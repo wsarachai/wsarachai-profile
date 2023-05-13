@@ -1,9 +1,15 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<!DOCTYPE html>
 <html>
 <head>
-    <title><spring:message code="page.title" /></title>
-    <jsp:include page="/WEB-INF/view/layouts/header-meta.jsp"/>
+    <title>Watcharin Sarachai - วัชรินทร์ สาระไชย</title>
+
+    <!-- Meta Data -->
+    <meta name="description" content="Watcharin is a professor in the Information Technology Division at Maejo University located in Chiangmai, Thailand. With extensive experience in his field, he has dedicated his research to several major areas of interest and expertise, including Supervised Learning, Neural Networks, Artificial Intelligence, Object Recognition, the Internet of Things, and Embedded Systems.">
+    <meta name="keywords" content="Watcharin Sarachai, Information Technology, Maejo University, Image Processing, Classification, Machine Learning">
+    <meta name="author" content="Watcharin Sarachai">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- Vendor CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/core/vendor/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/core/vendor/fontawesome/css/font-awesome.css">
@@ -20,7 +26,8 @@
 
     <!-- Current Page CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/core/vendor/rs-plugin/css/settings.css" media="screen">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/core/vendor/circle-flip-slideshow/css/component.css" media="screen">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/core/vendor/circle-flip-slideshow/css/component.css" media="screen">
 
     <!-- Skin CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/skins/default.css">
@@ -53,7 +60,7 @@
         <td class="text-lf-vt" style="height: 5px; background-color:#058C11"></td>
     </tr>
 </table>
-</br>
+<br>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -75,29 +82,30 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <i class="fa fa-graduation-cap"></i> <strong>PhD</strong> (Chiangmai University, Thailand),
-                        </br> <i class="fa fa-graduation-cap"></i> <strong>M.S. (Software Engineering),</strong>
-                        (College of Arts Media and Technology, Chiangmai University, Thailand),
-                        </br> <i class="fa fa-graduation-cap"></i> <strong>BSc</strong>
-                        (Payap University, Thailand)
-                        </br> <i class="fa fa-google-plus-square"></i> <a
-                            href="https://scholar.google.co.th/citations?user=DUg3W2QAAAAJ&hl=en"
-                            target="_blank"><strong>Google Scholar Link</strong></a> </br>
-                        <i class="fa fa-envelope"></i> <strong>Email: watcharin_s@mju.ac.th</strong>
-                        <br><i class="fa fa-calendar"></i> <a href="${pageContext.request.contextPath}/calendar"><strong>My Calendar</strong></a>
-                        <br/><i class="fa fa-book"></i> <a href="https://itsci.mju.ac.th/~watcharin/wordpress/courses/" target="_blank"><strong>Teaching courses</strong>
-
+                        <i class="fa fa-graduation-cap"></i>
+                        <strong>PhD</strong> (Chiangmai University, Thailand)<br>
+                        <i class="fa fa-graduation-cap"></i>
+                        <strong>M.S. (Software Engineering),</strong>(College of Arts Media and Technology, Chiangmai University, Thailand)<br>
+                        <i class="fa fa-graduation-cap"></i>
+                        <strong>BSc</strong>(Payap University, Thailand)<br>
+                        <i class="fa fa-envelope"></i>
+                        <strong>Email: watcharin_s@mju.ac.th</strong><br>
+                        <i class="fa fa-google-plus-square"></i>
+                        <a href="https://scholar.google.co.th/citations?user=DUg3W2QAAAAJ&hl=en" target="_blank">
+                            <strong>Google Scholar Link</strong>
+                        </a><br>
+                        <i class="fa fa-book"></i>
+                        <a href="https://itsci.mju.ac.th/~watcharin/wordpress/courses/" target="_blank">
+                            <strong>Teaching Courses</strong>
+                        </a>
                     </div>
                     <div class="col-md-6" style="border-left: thin; border-left-style: dotted;">
                         <strong>
-                            <a
-                                    href="http://itsci.mju.ac.th" target="_blank">Information
-                                Technology Division</a>, </br> <a
-                                href="http://www.science.mju.ac.th" target="_blank">Faculty
-                            of Science</a>, <a href="http://www.mju.ac.th" target="_blank">Maejo
-                            University</a>, </br> Sansai, Chiangmai 50290, THAILAND
+                            Information Technology Division,<br>
+                            Faculty of Science, Maejo University,<br>
+                            Sansai, Chiangmai 50290, THAILAND
                         </strong>
-                        </br>
+                        <br>
                         <hr>
                         <i class="fa fa-university"></i> Office: ห้อง 1103-2, อาคารเสาวรัจ นิตยวรรธนะ
                         <br><i class="fa fa-phone-square"></i> Ph: (+66) 053-873901 <br><i class="fa fa-tty"></i> Fax:
@@ -122,10 +130,13 @@
                 from 2001 to 2004, and as a developer at RoundBxo Co., Ltd from 2006 to 2010. Since 2012, Watcharin has
                 been a dedicated lecturer in the Information Technology Division at Maejo University, where he has made
                 significant contributions to the field.
-                </br> </br> <span style="color: #B20102">Watcharin's major areas of research interests and
-                expertise include : <strong>Supervised Learning, Neural Networks, Artificial Intelligence, Object
-                    Recognition, Internet Of Things and
-                    Embedded Systems.</strong></span> </br>
+
+            <p>
+                <strong>Watcharin's major areas of research interests and
+                    expertise include:<strong> <em>Supervised Learning, Neural Networks, Artificial Intelligence, Object
+                        Recognition, Internet Of Things and
+                        Embedded Systems</em>.
+            </p>
             </p>
         </div>
     </div>
@@ -269,7 +280,15 @@
         </div>
     </div>
 </div>
-<jsp:include page="/WEB-INF/view/layouts/footer.jsp"/>
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" style="text-align: center; margin-top: 5px; margin-bottom: 5px; color: white;">
+                Information Technology Division, Faculty of Science, Maejo University<br> Sansai, Chiangmai 50290 THAILAND
+            </div>
+        </div>
+    </div>
+</footer>
 
 <!-- Vendor -->
 <script src="${pageContext.request.contextPath}/assets/core/vendor/jquery/jquery.js"></script>

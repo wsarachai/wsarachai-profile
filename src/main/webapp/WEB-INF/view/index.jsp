@@ -95,7 +95,7 @@
                             <strong>Google Scholar Link</strong>
                         </a><br>
                         <i class="fa fa-book"></i>
-                        <a href="https://itsci.mju.ac.th/~watcharin/wordpress/courses/" target="_blank">
+                        <a href="https://itsci.mju.ac.th/~watcharin/wordpress/?page_id=164" target="_blank">
                             <strong>Teaching Courses</strong>
                         </a>
                     </div>

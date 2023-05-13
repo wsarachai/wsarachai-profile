@@ -67,7 +67,7 @@
             <div class="col-md-3" style="text-align:left">
                 <a class="example-image-link"
                    href="${pageContext.request.contextPath}/assets/images/watcharin.png"
-                   data-lightbox="index" data-title="Watcharin Sarachai, Ph.D.  (ดร.วัชรินทร์ สาระไชย)">
+                   data-lightbox="index" data-title="Watcharin Sarachai, Ph.D.  (อ.ดร.วัชรินทร์ สาระไชย)">
                     <img class="example-image img-thumbnail" src="${pageContext.request.contextPath}/assets/images/watcharin.png" alt="Watcharin Sarachai"/>
                 </a>
             </div>
@@ -75,7 +75,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1 style="font-size: 1.8em; font-weight: 300; line-height: 42px; margin: 0 0 32px 0;">
-                            <strong><span class="text-red">W</span></font>atcharin Sarachai, Ph.D. </strong> <small>(ดร.
+                            <strong><span class="text-red">W</span></font>atcharin Sarachai, Ph.D. </strong> <small>(อ.ดร.
                             วัชรินทร์ สาระไชย)</small>
                         </h1>
                     </div>

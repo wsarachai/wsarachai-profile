@@ -28,5 +28,5 @@ replay_pid*
 .DS_Store
 
 target
-misc-data/mysql-db
-misc-data/wordpress
+misc-data
+wordpress

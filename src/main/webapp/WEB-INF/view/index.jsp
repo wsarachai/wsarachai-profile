@@ -131,10 +131,8 @@
                         significant contributions to the field.
                     <p>
                         <strong>Watcharin's major areas of research interests and
-                            expertise include:<em>Supervised Learning, Neural Networks, Artificial Intelligence, Object
-                                Recognition, Internet Of Things and
-                                Embedded Systems</em>.
-                        </strong>
+                            expertise include:</strong>
+                        <em>Supervised Learning, Neural Networks, Artificial Intelligence, Object Recognition, Internet Of Things and Embedded Systems</em>.
                     </p>
                 </div>
             </div>

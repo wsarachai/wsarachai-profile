@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   mysql:
-    image: "wsarachai/mysql-itsci:latest"
+    image: "wsarachai/mysql-itsci:linux-amd64"
     restart: always
     command:
       - "--collation-server=utf8mb4_unicode_ci"
@@ -13,40 +13,40 @@ services:
       - ./env/mysql.env
     ports:
       - "3306:3306"
-
-  tomcat:
-    image: "wsarachai/tomcat9-itsci:latest"
-    restart: always
-    volumes:
-      - ./target:/usr/local/tomcat/webapps
-    ports:
-      - "8888:8080"
-    depends_on:
-      - mysql
-
-  phpmyadmin:
-    image: phpmyadmin
-    restart: always
-    volumes:
-      - ./misc-data/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
-    ports:
-      - "3333:80"
-    depends_on:
-      - mysql
-    environment:
-      - PMA_ARBITRARY=1
-
-  wordpress:
-    image: wordpress
-    restart: always
-    ports:
-      - "5555:80"
-    depends_on:
-      - mysql
-    environment:
-      WORDPRESS_DB_HOST: mysql
-      WORDPRESS_DB_USER: wordpress_user
-      WORDPRESS_DB_PASSWORD: 1234
-      WORDPRESS_DB_NAME: wordpress_db
-    volumes:
-      - ./misc-data/wordpress:/var/www/html
+#
+#  tomcat:
+#    image: "wsarachai/tomcat9-itsci:latest"
+#    restart: always
+#    volumes:
+#      - ./target:/usr/local/tomcat/webapps
+#    ports:
+#      - "8888:8080"
+#    depends_on:
+#      - mysql
+#
+#  phpmyadmin:
+#    image: phpmyadmin
+#    restart: always
+#    volumes:
+#      - ./misc-data/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
+#    ports:
+#      - "3333:80"
+#    depends_on:
+#      - mysql
+#    environment:
+#      - PMA_ARBITRARY=1
+#
+#  wordpress:
+#    image: wordpress
+#    restart: always
+#    ports:
+#      - "5555:80"
+#    depends_on:
+#      - mysql
+#    environment:
+#      WORDPRESS_DB_HOST: mysql
+#      WORDPRESS_DB_USER: wordpress_user
+#      WORDPRESS_DB_PASSWORD: 1234
+#      WORDPRESS_DB_NAME: wordpress_db
+#    volumes:
+#      - ./misc-data/wordpress:/var/www/html

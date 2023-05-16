@@ -33,6 +33,14 @@ public class MemberDaoImpl implements MemberDao {
     }
 
     @Override
+    public Member updateMember(Member member) {
+        Session session = sessionFactory.getCurrentSession();
+        member = (Member) session.merge(member);
+
+        return member;
+    }
+
+    @Override
     public void saveMember(Member member) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(member);
@@ -41,8 +49,7 @@ public class MemberDaoImpl implements MemberDao {
     @Override
     public Member getMember(Long id) {
         Session session = sessionFactory.getCurrentSession();
-        Member member = session.get(Member.class, id);
-        return member;
+        return session.get(Member.class, id);
     }
 
     @Override

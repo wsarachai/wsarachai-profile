@@ -8,6 +8,8 @@ public interface MemberDao {
 
     List<Member> getMembers();
 
+    Member updateMember(Member member);
+
     void saveMember(Member member);
 
     Member getMember(Long id);

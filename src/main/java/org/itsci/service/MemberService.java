@@ -9,6 +9,8 @@ public interface MemberService {
 
     Member getMember(Long id);
 
+    Member updateMember(Member user);
+
     void saveMember(Member user);
 
     List<Member> getMembers();

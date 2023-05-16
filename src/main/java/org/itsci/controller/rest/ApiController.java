@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/system/api")
+@RequestMapping("/system/api/v1")
 public class ApiController {
 
     @Autowired
@@ -32,12 +32,8 @@ public class ApiController {
         return member;
     }
 
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleException(MemberNotFoundException ex) {
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
-                System.currentTimeMillis());
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    @GetMapping("/members/add")
+    public void addMember(@RequestBody Member member) {
+        memberService.saveMember(member);
     }
 }

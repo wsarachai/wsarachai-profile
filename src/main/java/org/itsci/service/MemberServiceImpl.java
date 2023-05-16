@@ -5,6 +5,7 @@ import org.itsci.dao.MemberDao;
 import org.itsci.model.Authority;
 import org.itsci.model.AuthorityType;
 import org.itsci.model.Member;
+import org.itsci.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,30 +22,37 @@ public class MemberServiceImpl implements MemberService {
     private AuthorityDao authorityDao;
 
     @Autowired
-    private MemberDao MemberDao;
+    private MemberDao memberDao;
 
     @Override
     @Transactional
     public Member getMember(Long id) {
-        return MemberDao.getMember(id);
+        return memberDao.getMember(id);
+    }
+
+    @Override
+    @Transactional
+    public Member updateMember(Member member) {
+        member = memberDao.updateMember(member);
+        return member;
     }
 
     @Override
     @Transactional
     public void saveMember(Member user) {
-        MemberDao.saveMember(user);
+        memberDao.saveMember(user);
     }
 
     @Override
     @Transactional
     public List<Member> getMembers() {
-        return MemberDao.getMembers();
+        return memberDao.getMembers();
     }
 
     @Override
     @Transactional
     public void deleteMember(Long id) {
-        MemberDao.deleteMember(id);
+        memberDao.deleteMember(id);
     }
 
     @Override
@@ -57,7 +65,7 @@ public class MemberServiceImpl implements MemberService {
             Authority authority = authorityDao.findByAuthority(auth.getAuthority());
             member.getLogin().getAuthorities().add(authority);
         }
-        MemberDao.saveMember(member);
+        memberDao.saveMember(member);
     }
 
     @Override
@@ -71,6 +79,6 @@ public class MemberServiceImpl implements MemberService {
         authorities.add(authority);
         member.getLogin().setAuthorities(authorities);
         member.getLogin().setEnabled(true);
-        MemberDao.saveMember(member);
+        memberDao.saveMember(member);
     }
 }

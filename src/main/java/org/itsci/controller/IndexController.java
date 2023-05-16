@@ -12,9 +12,4 @@ public class IndexController {
     public String index() {
         return "index";
     }
-
-    @GetMapping("/calendar")
-    public String calendar() {
-        return "calendar";
-    }
 }

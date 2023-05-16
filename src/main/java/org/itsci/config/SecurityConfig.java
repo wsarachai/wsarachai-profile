@@ -19,9 +19,14 @@ public class SecurityConfig {
         http.authorizeRequests(new Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry>() {
             @Override
             public void customize(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry configurer) {
-                configurer.antMatchers("/home/**").authenticated()
-                        .antMatchers("/member/**").hasRole("MEMBER");
-                        //.antMatchers("/system/**").hasRole("ADMIN");
+                try {
+                    configurer.antMatchers("/home/**").authenticated()
+                            .antMatchers("/member/**").hasRole("MEMBER")
+                            .antMatchers("/system/**").hasRole("ADMIN")
+                            .and().csrf().ignoringAntMatchers("/api/**");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 

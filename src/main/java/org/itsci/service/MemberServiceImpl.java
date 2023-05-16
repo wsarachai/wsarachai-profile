@@ -5,7 +5,6 @@ import org.itsci.dao.MemberDao;
 import org.itsci.model.Authority;
 import org.itsci.model.AuthorityType;
 import org.itsci.model.Member;
-import org.itsci.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

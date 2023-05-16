@@ -20,8 +20,8 @@ public class SecurityConfig {
             @Override
             public void customize(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry configurer) {
                 configurer.antMatchers("/home/**").authenticated()
-                        .antMatchers("/member/**").hasRole("MEMBER")
-                        .antMatchers("/system/**").hasRole("ADMIN");
+                        .antMatchers("/member/**").hasRole("MEMBER");
+                        //.antMatchers("/system/**").hasRole("ADMIN");
             }
         });
 

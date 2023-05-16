@@ -159,10 +159,17 @@
         <!--            <artifactId>aspectjweaver</artifactId>-->
         <!--            <version>${aspectjweaver.version}</version>-->
         <!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.linecorp.bot/line-bot-api-client -->
+        <!-- https://github.com/line/line-bot-sdk-java -->
+<!--        <dependency>-->
+<!--            <groupId>com.linecorp.bot</groupId>-->
+<!--            <artifactId>line-bot-api-client</artifactId>-->
+<!--            <version>6.0.0</version>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
-        <finalName>wsarachai</finalName>
+<!--        <finalName>wsarachai</finalName>-->
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>
                 <plugin>

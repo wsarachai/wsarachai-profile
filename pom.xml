@@ -30,6 +30,7 @@
         <aspectjweaver.version>1.9.7</aspectjweaver.version>
         <mysql.version>8.0.30</mysql.version>
         <mariadb.version>3.0.6</mariadb.version>
+        <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
     </properties>
 
     <dependencies>
@@ -176,7 +177,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.30</version>
+            <version>8.0.32</version>
         </dependency>
         <!-- Aspect oriented programming (APO) -->
         <!--        <dependency>-->
@@ -184,8 +185,12 @@
         <!--            <artifactId>aspectjweaver</artifactId>-->
         <!--            <version>${aspectjweaver.version}</version>-->
         <!--        </dependency>-->
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring5</artifactId>
+            <version>${thymeleaf.version}</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.linecorp.bot/line-bot-api-client -->
-        <!-- https://github.com/line/line-bot-sdk-java -->
         <dependency>
             <groupId>com.linecorp.bot</groupId>
             <artifactId>line-bot-api-client</artifactId>
@@ -242,5 +247,15 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>

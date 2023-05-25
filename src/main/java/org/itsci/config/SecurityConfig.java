@@ -1,5 +1,6 @@
 package org.itsci.config;
 
+import com.linecorp.bot.client.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -10,9 +11,31 @@ import org.springframework.security.config.annotation.web.configurers.Expression
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.linecorp.bot.client.LineMessagingClient;
+import com.linecorp.bot.client.LineMessagingClientBuilder;
+
+import java.io.IOException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+//    @Bean
+//    public LineMessagingClient lineMessagingClient() {
+//        return LineMessagingClient
+//                .builder(new MyChannelTokenSupplier())
+//                .apiEndPoint(URI.create(""))
+//                .blobEndPoint(URI.create(""))
+//                .connectTimeout(1000)
+//                .readTimeout(1000)
+//                .writeTimeout(1000)
+//                .additionalInterceptors(null)
+//                .build();
+//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

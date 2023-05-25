@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   mysql:
-    image: "wsarachai/mysql-itsci:linux-amd64"
+    image: "wsarachai/mysql-itsci:latest"
     restart: always
     command:
       - "--collation-server=utf8mb4_unicode_ci"

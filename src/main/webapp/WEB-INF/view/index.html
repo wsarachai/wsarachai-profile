@@ -39,7 +39,7 @@
                                     <div class="data-cell" th:text="${cs.getLabRoom().getRoomId()}"></div>
                                 </div>
                                 <div>
-                                    <a href="#"><span th:text="#{page.home.signin}"></span></a>
+                                    <a th:href="@{/student/login/{id}(id=${cs.getId()})}"><span th:text="#{page.home.signin}"></span></a>
                                 </div>
                             </div>
                         </div>

@@ -11,10 +11,10 @@ public class HomeController {
 
     private static final Logger logging = Logger.getLogger(HomeController.class);
 
-//    @GetMapping("/")
-//    public String home() {
-//        return "home";
-//    }
+    @GetMapping("/")
+    public String home() {
+        return "home";
+    }
 
     @GetMapping("/manage")
     public String authenticated_home() {

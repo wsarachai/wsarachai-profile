@@ -4,7 +4,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -15,15 +14,16 @@ public class Authority implements GrantedAuthority {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @GenericGenerator(name = "increment", strategy = "increment")
     private int id;
-    @NotNull
-    @Column(length = 50, nullable = false, unique = true)
-    private String authority;
+    @Enumerated(EnumType.STRING)
+    @Column(name="authority", columnDefinition = "VARCHAR(30)", nullable = false, unique = true)
+    private EAuthorityType authority;
+    @Column(name="description")
     private String description;
 
     public Authority() {}
 
     public Authority(String authority) {
-        this.authority = authority;
+        this.authority = EAuthorityType.valueOf(authority);
     }
 
     public int getId() {
@@ -35,10 +35,14 @@ public class Authority implements GrantedAuthority {
     }
 
     public String getAuthority() {
-        return authority;
+        return authority.toString();
     }
 
     public void setAuthority(String authority) {
+        this.authority = EAuthorityType.valueOf(authority);
+    }
+
+    public void setAuthority(EAuthorityType authority) {
         this.authority = authority;
     }
 
@@ -52,7 +56,7 @@ public class Authority implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return authority;
+        return getAuthority();
     }
 
     @Override

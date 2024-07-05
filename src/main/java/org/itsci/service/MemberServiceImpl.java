@@ -3,7 +3,7 @@ package org.itsci.service;
 import org.itsci.dao.AuthorityDao;
 import org.itsci.dao.MemberDao;
 import org.itsci.model.Authority;
-import org.itsci.model.AuthorityType;
+import org.itsci.model.EAuthorityType;
 import org.itsci.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -74,7 +74,7 @@ public class MemberServiceImpl implements MemberService {
         String encrypted = bCryptPasswordEncoder.encode(member.getLogin().getPassword().trim());
         member.getLogin().setPassword("{bcrypt}" + encrypted);
         Set<Authority> authorities = new HashSet<>();
-        Authority authority = authorityDao.findByAuthority(AuthorityType.ROLE_MEMBER.toString());
+        Authority authority = authorityDao.findByAuthority(EAuthorityType.ROLE_MEMBER.toString());
         authorities.add(authority);
         member.getLogin().setAuthorities(authorities);
         member.getLogin().setEnabled(true);

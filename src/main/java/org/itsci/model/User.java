@@ -16,10 +16,13 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
-
+    @Column(name="prename", length = 128)
+    private String prename;
+    @Column(name="first_name", nullable = false)
     private String firstName;
+    @Column(name="last_name", nullable = false)
     private String lastName;
-    @Column(columnDefinition="TEXT")
+    @Column(name="address", columnDefinition="TEXT")
     private String address;
     @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "login_id")
@@ -35,6 +38,14 @@ public class User implements UserDetails {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getPrename() {
+        return prename;
+    }
+
+    public void setPrename(String prename) {
+        this.prename = prename;
     }
 
     public String getFirstName() {

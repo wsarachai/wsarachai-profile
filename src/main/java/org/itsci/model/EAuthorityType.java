@@ -4,21 +4,25 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 
 import java.util.*;
 
-public enum AuthorityType {
+public enum EAuthorityType {
+    ROLE_ADMIN("ROLE_ADMIN"),
+    ROLE_TEACHER("ROLE_TEACHER"),
+    ROLE_STAFF("ROLE_STAFF"),
+    ROLE_STUDENT("ROLE_STUDENT"),
     ROLE_MEMBER("ROLE_MEMBER"),
-    ROLE_ADMIN("ROLE_ADMIN");
+    ROLE_USER("ROLE_USER");
 
     private static List<String> authorities = null;
     private final String role;
 
-    AuthorityType(String role) {
+    EAuthorityType(String role) {
         this.role = role;
     }
 
     public static List<String> getAuthorities() {
         if (authorities == null) {
             authorities = new ArrayList<>();
-            for (AuthorityType val : AuthorityType.values()) {
+            for (EAuthorityType val : EAuthorityType.values()) {
                 authorities.add(val.role);
             }
         }

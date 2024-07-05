@@ -3,7 +3,7 @@ package org.itsci.service;
 import org.itsci.dao.AuthorityDao;
 import org.itsci.dao.UserDao;
 import org.itsci.model.Authority;
-import org.itsci.model.AuthorityType;
+import org.itsci.model.EAuthorityType;
 import org.itsci.model.Login;
 import org.itsci.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         String encrypted = bCryptPasswordEncoder.encode(user.getLogin().getPassword().trim());
         user.getLogin().setPassword("{bcrypt}" + encrypted);
         Set<Authority> authorities = new HashSet<>();
-        Authority authority = authorityDao.findByAuthority(AuthorityType.ROLE_MEMBER.toString());
+        Authority authority = authorityDao.findByAuthority(EAuthorityType.ROLE_MEMBER.toString());
         authorities.add(authority);
         user.getLogin().setAuthorities(authorities);
         user.getLogin().setEnabled(true);

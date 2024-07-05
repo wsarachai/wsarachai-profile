@@ -14,9 +14,9 @@ public class Login {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
-    @Column(length = 50, nullable = false, unique = true)
+    @Column(name="username", length = 50, nullable = false, unique = true)
     private String username;
-    @Column(nullable = false)
+    @Column(name="password", nullable = false)
     private String password;
     @Transient
     private String confirmPassword;
@@ -24,7 +24,7 @@ public class Login {
     private boolean enabled;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
-            joinColumns= { @JoinColumn(name = "user_id")},
+            joinColumns= { @JoinColumn(name = "login_id")},
             inverseJoinColumns= { @JoinColumn(name = "authority_id")})
     private Set<Authority> authorities = new HashSet<>();
 

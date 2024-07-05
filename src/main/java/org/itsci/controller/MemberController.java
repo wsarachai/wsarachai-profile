@@ -1,7 +1,7 @@
 package org.itsci.controller;
 
 import org.itsci.model.Authority;
-import org.itsci.model.AuthorityType;
+import org.itsci.model.EAuthorityType;
 import org.itsci.model.Member;
 import org.itsci.model.User;
 import org.itsci.service.MemberService;
@@ -97,7 +97,7 @@ public class MemberController {
     @GetMapping("/system/member/create")
     public String showFormForAdd(Locale locale, Model model) {
         model.addAttribute("title", messageSource.getMessage("page.user.add", null, Locale.getDefault()));
-        model.addAttribute("authorities", AuthorityType.getAuthorityOptions(messageSource, locale));
+        model.addAttribute("authorities", EAuthorityType.getAuthorityOptions(messageSource, locale));
         model.addAttribute("members", memberService.getMembers());
         model.addAttribute("member", new Member());
         model.addAttribute("disabled", "false");
@@ -108,7 +108,7 @@ public class MemberController {
     public String showFormForUpdate(@PathVariable("id") int id, Locale locale, Model model) {
         Member member = memberService.getMember(Long.valueOf(id));
         model.addAttribute("title", messageSource.getMessage("page.user.update", null, Locale.getDefault()));
-        model.addAttribute("authorities", AuthorityType.getAuthorityOptions(messageSource, locale));
+        model.addAttribute("authorities", EAuthorityType.getAuthorityOptions(messageSource, locale));
         model.addAttribute("member", member);
         model.addAttribute("disabled", "true");
         return "member/form";
@@ -136,7 +136,7 @@ public class MemberController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("title", messageSource.getMessage("page.error", null, Locale.getDefault()));
-            model.addAttribute("authorities", AuthorityType.getAuthorities());
+            model.addAttribute("authorities", EAuthorityType.getAuthorities());
             model.addAttribute("member", member);
             model.addAttribute("disabled", "true");
             return "member/form";

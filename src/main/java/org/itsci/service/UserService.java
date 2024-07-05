@@ -6,23 +6,23 @@ import org.itsci.model.User;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService<T> {
 
-    User getUser(Long id);
+    T getUser(Long id, Class<?> c);
 
-    User updateUser(User user);
+    T updateUser(T user);
 
-    void saveUser(User user);
+    void saveUser(T user);
 
-    List<User> getUsers();
+    List<T> getUsers();
 
     void deleteUser(Long id);
 
-    void updateUser(User user, List<Authority> authorityToRemove, List<Authority> authorityToAdd);
+    void updateUser(T user, List<Authority> authorityToRemove, List<Authority> authorityToAdd);
 
-    void register(User user);
+    void register(T user);
 
-    User findByUsername(String username);
+    T findByUsernameGeneric(String username);
 
     Login getLoginById(Long id);
 }

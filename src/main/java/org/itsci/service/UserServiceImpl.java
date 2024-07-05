@@ -19,42 +19,48 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl<T extends User> implements UserService<T>, UserDetailsService {
 
     @Autowired
     private AuthorityDao authorityDao;
 
     @Autowired
-    private UserDao userDao;
+    private UserDao<T> userDao;
 
     @Override
     @Transactional
-    public User getUser(Long id) {
-        return userDao.getUser(id);
+    public T getUser(Long id, Class<?> c) {
+        T user = userDao.getUser(id, c);
+        return user;
     }
 
     @Override
+    @Transactional
+    public T findByUsernameGeneric(String username) {
+        return userDao.findByUsernameGeneric(username);
+    }
+
     @Transactional
     public User findByUsername(String username) {
-        return userDao.findByUsername(username);
+        return (User) findByUsernameGeneric(username);
     }
 
     @Override
     @Transactional
-    public User updateUser(User user) {
+    public T updateUser(T user) {
         user = userDao.updateUser(user);
         return user;
     }
 
     @Override
     @Transactional
-    public void saveUser(User user) {
+    public void saveUser(T user) {
         userDao.saveUser(user);
     }
 
     @Override
     @Transactional
-    public List<User> getUsers() {
+    public List<T> getUsers() {
         return userDao.getUsers();
     }
 
@@ -66,28 +72,28 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public void updateUser(User user, List<Authority> authorityToRemove, List<Authority> authorityToAdd) {
+    public void updateUser(T user, List<Authority> authorityToRemove, List<Authority> authorityToAdd) {
         for (Authority authority : authorityToRemove) {
-            user.getLogin().getAuthorities().remove(authority);
+            ((User)user).getLogin().getAuthorities().remove(authority);
         }
         for (Authority auth : authorityToAdd) {
             Authority authority = authorityDao.findByAuthority(auth.getAuthority());
-            user.getLogin().getAuthorities().add(authority);
+            ((User)user).getLogin().getAuthorities().add(authority);
         }
         userDao.saveUser(user);
     }
 
     @Override
     @Transactional
-    public void register(User user) {
+    public void register(T user) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        String encrypted = bCryptPasswordEncoder.encode(user.getLogin().getPassword().trim());
-        user.getLogin().setPassword("{bcrypt}" + encrypted);
+        String encrypted = bCryptPasswordEncoder.encode(((User)user).getLogin().getPassword().trim());
+        ((User)user).getLogin().setPassword("{bcrypt}" + encrypted);
         Set<Authority> authorities = new HashSet<>();
         Authority authority = authorityDao.findByAuthority(EAuthorityType.ROLE_MEMBER.toString());
         authorities.add(authority);
-        user.getLogin().setAuthorities(authorities);
-        user.getLogin().setEnabled(true);
+        ((User)user).getLogin().setAuthorities(authorities);
+        ((User)user).getLogin().setEnabled(true);
         userDao.saveUser(user);
     }
 
@@ -98,7 +104,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return findByUsername(username);
     }

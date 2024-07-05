@@ -11,16 +11,16 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Selection;
 import java.util.List;
 
 @Repository
-public class UserDaoImpl implements UserDao {
-
+public class UserDaoImpl<T extends User> implements UserDao<T> {
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
-    public List<User> getUsers() {
+    public List<T> getUsers() {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
@@ -28,28 +28,28 @@ public class UserDaoImpl implements UserDao {
         criteria.select(root);
 
         Query<User> query = session.createQuery(criteria);
-        List<User> users = query.getResultList();
+        List<T> users = (List<T>) query.getResultList();
 
         return users;
     }
 
     @Override
-    public User updateUser(User user) {
+    public T updateUser(T user) {
         Session session = sessionFactory.getCurrentSession();
-        user = (User) session.merge(user);
+        user = (T) session.merge(user);
         return user;
     }
 
     @Override
-    public void saveUser(User user) {
+    public void saveUser(T user) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(user);
     }
 
     @Override
-    public User getUser(Long id) {
+    public T getUser(Long id, Class<?> c) {
         Session session = sessionFactory.getCurrentSession();
-        User user = session.get(User.class, id);
+        T user = (T) session.get(c, id);
         return user;
     }
 
@@ -58,7 +58,7 @@ public class UserDaoImpl implements UserDao {
         Session session = sessionFactory.getCurrentSession();
         User user = session.load(User.class, id);
         session.delete(user);
-        session.flush() ;
+        session.flush();
     }
 
     @Override
@@ -68,11 +68,16 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findByUsername(String username) {
+    public T findByUsernameGeneric(String username) {
         Session session = sessionFactory.getCurrentSession();
-        Query<User> query = session.createQuery("from User u where u.login.username=:username", User.class);
-        query.setParameter("username", username);
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> criteria = builder.createQuery(User.class);
+        Root<?> root = criteria.from(User.class);
+        criteria.select((Selection<? extends User>) root);
+        criteria.where(builder.equal(root.get("login.username"), username));
+
+        Query<User> query = session.createQuery(criteria);
         User result = query.getSingleResult();
-        return result;
+        return (T) result;
     }
 }

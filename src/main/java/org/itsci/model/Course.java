@@ -3,6 +3,8 @@ package org.itsci.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "courses")
@@ -17,9 +19,8 @@ public class Course {
     private Subject subject;
     @Column(name="semester")
     private String semester;
-    @ManyToOne
-    @JoinColumn(name="curriculum_id")
-    private Curriculum curriculum;
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<CourseSection> courseSectionSet = new HashSet<>();
 
     public long getId() {
         return id;
@@ -43,5 +44,13 @@ public class Course {
 
     public void setSemester(String semester) {
         this.semester = semester;
+    }
+
+    public Set<CourseSection> getCourseSectionSet() {
+        return courseSectionSet;
+    }
+
+    public void setCourseSectionSet(Set<CourseSection> courseSectionSet) {
+        this.courseSectionSet = courseSectionSet;
     }
 }

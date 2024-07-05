@@ -5,19 +5,19 @@ import org.itsci.model.User;
 
 import java.util.List;
 
-public interface UserDao {
+public interface UserDao<T extends User> {
 
-    List<User> getUsers();
+    List<T> getUsers();
 
-    User updateUser(User user);
+    T updateUser(T user);
 
-    void saveUser(User user);
+    void saveUser(T user);
 
-    User getUser(Long id);
+    T getUser(Long id, Class<?> c);
 
     void deleteUser(Long id);
 
     Login getLoginById(Long id);
 
-    User findByUsername(String username);
+    T findByUsernameGeneric(String username);
 }

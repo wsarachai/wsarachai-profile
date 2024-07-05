@@ -14,11 +14,11 @@ public class CourseSection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
-    @Enumerated(EnumType.STRING)
-    @Column(name="lecDay", columnDefinition = "VARCHAR(30)")
+    @Column(name="lec_day", columnDefinition = "VARCHAR(30)")
+    @Convert(converter = EDayOfWeekAttributeConverter.class)
     private EDayOfWeek lecDay;
-    @Enumerated(EnumType.STRING)
-    @Column(name="labDay", columnDefinition = "VARCHAR(30)")
+    @Column(name="lab_day", columnDefinition = "VARCHAR(30)")
+    @Convert(converter = EDayOfWeekAttributeConverter.class)
     private EDayOfWeek labDay;
     @Column(name="group_number", length = 3)
     private String groupNumber;

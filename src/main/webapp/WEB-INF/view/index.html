@@ -24,23 +24,21 @@
                         <p><span  th:text="${c.subject.getCode()}"/> <span  th:text="${c.subject.getThaiName()}"/></p>
                     </div>
                     <div class="card-body">
-                        <div th:each="cs : ${c.courseSectionSet}">
-                            <div class="FlexContainer">
-                                <div th:text="${cs.getGroupNumber()}"></div>
-                                <div>
-                                    <div class="data-cell" th:text="#{section.lec}"></div>
-                                    <div class="data-cell" th:text="${#messages.msgOrNull('day.' + cs.getLecDay())}"></div>
-                                    <div class="data-cell" th:inline="text">[[${cs.getStartLectureTime()}]]-[[${cs.getEndLectureTime()}]]</div>
-                                    <div class="data-cell" th:text="${cs.getLecRoom().getRoomId()}"></div>
-                                    <br>
-                                    <div class="data-cell" th:text="#{section.lab}"></div>
-                                    <div class="data-cell" th:text="${#messages.msgOrNull('day.' + cs.getLabDay())}"></div>
-                                    <div class="data-cell" th:inline="text">[[${cs.getStartLabTime()}]]-[[${cs.getEndLabTime()}]]</div>
-                                    <div class="data-cell" th:text="${cs.getLabRoom().getRoomId()}"></div>
-                                </div>
-                                <div>
-                                    <a th:href="@{/student/login/{id}(id=${cs.getId()})}"><span th:text="#{page.home.signin}"></span></a>
-                                </div>
+                        <div class="FlexContainer" th:each="cs : ${c.courseSectionSet}">
+                            <div th:text="${cs.getGroupNumber()}"></div>
+                            <div>
+                                <div class="data-cell" th:text="#{section.lec}"></div>
+                                <div class="data-cell" th:text="${#messages.msgOrNull('day.' + cs.getLecDay())}"></div>
+                                <div class="data-cell" th:inline="text">[[${cs.getStartLectureTime()}]]-[[${cs.getEndLectureTime()}]]</div>
+                                <div class="data-cell" th:text="${cs.getLecRoom().getRoomId()}"></div>
+                                <br>
+                                <div class="data-cell" th:text="#{section.lab}"></div>
+                                <div class="data-cell" th:text="${#messages.msgOrNull('day.' + cs.getLabDay())}"></div>
+                                <div class="data-cell" th:inline="text">[[${cs.getStartLabTime()}]]-[[${cs.getEndLabTime()}]]</div>
+                                <div class="data-cell" th:text="${cs.getLabRoom().getRoomId()}"></div>
+                            </div>
+                            <div>
+                                <a th:href="@{'/student/atten/' + ${c.getId()} + '/' + ${cs.getId()}}"><span th:text="#{page.home.signin}"></span></a>
                             </div>
                         </div>
                     </div>

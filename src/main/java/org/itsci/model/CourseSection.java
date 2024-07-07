@@ -38,6 +38,9 @@ public class CourseSection {
     @ManyToOne
     @JoinColumn(name="lab_room_id")
     private Room labRoom;
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn (name = "course_id")
+    private Course course;
     @OneToMany(mappedBy = "courseSection")
     private Set<CourseSectionRegistration> registeredStudents = new HashSet<>();
 
@@ -135,5 +138,13 @@ public class CourseSection {
 
     public void setLabDay(EDayOfWeek labDay) {
         this.labDay = labDay;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }

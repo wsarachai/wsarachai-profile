@@ -19,7 +19,7 @@ public class Course {
     private Subject subject;
     @Column(name="semester")
     private String semester;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "course", fetch = FetchType.EAGER)
     private Set<CourseSection> courseSectionSet = new HashSet<>();
 
     public long getId() {

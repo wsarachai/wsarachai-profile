@@ -27,6 +27,7 @@ public class CourseSectionRegistrationDaoImpl implements CourseSectionRegistrati
 
         criteria.select(root);
         criteria.where(builder.equal(root.get("courseSection").get("id"), courseSectionId));
+        criteria.orderBy(builder.asc(root.get("student").get("studentId")));
 
         Query<CourseSectionRegistration> query = session.createQuery(criteria);
         List<CourseSectionRegistration> courseSectionRegistrations = query.getResultList();

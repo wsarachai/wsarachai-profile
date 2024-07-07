@@ -14,7 +14,7 @@
         <h1 th:text="#{page.title}"></h1>
     </header>
     <main id="main-container">
-        <p><span class="title" th:text="#{page.student.login.title}"></span></p>
+        <p class="title"><a th:href="@{'/'}">Home</a>&nbsp;&gt;&nbsp;<span th:text="#{page.student.login.title}"></span></p>
         <section class="flex-container-column">
             <div class="flex-container-row">
                 <div class="item1">
@@ -28,7 +28,14 @@
                     <p th:text="${course.getSemester()}"></p>
                 </div>
             </div>
-            <div class="blueTable outerTableFooter"><div class="tableFootStyle"><div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a></div></div></div>
+            <div class="blueTable outerTableFooter">
+                <div class="tableFootStyle">
+                    <div class="links">
+<!--                        <a class="active" href="#">1</a>-->
+                        <a th:each="i : ${#numbers.sequence(1, 15)}" th:text="${i}" th:href="@{'/student/atten/'+${courseId}+'/'+${secionId}+'/'+${i}}"></a>
+                    </div>
+                </div>
+            </div>
             <div class="divTable blueTable">
                 <div class="divTableHeading">
                     <div class="divTableRow">
@@ -40,7 +47,7 @@
                     </div>
                 </div>
                 <div class="divTableBody">
-                    <div class="divTableRow" th:each="csReg, i : ${courseSectionRegistrations}">
+                    <div class="divTableRow" th:each="csReg, i : ${attenDatas}">
                         <div class="divTableCell" th:text="${i.index+1}"></div>
                         <div class="divTableCell" th:text="${csReg.getStudent().getStudentId()}"></div>
                         <div class="divTableCell" th:text="${csReg.getStudent().getPrename()+' '+csReg.getStudent().getFirstName()+' '+csReg.getStudent().getLastName()}"></div>

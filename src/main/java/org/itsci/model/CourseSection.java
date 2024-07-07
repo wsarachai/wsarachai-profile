@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "course_sections")
-public class CourseSection {
+public class CourseSection implements Comparable<CourseSection> {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -146,5 +146,10 @@ public class CourseSection {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    @Override
+    public int compareTo(CourseSection o) {
+        return this.getGroupNumber().compareTo(o.getGroupNumber());
     }
 }

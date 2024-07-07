@@ -3,12 +3,11 @@ package org.itsci.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "courses")
-public class Course {
+public class Course implements Comparable<Course> {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +19,8 @@ public class Course {
     @Column(name="semester")
     private String semester;
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "course", fetch = FetchType.EAGER)
-    private Set<CourseSection> courseSectionSet = new HashSet<>();
+    @OrderBy("groupNumber ASC")
+    private SortedSet<CourseSection> courseSectionSet = new TreeSet<>();
 
     public long getId() {
         return id;
@@ -46,11 +46,16 @@ public class Course {
         this.semester = semester;
     }
 
-    public Set<CourseSection> getCourseSectionSet() {
+    public SortedSet<CourseSection> getCourseSectionSet() {
         return courseSectionSet;
     }
 
-    public void setCourseSectionSet(Set<CourseSection> courseSectionSet) {
+    public void setCourseSectionSet(SortedSet<CourseSection> courseSectionSet) {
         this.courseSectionSet = courseSectionSet;
+    }
+
+    @Override
+    public int compareTo(Course o) {
+        return o.getSubject().getCode().compareTo(this.getSubject().getCode());
     }
 }

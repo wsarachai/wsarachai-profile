@@ -9,7 +9,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 @Entity
-@Table(name = "course_section_registrations")
+@Table(name = "student_registrations")
 public class CourseSectionRegistration {
     @Id
     @Column(name = "id", nullable = false)
@@ -28,9 +28,6 @@ public class CourseSectionRegistration {
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "courseSectionRegistration", fetch = FetchType.EAGER)
     @OrderBy("weekNo ASC")
     private SortedSet<Attendance> labAtten = new TreeSet<>();
-
-    @Column(name="attendance")
-    private String attendance;
 
     public long getId() {
         return id;
@@ -70,13 +67,5 @@ public class CourseSectionRegistration {
 
     public void setLabAtten(SortedSet<Attendance> labAtten) {
         this.labAtten = labAtten;
-    }
-
-    public String getAttendance() {
-        return attendance;
-    }
-
-    public void setAttendance(String attendance) {
-        this.attendance = attendance;
     }
 }

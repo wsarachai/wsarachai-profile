@@ -23,6 +23,7 @@
                         <p th:text="#{page.student.atten.semester}">:</p>
                         <p th:text="#{page.student.login.code}">:</p>
                         <p th:text="#{page.student.login.name}">:</p>
+                        <p>Location: </p>
                     </div>
                     <div class="item2">
                         <p th:text="${course.getSubject().getCode() + ' ' + course.getSubject().getThaiName()}"></p>
@@ -30,12 +31,32 @@
                         <p th:text="${course.getSemester()}"></p>
                         <p th:text="${student.getStudentId()}"></p>
                         <p th:text="${student.getPrename()+' '+student.getFirstName()+' '+student.getLastName()}"></p>
+                        <p id="location"></p>
                     </div>
                 </div>
                 <div class="flex-container-row">
-                    <p>Click the button below to get your position.</p>
-                    <button onclick="getLocation()">Get location</button>
-                    <div id="demo"></div>
+                    <div class="item3">
+                        <div class="wrapper">
+                            <video></video>
+                            <br />
+                            <button id="newphoto">ถ่ายรูปนักศึกษา</button>
+                        </div>
+                    </div>
+                    <div class="item4">
+                        <div class="wrapper">
+                            <canvas id="canvas1"></canvas>
+                            <p>รูปนักศึกษา</p>
+                        </div>
+                        <div class="wrapper">
+                            <canvas id="canvas2"></canvas>
+                            <p>รูปอ้างอิง</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-container-row">
+                    <div class="item5">
+                        <button id="attbutton" disabled="disabled">ลงชื่อเข้าเรียน</button>
+                    </div>
                 </div>
             </section>
         </main>

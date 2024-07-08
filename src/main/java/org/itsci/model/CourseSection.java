@@ -41,6 +41,10 @@ public class CourseSection implements Comparable<CourseSection> {
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn (name = "course_id")
     private Course course;
+    @Column(name="latitude")
+    private Double latitue;
+    @Column(name="longitude")
+    private Double longitude;
     @OneToMany(mappedBy = "courseSection")
     private Set<CourseSectionRegistration> registeredStudents = new HashSet<>();
 
@@ -146,6 +150,22 @@ public class CourseSection implements Comparable<CourseSection> {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Double getLatitue() {
+        return latitue;
+    }
+
+    public void setLatitue(Double latitue) {
+        this.latitue = latitue;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     @Override

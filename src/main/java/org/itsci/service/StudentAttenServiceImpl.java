@@ -3,9 +3,11 @@ package org.itsci.service;
 import org.itsci.dao.CourseDao;
 import org.itsci.dao.CourseSectionDao;
 import org.itsci.dao.CourseSectionRegistrationDao;
+import org.itsci.dao.UserDao;
 import org.itsci.model.Course;
 import org.itsci.model.CourseSection;
 import org.itsci.model.CourseSectionRegistration;
+import org.itsci.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,12 +24,15 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     private CourseSectionDao courseSectionDao;
 
     @Autowired
+    private UserDao userDao;
+
+    @Autowired
     private CourseSectionRegistrationDao courseSectionRegistrationDao;
 
     @Override
     @Transactional
     public Course getCourse(Long id) {
-        return courseDao.getUser(id);
+        return courseDao.getCourse(id);
     }
 
     @Override
@@ -40,5 +45,11 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     @Transactional
     public List<CourseSectionRegistration> findStudentByCourseSectionId(Long id) {
         return courseSectionRegistrationDao.findStudentByCourseSectionId(id);
+    }
+
+    @Override
+    @Transactional
+    public Student getStudent(String studentId) {
+        return (Student) userDao.getUser(Long.valueOf(studentId), Student.class);
     }
 }

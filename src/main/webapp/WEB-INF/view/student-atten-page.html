@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+        <title th:text="#{page.title}"></title>
+    </head>
+
+    <body>
+        <header>
+            <h1 th:text="#{page.title}"></h1>
+        </header>
+        <main id="main-container">
+            <p class="title"><a th:href="@{'/'}" th:text="#{page.home}"></a>&nbsp;/&nbsp;<span th:text="#{page.student.login.title}"></span></p>
+            <section class="flex-container-column">
+                <div class="flex-container-row">
+                    <div class="item1">
+                        <p th:text="#{page.student.atten.subjects}">:</p>
+                        <p th:text="#{page.student.atten.group}">:</p>
+                        <p th:text="#{page.student.atten.semester}">:</p>
+                        <p th:text="#{page.student.login.code}">:</p>
+                        <p th:text="#{page.student.login.name}">:</p>
+                    </div>
+                    <div class="item2">
+                        <p th:text="${course.getSubject().getCode() + ' ' + course.getSubject().getThaiName()}"></p>
+                        <p th:text="${courseSection.getGroupNumber()}"></p>
+                        <p th:text="${course.getSemester()}"></p>
+                        <p th:text="${student.getStudentId()}"></p>
+                        <p th:text="${student.getPrename()+' '+student.getFirstName()+' '+student.getLastName()}"></p>
+                    </div>
+                </div>
+                <div class="flex-container-row">
+                    <select>
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2024 <span th:text="${teacher_name}"></span></p>
+        </footer>
+    </body>
+
+</html>

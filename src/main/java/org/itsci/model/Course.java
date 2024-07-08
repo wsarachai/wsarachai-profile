@@ -18,6 +18,9 @@ public class Course implements Comparable<Course> {
     private Subject subject;
     @Column(name="semester")
     private String semester;
+    @Temporal(TemporalType.DATE)
+    @Column(name="start_semester")
+    private Date startSemester;
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "course", fetch = FetchType.EAGER)
     @OrderBy("groupNumber ASC")
     private SortedSet<CourseSection> courseSectionSet = new TreeSet<>();
@@ -44,6 +47,14 @@ public class Course implements Comparable<Course> {
 
     public void setSemester(String semester) {
         this.semester = semester;
+    }
+
+    public Date getStartSemester() {
+        return startSemester;
+    }
+
+    public void setStartSemester(Date startSemester) {
+        this.startSemester = startSemester;
     }
 
     public SortedSet<CourseSection> getCourseSectionSet() {

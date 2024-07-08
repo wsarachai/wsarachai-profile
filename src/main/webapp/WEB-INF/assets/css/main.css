@@ -64,6 +64,10 @@ div {
 	margin: 5px 0;
 }
 
+a {
+	text-decoration: none;
+}
+
 .flex-container {
 	display: flex;
 	flex-wrap: wrap;
@@ -236,11 +240,30 @@ div.blueTable {
 	margin: 3px;
 	border-radius: 5px;
 }
+
+.blueTable .tableFootStyle .links .active {
+	background-color: darkgoldenrod;
+}
+
+.blueTable .tableFootStyle .dif-ref {
+	text-align: right;
+}
+.blueTable .tableFootStyle .dif-ref span {
+	color: black;
+	font-weight: 1.0;
+}
+
 .blueTable.outerTableFooter {
 	border-top: none;
 }
 .blueTable.outerTableFooter .tableFootStyle {
 	padding: 1px 1px;
+}
+.tableFootStyle img {
+	width: 15px;
+}
+.divTable.blueTable .divTableCell img {
+	width: 15px;
 }
 /* DivTable.com */
 .divTable {

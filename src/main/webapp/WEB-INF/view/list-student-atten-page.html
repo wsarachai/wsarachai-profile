@@ -14,13 +14,13 @@
         <h1 th:text="#{page.title}"></h1>
     </header>
     <main id="main-container">
-        <p class="title"><a th:href="@{'/'}">Home</a>&nbsp;&gt;&nbsp;<span th:text="#{page.student.login.title}"></span></p>
+        <p class="title"><a th:href="@{'/'}" th:text="#{page.home}"></a>&nbsp;/&nbsp;<span th:text="#{page.student.login.title}"></span></p>
         <section class="flex-container-column">
             <div class="flex-container-row">
                 <div class="item1">
-                    <p>รายวิชา:</p>
-                    <p>กลุ่ม</p>
-                    <p>ปีการศึกษา</p>
+                    <p th:text="#{page.student.atten.subjects}">:</p>
+                    <p th:text="#{page.student.atten.group}">:</p>
+                    <p th:text="#{page.student.atten.semester}">:</p>
                 </div>
                 <div class="item2">
                     <p th:text="${course.getSubject().getCode() + ' ' + course.getSubject().getThaiName()}"></p>
@@ -31,8 +31,20 @@
             <div class="blueTable outerTableFooter">
                 <div class="tableFootStyle">
                     <div class="links">
-<!--                        <a class="active" href="#">1</a>-->
-                        <a th:each="i : ${#numbers.sequence(1, 15)}" th:text="${i}" th:href="@{'/student/atten/'+${courseId}+'/'+${secionId}+'/'+${i}}"></a>
+                        <a th:each="i : ${#numbers.sequence(0, 14)}" th:text="${i}"
+                           th:classappend="${displayWeek == i} ? 'active': ''"
+                           th:href="@{'/student/atten/'+${courseId}+'/'+${secionId}+'/'+${i}}"></a>
+                    </div>
+                    <div class="dif-ref">
+                        <img th:src="@{/assets/images/na.png}"/> <span th:text="#{page.student.atten.na}"></span>
+                        <span>&nbsp;|&nbsp;</span>
+                        <img th:src="@{/assets/images/absent.png}"/> <span th:text="#{page.student.atten.absent}"></span>
+                        <span>&nbsp;|&nbsp;</span>
+                        <img th:src="@{/assets/images/late.png}"/> <span th:text="#{page.student.atten.late}"></span>
+                        <span>&nbsp;|&nbsp;</span>
+                        <img th:src="@{/assets/images/letters.png}"/> <span th:text="#{page.student.atten.letters}"></span>
+                        <span>&nbsp;|&nbsp;</span>
+                        <img th:src="@{/assets/images/atten.png}"/> <span th:text="#{page.student.atten.atten}"></span>
                     </div>
                 </div>
             </div>
@@ -51,8 +63,18 @@
                         <div class="divTableCell" th:text="${i.index+1}"></div>
                         <div class="divTableCell" th:text="${csReg.getStudent().getStudentId()}"></div>
                         <div class="divTableCell" th:text="${csReg.getStudent().getPrename()+' '+csReg.getStudent().getFirstName()+' '+csReg.getStudent().getLastName()}"></div>
-                        <div class="divTableCell">cell4_1</div>
-                        <div class="divTableCell">cell5_1</div>
+                        <div class="divTableCell">
+                            <a th:if="${allowAtten}"
+                               th:href="@{'/student/atten/'+${courseId}+'/'+${secionId}+'/studentId/'+${csReg.getStudent().getId()}}"
+                               th:text="#{page.student.login.atten}"></a>
+                        </div>
+                        <div class="divTableCell" th:switch="${csReg.getAttenLab()[displayWeek]}">
+                            <img th:case="0" th:src="@{/assets/images/na.png}"/>
+                            <img th:case="1" th:src="@{/assets/images/absent.png}"/>
+                            <img th:case="2" th:src="@{/assets/images/late.png}"/>
+                            <img th:case="3" th:src="@{/assets/images/letters.png}"/>
+                            <img th:case="4" th:src="@{/assets/images/atten.png}"/>
+                        </div>
                     </div>
                 </div>
             </div>

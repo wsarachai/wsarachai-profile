@@ -52,4 +52,10 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     public Student getStudent(String studentId) {
         return (Student) userDao.getUser(Long.valueOf(studentId), Student.class);
     }
+
+    @Override
+    @Transactional
+    public void saveCourseSectionRegistration(CourseSectionRegistration courseSectionRegistration) {
+        courseSectionRegistrationDao.save(courseSectionRegistration);
+    }
 }

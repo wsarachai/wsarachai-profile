@@ -33,4 +33,10 @@ public class CourseSectionRegistrationDaoImpl implements CourseSectionRegistrati
         List<CourseSectionRegistration> courseSectionRegistrations = query.getResultList();
         return courseSectionRegistrations;
     }
+
+    @Override
+    public void save(CourseSectionRegistration courseSectionRegistration) {
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(courseSectionRegistration);
+    }
 }

@@ -12,4 +12,6 @@ public interface StudentAttenService {
     CourseSection getCourseSection(Long id);
     List<CourseSectionRegistration> findStudentByCourseSectionId(Long id);
     Student getStudent(String studentId);
+
+    void saveCourseSectionRegistration(CourseSectionRegistration courseSectionRegistration);
 }

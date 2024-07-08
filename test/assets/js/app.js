@@ -1,13 +1,13 @@
 "use strict";
 
-let message = {};
-let wrapper = {};
-let buttonNewPhoto = {};
-let buttonDownload = {};
-let video = {};
-let canvas = {};
+var message = {},
+  wrapper = {},
+  buttonNewPhoto = {},
+  buttonDownload = {},
+  video = {},
+  canvas = {};
 
-const initElement = function () {
+function initElement() {
   message = document.getElementById("msg");
   wrapper = document.getElementById("wrapper");
   buttonNewPhoto = document.getElementById("newphoto");
@@ -38,7 +38,7 @@ const initElement = function () {
       });
     };
   }
-};
+}
 
 function onTakeAPhoto() {
   canvas.getContext("2d").drawImage(video, 0, 0, video.width, video.height);
@@ -72,6 +72,7 @@ function onMediaStream(stream) {
   } else {
     video.src = window.URL.createObjectURL(stream);
   }
+
   message.style.display = "none";
   wrapper.style.display = "block";
   buttonNewPhoto.addEventListener("click", onTakeAPhoto);
@@ -83,24 +84,24 @@ function onMediaError(err) {
   message.innerHTML = err.name + ": " + err.message;
 }
 
-const initEvent = function () {
+function initEvent() {
   navigator.mediaDevices
     .getUserMedia({ video: true })
     .then(onMediaStream)
     .catch(onMediaError);
-};
+}
 
 function init() {
   initElement();
   initEvent();
 }
 
-// if (
-//   window.location.protocol != "https:" &&
-//   window.location.protocol != "file:"
-// ) {
-//   window.location.href =
-//     "https:" + window.location.href.substring(window.location.protocol.length);
-// }
+if (
+  window.location.protocol != "https:" &&
+  window.location.protocol != "file:"
+) {
+  window.location.href =
+    "https:" + window.location.href.substring(window.location.protocol.length);
+}
 
-window.addEventListener("DOMContentLoaded", init);
+window.addEventListener('DOMContentLoaded', init);

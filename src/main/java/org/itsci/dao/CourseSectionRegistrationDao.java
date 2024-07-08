@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface CourseSectionRegistrationDao {
     List<CourseSectionRegistration> findStudentByCourseSectionId(Long courseSectionId);
+
+    void save(CourseSectionRegistration courseSectionRegistration);
 }

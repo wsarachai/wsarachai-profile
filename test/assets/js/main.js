@@ -1,10 +1,6 @@
-let s =
-  '{"lec": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], "lab": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}';
+navigator.geolocation.getCurrentPosition((position) => {
+  const { latitude, longitude } = position.coords;
 
-let atten = JSON.parse(s);
-
-let lec = atten["lec"];
-let lab = atten["lab"];
-
-console.log(lec);
-console.log(lab);
+  console.log(latitude, longitude); // Log the latitude / longitude.
+  // Show a map centered at latitude / longitude.
+});

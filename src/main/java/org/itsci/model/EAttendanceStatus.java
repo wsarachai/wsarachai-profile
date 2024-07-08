@@ -5,11 +5,11 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import java.util.*;
 
 public enum EAttendanceStatus {
-    NA("N/A"),
-    ABSENT("Absent"),
-    LATE("Late"),
-    LETTERS("Letters"),
-    ATTENDED("Attended");
+    NA("0"),
+    ABSENT("1"),
+    LATE("2"),
+    LETTERS("3"),
+    ATTENDED("4");
 
     private static List<String> attendances = null;
     private final String attendance;

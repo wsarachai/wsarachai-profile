@@ -29,13 +29,22 @@ public class PopulateDataController {
         for (long i = 1; i <= 4; i++) {
             List<CourseSectionRegistration> courseSectionRegistrations = studentAttenService.findStudentByCourseSectionId(i);
             for (CourseSectionRegistration courseSectionRegistration : courseSectionRegistrations) {
-                if (courseSectionRegistration.getAttendances().size() <=0) {
+                if (courseSectionRegistration.getLecAtten().size() <=0) {
                     for (int j = 1; j <= 15; j++) {
                         Attendance attendance = new Attendance();
                         attendance.setWeekNo(j);
                         attendance.setCourseSectionRegistration(courseSectionRegistration);
                         attendance.setStatus(EAttendanceStatus.NA);
-                        courseSectionRegistration.getAttendances().add(attendance);
+                        courseSectionRegistration.getLecAtten().add(attendance);
+                    }
+                }
+                if (courseSectionRegistration.getLabAtten().size() <=0) {
+                    for (int j = 1; j <= 15; j++) {
+                        Attendance attendance = new Attendance();
+                        attendance.setWeekNo(j);
+                        attendance.setCourseSectionRegistration(courseSectionRegistration);
+                        attendance.setStatus(EAttendanceStatus.NA);
+                        courseSectionRegistration.getLabAtten().add(attendance);
                     }
                 }
                 studentAttenService.saveCourseSectionRegistration(courseSectionRegistration);

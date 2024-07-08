@@ -31,7 +31,7 @@
             <div class="blueTable outerTableFooter">
                 <div class="tableFootStyle">
                     <div class="links">
-                        <a th:each="i : ${#numbers.sequence(0, 14)}" th:text="${i}"
+                        <a th:each="i : ${#numbers.sequence(0, 14)}" th:text="${i+1}"
                            th:classappend="${displayWeek == i} ? 'active': ''"
                            th:href="@{'/student/atten/'+${courseId}+'/'+${secionId}+'/'+${i}}"></a>
                     </div>

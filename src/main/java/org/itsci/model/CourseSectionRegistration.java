@@ -24,7 +24,10 @@ public class CourseSectionRegistration {
     private Student student;
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "courseSectionRegistration", fetch = FetchType.EAGER)
     @OrderBy("weekNo ASC")
-    private SortedSet<Attendance> attendances = new TreeSet<>();
+    private SortedSet<Attendance> lecAtten = new TreeSet<>();
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "courseSectionRegistration", fetch = FetchType.EAGER)
+    @OrderBy("weekNo ASC")
+    private SortedSet<Attendance> labAtten = new TreeSet<>();
 
     @Column(name="attendance")
     private String attendance;
@@ -53,12 +56,20 @@ public class CourseSectionRegistration {
         this.student = student;
     }
 
-    public SortedSet<Attendance> getAttendances() {
-        return attendances;
+    public SortedSet<Attendance> getLecAtten() {
+        return lecAtten;
     }
 
-    public void setAttendances(SortedSet<Attendance> attendances) {
-        this.attendances = attendances;
+    public void setLecAtten(SortedSet<Attendance> lecAtten) {
+        this.lecAtten = lecAtten;
+    }
+
+    public SortedSet<Attendance> getLabAtten() {
+        return labAtten;
+    }
+
+    public void setLabAtten(SortedSet<Attendance> labAtten) {
+        this.labAtten = labAtten;
     }
 
     public String getAttendance() {

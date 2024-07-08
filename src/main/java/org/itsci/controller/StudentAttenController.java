@@ -72,17 +72,12 @@ public class StudentAttenController {
         List<AttenData> attenDatas = new ArrayList<>();
         for (CourseSectionRegistration courseSectionRegistration : courseSectionRegistrations) {
             AttenData attenData = new AttenData(courseSectionRegistration.getStudent(), "0");
-            JSONObject jsonObject = new JSONObject(courseSectionRegistration.getAttendance());
-            JSONArray lecArray = jsonObject.getJSONArray("lec");
-            JSONArray labArray = jsonObject.getJSONArray("lab");
-            for (int i = 0; i < lecArray.length(); i++) {
-                String lec = String.valueOf(lecArray.getInt(i));
-                attenData.getAttenLec()[i] = lec;
-            }
-            for (int i = 0; i < labArray.length(); i++) {
-                String lab = String.valueOf(labArray.getInt(i));
-                attenData.getAttenLab()[i] = lab;
-            }
+            courseSectionRegistration.getLecAtten().forEach(lecAtten -> {
+                attenData.getAttenLec()[lecAtten.getWeekNo()-1] = lecAtten.getStatus().toString();
+            });
+            courseSectionRegistration.getLabAtten().forEach(labAtten -> {
+                attenData.getAttenLab()[labAtten.getWeekNo()-1] = labAtten.getStatus().toString();
+            });
             attenDatas.add(attenData);
         }
         model.addAttribute("attenDatas", attenDatas);

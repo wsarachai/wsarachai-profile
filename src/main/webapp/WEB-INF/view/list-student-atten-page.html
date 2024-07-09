@@ -33,7 +33,7 @@
                     <div class="links">
                         <a th:each="i : ${#numbers.sequence(0, 14)}" th:text="${i+1}"
                            th:classappend="${displayWeek == i} ? 'active': ''"
-                           th:href="@{'/student/atten/'+${courseId}+'/'+${secionId}+'/'+${i}}"></a>
+                           th:href="@{'/pub/student/atten/'+${courseId}+'/'+${secionId}+'/'+${i}}"></a>
                     </div>
                     <div class="dif-ref">
                         <img th:src="@{/assets/images/na.png}"/> <span th:text="#{page.student.atten.na}"></span>
@@ -67,7 +67,7 @@
                         <div class="divTableCell" th:text="${csReg.getStudent().getPrename()+' '+csReg.getStudent().getFirstName()+' '+csReg.getStudent().getLastName()}"></div>
                         <div class="divTableCell">
                             <a th:if="${allowAtten}"
-                               th:href="@{'/student/atten/'+${courseId}+'/'+${secionId}+'/'+${csReg.getStudent().getId()}+'/lec/'+${currentWeek}}"
+                               th:href="@{'/pub/student/atten/'+${courseId}+'/'+${secionId}+'/'+${csReg.getStudent().getId()}+'/lec/'+${currentWeek}}"
                                th:text="#{page.student.login.atten}"></a>
                         </div>
                         <div class="divTableCell" th:switch="${csReg.getAttenLec()[displayWeek]}">
@@ -79,7 +79,7 @@
                         </div>
                         <div class="divTableCell">
                             <a th:if="${allowAtten}"
-                               th:href="@{'/student/atten/'+${courseId}+'/'+${secionId}+'/'+${csReg.getStudent().getId()}+'/lab/'+${currentWeek}}"
+                               th:href="@{'/pub/student/atten/'+${courseId}+'/'+${secionId}+'/'+${csReg.getStudent().getId()}+'/lab/'+${currentWeek}}"
                                th:text="#{page.student.login.atten}"></a>
                         </div>
                         <div class="divTableCell" th:switch="${csReg.getAttenLab()[displayWeek]}">

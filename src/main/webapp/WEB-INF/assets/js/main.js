@@ -5,6 +5,8 @@ let isStuPic = true;
 let video = {};
 let canvas1 = {};
 let canvas2 = {};
+let inputImage1 = {};
+let inputImage2 = {};
 let buttonNewPhoto = {};
 let attenButton = {};
 let currentDate = {};
@@ -34,6 +36,8 @@ const initElement = function () {
     attenButton = document.getElementById("attbutton");
     canvas1 = document.getElementById("canvas1");
     canvas2 = document.getElementById("canvas2");
+    inputImage1 = document.getElementById("inputImage1");
+    inputImage2 = document.getElementById("inputImage2");
     currentDate = document.getElementById("currentDate");
     currentTime = document.getElementById("currentTime");
     canvas1.width = 210;
@@ -90,12 +94,15 @@ const onMediaStream = function (stream) {
 
 function onTakeAPhoto() {
     let canvas = {};
+    let inputImage = {};
     if (isStuPic) {
         canvas = canvas1;
+        inputImage = inputImage1;
         isStuPic = false;
         buttonNewPhoto.innerHTML = buttonNewPhoto.getAttribute('state2');
     } else {
         canvas = canvas2;
+        inputImage = inputImage2;
         isStuPic = true;
         buttonNewPhoto.innerHTML = buttonNewPhoto.getAttribute('state1');
     }
@@ -120,6 +127,13 @@ function onTakeAPhoto() {
 
     let ctx = canvas.getContext("2d");
     ctx.drawImage(video, x_of_video, y_of_video, target_width, target_height);
+
+    canvas.toBlob((blob) => {
+        const file = new File( [ blob ], "mycanvas"+numOfPhoto+".png" );
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        inputImage.files = dataTransfer.files;
+    });
     numOfPhoto++;
 
     if (numOfPhoto >= 2) {

@@ -119,28 +119,25 @@ public class StudentAttenController {
 
     @PostMapping("/atten/doatten")
     public String doAtten(Model model,
-//            @RequestParam("secionId") String secionId,
-//            @RequestParam("type") String type,
-//            @RequestParam("week") String week,
-            @RequestParam("image1") MultipartFile image1
-//            @RequestParam("image2") MultipartFile image2,
-//            BindingResult bindingResult,
-//            Model model,
-//            MultipartHttpServletRequest mrequest
+            @RequestParam("secionId") String secionId,
+            @RequestParam("type") String type,
+            @RequestParam("week") String week,
+            @RequestParam("image1") MultipartFile image1,
+            @RequestParam("image2") MultipartFile image2
     ) throws IOException {
-//        Byte[] byteObjects1 = this.convertToBytes(image1);
-//        Byte[] byteObjects2 = this.convertToBytes(image2);
-//        CourseSectionRegistration csr = studentAttenService.findCourseSectionRegistrationBySectionId(secionId);
-//        Attendance attendance = null;
-//        if ("lec".equals(type)) {
-//            attendance = this.findAttendanceByWeek(csr.getLecAtten(), week);
-//        } else if ("lab".equals(type)) {
-//            attendance = this.findAttendanceByWeek(csr.getLabAtten(), week);
-//        }
-//        attendance.setStatus(EAttendanceStatus.ATTENDED);
-//        attendance.setStudentImage(byteObjects1);
-//        attendance.setCodeImage(byteObjects2);
-//        studentAttenService.saveAttendance(attendance);
+        Byte[] byteObjects1 = this.convertToBytes(image1);
+        Byte[] byteObjects2 = this.convertToBytes(image2);
+        CourseSectionRegistration csr = studentAttenService.findCourseSectionRegistrationBySectionId(secionId);
+        Attendance attendance = null;
+        if ("lec".equals(type)) {
+            attendance = this.findAttendanceByWeek(csr.getLecAtten(), week);
+        } else if ("lab".equals(type)) {
+            attendance = this.findAttendanceByWeek(csr.getLabAtten(), week);
+        }
+        attendance.setStatus(EAttendanceStatus.ATTENDED);
+        attendance.setStudentImage(byteObjects1);
+        attendance.setCodeImage(byteObjects2);
+        studentAttenService.saveAttendance(attendance);
 
 //        StringBuilder fileNames = new StringBuilder();
 //        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, image1.getOriginalFilename());

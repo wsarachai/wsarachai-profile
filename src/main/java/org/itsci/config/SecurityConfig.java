@@ -13,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.LineMessagingClientBuilder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.io.IOException;
 import java.net.URI;
@@ -46,7 +47,34 @@ public class SecurityConfig {
                     configurer.antMatchers("/home/**").authenticated()
                             .antMatchers("/member/**").hasRole("MEMBER")
                             .antMatchers("/system/**").hasRole("ADMIN")
-                            .and().csrf().ignoringAntMatchers("/api/**");
+                            .antMatchers("/**").permitAll()
+                            .and().csrf()
+                            .ignoringAntMatchers("/api/**")
+                            .ignoringAntMatchers("/pub/**");
+
+//                            .authorizeRequests()
+//                            .antMatchers("/test/**").permitAll()
+//                            .antMatchers("/admin/**","/user/secure").hasRole("ADMIN")
+//                            .antMatchers("/**").permitAll()
+//                            .anyRequest().anonymous()
+//                            .and()
+//                            .exceptionHandling().accessDeniedPage("/denied")
+//                            .and()
+//                            .formLogin()
+//                            .loginPage("/login")
+//                            .failureUrl("/error-login")
+//                            .permitAll()
+//                            .and()
+//                            .logout()
+//                            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//                            .logoutSuccessUrl("/")
+//                            .and()
+//                            .rememberMe()
+//                            .userDetailsService(userAccessDetails)
+//                            .tokenRepository(persistentTokenRepository())
+//                            .tokenValiditySeconds(16000);
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

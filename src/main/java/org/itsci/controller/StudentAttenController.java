@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 @Controller
-@RequestMapping("/student")
+@RequestMapping("/pub/student")
 public class StudentAttenController {
 
     @Autowired
@@ -26,7 +29,7 @@ public class StudentAttenController {
     @Autowired
     private StudentAttenService studentAttenService;
 
-    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
+//    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
 
     private int getCurrentWeekSemester(Course course) {
         Calendar c1 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
@@ -115,25 +118,36 @@ public class StudentAttenController {
     }
 
     @PostMapping("/atten/doatten")
-    public String doAtten(@RequestParam("secionId") String secionId,
-                          @RequestParam("type") String type,
-                          @RequestParam("week") String week
-//                          @RequestParam("image1") MultipartFile image1,
-//                          @RequestParam("image2") MultipartFile image2
+    public String doAtten(Model model,
+//            @RequestParam("secionId") String secionId,
+//            @RequestParam("type") String type,
+//            @RequestParam("week") String week,
+            @RequestParam("image1") MultipartFile image1
+//            @RequestParam("image2") MultipartFile image2,
+//            BindingResult bindingResult,
+//            Model model,
+//            MultipartHttpServletRequest mrequest
     ) throws IOException {
 //        Byte[] byteObjects1 = this.convertToBytes(image1);
 //        Byte[] byteObjects2 = this.convertToBytes(image2);
-        CourseSectionRegistration csr = studentAttenService.findCourseSectionRegistrationBySectionId(secionId);
-        Attendance attendance = null;
-        if ("lec".equals(type)) {
-            attendance = this.findAttendanceByWeek(csr.getLecAtten(), week);
-        } else if ("lab".equals(type)) {
-            attendance = this.findAttendanceByWeek(csr.getLabAtten(), week);
-        }
-        attendance.setStatus(EAttendanceStatus.ATTENDED);
+//        CourseSectionRegistration csr = studentAttenService.findCourseSectionRegistrationBySectionId(secionId);
+//        Attendance attendance = null;
+//        if ("lec".equals(type)) {
+//            attendance = this.findAttendanceByWeek(csr.getLecAtten(), week);
+//        } else if ("lab".equals(type)) {
+//            attendance = this.findAttendanceByWeek(csr.getLabAtten(), week);
+//        }
+//        attendance.setStatus(EAttendanceStatus.ATTENDED);
 //        attendance.setStudentImage(byteObjects1);
 //        attendance.setCodeImage(byteObjects2);
-        studentAttenService.saveAttendance(attendance);
+//        studentAttenService.saveAttendance(attendance);
+
+//        StringBuilder fileNames = new StringBuilder();
+//        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, image1.getOriginalFilename());
+//        fileNames.append(image1.getOriginalFilename());
+//        Files.write(fileNameAndPath, image1.getBytes());
+//        model.addAttribute("msg", "Uploaded images: " + fileNames.toString());
+
         return "index";
     }
 

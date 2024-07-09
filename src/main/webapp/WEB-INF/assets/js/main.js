@@ -7,6 +7,14 @@ let canvas1 = {};
 let canvas2 = {};
 let buttonNewPhoto = {};
 let attenButton = {};
+let currentDate = {};
+let currentTime = {};
+let timeHandler = undefined;
+
+var monthNamesThai = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน", "กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤษจิกายน","ธันวาคม"];
+
+var dayNames = ["วันอาทิตย์ที่","วันจันทร์ที่","วันอังคารที่","วันพุทธที่","วันพฤหัสบดีที่","วันศุกร์ที่","วันเสาร์ที่"];
+
 
 function getLocation(location) {
     if (navigator.geolocation) {
@@ -26,6 +34,8 @@ const initElement = function () {
     attenButton = document.getElementById("attbutton");
     canvas1 = document.getElementById("canvas1");
     canvas2 = document.getElementById("canvas2");
+    currentDate = document.getElementById("currentDate");
+    currentTime = document.getElementById("currentTime");
     canvas1.width = 210;
     canvas2.width = 210;
 
@@ -83,11 +93,11 @@ function onTakeAPhoto() {
     if (isStuPic) {
         canvas = canvas1;
         isStuPic = false;
-        buttonNewPhoto.innerHTML = "ถ่ายรูปอ้างอิง";
+        buttonNewPhoto.innerHTML = buttonNewPhoto.getAttribute('state2');
     } else {
         canvas = canvas2;
         isStuPic = true;
-        buttonNewPhoto.innerHTML = "ถ่ายรูปนักศึกษา";
+        buttonNewPhoto.innerHTML = buttonNewPhoto.getAttribute('state1');
     }
     const video_width = video.offsetWidth;
     const video_height = video.offsetHeight;
@@ -133,11 +143,21 @@ const initEvent = function () {
         .catch(onMediaError);
 };
 
+function zfill(num, len) {return (Array(len).join("0") + num).slice(-len);}
+
+const updateTime = function () {
+    const date = new Date();
+    currentDate.innerHTML = dayNames[date.getDay()]+" " + date.getDate() + " " + monthNamesThai[date.getMonth()]+"  "+date.getFullYear()+543;
+    currentTime.innerHTML = zfill(date.getHours(), 2) + ":" + zfill(date.getMinutes(), 2) + ":" + zfill(date.getSeconds(), 2);
+};
+
+
 const init = () => {
     const location = document.getElementById("location");
     getLocation(location);
     initElement();
     initEvent();
+    timeHandler = setInterval(updateTime, 1000);
 };
 
 window.addEventListener("DOMContentLoaded", (event) => {

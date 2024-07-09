@@ -4,10 +4,7 @@ import org.itsci.dao.CourseDao;
 import org.itsci.dao.CourseSectionDao;
 import org.itsci.dao.CourseSectionRegistrationDao;
 import org.itsci.dao.UserDao;
-import org.itsci.model.Course;
-import org.itsci.model.CourseSection;
-import org.itsci.model.CourseSectionRegistration;
-import org.itsci.model.Student;
+import org.itsci.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,5 +54,15 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     @Transactional
     public void saveCourseSectionRegistration(CourseSectionRegistration courseSectionRegistration) {
         courseSectionRegistrationDao.save(courseSectionRegistration);
+    }
+
+    @Override
+    public CourseSectionRegistration findCourseSectionRegistrationBySectionId(String secionId) {
+        return null;
+    }
+
+    @Override
+    public void saveAttendance(Attendance attendance) {
+
     }
 }

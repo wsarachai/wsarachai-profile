@@ -23,7 +23,9 @@
                         <p th:text="#{page.student.atten.semester}">:</p>
                         <p th:text="#{page.student.login.code}">:</p>
                         <p th:text="#{page.student.login.name}">:</p>
-                        <p>Location: </p>
+                        <p th:text="#{page.location}">: </p>
+                        <p th:text="#{page.date}">:</p>
+                        <p th:text="#{page.time}">:</p>
                     </div>
                     <div class="item2">
                         <p th:text="${course.getSubject().getCode() + ' ' + course.getSubject().getThaiName()}"></p>
@@ -32,6 +34,8 @@
                         <p th:text="${student.getStudentId()}"></p>
                         <p th:text="${student.getPrename()+' '+student.getFirstName()+' '+student.getLastName()}"></p>
                         <p id="location"></p>
+                        <p id="currentDate"></p>
+                        <p id="currentTime"></p>
                     </div>
                 </div>
                 <div class="flex-container-row">
@@ -39,23 +43,42 @@
                         <div class="wrapper">
                             <video></video>
                             <br />
-                            <button id="newphoto">ถ่ายรูปนักศึกษา</button>
+                            <button id="newphoto"
+                                    th:state1="#{page.student.takepicture.st1}"
+                                    th:state2="#{page.student.takepicture.st2}"
+                                    th:text="#{page.student.takepicture.st1}">
+                            </button>
                         </div>
                     </div>
                     <div class="item4">
                         <div class="wrapper">
                             <canvas id="canvas1"></canvas>
-                            <p>รูปนักศึกษา</p>
+                            <p th:text="#{page.student.takepicture.st1}"></p>
                         </div>
                         <div class="wrapper">
                             <canvas id="canvas2"></canvas>
-                            <p>รูปอ้างอิง</p>
+                            <p th:text="#{page.student.takepicture.st2}"></p>
                         </div>
                     </div>
                 </div>
                 <div class="flex-container-row">
                     <div class="item5">
-                        <button id="attbutton" disabled="disabled">ลงชื่อเข้าเรียน</button>
+<!--                        <form method="post" th:action="@{/atten/doatten}" enctype="multipart/form-data">-->
+<!--                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />-->
+<!--                            <input type="hidden" th:name="secionId" th:value="${secionId}">-->
+<!--                            <input type="hidden" th:name="type" th:value="${type}">-->
+<!--                            <input type="hidden" th:name="week" th:value="${week}">-->
+<!--                            <input type="file" th:name="image1" accept="image/*" style="display: none">-->
+<!--                            <input type="file" th:name="image2" accept="image/*" style="display: none">-->
+<!--                            <button type="submit" id="attbutton" disabled="disabled" th:text="#{page.student.takepciture.btn}"></button>-->
+<!--                        </form>-->
+                        <form th:method="post" th:action="@{/atten/doatten}">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            <input type="hidden" th:name="secionId" th:value="${secionId}">
+                            <input type="hidden" th:name="type" th:value="${type}">
+                            <input type="hidden" th:name="week" th:value="${week}">
+                            <button type="submit" id="attbutton" disabled="disabled" th:text="#{page.student.takepciture.btn}"></button>
+                        </form>
                     </div>
                 </div>
             </section>

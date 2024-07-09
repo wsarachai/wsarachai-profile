@@ -22,10 +22,10 @@ public class Attendance implements Comparable<Attendance> {
     private int weekNo;
     @Lob
     @Column(name="student_image")
-    private byte[] studentImage;
+    private Byte[] studentImage;
     @Lob
     @Column(name="code_image")
-    private byte[] codeImage;
+    private Byte[] codeImage;
 
     public long getId() {
         return id;
@@ -59,19 +59,19 @@ public class Attendance implements Comparable<Attendance> {
         this.weekNo = weekNo;
     }
 
-    public byte[] getStudentImage() {
+    public Byte[] getStudentImage() {
         return studentImage;
     }
 
-    public void setStudentImage(byte[] studentImage) {
+    public void setStudentImage(Byte[] studentImage) {
         this.studentImage = studentImage;
     }
 
-    public byte[] getCodeImage() {
+    public Byte[] getCodeImage() {
         return codeImage;
     }
 
-    public void setCodeImage(byte[] codeImage) {
+    public void setCodeImage(Byte[] codeImage) {
         this.codeImage = codeImage;
     }
 

@@ -3,21 +3,15 @@ package org.itsci.controller;
 import org.itsci.model.*;
 import org.itsci.service.StudentAttenService;
 import org.itsci.service.UserService;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.TimeZone;
+import java.io.IOException;
+import java.util.*;
 
 @Controller
 @RequestMapping("/student")
@@ -31,6 +25,8 @@ public class StudentAttenController {
 
     @Autowired
     private StudentAttenService studentAttenService;
+
+    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
 
     private int getCurrentWeekSemester(Course course) {
         Calendar c1 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
@@ -95,19 +91,68 @@ public class StudentAttenController {
         return attentionPage(model, courseId, secionId, Integer.parseInt(week));
     }
 
-    @GetMapping("/atten/{courseId}/{secionId}/studentId/{studentId}")
-    public String attentionStudentPage(Model model, @PathVariable String courseId, @PathVariable String secionId, @PathVariable String studentId) {
+    @GetMapping("/atten/{courseId}/{secionId}/{studentId}/{type}/{week}")
+    public String attentionStudentPage(Model model,
+                                       @PathVariable String courseId,
+                                       @PathVariable String secionId,
+                                       @PathVariable String studentId,
+                                       @PathVariable String type,
+                                       @PathVariable String week) {
         Teacher teacher = userService.getUser(1l, Teacher.class);
         String teacherName = String.format("%s%s %s", teacher.getPrename(), teacher.getFirstName(), teacher.getLastName());
         Course course = studentAttenService.getCourse(Long.parseLong(courseId));
         Student student = studentAttenService.getStudent(studentId);
         CourseSection courseSection = studentAttenService.getCourseSection(Long.parseLong(secionId));
 
+        model.addAttribute("type", type);
+        model.addAttribute("week", week);
         model.addAttribute("course", course);
         model.addAttribute("student", student);
         model.addAttribute("courseSection", courseSection);
         model.addAttribute("teacherName", teacherName);
 
         return "student-atten-page";
+    }
+
+    @PostMapping("/atten/doatten")
+    public String doAtten(@RequestParam("secionId") String secionId,
+                          @RequestParam("type") String type,
+                          @RequestParam("week") String week
+//                          @RequestParam("image1") MultipartFile image1,
+//                          @RequestParam("image2") MultipartFile image2
+    ) throws IOException {
+//        Byte[] byteObjects1 = this.convertToBytes(image1);
+//        Byte[] byteObjects2 = this.convertToBytes(image2);
+        CourseSectionRegistration csr = studentAttenService.findCourseSectionRegistrationBySectionId(secionId);
+        Attendance attendance = null;
+        if ("lec".equals(type)) {
+            attendance = this.findAttendanceByWeek(csr.getLecAtten(), week);
+        } else if ("lab".equals(type)) {
+            attendance = this.findAttendanceByWeek(csr.getLabAtten(), week);
+        }
+        attendance.setStatus(EAttendanceStatus.ATTENDED);
+//        attendance.setStudentImage(byteObjects1);
+//        attendance.setCodeImage(byteObjects2);
+        studentAttenService.saveAttendance(attendance);
+        return "index";
+    }
+
+    private Attendance findAttendanceByWeek(SortedSet<Attendance> attendances, String week) {
+        Attendance attendance = null;
+        for (Attendance atten : attendances) {
+            if (atten.getWeekNo() == Integer.parseInt(week)) {
+                attendance = atten;
+            }
+        }
+        return attendance;
+    }
+
+    private Byte[] convertToBytes(MultipartFile file) throws IOException {
+        Byte[] byteObjects = new Byte[file.getBytes().length];
+        int i = 0;
+        for (byte b : file.getBytes()) {
+            byteObjects[i++] = b;
+        }
+        return byteObjects;
     }
 }

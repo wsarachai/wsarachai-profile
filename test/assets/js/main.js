@@ -7,6 +7,13 @@ let canvas1 = {};
 let canvas2 = {};
 let buttonNewPhoto = {};
 let attenButton = {};
+let currentDate = {};
+let currentTime = {};
+let timeHandler = undefined;
+
+var monthNamesThai = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน", "กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤษจิกายน","ธันวาคม"];
+
+var dayNames = ["วันอาทิตย์ที่","วันจันทร์ที่","วันอังคารที่","วันพุทธที่","วันพฤหัสบดีที่","วันศุกร์ที่","วันเสาร์ที่"];
 
 function getLocation(location) {
   if (navigator.geolocation) {
@@ -83,11 +90,11 @@ function onTakeAPhoto() {
   if (isStuPic) {
     canvas = canvas1;
     isStuPic = false;
-    buttonNewPhoto.innerHTML = "ถ่ายรูปอ้างอิง";
+    buttonNewPhoto.innerHTML = buttonNewPhoto.getAttribute('state2');
   } else {
     canvas = canvas2;
     isStuPic = true;
-    buttonNewPhoto.innerHTML = "ถ่ายรูปนักศึกษา";
+    buttonNewPhoto.innerHTML = buttonNewPhoto.getAttribute('state1');
   }
   const video_width = video.offsetWidth;
   const video_height = video.offsetHeight;
@@ -133,11 +140,25 @@ const initEvent = function () {
     .catch(onMediaError);
 };
 
+function zfill(num, len) {
+  let z = Array(len).join("0");
+  return (z + num).slice(-len);
+}
+
+const updateTime = function () {
+    const date = new Date();
+    currentDate.innerHTML = dayNames[date.getDay()]+" " + date.getDate() + " " + monthNamesThai[date.getMonth()]+"  "+date.getFullYear()+543;
+    currentTime.innerHTML = zfill(date.getHours(), 4) + ":" + zfill(date.getMinutes(), 2) + ":" + zfill(date.getSeconds(), 2);
+};
+
 const init = () => {
   const location = document.getElementById("location");
   getLocation(location);
   initElement();
   initEvent();
+  currentDate = document.getElementById("currentDate");
+  currentTime = document.getElementById("currentTime");
+  timeHandler = setInterval(updateTime, 1000);
 };
 
 window.addEventListener("DOMContentLoaded", (event) => {

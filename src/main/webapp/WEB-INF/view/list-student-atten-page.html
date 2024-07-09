@@ -54,7 +54,9 @@
                         <div class="divTableHead" th:text="#{page.student.login.no}"></div>
                         <div class="divTableHead" th:text="#{page.student.login.code}"></div>
                         <div class="divTableHead" th:text="#{page.student.login.name}"></div>
-                        <div class="divTableHead" th:text="#{page.student.login.atten}"></div>
+                        <div class="divTableHead" th:text="#{page.student.atten.lec}"></div>
+                        <div class="divTableHead" th:text="#{page.student.login.status}"></div>
+                        <div class="divTableHead" th:text="#{page.student.atten.lab}"></div>
                         <div class="divTableHead" th:text="#{page.student.login.status}"></div>
                     </div>
                 </div>
@@ -65,7 +67,19 @@
                         <div class="divTableCell" th:text="${csReg.getStudent().getPrename()+' '+csReg.getStudent().getFirstName()+' '+csReg.getStudent().getLastName()}"></div>
                         <div class="divTableCell">
                             <a th:if="${allowAtten}"
-                               th:href="@{'/student/atten/'+${courseId}+'/'+${secionId}+'/studentId/'+${csReg.getStudent().getId()}}"
+                               th:href="@{'/student/atten/'+${courseId}+'/'+${secionId}+'/'+${csReg.getStudent().getId()}+'/lec/'+${currentWeek}}"
+                               th:text="#{page.student.login.atten}"></a>
+                        </div>
+                        <div class="divTableCell" th:switch="${csReg.getAttenLec()[displayWeek]}">
+                            <img th:case="0" th:src="@{/assets/images/na.png}"/>
+                            <img th:case="1" th:src="@{/assets/images/absent.png}"/>
+                            <img th:case="2" th:src="@{/assets/images/late.png}"/>
+                            <img th:case="3" th:src="@{/assets/images/letters.png}"/>
+                            <img th:case="4" th:src="@{/assets/images/atten.png}"/>
+                        </div>
+                        <div class="divTableCell">
+                            <a th:if="${allowAtten}"
+                               th:href="@{'/student/atten/'+${courseId}+'/'+${secionId}+'/'+${csReg.getStudent().getId()}+'/lab/'+${currentWeek}}"
                                th:text="#{page.student.login.atten}"></a>
                         </div>
                         <div class="divTableCell" th:switch="${csReg.getAttenLab()[displayWeek]}">

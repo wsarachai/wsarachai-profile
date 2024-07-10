@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 @Controller
@@ -44,10 +41,10 @@ public class StudentAttenController {
 
     private String attentionPage(Model model, String courseId, String secionId, int week) {
         Teacher teacher = userService.getUser(1l, Teacher.class);
-        Course course = studentAttenService.getCourse(Long.parseLong(courseId));
+        Course course = studentAttenService.getCourseById(Long.parseLong(courseId));
         String teacherName = String.format("%s%s %s", teacher.getPrename(), teacher.getFirstName(), teacher.getLastName());
-        CourseSection courseSection = studentAttenService.getCourseSection(Long.parseLong(secionId));
-        List<CourseSectionRegistration> courseSectionRegistrations = studentAttenService.findStudentByCourseSectionId(Long.parseLong(secionId));
+        Section courseSection = studentAttenService.getCourseSection(Long.parseLong(secionId));
+        List<Enrollment> courseSectionRegistrations = studentAttenService.findStudentByCourseSectionId(Long.parseLong(secionId));
 
         int currentWeek = getCurrentWeekSemester(course);
         int displayWeek = currentWeek;
@@ -69,7 +66,7 @@ public class StudentAttenController {
         model.addAttribute("courseSection", courseSection);
 
         List<AttenData> attenDatas = new ArrayList<>();
-        for (CourseSectionRegistration courseSectionRegistration : courseSectionRegistrations) {
+        for (Enrollment courseSectionRegistration : courseSectionRegistrations) {
             AttenData attenData = new AttenData(courseSectionRegistration.getStudent(), "0");
             courseSectionRegistration.getLecAtten().forEach(lecAtten -> {
                 attenData.getAttenLec()[lecAtten.getWeekNo()-1] = lecAtten.getStatus().toString();
@@ -103,9 +100,9 @@ public class StudentAttenController {
                                        @PathVariable String week) {
         Teacher teacher = userService.getUser(1l, Teacher.class);
         String teacherName = String.format("%s%s %s", teacher.getPrename(), teacher.getFirstName(), teacher.getLastName());
-        Course course = studentAttenService.getCourse(Long.parseLong(courseId));
+        Course course = studentAttenService.getCourseById(Long.parseLong(courseId));
         Student student = studentAttenService.getStudent(studentId);
-        CourseSection courseSection = studentAttenService.getCourseSection(Long.parseLong(secionId));
+        Section courseSection = studentAttenService.getCourseSection(Long.parseLong(secionId));
 
         model.addAttribute("type", type);
         model.addAttribute("week", week);
@@ -127,7 +124,7 @@ public class StudentAttenController {
     ) throws IOException {
         Byte[] byteObjects1 = this.convertToBytes(image1);
         Byte[] byteObjects2 = this.convertToBytes(image2);
-        CourseSectionRegistration csr = studentAttenService.findCourseSectionRegistrationBySectionId(secionId);
+        Enrollment csr = studentAttenService.findCourseSectionRegistrationBySectionId(secionId);
         Attendance attendance = null;
         if ("lec".equals(type)) {
             attendance = this.findAttendanceByWeek(csr.getLecAtten(), week);

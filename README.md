@@ -17,6 +17,13 @@ INSERT INTO `wsarachai_db`.`authorities` (`authority`, `description`) VALUES ('R
 INSERT INTO `wsarachai_db`.`authorities` (`authority`, `description`) VALUES ('ROLE_USER', 'ผู้ใช้ทั่วไป');
 ```
 
+#### สำหรับตาราง curriculums
+
+```
+INSERT INTO `wsarachai_db`.`curriculums` (`eng_degree_name`, `eng_name`, `thai_degree_name`, `thai_name`, `type`, `year`) VALUES ('Bachelor Of Science In Information Technology', 'Bachelor Of Science In Information Technology', 'วิทยาศาสตรบัณฑิต (เทคโนโลยีสารสนเทศ)', 'หลักสูตรวิทยาศาสตรบัณฑิต สาขาวิชาเทคโนโลยีสารสนเทศ', 'หลักสูตรระดับปริญญาตรี หลักสูตร 4 ปี', '60');
+INSERT INTO `wsarachai_db`.`curriculums` (`eng_degree_name`, `eng_name`, `thai_degree_name`, `thai_name`, `type`, `year`) VALUES ('Bachelor Of Science In Information Technology', 'Bachelor Of Science In Information Technology', 'วิทยาศาสตรบัณฑิต (เทคโนโลยีสารสนเทศ)', 'หลักสูตรวิทยาศาสตรบัณฑิต สาขาวิชาเทคโนโลยีสารสนเทศ', 'หลักสูตรระดับปริญญาตรี หลักสูตร 4 ปี', '65');
+```
+
 #### สำหรับตาราง subjects
 
 ```
@@ -40,11 +47,11 @@ INSERT INTO `wsarachai_db`.`logins` (`enabled`, `password`, `username`) VALUES (
 INSERT INTO `wsarachai_db`.`logins` (`enabled`, `password`, `username`) VALUES ('1', '0123456789', '{bcrypt}$2a$10$/GUlfBF1jG6Z7h2IiF6UGOCniw.HQeza8pWpW/x2eGWm6LL/rAlLO');
 ```
 
-#### สำหรับตาราง curriculums
+#### สำหรับตาราง users
 
 ```
-INSERT INTO `wsarachai_db`.`curriculums` (`eng_degree_name`, `eng_name`, `thai_degree_name`, `thai_name`, `type`, `year`) VALUES ('Bachelor Of Science In Information Technology', 'Bachelor Of Science In Information Technology', 'วิทยาศาสตรบัณฑิต (เทคโนโลยีสารสนเทศ)', 'หลักสูตรวิทยาศาสตรบัณฑิต สาขาวิชาเทคโนโลยีสารสนเทศ', 'หลักสูตรระดับปริญญาตรี หลักสูตร 4 ปี', '60');
-INSERT INTO `wsarachai_db`.`curriculums` (`eng_degree_name`, `eng_name`, `thai_degree_name`, `thai_name`, `type`, `year`) VALUES ('Bachelor Of Science In Information Technology', 'Bachelor Of Science In Information Technology', 'วิทยาศาสตรบัณฑิต (เทคโนโลยีสารสนเทศ)', 'หลักสูตรวิทยาศาสตรบัณฑิต สาขาวิชาเทคโนโลยีสารสนเทศ', 'หลักสูตรระดับปริญญาตรี หลักสูตร 4 ปี', '65');
+INSERT INTO `wsarachai_db`.`users` (`DTYPE`, `first_name`, `last_name`, `prename`, `login_id`) VALUES ('Teacher', 'วัชรินทร์', 'สาระไชย', 'อาจารย์ ดร.', '1');
+INSERT INTO `wsarachai_db`.`users` (`DTYPE`, `first_name`, `last_name`, `prename`, `start_from_year`, `student_id`, `login_id`) VALUES ('Student', 'แดง', 'นามกสุล', 'นาย', '2566', '0123456789', '2');
 ```
 
 #### สำหรับตาราง courses
@@ -53,13 +60,6 @@ INSERT INTO `wsarachai_db`.`curriculums` (`eng_degree_name`, `eng_name`, `thai_d
 INSERT INTO `wsarachai_db`.`courses` (`semester`, `subject_id`) VALUES ('1/2567', '2');
 INSERT INTO `wsarachai_db`.`courses` (`semester`, `subject_id`) VALUES ('1/2567', '1');
 INSERT INTO `wsarachai_db`.`courses` (`semester`, `subject_id`) VALUES ('1/2567', '3');
-```
-
-#### สำหรับตาราง users
-
-```
-INSERT INTO `wsarachai_db`.`users` (`DTYPE`, `first_name`, `last_name`, `prename`, `login_id`) VALUES ('Teacher', 'วัชรินทร์', 'สาระไชย', 'อาจารย์ ดร.', '1');
-INSERT INTO `wsarachai_db`.`users` (`DTYPE`, `first_name`, `last_name`, `prename`, `start_from_year`, `student_id`, `login_id`) VALUES ('Student', 'แดง', 'นามกสุล', 'นาย', '2566', '0123456789', '2');
 ```
 
 #### สำหรับตาราง course_sections

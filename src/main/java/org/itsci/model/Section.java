@@ -7,8 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "course_sections")
-public class CourseSection implements Comparable<CourseSection> {
+@Table(name = "sections")
+public class Section implements Comparable<Section> {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,15 +38,15 @@ public class CourseSection implements Comparable<CourseSection> {
     @ManyToOne
     @JoinColumn(name="lab_room_id")
     private Room labRoom;
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn (name = "course_id")
-    private Course course;
     @Column(name="latitude")
     private Double latitue;
     @Column(name="longitude")
     private Double longitude;
-    @OneToMany(mappedBy = "courseSection")
-    private Set<CourseSectionRegistration> registeredStudents = new HashSet<>();
+    @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="course_id")
+    private Course course;
+    @OneToMany(mappedBy = "section", fetch = FetchType.EAGER)
+    private Set<Enrollment> enrollments = new HashSet<>();
 
     public long getId() {
         return id;
@@ -70,14 +70,6 @@ public class CourseSection implements Comparable<CourseSection> {
 
     public void setNumberOfSeat(int numberOfSeat) {
         this.numberOfSeat = numberOfSeat;
-    }
-
-    public Set<CourseSectionRegistration> getRegisteredStudents() {
-        return registeredStudents;
-    }
-
-    public void setRegisteredStudents(Set<CourseSectionRegistration> registeredStudents) {
-        this.registeredStudents = registeredStudents;
     }
 
     public String getStartLectureTime() {
@@ -168,8 +160,16 @@ public class CourseSection implements Comparable<CourseSection> {
         this.longitude = longitude;
     }
 
+    public Set<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(Set<Enrollment> enrollments) {
+        this.enrollments = enrollments;
+    }
+
     @Override
-    public int compareTo(CourseSection o) {
+    public int compareTo(Section o) {
         return this.getGroupNumber().compareTo(o.getGroupNumber());
     }
 }

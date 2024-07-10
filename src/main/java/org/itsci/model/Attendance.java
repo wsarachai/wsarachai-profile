@@ -13,8 +13,8 @@ public class Attendance implements Comparable<Attendance> {
     @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "course_section_registration_id")
-    private CourseSectionRegistration courseSectionRegistration;
+    @JoinColumn(name = "enrollment_id")
+    private Enrollment enrollment;
     @Column(name="status", columnDefinition = "VARCHAR(30)")
     @Convert(converter = EAttendanceStatusConverter.class)
     private EAttendanceStatus status;
@@ -35,12 +35,12 @@ public class Attendance implements Comparable<Attendance> {
         this.id = id;
     }
 
-    public CourseSectionRegistration getCourseSectionRegistration() {
-        return courseSectionRegistration;
+    public Enrollment getEnrollment() {
+        return enrollment;
     }
 
-    public void setCourseSectionRegistration(CourseSectionRegistration courseSectionRegistration) {
-        this.courseSectionRegistration = courseSectionRegistration;
+    public void setEnrollment(Enrollment enrollment) {
+        this.enrollment = enrollment;
     }
 
     public EAttendanceStatus getStatus() {

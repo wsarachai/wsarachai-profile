@@ -1,8 +1,6 @@
 package org.itsci.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -13,8 +11,8 @@ public class Student extends Member {
     private String studentId;
     @Column(name="start_from_year")
     private int startFromYear;
-    @OneToMany(mappedBy = "student")
-    private Set<CourseSectionRegistration> courseRegistered = new HashSet<>();
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private Set<Enrollment> enrollments = new HashSet<>();
 
     public String getStudentId() {
         return studentId;
@@ -24,12 +22,12 @@ public class Student extends Member {
         this.studentId = studentId;
     }
 
-    public Set<CourseSectionRegistration> getCourseRegistered() {
-        return courseRegistered;
+    public Set<Enrollment> getEnrollments() {
+        return enrollments;
     }
 
-    public void setCourseRegistered(Set<CourseSectionRegistration> courseRegistered) {
-        this.courseRegistered = courseRegistered;
+    public void setEnrollments(Set<Enrollment> enrollments) {
+        this.enrollments = enrollments;
     }
 
     public int getStartFromYear() {

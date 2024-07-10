@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import org.json.JSONException;
-
 @Controller
 public class IndexController {
     private static final Logger logging = Logger.getLogger(IndexController.class);
@@ -31,7 +29,7 @@ public class IndexController {
         String teacherName = String.format("%s%s %s", teacher.getPrename(), teacher.getFirstName(), teacher.getLastName());
         model.addAttribute("teacher_name", teacherName);
 
-        ArrayList<Course> courses = new ArrayList<Course>(teacher.getCourseSectionSet());
+        ArrayList<Course> courses = new ArrayList<Course>(teacher.getCourses());
         Collections.sort(courses);
 
         model.addAttribute("courses", courses);

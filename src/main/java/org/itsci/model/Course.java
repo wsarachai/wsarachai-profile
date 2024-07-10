@@ -21,9 +21,11 @@ public class Course implements Comparable<Course> {
     @Temporal(TemporalType.DATE)
     @Column(name="start_semester")
     private Date startSemester;
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "course", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "courses", fetch = FetchType.EAGER)
+    private Set<Teacher> teachers = new HashSet<>();
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy("groupNumber ASC")
-    private SortedSet<CourseSection> courseSectionSet = new TreeSet<>();
+    private SortedSet<Section> sections = new TreeSet<>();
 
     public long getId() {
         return id;
@@ -57,12 +59,20 @@ public class Course implements Comparable<Course> {
         this.startSemester = startSemester;
     }
 
-    public SortedSet<CourseSection> getCourseSectionSet() {
-        return courseSectionSet;
+    public Set<Teacher> getTeachers() {
+        return teachers;
     }
 
-    public void setCourseSectionSet(SortedSet<CourseSection> courseSectionSet) {
-        this.courseSectionSet = courseSectionSet;
+    public void setTeachers(Set<Teacher> teachers) {
+        this.teachers = teachers;
+    }
+
+    public SortedSet<Section> getSections() {
+        return sections;
+    }
+
+    public void setSections(SortedSet<Section> sections) {
+        this.sections = sections;
     }
 
     @Override

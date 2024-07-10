@@ -3,6 +3,8 @@ package org.itsci.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "subjects")
@@ -28,10 +30,11 @@ public class Subject {
     private String creditDetail;
     @Column(name="enabled", columnDefinition = "TINYINT(1)")
     private boolean enabled;
-
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="curriculum_id")
     private Curriculum curriculum;
+    @OneToMany(mappedBy = "section", fetch = FetchType.EAGER)
+    private Set<Enrollment> studentCourses = new HashSet<>();
 
     public long getId() {
         return id;
@@ -111,5 +114,13 @@ public class Subject {
 
     public void setCurriculum(Curriculum curriculum) {
         this.curriculum = curriculum;
+    }
+
+    public Set<Enrollment> getStudentCourses() {
+        return studentCourses;
+    }
+
+    public void setStudentCourses(Set<Enrollment> studentCourses) {
+        this.studentCourses = studentCourses;
     }
 }

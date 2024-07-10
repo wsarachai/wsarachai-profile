@@ -7,17 +7,17 @@ import java.util.List;
 
 public interface UserDao<T extends User> {
 
-    List<T> getUsers();
+    T update(T user);
 
-    T updateUser(T user);
+    void save(T user);
 
-    void saveUser(T user);
+    T getById(Long id, Class<?> c);
 
-    T getUser(Long id, Class<?> c);
-
-    void deleteUser(Long id);
+    void delete(Long id);
 
     Login getLoginById(Long id);
 
     T findByUsernameGeneric(String username);
+
+    List<T> findAll();
 }

@@ -2,13 +2,16 @@ package org.itsci.dao;
 
 import org.itsci.model.Course;
 
+import java.util.List;
+
 public interface CourseDao {
-    Course getCourse(Long id);
+    Course getCourseById(Long id);
 
-    Course updateCourse(Course course);
+    Course update(Course course);
 
-    void saveCourse(Course course);
+    void save(Course course);
 
-    void deleteCourse(Long id);
+    void delete(Long id);
 
+    List<Course> findAll();
 }

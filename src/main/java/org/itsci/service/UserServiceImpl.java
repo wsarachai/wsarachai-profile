@@ -30,7 +30,7 @@ public class UserServiceImpl<T extends User> implements UserService<T>, UserDeta
     @Override
     @Transactional
     public T getUser(Long id, Class<?> c) {
-        T user = userDao.getUser(id, c);
+        T user = userDao.getById(id, c);
         return user;
     }
 
@@ -48,26 +48,26 @@ public class UserServiceImpl<T extends User> implements UserService<T>, UserDeta
     @Override
     @Transactional
     public T updateUser(T user) {
-        user = userDao.updateUser(user);
+        user = userDao.update(user);
         return user;
     }
 
     @Override
     @Transactional
     public void saveUser(T user) {
-        userDao.saveUser(user);
+        userDao.save(user);
     }
 
     @Override
     @Transactional
     public List<T> getUsers() {
-        return userDao.getUsers();
+        return userDao.findAll();
     }
 
     @Override
     @Transactional
     public void deleteUser(Long id) {
-        userDao.deleteUser(id);
+        userDao.delete(id);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class UserServiceImpl<T extends User> implements UserService<T>, UserDeta
             Authority authority = authorityDao.findByAuthority(auth.getAuthority());
             ((User)user).getLogin().getAuthorities().add(authority);
         }
-        userDao.saveUser(user);
+        userDao.update(user);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class UserServiceImpl<T extends User> implements UserService<T>, UserDeta
         authorities.add(authority);
         ((User)user).getLogin().setAuthorities(authorities);
         ((User)user).getLogin().setEnabled(true);
-        userDao.saveUser(user);
+        userDao.save(user);
     }
 
     @Override

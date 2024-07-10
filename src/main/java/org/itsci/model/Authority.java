@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name="authorities")
-public class Authority implements GrantedAuthority {
+public class Authority implements GrantedAuthority, Comparable<Authority> {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -70,5 +70,10 @@ public class Authority implements GrantedAuthority {
     @Override
     public int hashCode() {
         return Objects.hash(authority);
+    }
+
+    @Override
+    public int compareTo(Authority o) {
+        return this.authority.compareTo(o.authority);
     }
 }

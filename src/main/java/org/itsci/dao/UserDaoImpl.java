@@ -20,7 +20,7 @@ public class UserDaoImpl<T extends User> implements UserDao<T> {
     private SessionFactory sessionFactory;
 
     @Override
-    public List<T> getUsers() {
+    public List<T> findAll() {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
@@ -34,27 +34,27 @@ public class UserDaoImpl<T extends User> implements UserDao<T> {
     }
 
     @Override
-    public T updateUser(T user) {
+    public T update(T user) {
         Session session = sessionFactory.getCurrentSession();
-        user = (T) session.merge(user);
+        session.saveOrUpdate(user);
         return user;
     }
 
     @Override
-    public void saveUser(T user) {
+    public void save(T user) {
         Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(user);
+        session.save(user);
     }
 
     @Override
-    public T getUser(Long id, Class<?> c) {
+    public T getById(Long id, Class<?> c) {
         Session session = sessionFactory.getCurrentSession();
         T user = (T) session.get(c, id);
         return user;
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public void delete(Long id) {
         Session session = sessionFactory.getCurrentSession();
         User user = session.load(User.class, id);
         session.delete(user);

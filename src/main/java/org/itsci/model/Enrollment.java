@@ -3,29 +3,27 @@ package org.itsci.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 @Entity
-@Table(name = "student_registrations")
-public class CourseSectionRegistration {
+@Table(name = "enrollments")
+public class Enrollment {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
     @ManyToOne
-    @JoinColumn(name="course_section_id")
-    private CourseSection courseSection;
+    @JoinColumn(name="section_id")
+    private Section section;
     @ManyToOne
     @JoinColumn(name="student_id")
     private Student student;
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "courseSectionRegistration", fetch = FetchType.EAGER)
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "enrollment", fetch = FetchType.EAGER)
     @OrderBy("weekNo ASC")
     private SortedSet<Attendance> lecAtten = new TreeSet<>();
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "courseSectionRegistration", fetch = FetchType.EAGER)
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "enrollment", fetch = FetchType.EAGER)
     @OrderBy("weekNo ASC")
     private SortedSet<Attendance> labAtten = new TreeSet<>();
 
@@ -37,12 +35,12 @@ public class CourseSectionRegistration {
         this.id = id;
     }
 
-    public CourseSection getCourseSection() {
-        return courseSection;
+    public Section getSection() {
+        return section;
     }
 
-    public void setCourseSection(CourseSection courseSection) {
-        this.courseSection = courseSection;
+    public void setSection(Section section) {
+        this.section = section;
     }
 
     public Student getStudent() {

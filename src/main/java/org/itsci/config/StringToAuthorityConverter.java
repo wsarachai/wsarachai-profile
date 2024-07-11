@@ -8,6 +8,6 @@ public class StringToAuthorityConverter implements Converter<String, Authority> 
     @Override
     public Authority convert(String source) {
         EAuthorityType at = EAuthorityType.valueOf(source);
-        return new Authority(at.toString());
+        return new Authority(at);
     }
 }

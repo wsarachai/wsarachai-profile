@@ -1,6 +1,7 @@
 package org.itsci.dao;
 
 import org.itsci.model.Course;
+import org.itsci.model.Teacher;
 
 import java.util.List;
 

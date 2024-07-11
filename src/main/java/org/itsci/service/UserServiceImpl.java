@@ -77,7 +77,7 @@ public class UserServiceImpl<T extends User> implements UserService<T>, UserDeta
             ((User)user).getLogin().getAuthorities().remove(authority);
         }
         for (Authority auth : authorityToAdd) {
-            Authority authority = authorityDao.findByAuthority(auth.getAuthority());
+            Authority authority = authorityDao.findByRole(auth.getRoleName());
             ((User)user).getLogin().getAuthorities().add(authority);
         }
         userDao.update(user);
@@ -90,7 +90,7 @@ public class UserServiceImpl<T extends User> implements UserService<T>, UserDeta
         String encrypted = bCryptPasswordEncoder.encode(((User)user).getLogin().getPassword().trim());
         ((User)user).getLogin().setPassword("{bcrypt}" + encrypted);
         Set<Authority> authorities = new HashSet<>();
-        Authority authority = authorityDao.findByAuthority(EAuthorityType.ROLE_MEMBER.toString());
+        Authority authority = authorityDao.findByRole(EAuthorityType.ROLE_MEMBER);
         authorities.add(authority);
         ((User)user).getLogin().setAuthorities(authorities);
         ((User)user).getLogin().setEnabled(true);

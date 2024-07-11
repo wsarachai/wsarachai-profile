@@ -23,7 +23,7 @@ public class Login {
     @Column(columnDefinition = "TINYINT(1)")
     private boolean enabled;
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_authority",
+    @JoinTable(name = "login_authority",
             joinColumns= { @JoinColumn(name = "login_id")},
             inverseJoinColumns= { @JoinColumn(name = "authority_id")})
     private Set<Authority> authorities = new HashSet<>();

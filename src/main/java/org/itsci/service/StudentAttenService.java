@@ -40,8 +40,6 @@ public interface StudentAttenService {
 
     void saveUser(User user);
 
-    List<Course> findAllTeachingCourseByTeacher(Teacher teacher);
-
     List<Course> findAllCourse();
 
     Subject getSubjectById(long l);
@@ -52,7 +50,11 @@ public interface StudentAttenService {
 
     void saveSection(Section section1);
 
-    Authority findAuthority(EAuthorityType role);
+    Authority findByRoleName(EAuthorityType role);
 
     void saveCurriculum(Curriculum curriculum1);
+
+    Teacher findTeacherById(Long id);
+
+    void updateUser(User user);
 }

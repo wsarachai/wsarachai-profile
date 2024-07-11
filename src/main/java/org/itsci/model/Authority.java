@@ -15,15 +15,15 @@ public class Authority implements GrantedAuthority, Comparable<Authority> {
     @GenericGenerator(name = "increment", strategy = "increment")
     private int id;
     @Enumerated(EnumType.STRING)
-    @Column(name="authority", columnDefinition = "VARCHAR(30)", nullable = false, unique = true)
-    private EAuthorityType authority;
+    @Column(name="role_name", columnDefinition = "VARCHAR(30)", nullable = false, unique = true)
+    private EAuthorityType roleName;
     @Column(name="description")
     private String description;
 
     public Authority() {}
 
-    public Authority(String authority) {
-        this.authority = EAuthorityType.valueOf(authority);
+    public Authority(EAuthorityType roleName) {
+        this.roleName = roleName;
     }
 
     public int getId() {
@@ -34,16 +34,12 @@ public class Authority implements GrantedAuthority, Comparable<Authority> {
         this.id = id;
     }
 
-    public String getAuthority() {
-        return authority.toString();
+    public EAuthorityType getRoleName() {
+        return roleName;
     }
 
-    public void setAuthority(String authority) {
-        this.authority = EAuthorityType.valueOf(authority);
-    }
-
-    public void setAuthority(EAuthorityType authority) {
-        this.authority = authority;
+    public void setRoleName(EAuthorityType roleName) {
+        this.roleName = roleName;
     }
 
     public String getDescription() {
@@ -60,20 +56,12 @@ public class Authority implements GrantedAuthority, Comparable<Authority> {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Authority authority1 = (Authority) o;
-        return authority.equals(authority1.authority);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(authority);
+    public String getAuthority() {
+        return this.roleName.toString();
     }
 
     @Override
     public int compareTo(Authority o) {
-        return this.authority.compareTo(o.authority);
+        return this.roleName.compareTo(o.roleName);
     }
 }

@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.itsci.model.Authority;
+import org.itsci.model.EAuthorityType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,12 +30,16 @@ public class AuthorityDaoImpl implements AuthorityDao {
     }
 
     @Override
-    public Authority findByAuthority(String authority) {
+    public Authority findByRole(EAuthorityType role) {
         Session session = sessionFactory.getCurrentSession();
-        Query<Authority> query = session.createQuery("from Authority a where a.authority=:authority", Authority.class);
-        query.setParameter("authority", authority);
-        Authority result = query.getSingleResult();
-        return result;
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Authority> criteria = builder.createQuery(Authority.class);
+        Root<Authority> root = criteria.from(Authority.class);
+        criteria.select(root);
+        criteria.where(builder.equal(root.get("roleName"), role));
+
+        Query<Authority> query = session.createQuery(criteria);
+        return query.getSingleResult();
     }
 
     @Override
@@ -47,9 +52,8 @@ public class AuthorityDaoImpl implements AuthorityDao {
 
         Query<Authority> query = session.createQuery(criteria);
         List<Authority> _authorities = query.getResultList();
-        Set<Authority> authorities = new TreeSet<>(_authorities);
 
-        return authorities;
+        return new TreeSet<>(_authorities);
     }
 
     @Override

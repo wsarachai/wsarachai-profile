@@ -61,7 +61,7 @@ public class MemberServiceImpl implements MemberService {
             member.getLogin().getAuthorities().remove(authority);
         }
         for (Authority auth : authorityToAdd) {
-            Authority authority = authorityDao.findByAuthority(auth.getAuthority());
+            Authority authority = authorityDao.findByRole(auth.getRoleName());
             member.getLogin().getAuthorities().add(authority);
         }
         memberDao.saveMember(member);
@@ -74,7 +74,7 @@ public class MemberServiceImpl implements MemberService {
         String encrypted = bCryptPasswordEncoder.encode(member.getLogin().getPassword().trim());
         member.getLogin().setPassword("{bcrypt}" + encrypted);
         Set<Authority> authorities = new HashSet<>();
-        Authority authority = authorityDao.findByAuthority(EAuthorityType.ROLE_MEMBER.toString());
+        Authority authority = authorityDao.findByRole(EAuthorityType.ROLE_MEMBER);
         authorities.add(authority);
         member.getLogin().setAuthorities(authorities);
         member.getLogin().setEnabled(true);

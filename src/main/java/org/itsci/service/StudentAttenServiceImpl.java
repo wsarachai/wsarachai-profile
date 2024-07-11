@@ -34,9 +34,6 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     private RoomDao roomDao;
 
     @Autowired
-    private TeachingClassDao teachingClassDao;
-
-    @Autowired
     private EnrollmentDao courseSectionRegistrationDao;
 
     @Override
@@ -143,8 +140,8 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
-    public List<Course> findAllTeachingCourseByTeacher(Teacher teacher) {
-        return teachingClassDao.findByTeacher(teacher);
+    public void updateUser(User user) {
+        userDao.update(user);
     }
 
     @Override
@@ -179,13 +176,19 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
-    public Authority findAuthority(EAuthorityType role) {
-        return authorityDao.findByAuthority(role.toString());
+    public Authority findByRoleName(EAuthorityType role) {
+        return authorityDao.findByRole(role);
     }
 
     @Override
     @Transactional
     public void saveCurriculum(Curriculum curriculum1) {
         curriculumDao.save(curriculum1);
+    }
+
+    @Override
+    @Transactional
+    public Teacher findTeacherById(Long id) {
+        return (Teacher) userDao.getById(id, Teacher.class);
     }
 }

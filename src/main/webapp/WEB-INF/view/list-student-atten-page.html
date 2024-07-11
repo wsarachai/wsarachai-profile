@@ -24,7 +24,7 @@
                 </div>
                 <div class="item2">
                     <p th:text="${course.getSubject().getCode() + ' ' + course.getSubject().getThaiName()}"></p>
-                    <p th:text="${courseSection.getGroupNumber()}"></p>
+                    <p th:text="${section.getGroupNumber()}"></p>
                     <p th:text="${course.getSemester()}"></p>
                 </div>
             </div>
@@ -51,9 +51,9 @@
             <div class="divTable blueTable">
                 <div class="divTableHeading">
                     <div class="divTableRow">
-                        <div class="divTableHead" th:text="#{page.student.login.no}"></div>
-                        <div class="divTableHead" th:text="#{page.student.login.code}"></div>
-                        <div class="divTableHead" th:text="#{page.student.login.name}"></div>
+                        <div class="divTableHead" th:text="#{page.no}"></div>
+                        <div class="divTableHead" th:text="#{page.student.code}"></div>
+                        <div class="divTableHead" th:text="#{page.user.firstname}"></div>
                         <div class="divTableHead" th:text="#{page.student.atten.lec}"></div>
                         <div class="divTableHead" th:text="#{page.student.login.status}"></div>
                         <div class="divTableHead" th:text="#{page.student.atten.lab}"></div>
@@ -95,7 +95,7 @@
         </section>
     </main>
     <footer>
-        <p>&copy; 2024 <span th:text="${teacher_name}"></span></p>
+        <p>&copy; 2024 <span th:text="#{page.author}"></span></p>
     </footer>
 </body>
 

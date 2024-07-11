@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+        <title th:text="#{page.title}"></title>
+    </head>
+
+    <body>
+        <header>
+            <h1 th:text="#{page.title}"></h1>
+        </header>
+        <main id="main-container">
+            <section class="flex-container-column">
+                <div class="flex-container-row">
+                    <form th:action="@{/system/student/enroll}" method="post">
+                        <h3>Select field mapping</h3>
+                        <div>No:*</div>
+                        <div>
+                            <select name="no">
+                                <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
+                            </select>
+                        </div>
+                        <div>Code:*</div>
+                        <div>
+                            <select name="code">
+                                <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
+                            </select>
+                        </div>
+                        <div>Prename:*</div>
+                        <div>
+                            <select name="prename">
+                                <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
+                            </select>
+                        </div>
+                        <div>Firstname:*</div>
+                        <div>
+                            <select name="firstname">
+                                <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
+                            </select>
+                        </div>
+                        <div>Lastname:*</div>
+                        <div>
+                            <select name="lastname">
+                                <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
+                            </select>
+                        </div>
+                        <div>Section:*</div>
+                        <div>
+                            <select name="section_id">
+                                <option th:each="sec : ${sections}" th:value="${sec.getId()}" th:text="${sec.getCourse().getSubject().getCode()+'-sec'+sec.getGroupNumber()}"></option>
+                            </select>
+                        </div>
+                        <div>
+                            <input type="submit" value="Submit">
+                        </div>
+                    </form>
+                </div>
+                <div class="divTable blueTable">
+                    <div class="divTableHeading">
+                        <div class="divTableRow">
+                            <div class="divTableHead" th:each="field : ${fields}" th:text="${field}"></div>
+                        </div>
+                    </div>
+                    <div class="divTableBody">
+                        <div class="divTableRow" th:each="lst : ${records}">
+                            <div class="divTableCell" th:each="data : ${lst}" th:text="${data}"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2024 <span th:text="#{page.author}"></span></p>
+        </footer>
+    </body>
+
+</html>

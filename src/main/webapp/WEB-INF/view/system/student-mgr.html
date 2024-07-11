@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+    <title th:text="#{page.title}"></title>
+</head>
+
+<body>
+    <header>
+        <h1 th:text="#{page.title}"></h1>
+    </header>
+    <main id="main-container">
+        <section>
+            <p class="title" th:text="#{page.student.title}"></p>
+            <div class="divTable blueTable">
+                <div class="divTableHeading">
+                    <div class="divTableRow">
+                        <div class="divTableHead" th:text="#{page.no}"></div>
+                        <div class="divTableHead" th:text="#{page.student.code}"></div>
+                        <div class="divTableHead" th:text="#{page.user.prename}"></div>
+                        <div class="divTableHead" th:text="#{page.user.firstname}"></div>
+                        <div class="divTableHead" th:text="#{page.user.lastname}"></div>
+                        <div class="divTableHead" th:text="#{page.student.atten.subjects}"></div>
+                    </div>
+                </div>
+                <div class="divTableBody">
+                    <div class="divTableRow" th:each="stu, i : ${students}">
+                        <div class="divTableCell" th:text="${i.index+1}"></div>
+                        <div class="divTableCell" th:text="${stu.getStudentId()}"></div>
+                        <div class="divTableCell" th:text="${stu.getPrename()}"></div>
+                        <div class="divTableCell" th:text="${stu.getFirstName()}"></div>
+                        <div class="divTableCell" th:text="${stu.getLastName()}"></div>
+                        <div class="divTableCell">xxx</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 <span th:text="#{page.author}"></span></p>
+    </footer>
+</body>
+
+</html>

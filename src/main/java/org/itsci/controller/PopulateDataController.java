@@ -173,6 +173,7 @@ public class PopulateDataController {
             section1.setLabRoom(studentAttenService.getRoomById(2l));
             section1.setLecRoom(studentAttenService.getRoomById(2l));
             section1.setNumberOfSeat(42);
+            section1.setCourse(course1);
             course1.getSections().add(section1);
 
             studentAttenService.saveCourse(course1);
@@ -208,6 +209,8 @@ public class PopulateDataController {
             section4.setLecRoom(studentAttenService.getRoomById(1l));
             section4.setNumberOfSeat(51);
 
+            section3.setCourse(course2);
+            section4.setCourse(course2);
             course2.getSections().add(section3);
             course2.getSections().add(section4);
 
@@ -231,6 +234,7 @@ public class PopulateDataController {
             section2.setLecRoom(studentAttenService.getRoomById(2l));
             section2.setNumberOfSeat(50);
 
+            section2.setCourse(course3);
             course3.getSections().add(section2);
 
             studentAttenService.saveCourse(course3);
@@ -244,32 +248,6 @@ public class PopulateDataController {
             studentAttenService.updateUser(teacher1);
         }
 
-//        List<TeachingClass> teachingClasses = studentAttenService.findAllTeachingClass();
-//
-//        for (long i = 1; i <= 4; i++) {
-//            List<StudentSectionRegistration> courseSectionRegistrations = studentAttenService.findStudentByCourseSectionId(i);
-//            for (StudentSectionRegistration courseSectionRegistration : courseSectionRegistrations) {
-//                if (courseSectionRegistration.getLecAtten().size() <=0) {
-//                    for (int j = 1; j <= 15; j++) {
-//                        Attendance attendance = new Attendance();
-//                        attendance.setWeekNo(j);
-//                        attendance.setCourseSectionRegistration(courseSectionRegistration);
-//                        attendance.setStatus(EAttendanceStatus.NA);
-//                        courseSectionRegistration.getLecAtten().add(attendance);
-//                    }
-//                }
-//                if (courseSectionRegistration.getLabAtten().size() <=0) {
-//                    for (int j = 1; j <= 15; j++) {
-//                        Attendance attendance = new Attendance();
-//                        attendance.setWeekNo(j);
-//                        attendance.setCourseSectionRegistration(courseSectionRegistration);
-//                        attendance.setStatus(EAttendanceStatus.NA);
-//                        courseSectionRegistration.getLabAtten().add(attendance);
-//                    }
-//                }
-//                studentAttenService.saveCourseSectionRegistration(courseSectionRegistration);
-//            }
-//        }
         return "index";
     }
 }

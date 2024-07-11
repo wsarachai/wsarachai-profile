@@ -98,13 +98,10 @@ canvas {
 }
 
 .card-body {
-	padding: 3px 0px 3px 20px;
 	margin: 0;
 	border-radius: 0 0 8px 8px;
 	background-color: #fff;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	min-height: 50px;
-	overflow: auto;
 	word-wrap: break-word;
 	word-break: break-word;
 }

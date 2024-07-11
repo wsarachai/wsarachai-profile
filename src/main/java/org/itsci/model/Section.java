@@ -170,6 +170,10 @@ public class Section implements Comparable<Section> {
 
     @Override
     public int compareTo(Section o) {
-        return this.getGroupNumber().compareTo(o.getGroupNumber());
+        if (o != null && o.getGroupNumber() != null && this.getGroupNumber() != null) {
+            return this.getGroupNumber().compareTo(o.getGroupNumber());
+        } else {
+            return 0;
+        }
     }
 }

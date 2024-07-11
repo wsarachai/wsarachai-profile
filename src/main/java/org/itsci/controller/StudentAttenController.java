@@ -3,6 +3,7 @@ package org.itsci.controller;
 import org.itsci.model.*;
 import org.itsci.service.StudentAttenService;
 import org.itsci.service.UserService;
+import org.itsci.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
@@ -28,25 +29,14 @@ public class StudentAttenController {
 
 //    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
 
-    private int getCurrentWeekSemester(Course course) {
-        Calendar c1 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
-        Calendar c2 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
-        c1.setTime(course.getStartSemester());
-
-        int startWeek = c1.get(Calendar.WEEK_OF_YEAR);
-        int curWeek = c2.get(Calendar.WEEK_OF_YEAR);
-
-        return curWeek-startWeek;
-    }
-
     private String attentionPage(Model model, String courseId, String secionId, int week) {
         Teacher teacher = userService.getUser(1l, Teacher.class);
         Course course = studentAttenService.getCourseById(Long.parseLong(courseId));
         String teacherName = String.format("%s%s %s", teacher.getPrename(), teacher.getFirstName(), teacher.getLastName());
-        Section courseSection = studentAttenService.findSectionById(Long.parseLong(secionId));
+        Section section = studentAttenService.findSectionById(Long.parseLong(secionId));
         List<Enrollment> enrollments = studentAttenService.findEnrollmentBySectionId(Long.parseLong(secionId));
 
-        int currentWeek = getCurrentWeekSemester(course);
+        int currentWeek = DateUtils.getCurrentWeekSemester(course);
         int displayWeek = currentWeek;
         if (week >= 0) {
             displayWeek = week;
@@ -63,7 +53,7 @@ public class StudentAttenController {
         model.addAttribute("secionId", secionId);
         model.addAttribute("teacher_name", teacherName);
         model.addAttribute("course", course);
-        model.addAttribute("courseSection", courseSection);
+        model.addAttribute("courseSection", section);
 
         List<AttenData> attenDatas = new ArrayList<>();
         for (Enrollment enrollment : enrollments) {

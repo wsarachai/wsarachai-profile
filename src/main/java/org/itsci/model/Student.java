@@ -9,6 +9,8 @@ import java.util.Set;
 public class Student extends Member {
     @Column(name="student_id", length = 10)
     private String studentId;
+    @Column(name="student_no")
+    private int studentNo;
     @Column(name="start_from_year")
     private int startFromYear;
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
@@ -20,6 +22,14 @@ public class Student extends Member {
 
     public void setStudentId(String studentId) {
         this.studentId = studentId;
+    }
+
+    public int getStudentNo() {
+        return studentNo;
+    }
+
+    public void setStudentNo(int studentNo) {
+        this.studentNo = studentNo;
     }
 
     public Set<Enrollment> getEnrollments() {

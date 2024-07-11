@@ -46,8 +46,6 @@ public interface StudentAttenService {
 
     Room getRoomById(long id);
 
-    void saveSection(Section section1);
-
     Authority findByRoleName(EAuthorityType role);
 
     void saveCurriculum(Curriculum curriculum1);

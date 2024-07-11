@@ -160,32 +160,8 @@ public class PopulateDataController {
             course1.setSemester("1/2567");
             course1.setStartSemester(DateUtils.getDateFrom(2567, 6, 3));
             course1.setSubject(studentAttenService.getSubjectById(1l));
-            studentAttenService.saveCourse(course1);
 
-            Course course2 = new Course();
-            course2.setSemester("1/2567");
-            course2.setStartSemester(DateUtils.getDateFrom(2567, 6, 3));
-            course2.setSubject(studentAttenService.getSubjectById(2l));
-            studentAttenService.saveCourse(course2);
-
-            Course course3 = new Course();
-            course3.setSemester("1/2567");
-            course3.setStartSemester(DateUtils.getDateFrom(2567, 6, 3));
-            course3.setSubject(studentAttenService.getSubjectById(3l));
-            studentAttenService.saveCourse(course3);
-
-            course1.getTeachers().add(teacher1);
-            course2.getTeachers().add(teacher1);
-            course3.getTeachers().add(teacher1);
-            teacher1.getCourses().add(course1);
-            teacher1.getCourses().add(course2);
-            teacher1.getCourses().add(course3);
-            studentAttenService.updateUser(teacher1);
-        }
-
-        Section section1 = studentAttenService.findSectionById(1l);
-        if (section1 == null) {
-            section1 = new Section();
+            Section section1 = new Section();
             section1.setCourse(studentAttenService.getCourseById(1l));
             section1.setGroupNumber("01");
             section1.setLecDay(EDayOfWeek.WEDNESDAY);
@@ -197,29 +173,16 @@ public class PopulateDataController {
             section1.setLabRoom(studentAttenService.getRoomById(2l));
             section1.setLecRoom(studentAttenService.getRoomById(2l));
             section1.setNumberOfSeat(42);
-            studentAttenService.saveSection(section1);
-        }
+            course1.getSections().add(section1);
 
-        Section section2 = studentAttenService.findSectionById(2l);
-        if (section2 == null) {
-            section2 = new Section();
-            section2.setCourse(studentAttenService.getCourseById(3l));
-            section2.setGroupNumber("01");
-            section2.setLecDay(EDayOfWeek.WEDNESDAY);
-            section2.setStartLectureTime("8:30");
-            section2.setEndLectureTime("11:30");
-            section2.setLabDay(EDayOfWeek.WEDNESDAY);
-            section2.setStartLabTime("8:30");
-            section2.setEndLabTime("11:30");
-            section2.setLabRoom(studentAttenService.getRoomById(2l));
-            section2.setLecRoom(studentAttenService.getRoomById(2l));
-            section2.setNumberOfSeat(50);
-            studentAttenService.saveSection(section2);
-        }
+            studentAttenService.saveCourse(course1);
 
-        Section section3 = studentAttenService.findSectionById(3l);
-        if (section3 == null) {
-            section3 = new Section();
+            Course course2 = new Course();
+            course2.setSemester("1/2567");
+            course2.setStartSemester(DateUtils.getDateFrom(2567, 6, 3));
+            course2.setSubject(studentAttenService.getSubjectById(2l));
+
+            Section section3 = new Section();
             section3.setCourse(studentAttenService.getCourseById(2l));
             section3.setGroupNumber("01");
             section3.setLecDay(EDayOfWeek.WEDNESDAY);
@@ -231,12 +194,8 @@ public class PopulateDataController {
             section3.setLabRoom(studentAttenService.getRoomById(2l));
             section3.setLecRoom(studentAttenService.getRoomById(1l));
             section3.setNumberOfSeat(61);
-            studentAttenService.saveSection(section3);
-        }
 
-        Section section4 = studentAttenService.findSectionById(4l);
-        if (section4 == null) {
-            section4 = new Section();
+            Section section4 = new Section();
             section4.setCourse(studentAttenService.getCourseById(2l));
             section4.setGroupNumber("02");
             section4.setLecDay(EDayOfWeek.WEDNESDAY);
@@ -248,22 +207,42 @@ public class PopulateDataController {
             section4.setLabRoom(studentAttenService.getRoomById(2l));
             section4.setLecRoom(studentAttenService.getRoomById(1l));
             section4.setNumberOfSeat(51);
-            studentAttenService.saveSection(section4);
+
+            course2.getSections().add(section3);
+            course2.getSections().add(section4);
+
+            studentAttenService.saveCourse(course2);
+
+            Course course3 = new Course();
+            course3.setSemester("1/2567");
+            course3.setStartSemester(DateUtils.getDateFrom(2567, 6, 3));
+            course3.setSubject(studentAttenService.getSubjectById(3l));
+
+            Section section2 = new Section();
+            section2.setCourse(studentAttenService.getCourseById(3l));
+            section2.setGroupNumber("01");
+            section2.setLecDay(EDayOfWeek.WEDNESDAY);
+            section2.setStartLectureTime("8:30");
+            section2.setEndLectureTime("11:30");
+            section2.setLabDay(EDayOfWeek.WEDNESDAY);
+            section2.setStartLabTime("8:30");
+            section2.setEndLabTime("11:30");
+            section2.setLabRoom(studentAttenService.getRoomById(2l));
+            section2.setLecRoom(studentAttenService.getRoomById(2l));
+            section2.setNumberOfSeat(50);
+
+            course3.getSections().add(section2);
+
+            studentAttenService.saveCourse(course3);
+
+            course1.getTeachers().add(teacher1);
+            course2.getTeachers().add(teacher1);
+            course3.getTeachers().add(teacher1);
+            teacher1.getCourses().add(course1);
+            teacher1.getCourses().add(course2);
+            teacher1.getCourses().add(course3);
+            studentAttenService.updateUser(teacher1);
         }
-
-        Course course1 = studentAttenService.getCourseById(1l);
-        course1.getSections().add(section1);
-        studentAttenService.updateCourse(course1);
-
-        Course course3 = studentAttenService.getCourseById(3l);
-        course3.getSections().add(section2);
-        studentAttenService.updateCourse(course3);
-
-        Course course2 = studentAttenService.getCourseById(2l);
-        course2.getSections().add(section3);
-        course2.getSections().add(section4);
-        studentAttenService.updateCourse(course2);
-
 
 //        List<TeachingClass> teachingClasses = studentAttenService.findAllTeachingClass();
 //

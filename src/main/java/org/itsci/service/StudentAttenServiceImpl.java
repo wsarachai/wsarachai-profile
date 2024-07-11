@@ -34,7 +34,7 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     private RoomDao roomDao;
 
     @Autowired
-    private EnrollmentDao courseSectionRegistrationDao;
+    private EnrollmentDao enrollmentDao;
 
     @Override
     @Transactional
@@ -44,8 +44,8 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
-    public List<Enrollment> findStudentByCourseSectionId(Long id) {
-        return courseSectionRegistrationDao.findStudentByCourseSectionId(id);
+    public List<Enrollment> findEnrollmentBySectionId(Long id) {
+        return enrollmentDao.findBySectionId(id);
     }
 
     @Override
@@ -56,8 +56,8 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
-    public void saveCourseSectionRegistration(Enrollment courseSectionRegistration) {
-        courseSectionRegistrationDao.save(courseSectionRegistration);
+    public void saveEnrollment(Enrollment enrollment) {
+        enrollmentDao.save(enrollment);
     }
 
     @Override

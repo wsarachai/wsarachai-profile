@@ -18,19 +18,19 @@ public class EnrollmentDaoImpl implements EnrollmentDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public List<Enrollment> findStudentByCourseSectionId(Long courseSectionId) {
+    public List<Enrollment> findBySectionId(Long sectionId) {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Enrollment> criteria = builder.createQuery(Enrollment.class);
         Root<Enrollment> root = criteria.from(Enrollment.class);
 
         criteria.select(root);
-        criteria.where(builder.equal(root.get("courseSection").get("id"), courseSectionId));
+        criteria.where(builder.equal(root.get("section").get("id"), sectionId));
         criteria.orderBy(builder.asc(root.get("student").get("studentId")));
 
         Query<Enrollment> query = session.createQuery(criteria);
-        List<Enrollment> courseSectionRegistrations = query.getResultList();
-        return courseSectionRegistrations;
+        List<Enrollment> enrollments = query.getResultList();
+        return enrollments;
     }
 
     @Override

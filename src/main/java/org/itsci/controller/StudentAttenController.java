@@ -44,7 +44,7 @@ public class StudentAttenController {
         Course course = studentAttenService.getCourseById(Long.parseLong(courseId));
         String teacherName = String.format("%s%s %s", teacher.getPrename(), teacher.getFirstName(), teacher.getLastName());
         Section courseSection = studentAttenService.findSectionById(Long.parseLong(secionId));
-        List<Enrollment> courseSectionRegistrations = studentAttenService.findStudentByCourseSectionId(Long.parseLong(secionId));
+        List<Enrollment> enrollments = studentAttenService.findEnrollmentBySectionId(Long.parseLong(secionId));
 
         int currentWeek = getCurrentWeekSemester(course);
         int displayWeek = currentWeek;
@@ -66,12 +66,12 @@ public class StudentAttenController {
         model.addAttribute("courseSection", courseSection);
 
         List<AttenData> attenDatas = new ArrayList<>();
-        for (Enrollment courseSectionRegistration : courseSectionRegistrations) {
-            AttenData attenData = new AttenData(courseSectionRegistration.getStudent(), "0");
-            courseSectionRegistration.getLecAtten().forEach(lecAtten -> {
+        for (Enrollment enrollment : enrollments) {
+            AttenData attenData = new AttenData(enrollment.getStudent(), "0");
+            enrollment.getLecAtten().forEach(lecAtten -> {
                 attenData.getAttenLec()[lecAtten.getWeekNo()-1] = lecAtten.getStatus().toString();
             });
-            courseSectionRegistration.getLabAtten().forEach(labAtten -> {
+            enrollment.getLabAtten().forEach(labAtten -> {
                 attenData.getAttenLab()[labAtten.getWeekNo()-1] = labAtten.getStatus().toString();
             });
             attenDatas.add(attenData);

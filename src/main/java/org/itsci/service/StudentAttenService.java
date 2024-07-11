@@ -8,11 +8,11 @@ import java.util.Set;
 public interface StudentAttenService {
     Course getCourseById(Long id);
 
-    List<Enrollment> findStudentByCourseSectionId(Long id);
+    List<Enrollment> findEnrollmentBySectionId(Long id);
 
     Student getStudent(String studentId);
 
-    void saveCourseSectionRegistration(Enrollment courseSectionRegistration);
+    void saveEnrollment(Enrollment enrollment);
 
     Enrollment findCourseSectionRegistrationBySectionId(String secionId);
 

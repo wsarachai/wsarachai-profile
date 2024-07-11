@@ -20,4 +20,6 @@ public interface UserDao<T extends User> {
     T findByUsernameGeneric(String username);
 
     List<T> findAll();
+
+    User findByUsername(String username);
 }

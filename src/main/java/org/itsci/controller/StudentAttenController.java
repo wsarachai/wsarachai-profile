@@ -43,7 +43,7 @@ public class StudentAttenController {
         Teacher teacher = userService.getUser(1l, Teacher.class);
         Course course = studentAttenService.getCourseById(Long.parseLong(courseId));
         String teacherName = String.format("%s%s %s", teacher.getPrename(), teacher.getFirstName(), teacher.getLastName());
-        Section courseSection = studentAttenService.getCourseSection(Long.parseLong(secionId));
+        Section courseSection = studentAttenService.findSectionById(Long.parseLong(secionId));
         List<Enrollment> courseSectionRegistrations = studentAttenService.findStudentByCourseSectionId(Long.parseLong(secionId));
 
         int currentWeek = getCurrentWeekSemester(course);
@@ -102,7 +102,7 @@ public class StudentAttenController {
         String teacherName = String.format("%s%s %s", teacher.getPrename(), teacher.getFirstName(), teacher.getLastName());
         Course course = studentAttenService.getCourseById(Long.parseLong(courseId));
         Student student = studentAttenService.getStudent(studentId);
-        Section courseSection = studentAttenService.getCourseSection(Long.parseLong(secionId));
+        Section courseSection = studentAttenService.findSectionById(Long.parseLong(secionId));
 
         model.addAttribute("type", type);
         model.addAttribute("week", week);

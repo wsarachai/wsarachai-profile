@@ -29,7 +29,7 @@ public class IndexController {
         String teacherName = String.format("%s%s %s", teacher.getPrename(), teacher.getFirstName(), teacher.getLastName());
         model.addAttribute("teacher_name", teacherName);
 
-        ArrayList<Course> courses = new ArrayList<Course>(teacher.getCourses());
+        ArrayList<Course> courses = new ArrayList<>(teacher.getCourses());
         Collections.sort(courses);
 
         model.addAttribute("courses", courses);

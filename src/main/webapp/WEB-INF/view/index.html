@@ -8,7 +8,6 @@
     <link rel="stylesheet" th:href="@{assets/css/main.css}">
     <title th:text="#{page.title}"></title>
 </head>
-
 <body>
     <header>
         <h1 th:text="#{page.title}"></h1>
@@ -24,7 +23,7 @@
                         <p><span  th:text="${c.subject.getCode()}"/> <span  th:text="${c.subject.getThaiName()}"/></p>
                     </div>
                     <div class="card-body">
-                        <div class="FlexContainer" th:each="cs : ${c.courseSectionSet}">
+                        <div class="FlexContainer" th:each="cs : ${c.getSections()}">
                             <div th:text="${cs.getGroupNumber()}"></div>
                             <div>
                                 <div class="data-cell" th:text="#{section.lec}"></div>

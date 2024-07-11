@@ -1,6 +1,5 @@
 package org.itsci.config;
 
-import com.linecorp.bot.client.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;

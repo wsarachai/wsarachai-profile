@@ -12,7 +12,7 @@ public class SectionDaoImpl implements SectionDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public Section getCourseSection(Long id) {
+    public Section findById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         Section courseSection = session.get(Section.class, id);
         return courseSection;

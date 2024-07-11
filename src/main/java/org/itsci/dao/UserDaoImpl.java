@@ -34,6 +34,21 @@ public class UserDaoImpl<T extends User> implements UserDao<T> {
     }
 
     @Override
+    public User findByUsername(String username) {
+        Session session = sessionFactory.getCurrentSession();
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> criteria = builder.createQuery(User.class);
+        Root<User> root = criteria.from(User.class);
+        criteria.select(root);
+        criteria.where(builder.equal(root.get("login").get("username"), username));
+
+        Query<User> query = session.createQuery(criteria);
+        User user = query.getSingleResult();
+        return user;
+    }
+
+    @Override
     public T update(T user) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(user);
@@ -74,7 +89,7 @@ public class UserDaoImpl<T extends User> implements UserDao<T> {
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
         Root<?> root = criteria.from(User.class);
         criteria.select((Selection<? extends User>) root);
-        criteria.where(builder.equal(root.get("login.username"), username));
+        criteria.where(builder.equal(root.get("login").get("username"), username));
 
         Query<User> query = session.createQuery(criteria);
         User result = query.getSingleResult();

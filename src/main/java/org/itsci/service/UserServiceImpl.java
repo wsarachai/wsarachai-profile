@@ -40,11 +40,6 @@ public class UserServiceImpl<T extends User> implements UserService<T>, UserDeta
         return userDao.findByUsernameGeneric(username);
     }
 
-    @Transactional
-    public User findByUsername(String username) {
-        return (User) findByUsernameGeneric(username);
-    }
-
     @Override
     @Transactional
     public T updateUser(T user) {
@@ -104,7 +99,8 @@ public class UserServiceImpl<T extends User> implements UserService<T>, UserDeta
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return findByUsername(username);
+        return userDao.findByUsername(username);
     }
 }

@@ -22,7 +22,7 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     private CourseDao courseDao;
 
     @Autowired
-    private SectionDao courseSectionDao;
+    private SectionDao sectionDao;
 
     @Autowired
     private UserDao userDao;
@@ -40,12 +40,6 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     @Transactional
     public Course getCourseById(Long id) {
         return courseDao.getCourseById(id);
-    }
-
-    @Override
-    @Transactional
-    public Section getCourseSection(Long id) {
-        return courseSectionDao.getCourseSection(id);
     }
 
     @Override
@@ -146,6 +140,24 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
+    public Section findSectionById(long id) {
+        return sectionDao.findById(id);
+    }
+
+    @Override
+    @Transactional
+    public void updateCourse(Course course) {
+        courseDao.update(course);
+    }
+
+    @Override
+    @Transactional
+    public void saveSection(Section section1) {
+        sectionDao.save(section1);
+    }
+
+    @Override
+    @Transactional
     public List<Course> findAllCourse() {
         return courseDao.findAll();
     }
@@ -166,12 +178,6 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     @Transactional
     public Room getRoomById(long id) {
         return roomDao.getRoomById(id);
-    }
-
-    @Override
-    @Transactional
-    public void saveSection(Section section1) {
-        courseSectionDao.save(section1);
     }
 
     @Override

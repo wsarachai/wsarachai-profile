@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/populate")
+@RequestMapping("/system")
 public class PopulateDataController {
 
     @Autowired
@@ -25,7 +25,7 @@ public class PopulateDataController {
     @Autowired
     private StudentAttenService studentAttenService;
 
-    @GetMapping("/student")
+    @GetMapping("/populate")
     public String populateStudent(Model model) {
 
         Set<Authority> authorities =studentAttenService.findAllAuthorities();
@@ -183,61 +183,87 @@ public class PopulateDataController {
             studentAttenService.updateUser(teacher1);
         }
 
-        Section section1 = new Section();
-        section1.setCourse(studentAttenService.getCourseById(1l));
-        section1.setGroupNumber("01");
-        section1.setLecDay(EDayOfWeek.WEDNESDAY);
-        section1.setStartLectureTime("8:30");
-        section1.setEndLectureTime("11:30");
-        section1.setLabDay(EDayOfWeek.WEDNESDAY);
-        section1.setStartLabTime("8:30");
-        section1.setEndLabTime("11:30");
-        section1.setLabRoom(studentAttenService.getRoomById(2l));
-        section1.setLecRoom(studentAttenService.getRoomById(2l));
-        section1.setNumberOfSeat(42);
-        studentAttenService.saveSection(section1);
+        Section section1 = studentAttenService.findSectionById(1l);
+        if (section1 == null) {
+            section1 = new Section();
+            section1.setCourse(studentAttenService.getCourseById(1l));
+            section1.setGroupNumber("01");
+            section1.setLecDay(EDayOfWeek.WEDNESDAY);
+            section1.setStartLectureTime("8:30");
+            section1.setEndLectureTime("11:30");
+            section1.setLabDay(EDayOfWeek.WEDNESDAY);
+            section1.setStartLabTime("8:30");
+            section1.setEndLabTime("11:30");
+            section1.setLabRoom(studentAttenService.getRoomById(2l));
+            section1.setLecRoom(studentAttenService.getRoomById(2l));
+            section1.setNumberOfSeat(42);
+            studentAttenService.saveSection(section1);
+        }
 
-        Section section2 = new Section();
-        section2.setCourse(studentAttenService.getCourseById(3l));
-        section2.setGroupNumber("01");
-        section2.setLecDay(EDayOfWeek.WEDNESDAY);
-        section2.setStartLectureTime("8:30");
-        section2.setEndLectureTime("11:30");
-        section2.setLabDay(EDayOfWeek.WEDNESDAY);
-        section2.setStartLabTime("8:30");
-        section2.setEndLabTime("11:30");
-        section2.setLabRoom(studentAttenService.getRoomById(2l));
-        section2.setLecRoom(studentAttenService.getRoomById(2l));
-        section2.setNumberOfSeat(50);
-        studentAttenService.saveSection(section2);
+        Section section2 = studentAttenService.findSectionById(2l);
+        if (section2 == null) {
+            section2 = new Section();
+            section2.setCourse(studentAttenService.getCourseById(3l));
+            section2.setGroupNumber("01");
+            section2.setLecDay(EDayOfWeek.WEDNESDAY);
+            section2.setStartLectureTime("8:30");
+            section2.setEndLectureTime("11:30");
+            section2.setLabDay(EDayOfWeek.WEDNESDAY);
+            section2.setStartLabTime("8:30");
+            section2.setEndLabTime("11:30");
+            section2.setLabRoom(studentAttenService.getRoomById(2l));
+            section2.setLecRoom(studentAttenService.getRoomById(2l));
+            section2.setNumberOfSeat(50);
+            studentAttenService.saveSection(section2);
+        }
 
-        Section section3 = new Section();
-        section3.setCourse(studentAttenService.getCourseById(2l));
-        section3.setGroupNumber("01");
-        section3.setLecDay(EDayOfWeek.WEDNESDAY);
-        section3.setStartLectureTime("12:00");
-        section3.setEndLectureTime("14:00");
-        section3.setLabDay(EDayOfWeek.MONDAY);
-        section3.setStartLabTime("09:00");
-        section3.setEndLabTime("12:00");
-        section3.setLabRoom(studentAttenService.getRoomById(2l));
-        section3.setLecRoom(studentAttenService.getRoomById(1l));
-        section3.setNumberOfSeat(61);
-        studentAttenService.saveSection(section3);
+        Section section3 = studentAttenService.findSectionById(3l);
+        if (section3 == null) {
+            section3 = new Section();
+            section3.setCourse(studentAttenService.getCourseById(2l));
+            section3.setGroupNumber("01");
+            section3.setLecDay(EDayOfWeek.WEDNESDAY);
+            section3.setStartLectureTime("12:00");
+            section3.setEndLectureTime("14:00");
+            section3.setLabDay(EDayOfWeek.MONDAY);
+            section3.setStartLabTime("09:00");
+            section3.setEndLabTime("12:00");
+            section3.setLabRoom(studentAttenService.getRoomById(2l));
+            section3.setLecRoom(studentAttenService.getRoomById(1l));
+            section3.setNumberOfSeat(61);
+            studentAttenService.saveSection(section3);
+        }
 
-        Section section4 = new Section();
-        section4.setCourse(studentAttenService.getCourseById(2l));
-        section4.setGroupNumber("02");
-        section4.setLecDay(EDayOfWeek.WEDNESDAY);
-        section4.setStartLectureTime("12:00");
-        section4.setEndLectureTime("14:00");
-        section4.setLabDay(EDayOfWeek.THURSDAY);
-        section4.setStartLabTime("13:00");
-        section4.setEndLabTime("16:00");
-        section4.setLabRoom(studentAttenService.getRoomById(2l));
-        section4.setLecRoom(studentAttenService.getRoomById(1l));
-        section4.setNumberOfSeat(51);
-        studentAttenService.saveSection(section4);
+        Section section4 = studentAttenService.findSectionById(4l);
+        if (section4 == null) {
+            section4 = new Section();
+            section4.setCourse(studentAttenService.getCourseById(2l));
+            section4.setGroupNumber("02");
+            section4.setLecDay(EDayOfWeek.WEDNESDAY);
+            section4.setStartLectureTime("12:00");
+            section4.setEndLectureTime("14:00");
+            section4.setLabDay(EDayOfWeek.THURSDAY);
+            section4.setStartLabTime("13:00");
+            section4.setEndLabTime("16:00");
+            section4.setLabRoom(studentAttenService.getRoomById(2l));
+            section4.setLecRoom(studentAttenService.getRoomById(1l));
+            section4.setNumberOfSeat(51);
+            studentAttenService.saveSection(section4);
+        }
+
+        Course course1 = studentAttenService.getCourseById(1l);
+        course1.getSections().add(section1);
+        studentAttenService.updateCourse(course1);
+
+        Course course3 = studentAttenService.getCourseById(3l);
+        course3.getSections().add(section2);
+        studentAttenService.updateCourse(course3);
+
+        Course course2 = studentAttenService.getCourseById(2l);
+        course2.getSections().add(section3);
+        course2.getSections().add(section4);
+        studentAttenService.updateCourse(course2);
+
 
 //        List<TeachingClass> teachingClasses = studentAttenService.findAllTeachingClass();
 //

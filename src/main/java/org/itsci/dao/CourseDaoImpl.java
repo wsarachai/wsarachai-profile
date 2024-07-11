@@ -26,10 +26,9 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public Course update(Course course) {
+    public void update(Course course) {
         Session session = sessionFactory.getCurrentSession();
-        course = (Course) session.merge(course);
-        return course;
+        session.saveOrUpdate(course);
     }
 
     @Override

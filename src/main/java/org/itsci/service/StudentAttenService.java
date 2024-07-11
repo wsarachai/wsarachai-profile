@@ -8,8 +8,6 @@ import java.util.Set;
 public interface StudentAttenService {
     Course getCourseById(Long id);
 
-    Section getCourseSection(Long id);
-
     List<Enrollment> findStudentByCourseSectionId(Long id);
 
     Student getStudent(String studentId);
@@ -57,4 +55,8 @@ public interface StudentAttenService {
     Teacher findTeacherById(Long id);
 
     void updateUser(User user);
+
+    Section findSectionById(long id);
+
+    void updateCourse(Course course);
 }

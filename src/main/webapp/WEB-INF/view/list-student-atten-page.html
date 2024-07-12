@@ -71,7 +71,7 @@
                         <div class="divTableCell" th:text="${csReg.getEnrollment().getStudent().getStudentId()}"></div>
                         <div class="divTableCell" th:text="${csReg.getEnrollment().getStudent().getPrename()+' '+csReg.getEnrollment().getStudent().getFirstName()+' '+csReg.getEnrollment().getStudent().getLastName()}"></div>
                         <div class="divTableCell">
-                            <a th:if="${allowAtten}"
+                            <a th:if="${isInTimeForLecAttend}"
                                th:href="@{'/pub/student/atten/'+${courseId}+'/'+${csReg.getEnrollment().getId()}+'/lec/'+${currentWeek}}"
                                th:text="#{page.student.login.atten}"></a>
                         </div>
@@ -84,7 +84,7 @@
                             <p th:case="*" th:text="${csReg.getAttenLec()[displayWeek]}"></p>
                         </div>
                         <div class="divTableCell">
-                            <a th:if="${allowAtten}"
+                            <a th:if="${isInTimeForLabAttend}"
                                th:href="@{'/pub/student/atten/'+${courseId}+'/'+${csReg.getEnrollment().getId()}+'/lab/'+${currentWeek}}"
                                th:text="#{page.student.login.atten}"></a>
                         </div>

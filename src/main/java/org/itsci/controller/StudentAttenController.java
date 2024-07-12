@@ -29,7 +29,7 @@ public class StudentAttenController {
 
 //    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
 
-    private String attentionPage(Model model, String courseId, String secionId, int week) {
+    private String attentionPage(Model model, String courseId, String secionId, int userSelectedWeek) {
         Course course = studentAttenService.getCourseById(Long.parseLong(courseId));
         List<Enrollment> enrollments = studentAttenService.findEnrollmentBySectionId(Long.parseLong(secionId));
 
@@ -45,15 +45,24 @@ public class StudentAttenController {
 
         int currentWeek = DateUtils.getCurrentWeekSemester(course);
         int displayWeek = currentWeek;
-        if (week >= 0) {
-            displayWeek = week;
-        }
-        boolean allowAtten = false;
-        if (displayWeek == currentWeek) {
-            allowAtten = true;
+        boolean allowAttend = false;
+
+        // If user selected a week, display that week
+        if (userSelectedWeek >= 0) {
+            displayWeek = userSelectedWeek;
         }
 
-        model.addAttribute("allowAtten", allowAtten);
+        // If user display week is the current week, allow attendance
+        if (displayWeek == currentWeek) {
+            allowAttend = true;
+        }
+
+        // Check if user is allowed to attend
+        boolean isInTimeForLecAttend = allowAttend && DateUtils.isInTimeForLecAttend(section);
+        boolean isInTimeForLabAttend = allowAttend && DateUtils.isInTimeForLabAttend(section);
+
+        model.addAttribute("isInTimeForLecAttend", isInTimeForLecAttend);
+        model.addAttribute("isInTimeForLabAttend", isInTimeForLabAttend);
         model.addAttribute("currentWeek", currentWeek);
         model.addAttribute("displayWeek", displayWeek);
         model.addAttribute("courseId", courseId);
@@ -77,10 +86,10 @@ public class StudentAttenController {
                         }
                     }
                     if (!found) {
-                        attenData.getAttenLec()[i] = EAttendanceStatus.NA;
+                        attenData.getAttenLec()[i] = EAttendanceStatus.ABSENT;
                     }
                 } catch (Exception ex) {
-                    attenData.getAttenLec()[i] = EAttendanceStatus.NA;
+                    attenData.getAttenLec()[i] = EAttendanceStatus.ABSENT;
                 }
 
                 try {
@@ -93,10 +102,10 @@ public class StudentAttenController {
                         }
                     }
                     if (!found) {
-                        attenData.getAttenLab()[i] = EAttendanceStatus.NA;
+                        attenData.getAttenLab()[i] = EAttendanceStatus.ABSENT;
                     }
                 } catch (Exception ex) {
-                    attenData.getAttenLab()[i] = EAttendanceStatus.NA;
+                    attenData.getAttenLab()[i] = EAttendanceStatus.ABSENT;
                 }
             }
             attenDatas.add(attenData);
@@ -147,29 +156,41 @@ public class StudentAttenController {
         Byte[] byteObjects2 = this.convertToBytes(image2);
         Enrollment enrollment = studentAttenService.getEnrollmentById(Long.parseLong(enrollmentId));
         Attendance attendance = null;
+
         if ("lec".equals(type)) {
-            attendance = this.findAttendanceByWeek(enrollment.getLecAtten(), week);
-            if (attendance == null) {
-                attendance = new Attendance();
-                attendance.setWeekNo(Integer.parseInt(week));
-//                attendance.setEnrollment(enrollment);
-                enrollment.getLecAtten().add(attendance);
+            EAttendanceStatus status = DateUtils.checkAttendanceStatus(enrollment.getSection().getStartLectureTime(), enrollment.getSection().getEndLectureTime());
+            if (status == EAttendanceStatus.ATTENDED || status == EAttendanceStatus.LATE) {
+                attendance = this.findAttendanceByWeek(enrollment.getLecAtten(), week);
+                if (attendance == null) {
+                    attendance = new Attendance();
+                    attendance.setWeekNo(Integer.parseInt(week));
+                    enrollment.getLecAtten().add(attendance);
+                }
+                attendance.setLatitude(Double.parseDouble(latitude));
+                attendance.setLongitude(Double.parseDouble(longitude));
+                attendance.setStatus(status);
+                attendance.setStudentImage(byteObjects1);
+                attendance.setCodeImage(byteObjects2);
+                studentAttenService.saveEnrollment(enrollment);
             }
         } else if ("lab".equals(type)) {
-            attendance = this.findAttendanceByWeek(enrollment.getLabAtten(), week);
-            if (attendance == null) {
-                attendance = new Attendance();
-                attendance.setWeekNo(Integer.parseInt(week));
-//                attendance.setEnrollment(enrollment);
-                enrollment.getLabAtten().add(attendance);
+            EAttendanceStatus status = DateUtils.checkAttendanceStatus(enrollment.getSection().getStartLabTime(), enrollment.getSection().getEndLabTime());
+            if (status == EAttendanceStatus.ATTENDED || status == EAttendanceStatus.LATE) {
+                attendance = this.findAttendanceByWeek(enrollment.getLabAtten(), week);
+                if (attendance == null) {
+                    attendance = new Attendance();
+                    attendance.setWeekNo(Integer.parseInt(week));
+                    enrollment.getLabAtten().add(attendance);
+                }
+                attendance.setLatitude(Double.parseDouble(latitude));
+                attendance.setLongitude(Double.parseDouble(longitude));
+                attendance.setStatus(status);
+                attendance.setStudentImage(byteObjects1);
+                attendance.setCodeImage(byteObjects2);
+                studentAttenService.saveEnrollment(enrollment);
             }
         }
-        attendance.setLatitude(Double.parseDouble(latitude));
-        attendance.setLongitude(Double.parseDouble(longitude));
-        attendance.setStatus(EAttendanceStatus.ATTENDED);
-        attendance.setStudentImage(byteObjects1);
-        attendance.setCodeImage(byteObjects2);
-        studentAttenService.saveEnrollment(enrollment);
+
         return "redirect:/pub/student/atten/" + enrollment.getSection().getCourse().getId() + "/" + enrollment.getSection().getId();
     }
 

@@ -68,11 +68,11 @@
                 <div class="divTableBody">
                     <div class="divTableRow" th:each="csReg, i : ${attenDatas}">
                         <div class="divTableCell" th:text="${i.index+1}"></div>
-                        <div class="divTableCell" th:text="${csReg.getStudent().getStudentId()}"></div>
-                        <div class="divTableCell" th:text="${csReg.getStudent().getPrename()+' '+csReg.getStudent().getFirstName()+' '+csReg.getStudent().getLastName()}"></div>
+                        <div class="divTableCell" th:text="${csReg.getEnrollment().getStudent().getStudentId()}"></div>
+                        <div class="divTableCell" th:text="${csReg.getEnrollment().getStudent().getPrename()+' '+csReg.getEnrollment().getStudent().getFirstName()+' '+csReg.getEnrollment().getStudent().getLastName()}"></div>
                         <div class="divTableCell">
                             <a th:if="${allowAtten}"
-                               th:href="@{'/pub/student/atten/'+${courseId}+'/'+${secionId}+'/'+${csReg.getStudent().getId()}+'/lec/'+${currentWeek}}"
+                               th:href="@{'/pub/student/atten/'+${courseId}+'/'+${csReg.getEnrollment().getId()}+'/lec/'+${currentWeek}}"
                                th:text="#{page.student.login.atten}"></a>
                         </div>
                         <div class="divTableCell" th:switch="${csReg.getAttenLec()[displayWeek].name()}">
@@ -85,7 +85,7 @@
                         </div>
                         <div class="divTableCell">
                             <a th:if="${allowAtten}"
-                               th:href="@{'/pub/student/atten/'+${courseId}+'/'+${secionId}+'/'+${csReg.getStudent().getId()}+'/lab/'+${currentWeek}}"
+                               th:href="@{'/pub/student/atten/'+${courseId}+'/'+${csReg.getEnrollment().getId()}+'/lab/'+${currentWeek}}"
                                th:text="#{page.student.login.atten}"></a>
                         </div>
                         <div class="divTableCell" th:switch="${csReg.getAttenLab()[displayWeek].name()}">

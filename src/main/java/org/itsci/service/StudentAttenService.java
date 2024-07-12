@@ -14,7 +14,7 @@ public interface StudentAttenService {
 
     void saveEnrollment(Enrollment enrollment);
 
-    Enrollment findCourseSectionRegistrationBySectionId(String secionId);
+    Enrollment findSectionBySectionId(String secionId);
 
     void saveAttendance(Attendance attendance);
 
@@ -57,4 +57,6 @@ public interface StudentAttenService {
     Section findSectionById(long id);
 
     void updateCourse(Course course);
+
+    Enrollment getEnrollmentById(long id);
 }

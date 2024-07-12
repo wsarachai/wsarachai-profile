@@ -8,4 +8,6 @@ public interface EnrollmentDao {
     List<Enrollment> findBySectionId(Long sectionId);
 
     void save(Enrollment courseSectionRegistration);
+
+    Enrollment findById(long id);
 }

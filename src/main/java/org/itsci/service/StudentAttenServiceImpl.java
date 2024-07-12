@@ -36,6 +36,9 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     @Autowired
     private EnrollmentDao enrollmentDao;
 
+    @Autowired
+    private AttendanceDao attendanceDao;
+
     @Override
     @Transactional
     public Course getCourseById(Long id) {
@@ -61,15 +64,14 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     }
 
     @Override
-    @Transactional
-    public Enrollment findCourseSectionRegistrationBySectionId(String secionId) {
+    public Enrollment findSectionBySectionId(String secionId) {
         return null;
     }
 
     @Override
     @Transactional
     public void saveAttendance(Attendance attendance) {
-
+        attendanceDao.save(attendance);
     }
 
     @Override
@@ -148,6 +150,12 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     @Transactional
     public void updateCourse(Course course) {
         courseDao.update(course);
+    }
+
+    @Override
+    @Transactional
+    public Enrollment getEnrollmentById(long id) {
+        return enrollmentDao.findById(id);
     }
 
     @Override

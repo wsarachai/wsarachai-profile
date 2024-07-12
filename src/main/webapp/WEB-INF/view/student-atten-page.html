@@ -26,24 +26,50 @@
                         <p th:text="#{page.location}">: </p>
                         <p th:text="#{page.date}">:</p>
                         <p th:text="#{page.student.atten.time}"></p>
-                        <p th:text="#{page.time}">:</p>
                     </div>
                     <div class="item2">
                         <p th:text="${course.getSubject().getCode() + ' ' + course.getSubject().getThaiName()}"></p>
-                        <p th:text="${section.getGroupNumber()}"></p>
+                        <p th:text="${enrollment.getSection().getGroupNumber()}"></p>
                         <p th:text="${course.getSemester()}"></p>
-                        <p th:text="${student.getStudentId()}"></p>
-                        <p th:text="${student.getPrename()+' '+student.getFirstName()+' '+student.getLastName()}"></p>
+                        <p th:text="${enrollment.getStudent().getStudentId()}"></p>
+                        <p th:text="${enrollment.getStudent().getPrename()+' '+enrollment.getStudent().getFirstName()+' '+enrollment.getStudent().getLastName()}"></p>
                         <p id="location"></p>
-                        <p id="currentDate"></p>
+                        <p>
+                            <span id="currentDate"></span>
+                            <span th:text="#{page.time}+' '"></span><span id="currentTime"></span>
+                        </p>
                         <p>
                             <span th:switch="${type}">
-                                <span th:case="lec" th:text="#{section.lec}+' '+${section.getStartLectureTime()+'-'+section.getEndLectureTime()}"></span>
-                                <span th:case="lab" th:text="#{section.lab}+' '+${section.getStartLabTime()+'-'+section.getEndLabTime()}"></span>
+                                <span th:case="lec">
+                                    <span th:text="#{section.lec}"></span>
+                                    <span th:switch="${enrollment.getSection().getLecDay().name()}">
+                                        <span th:case="'MONDAY'" th:text="#{day.MONDAY}"></span>
+                                        <span th:case="'TUESDAY'" th:text="#{day.TUESDAY}"></span>
+                                        <span th:case="'WEDNESDAY'" th:text="#{day.WEDNESDAY}"></span>
+                                        <span th:case="'THURSDAY'" th:text="#{day.THURSDAY}"></span>
+                                        <span th:case="'FRIDAY'" th:text="#{day.FRIDAY}"></span>
+                                        <span th:case="'SATURDAY'" th:text="#{day.SATURDAY}"></span>
+                                        <span th:case="'SUNDAY'" th:text="#{day.SUNDAY}"></span>
+                                    </span>
+                                    <span th:text="${enrollment.getSection().getStartLectureTime()+'-'+enrollment.getSection().getEndLectureTime()}"></span>
+                                </span>
+                                    <span th:case="lab">
+                                        <span th:text="#{section.lab}"></span>
+                                        <span th:switch="${enrollment.getSection().getLabDay().name()}">
+                                            <span th:case="'MONDAY'" th:text="#{day.MONDAY}"></span>
+                                            <span th:case="'TUESDAY'" th:text="#{day.TUESDAY}"></span>
+                                            <span th:case="'WEDNESDAY'" th:text="#{day.WEDNESDAY}"></span>
+                                            <span th:case="'THURSDAY'" th:text="#{day.THURSDAY}"></span>
+                                            <span th:case="'FRIDAY'" th:text="#{day.FRIDAY}"></span>
+                                            <span th:case="'SATURDAY'" th:text="#{day.SATURDAY}"></span>
+                                            <span th:case="'SUNDAY'" th:text="#{day.SUNDAY}">
+                                        </span>
+                                        <span th:text="${enrollment.getSection().getStartLabTime()+'-'+enrollment.getSection().getEndLabTime()}"></span>
+                                    </span>
+                                </span>
                                 <span th:case="*" th:text="${type}"></span>
                             </span>
                         </p>
-                        <p id="currentTime"></p>
                     </div>
                 </div>
                 <div class="flex-container-row">
@@ -72,8 +98,7 @@
                 <div class="flex-container-row">
                     <div class="item5">
                         <form th:method="post" th:action="@{/pub/student/atten/doatten}" enctype="multipart/form-data">
-                            <input type="hidden" th:name="secionId" th:value="${secionId}">
-                            <input type="hidden" th:name="secionId" th:value="${secionId}">
+                            <input type="hidden" th:name="enrollmentId" th:value="${enrollment.getId()}">
                             <input type="hidden" th:name="type" th:value="${type}">
                             <input type="hidden" th:name="week" th:value="${week}">
                             <input type="file" id="inputImage1" th:name="image1" accept="image/*" style="display: none">

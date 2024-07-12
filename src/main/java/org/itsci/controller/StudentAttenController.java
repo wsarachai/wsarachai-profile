@@ -63,18 +63,38 @@ public class StudentAttenController {
 
         List<AttenData> attenDatas = new ArrayList<>();
         for (Enrollment enrollment : enrollments) {
-            AttenData attenData = new AttenData(enrollment.getStudent(), "0");
+            AttenData attenData = new AttenData(enrollment);
             List<Attendance> lecAttendances = new ArrayList<>(enrollment.getLecAtten());
             List<Attendance> labAttendances = new ArrayList<>(enrollment.getLabAtten());
             for (int i=0; i<15; i++) {
                 try {
-                    attenData.getAttenLec()[i] = lecAttendances.get(i).getStatus();
+                    boolean found = false;
+                    for (Attendance att : lecAttendances) {
+                        if (att.getWeekNo() == i) {
+                            attenData.getAttenLec()[i] = att.getStatus();
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        attenData.getAttenLec()[i] = EAttendanceStatus.NA;
+                    }
                 } catch (Exception ex) {
                     attenData.getAttenLec()[i] = EAttendanceStatus.NA;
                 }
 
                 try {
-                    attenData.getAttenLab()[i] = labAttendances.get(i).getStatus();
+                    boolean found = false;
+                    for (Attendance att : labAttendances) {
+                        if (att.getWeekNo() == i) {
+                            attenData.getAttenLab()[i] = att.getStatus();
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        attenData.getAttenLab()[i] = EAttendanceStatus.NA;
+                    }
                 } catch (Exception ex) {
                     attenData.getAttenLab()[i] = EAttendanceStatus.NA;
                 }
@@ -96,29 +116,26 @@ public class StudentAttenController {
         return attentionPage(model, courseId, secionId, Integer.parseInt(week));
     }
 
-    @GetMapping("/atten/{courseId}/{secionId}/{studentId}/{type}/{week}")
+    @GetMapping("/atten/{courseId}/{enrollmentId}/{type}/{week}")
     public String attentionStudentPage(Model model,
                                        @PathVariable String courseId,
-                                       @PathVariable String secionId,
-                                       @PathVariable String studentId,
+                                       @PathVariable String enrollmentId,
                                        @PathVariable String type,
                                        @PathVariable String week) {
         Course course = studentAttenService.getCourseById(Long.parseLong(courseId));
-        Student student = studentAttenService.getStudent(studentId);
-        Section section = studentAttenService.findSectionById(Long.parseLong(secionId));
+        Enrollment enrollment = studentAttenService.getEnrollmentById(Long.parseLong(enrollmentId));
 
         model.addAttribute("type", type);
         model.addAttribute("week", week);
         model.addAttribute("course", course);
-        model.addAttribute("student", student);
-        model.addAttribute("section", section);
+        model.addAttribute("enrollment", enrollment);
 
         return "student-atten-page";
     }
 
     @PostMapping("/atten/doatten")
     public String doAtten(Model model,
-            @RequestParam("secionId") String secionId,
+            @RequestParam("enrollmentId") String enrollmentId,
             @RequestParam("type") String type,
             @RequestParam("week") String week,
             @RequestParam("image1") MultipartFile image1,
@@ -126,25 +143,30 @@ public class StudentAttenController {
     ) throws IOException {
         Byte[] byteObjects1 = this.convertToBytes(image1);
         Byte[] byteObjects2 = this.convertToBytes(image2);
-        Enrollment csr = studentAttenService.findCourseSectionRegistrationBySectionId(secionId);
+        Enrollment enrollment = studentAttenService.getEnrollmentById(Long.parseLong(enrollmentId));
         Attendance attendance = null;
         if ("lec".equals(type)) {
-            attendance = this.findAttendanceByWeek(csr.getLecAtten(), week);
+            attendance = this.findAttendanceByWeek(enrollment.getLecAtten(), week);
+            if (attendance == null) {
+                attendance = new Attendance();
+                attendance.setWeekNo(Integer.parseInt(week));
+//                attendance.setEnrollment(enrollment);
+                enrollment.getLecAtten().add(attendance);
+            }
         } else if ("lab".equals(type)) {
-            attendance = this.findAttendanceByWeek(csr.getLabAtten(), week);
+            attendance = this.findAttendanceByWeek(enrollment.getLabAtten(), week);
+            if (attendance == null) {
+                attendance = new Attendance();
+                attendance.setWeekNo(Integer.parseInt(week));
+//                attendance.setEnrollment(enrollment);
+                enrollment.getLabAtten().add(attendance);
+            }
         }
         attendance.setStatus(EAttendanceStatus.ATTENDED);
         attendance.setStudentImage(byteObjects1);
         attendance.setCodeImage(byteObjects2);
-        studentAttenService.saveAttendance(attendance);
-
-//        StringBuilder fileNames = new StringBuilder();
-//        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, image1.getOriginalFilename());
-//        fileNames.append(image1.getOriginalFilename());
-//        Files.write(fileNameAndPath, image1.getBytes());
-//        model.addAttribute("msg", "Uploaded images: " + fileNames.toString());
-
-        return "index";
+        studentAttenService.saveEnrollment(enrollment);
+        return "redirect:/pub/student/atten/" + enrollment.getSection().getCourse().getId() + "/" + enrollment.getSection().getId();
     }
 
     private Attendance findAttendanceByWeek(SortedSet<Attendance> attendances, String week) {

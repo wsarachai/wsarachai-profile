@@ -2,6 +2,7 @@ package org.itsci.utils;
 
 import org.itsci.model.Course;
 import org.itsci.model.EAttendanceStatus;
+import org.itsci.model.EDayOfWeek;
 import org.itsci.model.Section;
 
 import java.text.DateFormat;
@@ -44,7 +45,7 @@ public class DateUtils {
         int endHour = Integer.parseInt(times[0]);
         int endMinute = Integer.parseInt(times[1]);
 
-        return checkForInTime(startHour, startMinute, endHour, endMinute);
+        return checkForInTime(startHour, startMinute, endHour, endMinute, section.getLecDay());
     }
 
     public static boolean isInTimeForLabAttend(Section section) {
@@ -56,11 +57,19 @@ public class DateUtils {
         int endHour = Integer.parseInt(times[0]);
         int endMinute = Integer.parseInt(times[1]);
 
-        return checkForInTime(startHour, startMinute, endHour, endMinute);
+        return checkForInTime(startHour, startMinute, endHour, endMinute, section.getLabDay());
     }
 
-    private static boolean checkForInTime(int startHour, int startMinute, int endHour, int endMinute) {
+    private static boolean checkForInTime(int startHour, int startMinute, int endHour, int endMinute, EDayOfWeek dayOfWeek) {
         Calendar curCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
+
+        // Check if today is the day of the week for the section
+        int dayOfWeekNumber = EDayOfWeek.getDayOfWeekNumber(dayOfWeek);
+        int curDayOfWeek = curCal.get(Calendar.DAY_OF_WEEK);
+        if (curDayOfWeek != dayOfWeekNumber) {
+            return false;
+        }
+
         Calendar startCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
         Calendar endCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
 

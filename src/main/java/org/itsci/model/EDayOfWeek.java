@@ -30,6 +30,27 @@ public enum EDayOfWeek {
         return dayOfWeeks;
     }
 
+    public static int getDayOfWeekNumber(EDayOfWeek dayOfWeek) {
+        switch (dayOfWeek) {
+            case MONDAY:
+                return 2;
+            case TUESDAY:
+                return 3;
+            case WEDNESDAY:
+                return 4;
+            case THURSDAY:
+                return 5;
+            case FRIDAY:
+                return 6;
+            case SATURDAY:
+                return 7;
+            case SUNDAY:
+                return 1;
+            default:
+                return 0;
+        }
+    }
+
     public static Object getAuthorityOptions(ResourceBundleMessageSource messageSource, Locale locale) {
         List<String> dayOfWeeks = getDayOfWeeks();
         Map<String, String> dayOfWeekOptions = new HashMap<>();

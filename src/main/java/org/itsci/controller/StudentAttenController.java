@@ -27,8 +27,6 @@ public class StudentAttenController {
     @Autowired
     private StudentAttenService studentAttenService;
 
-//    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
-
     private String attentionPage(Model model, String courseId, String secionId, int userSelectedWeek) {
         Course course = studentAttenService.getCourseById(Long.parseLong(courseId));
         List<Enrollment> enrollments = studentAttenService.findEnrollmentBySectionId(Long.parseLong(secionId));

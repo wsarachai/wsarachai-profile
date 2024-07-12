@@ -81,6 +81,7 @@
                             <img th:case="2" th:src="@{/assets/images/late.png}"/>
                             <img th:case="3" th:src="@{/assets/images/letters.png}"/>
                             <img th:case="4" th:src="@{/assets/images/atten.png}"/>
+                            <p th:case="*" th:text="${csReg.getAttenLec()[displayWeek]}"></p>
                         </div>
                         <div class="divTableCell">
                             <a th:if="${allowAtten}"
@@ -93,6 +94,7 @@
                             <img th:case="2" th:src="@{/assets/images/late.png}"/>
                             <img th:case="3" th:src="@{/assets/images/letters.png}"/>
                             <img th:case="4" th:src="@{/assets/images/atten.png}"/>
+                            <p th:case="*" th:text="${csReg.getAttenLab()[displayWeek]}"></p>
                         </div>
                     </div>
                 </div>

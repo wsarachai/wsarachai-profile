@@ -64,12 +64,21 @@ public class StudentAttenController {
         List<AttenData> attenDatas = new ArrayList<>();
         for (Enrollment enrollment : enrollments) {
             AttenData attenData = new AttenData(enrollment.getStudent(), "0");
-            enrollment.getLecAtten().forEach(lecAtten -> {
-                attenData.getAttenLec()[lecAtten.getWeekNo()-1] = lecAtten.getStatus().toString();
-            });
-            enrollment.getLabAtten().forEach(labAtten -> {
-                attenData.getAttenLab()[labAtten.getWeekNo()-1] = labAtten.getStatus().toString();
-            });
+            List<Attendance> lecAttendances = new ArrayList<>(enrollment.getLecAtten());
+            List<Attendance> labAttendances = new ArrayList<>(enrollment.getLabAtten());
+            for (int i=0; i<15; i++) {
+                try {
+                    attenData.getAttenLec()[i] = lecAttendances.get(i).getStatus().toString();
+                } catch (Exception ex) {
+                    attenData.getAttenLec()[i] = EAttendanceStatus.NA.toString();
+                }
+
+                try {
+                    attenData.getAttenLab()[i] = labAttendances.get(i).getStatus().toString();
+                } catch (Exception ex) {
+                    attenData.getAttenLab()[i] = EAttendanceStatus.NA.toString();
+                }
+            }
             attenDatas.add(attenData);
         }
         model.addAttribute("attenDatas", attenDatas);
@@ -96,13 +105,13 @@ public class StudentAttenController {
                                        @PathVariable String week) {
         Course course = studentAttenService.getCourseById(Long.parseLong(courseId));
         Student student = studentAttenService.getStudent(studentId);
-        Section courseSection = studentAttenService.findSectionById(Long.parseLong(secionId));
+        Section section = studentAttenService.findSectionById(Long.parseLong(secionId));
 
         model.addAttribute("type", type);
         model.addAttribute("week", week);
         model.addAttribute("course", course);
         model.addAttribute("student", student);
-        model.addAttribute("section", courseSection);
+        model.addAttribute("section", section);
 
         return "student-atten-page";
     }

@@ -151,6 +151,6 @@ public class SystemController {
             systemService.saveEnrollment(enrollment);
         }
 
-        return "system/import-student";
+        return "redirect:/system/student/import";
     }
 }

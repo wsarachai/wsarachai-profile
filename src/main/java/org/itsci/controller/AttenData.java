@@ -1,19 +1,20 @@
 package org.itsci.controller;
 
+import org.itsci.model.EAttendanceStatus;
 import org.itsci.model.Student;
 
 public class AttenData {
     private Student student;
     private String status;
-    private String [] attenLec = new String[15];
-    private String [] attenLab = new String[15];
+    private EAttendanceStatus[] attenLec = new EAttendanceStatus[15];
+    private EAttendanceStatus [] attenLab = new EAttendanceStatus[15];
 
     public AttenData(Student student, String status) {
         this.student = student;
         this.status = status;
         for (int i = 0; i < 15; i++) {
-            attenLec[i] = "0";
-            attenLab[i] = "0";
+            attenLec[i] = EAttendanceStatus.NA;
+            attenLab[i] = EAttendanceStatus.NA;
         }
     }
 
@@ -33,19 +34,19 @@ public class AttenData {
         this.status = status;
     }
 
-    public String[] getAttenLec() {
+    public EAttendanceStatus[] getAttenLec() {
         return attenLec;
     }
 
-    public void setAttenLec(String[] attenLec) {
+    public void setAttenLec(EAttendanceStatus[] attenLec) {
         this.attenLec = attenLec;
     }
 
-    public String[] getAttenLab() {
+    public EAttendanceStatus[] getAttenLab() {
         return attenLab;
     }
 
-    public void setAttenLab(String[] attenLab) {
+    public void setAttenLab(EAttendanceStatus[] attenLab) {
         this.attenLab = attenLab;
     }
 }

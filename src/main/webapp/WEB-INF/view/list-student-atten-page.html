@@ -75,12 +75,12 @@
                                th:href="@{'/pub/student/atten/'+${courseId}+'/'+${secionId}+'/'+${csReg.getStudent().getId()}+'/lec/'+${currentWeek}}"
                                th:text="#{page.student.login.atten}"></a>
                         </div>
-                        <div class="divTableCell" th:switch="${csReg.getAttenLec()[displayWeek]}">
-                            <img th:case="0" th:src="@{/assets/images/na.png}"/>
-                            <img th:case="1" th:src="@{/assets/images/absent.png}"/>
-                            <img th:case="2" th:src="@{/assets/images/late.png}"/>
-                            <img th:case="3" th:src="@{/assets/images/letters.png}"/>
-                            <img th:case="4" th:src="@{/assets/images/atten.png}"/>
+                        <div class="divTableCell" th:switch="${csReg.getAttenLec()[displayWeek].name()}">
+                            <img th:case="'NA'" th:src="@{/assets/images/na.png}"/>
+                            <img th:case="'ABSENT'" th:src="@{/assets/images/absent.png}"/>
+                            <img th:case="'LATE'" th:src="@{/assets/images/late.png}"/>
+                            <img th:case="'LETTERS'" th:src="@{/assets/images/letters.png}"/>
+                            <img th:case="'ATTENDED'" th:src="@{/assets/images/atten.png}"/>
                             <p th:case="*" th:text="${csReg.getAttenLec()[displayWeek]}"></p>
                         </div>
                         <div class="divTableCell">
@@ -88,12 +88,12 @@
                                th:href="@{'/pub/student/atten/'+${courseId}+'/'+${secionId}+'/'+${csReg.getStudent().getId()}+'/lab/'+${currentWeek}}"
                                th:text="#{page.student.login.atten}"></a>
                         </div>
-                        <div class="divTableCell" th:switch="${csReg.getAttenLab()[displayWeek]}">
-                            <img th:case="0" th:src="@{/assets/images/na.png}"/>
-                            <img th:case="1" th:src="@{/assets/images/absent.png}"/>
-                            <img th:case="2" th:src="@{/assets/images/late.png}"/>
-                            <img th:case="3" th:src="@{/assets/images/letters.png}"/>
-                            <img th:case="4" th:src="@{/assets/images/atten.png}"/>
+                        <div class="divTableCell" th:switch="${csReg.getAttenLab()[displayWeek].name()}">
+                            <img th:case="'NA'" th:src="@{/assets/images/na.png}"/>
+                            <img th:case="'ABSENT'" th:src="@{/assets/images/absent.png}"/>
+                            <img th:case="'LATE'" th:src="@{/assets/images/late.png}"/>
+                            <img th:case="'LETTERS'" th:src="@{/assets/images/letters.png}"/>
+                            <img th:case="'ATTENDED'" th:src="@{/assets/images/atten.png}"/>
                             <p th:case="*" th:text="${csReg.getAttenLab()[displayWeek]}"></p>
                         </div>
                     </div>

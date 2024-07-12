@@ -68,15 +68,15 @@ public class StudentAttenController {
             List<Attendance> labAttendances = new ArrayList<>(enrollment.getLabAtten());
             for (int i=0; i<15; i++) {
                 try {
-                    attenData.getAttenLec()[i] = lecAttendances.get(i).getStatus().toString();
+                    attenData.getAttenLec()[i] = lecAttendances.get(i).getStatus();
                 } catch (Exception ex) {
-                    attenData.getAttenLec()[i] = EAttendanceStatus.NA.toString();
+                    attenData.getAttenLec()[i] = EAttendanceStatus.NA;
                 }
 
                 try {
-                    attenData.getAttenLab()[i] = labAttendances.get(i).getStatus().toString();
+                    attenData.getAttenLab()[i] = labAttendances.get(i).getStatus();
                 } catch (Exception ex) {
-                    attenData.getAttenLab()[i] = EAttendanceStatus.NA.toString();
+                    attenData.getAttenLab()[i] = EAttendanceStatus.NA;
                 }
             }
             attenDatas.add(attenData);

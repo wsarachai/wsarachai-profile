@@ -25,6 +25,7 @@
                         <p th:text="#{page.user.firstname}">:</p>
                         <p th:text="#{page.location}">: </p>
                         <p th:text="#{page.date}">:</p>
+                        <p th:text="#{page.student.atten.time}"></p>
                         <p th:text="#{page.time}">:</p>
                     </div>
                     <div class="item2">
@@ -35,6 +36,13 @@
                         <p th:text="${student.getPrename()+' '+student.getFirstName()+' '+student.getLastName()}"></p>
                         <p id="location"></p>
                         <p id="currentDate"></p>
+                        <p>
+                            <span th:switch="${type}">
+                                <span th:case="lec" th:text="#{section.lec}+' '+${section.getStartLectureTime()+'-'+section.getEndLectureTime()}"></span>
+                                <span th:case="lab" th:text="#{section.lab}+' '+${section.getStartLabTime()+'-'+section.getEndLabTime()}"></span>
+                                <span th:case="*" th:text="${type}"></span>
+                            </span>
+                        </p>
                         <p id="currentTime"></p>
                     </div>
                 </div>

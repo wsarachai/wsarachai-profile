@@ -38,8 +38,8 @@
                         <p id="currentDate"></p>
                         <p>
                             <span th:switch="${type}">
-                                <span th:case="lec" th:text="#{section.lec}+' '+${section.getStartLectureTime()+'-'+section.getEndLectureTime()}"></span>
-                                <span th:case="lab" th:text="#{section.lab}+' '+${section.getStartLabTime()+'-'+section.getEndLabTime()}"></span>
+                                <span th:case="lec" th:text="#{section.lec}+' '+${section.getLecDay()+' '+section.getStartLectureTime()+'-'+section.getEndLectureTime()}"></span>
+                                <span th:case="lab" th:text="#{section.lab}+' '+${section.getLecDay()+' '+section.getStartLabTime()+'-'+section.getEndLabTime()}"></span>
                                 <span th:case="*" th:text="${type}"></span>
                             </span>
                         </p>

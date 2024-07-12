@@ -18,4 +18,8 @@ public interface SystemService {
     void saveStudent(Student stu);
 
     void saveEnrollment(Enrollment enrollment);
+
+    Student findStudentByStudentId(String studentId);
+
+    void saveOrUpdateStudent(Student stu);
 }

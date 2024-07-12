@@ -59,12 +59,24 @@ public class SystemServiceImpl implements SystemService {
     @Override
     @Transactional
     public void saveStudent(Student stu) {
-        userDao.save(stu);
+        userDao.update(stu);
     }
 
     @Override
     @Transactional
     public void saveEnrollment(Enrollment enrollment) {
         enrollmentDao.save(enrollment);
+    }
+
+    @Override
+    @Transactional
+    public Student findStudentByStudentId(String studentId) {
+        return userDao.findByStudentId(studentId);
+    }
+
+    @Override
+    @Transactional
+    public void saveOrUpdateStudent(Student stu) {
+        userDao.saveOrUpdate(stu);
     }
 }

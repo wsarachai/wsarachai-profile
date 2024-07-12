@@ -15,7 +15,7 @@ public class User implements UserDetails {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment", strategy = "increment")
-    private long id;
+    private Long id;
     @Column(name="prename", length = 128)
     private String prename;
     @Column(name="first_name", nullable = false)
@@ -28,15 +28,11 @@ public class User implements UserDetails {
     @JoinColumn(name = "login_id")
     private Login login;
 
-    public User() {
-        login = new Login();
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

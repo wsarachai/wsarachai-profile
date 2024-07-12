@@ -17,17 +17,20 @@
         <p class="title"><a th:href="@{'/'}" th:text="#{page.home}"></a>&nbsp;/&nbsp;<span th:text="#{page.student.login.title}"></span></p>
         <section class="flex-container-column">
             <div class="flex-container-row">
+                <!-- Display course header of data table -->
                 <div class="item1">
                     <p th:text="#{page.student.atten.subjects}">:</p>
                     <p th:text="#{page.student.atten.group}">:</p>
                     <p th:text="#{page.student.atten.semester}">:</p>
                 </div>
+                <!-- Display course header details of data table -->
                 <div class="item2">
                     <p th:text="${course.getSubject().getCode() + ' ' + course.getSubject().getThaiName()}"></p>
                     <p th:text="${section.getGroupNumber()}"></p>
                     <p th:text="${course.getSemester()}"></p>
                 </div>
             </div>
+            <!-- Display 1-15 weeks links -->
             <div class="blueTable outerTableFooter">
                 <div class="tableFootStyle">
                     <div class="links">
@@ -49,6 +52,7 @@
                 </div>
             </div>
             <div class="divTable blueTable">
+                <!-- Display Attendance header of data table -->
                 <div class="divTableHeading">
                     <div class="divTableRow">
                         <div class="divTableHead" th:text="#{page.no}"></div>
@@ -60,6 +64,7 @@
                         <div class="divTableHead" th:text="#{page.student.login.status}"></div>
                     </div>
                 </div>
+                <!-- Display Attendance data table -->
                 <div class="divTableBody">
                     <div class="divTableRow" th:each="csReg, i : ${attenDatas}">
                         <div class="divTableCell" th:text="${i.index+1}"></div>

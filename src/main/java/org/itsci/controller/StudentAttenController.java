@@ -30,11 +30,18 @@ public class StudentAttenController {
 //    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
 
     private String attentionPage(Model model, String courseId, String secionId, int week) {
-        Teacher teacher = userService.getUser(1l, Teacher.class);
         Course course = studentAttenService.getCourseById(Long.parseLong(courseId));
-        String teacherName = String.format("%s%s %s", teacher.getPrename(), teacher.getFirstName(), teacher.getLastName());
-        Section section = studentAttenService.findSectionById(Long.parseLong(secionId));
         List<Enrollment> enrollments = studentAttenService.findEnrollmentBySectionId(Long.parseLong(secionId));
+
+        Section section = null;
+        for (Section sec : course.getSections()) {
+            if (sec.getId() == Long.parseLong(secionId)) {
+                section = sec;
+                break;
+            }
+        }
+
+        assert section != null;
 
         int currentWeek = DateUtils.getCurrentWeekSemester(course);
         int displayWeek = currentWeek;
@@ -51,9 +58,8 @@ public class StudentAttenController {
         model.addAttribute("displayWeek", displayWeek);
         model.addAttribute("courseId", courseId);
         model.addAttribute("secionId", secionId);
-        model.addAttribute("teacher_name", teacherName);
         model.addAttribute("course", course);
-        model.addAttribute("courseSection", section);
+        model.addAttribute("section", section);
 
         List<AttenData> attenDatas = new ArrayList<>();
         for (Enrollment enrollment : enrollments) {
@@ -88,8 +94,6 @@ public class StudentAttenController {
                                        @PathVariable String studentId,
                                        @PathVariable String type,
                                        @PathVariable String week) {
-        Teacher teacher = userService.getUser(1l, Teacher.class);
-        String teacherName = String.format("%s%s %s", teacher.getPrename(), teacher.getFirstName(), teacher.getLastName());
         Course course = studentAttenService.getCourseById(Long.parseLong(courseId));
         Student student = studentAttenService.getStudent(studentId);
         Section courseSection = studentAttenService.findSectionById(Long.parseLong(secionId));
@@ -98,8 +102,7 @@ public class StudentAttenController {
         model.addAttribute("week", week);
         model.addAttribute("course", course);
         model.addAttribute("student", student);
-        model.addAttribute("courseSection", courseSection);
-        model.addAttribute("teacherName", teacherName);
+        model.addAttribute("section", courseSection);
 
         return "student-atten-page";
     }

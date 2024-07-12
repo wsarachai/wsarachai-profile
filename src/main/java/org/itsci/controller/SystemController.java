@@ -113,24 +113,30 @@ public class SystemController {
 
         List<Student> students = new ArrayList<>();
         for (List<String> lst : records) {
-            Student stu = new Student();
-//            String val = lst.get(iNo).trim();
-//            stu.setStudentNo(Integer.parseInt(val));
-            stu.setStudentId(lst.get(iCode));
+            String studentId = lst.get(iCode).replaceAll("[^0-9]","");
+            Student stu = systemService.findStudentByStudentId(studentId);
+            if (stu == null) {
+                stu = new Student();
+            }
+            String val = lst.get(iNo).replaceAll("[^0-9]","");
+            stu.setStudentNo(Integer.parseInt(val));
+            stu.setStudentId(studentId);
             stu.setPrename(lst.get(iPrename));
             stu.setFirstName(lst.get(iFirstname));
             stu.setLastName(lst.get(iLastname));
-
-            Login login = new Login();
-            login.getAuthorities().add(systemService.getAuthority(EAuthorityType.ROLE_STUDENT));
-            login.setEnabled(true);
-            login.setUsername(stu.getStudentId());
-
-            String encrypted = bCryptPasswordEncoder.encode(stu.getStudentId());
-            login.setPassword("{bcrypt}" + encrypted);
-
-            stu.setLogin(login);
             stu.setStartFromYear(Integer.parseInt(stu.getStudentId().substring(0, 2)));
+
+            Login login = stu.getLogin();
+            if (login == null) {
+                login =new Login();
+                login.getAuthorities().add(systemService.getAuthority(EAuthorityType.ROLE_STUDENT));
+                login.setEnabled(true);
+                login.setUsername(stu.getStudentId());
+                String encrypted = bCryptPasswordEncoder.encode(stu.getStudentId());
+                login.setPassword("{bcrypt}" + encrypted);
+                stu.setLogin(login);
+            }
+
             students.add(stu);
         }
 
@@ -140,7 +146,7 @@ public class SystemController {
             Enrollment enrollment = new Enrollment();
             enrollment.setStudent(stu);
             enrollment.setSection(section);
-            systemService.saveStudent(stu);
+            systemService.saveOrUpdateStudent(stu);
             systemService.saveEnrollment(enrollment);
         }
 

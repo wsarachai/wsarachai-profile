@@ -1,6 +1,7 @@
 package org.itsci.dao;
 
 import org.itsci.model.Login;
+import org.itsci.model.Student;
 import org.itsci.model.User;
 
 import java.util.List;
@@ -22,4 +23,8 @@ public interface UserDao<T extends User> {
     List<T> findAll();
 
     User findByUsername(String username);
+
+    Student findByStudentId(String studentId);
+
+    void saveOrUpdate(T user);
 }

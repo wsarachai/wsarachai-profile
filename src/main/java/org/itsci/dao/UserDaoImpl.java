@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.itsci.model.Login;
+import org.itsci.model.Student;
 import org.itsci.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -49,9 +50,36 @@ public class UserDaoImpl<T extends User> implements UserDao<T> {
     }
 
     @Override
-    public T update(T user) {
+    public Student findByStudentId(String studentId) {
+        Student student = null;
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Student> criteria = builder.createQuery(Student.class);
+        Root<Student> root = criteria.from(Student.class);
+        criteria.select(root);
+        criteria.where(builder.equal(root.get("studentId"), studentId));
+
+        Query<Student> query = session.createQuery(criteria);
+        try {
+            student = query.getSingleResult();
+        } catch (Exception ex){
+            if (student == null) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return student;
+    }
+
+    @Override
+    public void saveOrUpdate(T user) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(user);
+    }
+
+    @Override
+    public T update(T user) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(user);
         return user;
     }
 

@@ -29,7 +29,7 @@
                     </div>
                     <div class="item2">
                         <p th:text="${course.getSubject().getCode() + ' ' + course.getSubject().getThaiName()}"></p>
-                        <p th:text="${courseSection.getGroupNumber()}"></p>
+                        <p th:text="${section.getGroupNumber()}"></p>
                         <p th:text="${course.getSemester()}"></p>
                         <p th:text="${student.getStudentId()}"></p>
                         <p th:text="${student.getPrename()+' '+student.getFirstName()+' '+student.getLastName()}"></p>

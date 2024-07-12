@@ -135,11 +135,13 @@ public class StudentAttenController {
 
     @PostMapping("/atten/doatten")
     public String doAtten(Model model,
-            @RequestParam("enrollmentId") String enrollmentId,
-            @RequestParam("type") String type,
-            @RequestParam("week") String week,
-            @RequestParam("image1") MultipartFile image1,
-            @RequestParam("image2") MultipartFile image2
+                          @RequestParam("enrollmentId") String enrollmentId,
+                          @RequestParam("type") String type,
+                          @RequestParam("latitude") String latitude,
+                          @RequestParam("longitude") String longitude,
+                          @RequestParam("week") String week,
+                          @RequestParam("image1") MultipartFile image1,
+                          @RequestParam("image2") MultipartFile image2
     ) throws IOException {
         Byte[] byteObjects1 = this.convertToBytes(image1);
         Byte[] byteObjects2 = this.convertToBytes(image2);
@@ -162,6 +164,8 @@ public class StudentAttenController {
                 enrollment.getLabAtten().add(attendance);
             }
         }
+        attendance.setLatitude(Double.parseDouble(latitude));
+        attendance.setLongitude(Double.parseDouble(longitude));
         attendance.setStatus(EAttendanceStatus.ATTENDED);
         attendance.setStudentImage(byteObjects1);
         attendance.setCodeImage(byteObjects2);

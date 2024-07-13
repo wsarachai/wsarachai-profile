@@ -1,68 +1,246 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="assets/css/main.css">
-    <title th:text="${title}"></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Description</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 60px; /* Space for the fixed header */
+            padding-bottom: 60px; /* Space for the fixed footer */
+        }
+        .fixed-header, .fixed-footer {
+            background-color: #1d3557;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 1.5rem;
+        }
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1030; /* Ensure it sits on top of other elements */
+        }
+        .fixed-footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .course-container {
+            max-width: 800px;
+            margin: 30px auto; /* Center the container */
+        }
+        .course-item {
+            margin-bottom: 20px;
+        }
+        .card {
+            height: 100%;
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .course-header {
+            background-color: #1d3557;
+            color: white;
+            padding: 10px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .course-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .course-description {
+            margin-top: 10px;
+        }
+        .course-details {
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+        .course-detail-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .course-detail-section:nth-child(even) {
+            background-color: #e9ecef;
+        }
+        .course-detail-header {
+            flex-basis: 100%;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .course-detail-item {
+            flex: 1;
+            min-width: 100px;
+            margin-right: 10px;
+        }
+        .course-detail-item:last-child {
+            margin-right: 0;
+        }
+    </style>
 </head>
-
 <body>
-    <header>
-        <h1>สาขาเทคโนโลยีสารสนเทศ คณะวิทยาศาสตร์ มหาวิทยาลัยแม่โจ้</h1>
-    </header>
-    <main id="main-container">
-        <p class="title">รายวิชาที่สอน: <span class="person-name">อาจารย์ ดร.วัชรินทร์ สาระไชย</span></p>
-        <section class="flex-container-column">
-            <div class="flex-container-row">
-                <div class="item1">
-                    <p>รายวิชา:</p>
-                    <p>กลุ่ม</p>
-                    <p>ปีการศึกษา</p>
-                    <p>Location</p>
-                </div>
-                <div class="item2">
-                    <p>รายวิชา:</p>
-                    <p>กลุ่ม</p>
-                    <p>ปีการศึกษา</p>
-                    <p id="location"></p>
-                </div>
-            </div>
-            <div class="flex-container-row">
-                <div class="item3">
-                    <div class="wrapper">
-                        <video></video>
-                        <br />
-                        <button id="newphoto" state1="ถ่ายรูปนักศึกษา" state2="ถ่ายรูปอ้างอิง">ถ่ายรูปนักศึกษา</button>
+    <div class="fixed-header">
+        Information Technology
+    </div>
+    <div class="container course-container">
+        <h1 class="my-4">Course Descriptions</h1>
+        <input type="text" id="searchInput" onkeyup="filterCourses()" placeholder="Search for courses..." class="form-control mb-4">
+        <div class="row">
+            <div class="col-12 course-item">
+                <div class="card">
+                    <div class="course-header">Course 1: Introduction to Programming</div>
+                    <div class="card-body">
+                        <p class="card-text course-description">Learn the basics of programming using Python. This course covers fundamental concepts such as variables, loops, and functions.</p>
+                        <div class="course-detail-section">
+                            <div class="course-detail-header">Lecture</div>
+                            <div class="course-detail-item">
+                                Group Number: Group 1
+                            </div>
+                            <div class="course-detail-item">
+                                Day: Monday
+                            </div>
+                            <div class="course-detail-item">
+                                Time: 09:00 AM - 11:00 AM
+                            </div>
+                            <div class="course-detail-item">
+                                Room: Room 101
+                            </div>
+                        </div>
+                        <div class="course-detail-section">
+                            <div class="course-detail-header">Laboratory</div>
+                            <div class="course-detail-item">
+                                Group Number: Group 1
+                            </div>
+                            <div class="course-detail-item">
+                                Day: Wednesday
+                            </div>
+                            <div class="course-detail-item">
+                                Time: 01:00 PM - 03:00 PM
+                            </div>
+                            <div class="course-detail-item">
+                                Room: Room 102
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="item4">
-                    <div class="wrapper">
-                        <canvas id="canvas1"></canvas>
-                        <p>รูปนักศึกษา</p>
-                    </div>
-                    <div class="wrapper">
-                        <canvas id="canvas2"></canvas>
-                        <p>รูปอ้างอิง</p>
+            </div>
+            <div class="col-12 course-item">
+                <div class="card">
+                    <div class="course-header">Course 2: Web Development</div>
+                    <div class="card-body">
+                        <p class="card-text course-description">Explore the world of web development. Learn how to create websites using HTML, CSS, and JavaScript.</p>
+                        <div class="course-detail-section">
+                            <div class="course-detail-header">Lecture</div>
+                            <div class="course-detail-item">
+                                Group Number: Group 2
+                            </div>
+                            <div class="course-detail-item">
+                                Day: Tuesday
+                            </div>
+                            <div class="course-detail-item">
+                                Time: 10:00 AM - 12:00 PM
+                            </div>
+                            <div class="course-detail-item">
+                                Room: Room 201
+                            </div>
+                        </div>
+                        <div class="course-detail-section">
+                            <div class="course-detail-header">Laboratory</div>
+                            <div class="course-detail-item">
+                                Group Number: Group 2
+                            </div>
+                            <div class="course-detail-item">
+                                Day: Thursday
+                            </div>
+                            <div class="course-detail-item">
+                                Time: 02:00 PM - 04:00 PM
+                            </div>
+                            <div class="course-detail-item">
+                                Room: Room 202
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="flex-container-row">
-                <div class="item5">
-                    <button id="attbutton" disabled="disabled">ลงชื่อเข้าเรียน</button>
+            <div class="col-12 course-item">
+                <div class="card">
+                    <div class="course-header">Course 3: Data Science</div>
+                    <div class="card-body">
+                        <p class="card-text course-description">Delve into data science. Learn how to analyze data, create visualizations, and build machine learning models.</p>
+                        <div class="course-detail-section">
+                            <div class="course-detail-header">Lecture</div>
+                            <div class="course-detail-item">
+                                Group Number: Group 3
+                            </div>
+                            <div class="course-detail-item">
+                                Day: Wednesday
+                            </div>
+                            <div class="course-detail-item">
+                                Time: 09:00 AM - 11:00 AM
+                            </div>
+                            <div class="course-detail-item">
+                                Room: Room 301
+                            </div>
+                        </div>
+                        <div class="course-detail-section">
+                            <div class="course-detail-header">Laboratory</div>
+                            <div class="course-detail-item">
+                                Group Number: Group 3
+                            </div>
+                            <div class="course-detail-item">
+                                Day: Friday
+                            </div>
+                            <div class="course-detail-item">
+                                Time: 01:00 PM - 03:00 PM
+                            </div>
+                            <div class="course-detail-item">
+                                Room: Room 302
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <p id="currentDate"></p>
-            <p id="currentTime"></p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 อาจารย์ ดร.วัชริทร์ สาระไชย</p>
-    </footer>
-    <script src="assets/js/main.js"></script>
+        </div>
+    </div>
+    <div class="fixed-footer">
+        Watcharin Sarachai
+    </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function filterCourses() {
+            let input, filter, courseContainer, courseItems, courseHeader, i, txtValue;
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            courseContainer = document.querySelector('.course-container .row');
+            courseItems = courseContainer.getElementsByClassName('course-item');
+            
+            for (i = 0; i < courseItems.length; i++) {
+                courseHeader = courseItems[i].getElementsByClassName('course-header')[0];
+                txtValue = courseHeader.textContent || courseHeader.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    courseItems[i].style.display = "";
+                } else {
+                    courseItems[i].style.display = "none";
+                }
+            }
+        }
+    </script>
 </body>
-
 </html>

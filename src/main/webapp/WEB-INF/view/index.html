@@ -1,53 +1,67 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" th:href="@{assets/css/main.css}">
-    <title th:text="#{page.title}"></title>
-</head>
-<body>
-    <header>
-        <h1 th:text="#{page.title}"></h1>
-    </header>
-    <main id="main-container">
-        <section>
-            <p>
-                <span class="title" th:text="#{page.home.title}"></span> <span class="person-name" th:text="${teacher_name}"></span></span>
-            </p>
-            <div class="flex-container">
-                <div class="card" th:each="c : ${courses}">
-                    <div class="card-header">
-                        <p><span  th:text="${c.subject.getCode()}"/> <span  th:text="${c.subject.getThaiName()}"/></p>
-                    </div>
-                    <div class="card-body">
-                        <div class="FlexContainer" th:each="cs : ${c.getSections()}">
-                            <div th:text="${cs.getGroupNumber()}"></div>
-                            <div>
-                                <div class="data-cell" th:text="#{section.lec}"></div>
-                                <div class="data-cell" th:text="${#messages.msgOrNull('day.' + cs.getLecDay())}"></div>
-                                <div class="data-cell" th:inline="text">[[${cs.getStartLectureTime()}]]-[[${cs.getEndLectureTime()}]]</div>
-                                <div class="data-cell" th:text="${cs.getLecRoom().getRoomId()}"></div>
-                                <br>
-                                <div class="data-cell" th:text="#{section.lab}"></div>
-                                <div class="data-cell" th:text="${#messages.msgOrNull('day.' + cs.getLabDay())}"></div>
-                                <div class="data-cell" th:inline="text">[[${cs.getStartLabTime()}]]-[[${cs.getEndLabTime()}]]</div>
-                                <div class="data-cell" th:text="${cs.getLabRoom().getRoomId()}"></div>
-                            </div>
-                            <div>
-                                <a th:href="@{'/pub/student/atten/' + ${c.getId()} + '/' + ${cs.getId()}}"><span th:text="#{page.home.signin}"></span></a>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title th:text="#{page.title}"></title>
+        <!-- Bootstrap CSS -->
+        <link th:href="@{assets/css/bootstrap.min.css}" rel="stylesheet">
+        <link th:href="@{assets/css/styles.css}" rel="stylesheet">
+    </head>
+    <body>
+        <div class="fixed-header" th:text="#{page.title}"></div>
+        <div class="container course-container">
+            <h1 class="my-4" th:text="#{page.home.title}"></h1>
+            <input type="text" id="searchInput" onkeyup="filterCourses()" placeholder="Search for courses..." class="form-control mb-4">
+            <div class="row">
+                <div class="col-12 course-item" th:each="c : ${courses}">
+                    <div class="card">
+                        <div class="course-header">
+                            <span  th:text="${c.subject.getCode()}"/> <span  th:text="${c.subject.getThaiName()}"/>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text course-description" th:text="${c.getSubject().getDescription()}"></p>
+                            <div class="course-detail-section" th:each="cs : ${c.getSections()}">
+                                <div class="course-detail-header">
+                                    <span th:text="#{page.student.atten.group}">:</span> <span th:text="${cs.getGroupNumber()}"/>
+                                    <span style="float: right">
+                                        <a th:href="@{'/pub/student/atten/' + ${c.getId()} + '/' + ${cs.getId()}}"><span th:text="#{page.home.signin}"></span></a>
+                                    </span>
+                                </div>
+                                <div class="container">
+                                    <!-- Lec -->
+                                    <div class="item" th:text="#{section.lec}"></div>
+                                    <div class="item" th:text="${#messages.msgOrNull('day.' + cs.getLecDay())}"></div>
+                                    <div class="item" th:inline="text">
+                                        <span th:text="#{page.time}"/> [[${cs.getStartLectureTime()}]]-[[${cs.getEndLectureTime()}]]
+                                    </div>
+                                    <div class="item">
+                                        <span th:text="#{page.room}"/>: <span th:text="${cs.getLecRoom().getRoomId()}" />
+                                    </div>
+
+                                    <!-- Lab -->
+                                    <div class="item" th:text="#{section.lab}"></div>
+                                    <div class="item" th:text="${#messages.msgOrNull('day.' + cs.getLabDay())}"></div>
+                                    <div class="item" th:inline="text">
+                                        <span th:text="#{page.time}"/> [[${cs.getStartLabTime()}]]-[[${cs.getEndLabTime()}]]
+                                    </div>
+                                    <div class="item">
+                                        <span th:text="#{page.room}"/>: <span th:text="${cs.getLabRoom().getRoomId()}" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 <span th:text="#{page.author}"></span></p>
-    </footer>
-</body>
-
+        </div>
+        <div class="fixed-footer">
+            Watcharin Sarachai
+        </div>
+        <!-- Bootstrap JS and dependencies -->
+        <script th:src="@{'assets/js/libs/jquery-3.5.1.slim.min.js'}"></script>
+        <script th:src="@{'assets/js/libs/popper.min.js'}"></script>
+        <script th:src="@{'assets/js/libs/bootstrap.min.js'}"></script>
+        <script th:src="@{'assets/js/scripts.js'}"></script>
+    </body>
 </html>

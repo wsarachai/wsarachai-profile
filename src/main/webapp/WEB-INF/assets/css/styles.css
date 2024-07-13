@@ -1,0 +1,96 @@
+body {
+    padding-top: 60px; /* Space for the fixed header */
+    padding-bottom: 60px; /* Space for the fixed footer */
+}
+.fixed-header, .fixed-footer {
+    background-color: #1d3557;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 1.5rem;
+}
+.fixed-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1030; /* Ensure it sits on top of other elements */
+}
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.course-container {
+    max-width: 800px;
+    margin: 30px auto; /* Center the container */
+}
+.course-item {
+    margin-bottom: 20px;
+}
+.card {
+    height: 100%;
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.course-header {
+    background-color: #1d3557;
+    color: white;
+    padding: 10px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.course-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.course-description {
+    margin-top: 10px;
+}
+.course-details {
+    margin-top: 10px;
+    font-size: 1rem;
+}
+.course-detail-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+.course-detail-section:nth-child(even) {
+    background-color: #e9ecef;
+}
+.course-detail-header {
+    flex-basis: 100%;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.course-detail-item {
+    flex: 1;
+    min-width: 100px;
+    margin-right: 10px;
+}
+.course-detail-item:last-child {
+    margin-right: 0;
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Adjust alignment as needed */
+}
+.item {
+    flex: 1 1 calc(25% - 20px); /* Adjust based on margin/padding */
+    margin: 0px; /* Adjust margin between items */
+    background-color: #f0f0f0;
+    padding: 5px;
+    box-sizing: border-box;
+    text-align: center;
+}

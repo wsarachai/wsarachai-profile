@@ -104,7 +104,7 @@ public class PopulateDataController {
             subject1.setEngName("Selected Topic in Information Technology");
             subject1.setThaiName("การศึกษาหัวข้อสนใจด้านเทคโนโลยีสารสนเทศ");
             subject1.setType("แกน");
-            subject1.setCurriculum(studentAttenService.getCurriculumById(1l));
+            subject1.setCurriculum(studentAttenService.findCurriculumById(1l));
             studentAttenService.saveSubject(subject1);
 
             Subject subject2 = new Subject();
@@ -116,7 +116,7 @@ public class PopulateDataController {
             subject2.setEngName("Web Content Management System");
             subject2.setThaiName("ระบบบริหารจัดการเว็บไซต์");
             subject2.setType("แกน");
-            subject2.setCurriculum(studentAttenService.getCurriculumById(2l));
+            subject2.setCurriculum(studentAttenService.findCurriculumById(2l));
             studentAttenService.saveSubject(subject2);
 
             Subject subject3 = new Subject();
@@ -128,7 +128,7 @@ public class PopulateDataController {
             subject3.setEngName("Selected Topic in Information Technology");
             subject3.setThaiName("การศึกษาหัวข้อสนใจด้านเทคโนโลยีสารสนเทศ");
             subject3.setType("แกน");
-            subject3.setCurriculum(studentAttenService.getCurriculumById(2l));
+            subject3.setCurriculum(studentAttenService.findCurriculumById(2l));
             studentAttenService.saveSubject(subject3);
         }
 
@@ -159,10 +159,10 @@ public class PopulateDataController {
             Course course1 = new Course();
             course1.setSemester("1/2567");
             course1.setStartSemester(DateUtils.getDateFrom(2567, 6, 3));
-            course1.setSubject(studentAttenService.getSubjectById(1l));
+            course1.setSubject(studentAttenService.findSubjectById(1l));
 
             Section section1 = new Section();
-            section1.setCourse(studentAttenService.getCourseById(1l));
+            section1.setCourse(studentAttenService.findCourseById(1l));
             section1.setGroupNumber("01");
             section1.setLecDay(EDayOfWeek.WEDNESDAY);
             section1.setStartLectureTime("8:30");
@@ -170,8 +170,8 @@ public class PopulateDataController {
             section1.setLabDay(EDayOfWeek.WEDNESDAY);
             section1.setStartLabTime("8:30");
             section1.setEndLabTime("11:30");
-            section1.setLabRoom(studentAttenService.getRoomById(2l));
-            section1.setLecRoom(studentAttenService.getRoomById(2l));
+            section1.setLabRoom(studentAttenService.findRoomById(2l));
+            section1.setLecRoom(studentAttenService.findRoomById(2l));
             section1.setNumberOfSeat(42);
             section1.setCourse(course1);
             course1.getSections().add(section1);
@@ -181,10 +181,10 @@ public class PopulateDataController {
             Course course2 = new Course();
             course2.setSemester("1/2567");
             course2.setStartSemester(DateUtils.getDateFrom(2567, 6, 3));
-            course2.setSubject(studentAttenService.getSubjectById(2l));
+            course2.setSubject(studentAttenService.findSubjectById(2l));
 
             Section section3 = new Section();
-            section3.setCourse(studentAttenService.getCourseById(2l));
+            section3.setCourse(studentAttenService.findCourseById(2l));
             section3.setGroupNumber("01");
             section3.setLecDay(EDayOfWeek.WEDNESDAY);
             section3.setStartLectureTime("12:00");
@@ -192,12 +192,12 @@ public class PopulateDataController {
             section3.setLabDay(EDayOfWeek.MONDAY);
             section3.setStartLabTime("09:00");
             section3.setEndLabTime("12:00");
-            section3.setLabRoom(studentAttenService.getRoomById(2l));
-            section3.setLecRoom(studentAttenService.getRoomById(1l));
+            section3.setLabRoom(studentAttenService.findRoomById(2l));
+            section3.setLecRoom(studentAttenService.findRoomById(1l));
             section3.setNumberOfSeat(61);
 
             Section section4 = new Section();
-            section4.setCourse(studentAttenService.getCourseById(2l));
+            section4.setCourse(studentAttenService.findCourseById(2l));
             section4.setGroupNumber("02");
             section4.setLecDay(EDayOfWeek.WEDNESDAY);
             section4.setStartLectureTime("12:00");
@@ -205,8 +205,8 @@ public class PopulateDataController {
             section4.setLabDay(EDayOfWeek.THURSDAY);
             section4.setStartLabTime("13:00");
             section4.setEndLabTime("16:00");
-            section4.setLabRoom(studentAttenService.getRoomById(2l));
-            section4.setLecRoom(studentAttenService.getRoomById(1l));
+            section4.setLabRoom(studentAttenService.findRoomById(2l));
+            section4.setLecRoom(studentAttenService.findRoomById(1l));
             section4.setNumberOfSeat(51);
 
             section3.setCourse(course2);
@@ -219,10 +219,10 @@ public class PopulateDataController {
             Course course3 = new Course();
             course3.setSemester("1/2567");
             course3.setStartSemester(DateUtils.getDateFrom(2567, 6, 3));
-            course3.setSubject(studentAttenService.getSubjectById(3l));
+            course3.setSubject(studentAttenService.findSubjectById(3l));
 
             Section section2 = new Section();
-            section2.setCourse(studentAttenService.getCourseById(3l));
+            section2.setCourse(studentAttenService.findCourseById(3l));
             section2.setGroupNumber("01");
             section2.setLecDay(EDayOfWeek.WEDNESDAY);
             section2.setStartLectureTime("8:30");
@@ -230,8 +230,8 @@ public class PopulateDataController {
             section2.setLabDay(EDayOfWeek.WEDNESDAY);
             section2.setStartLabTime("8:30");
             section2.setEndLabTime("11:30");
-            section2.setLabRoom(studentAttenService.getRoomById(2l));
-            section2.setLecRoom(studentAttenService.getRoomById(2l));
+            section2.setLabRoom(studentAttenService.findRoomById(2l));
+            section2.setLecRoom(studentAttenService.findRoomById(2l));
             section2.setNumberOfSeat(50);
 
             section2.setCourse(course3);

@@ -6,7 +6,6 @@ import org.itsci.service.UserService;
 import org.itsci.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +29,7 @@ public class StudentAttenController {
 
     @GetMapping("/manage/{enrollmentId}")
     public String authenticated_home(Model model, @PathVariable String enrollmentId) {
-            Enrollment enrollment = studentAttenService.getEnrollmentById(Long.parseLong(enrollmentId));
+            Enrollment enrollment = studentAttenService.findEnrollmentById(Long.parseLong(enrollmentId));
             List<Attendance> lecAtten = new ArrayList<>();
             List<Attendance> labAtten = new ArrayList<>();
             List<Attendance> lecAttendances = new ArrayList<>(enrollment.getLecAtten());
@@ -84,16 +83,26 @@ public class StudentAttenController {
                 model.addAttribute("lecAtten", lecAtten);
                 model.addAttribute("labAtten", labAtten);
         }
-        return "manage";
+        return "student-list-atten-page";
     }
 
     @GetMapping("/view/{enrollmentId}/{attenId}")
     private String viewAttenuation(Model model, @PathVariable String enrollmentId, @PathVariable String attenId) {
-        return "redirect:/pub/student/manage/" + enrollmentId;
+        Enrollment enrollment = studentAttenService.findEnrollmentById(Long.parseLong(enrollmentId));
+        Attendance attendance = studentAttenService.findAttendanceById(Long.parseLong(attenId));
+
+        if (attendance == null) {
+            return "redirect:/pub/student/manage/" + enrollmentId;
+        }
+
+        model.addAttribute("enrollment", enrollment);
+        model.addAttribute("attendance", attendance);
+
+        return "student-view-atten-page";
     }
 
     private String attentionPage(Model model, String courseId, String secionId, int userSelectedWeek) {
-        Course course = studentAttenService.getCourseById(Long.parseLong(courseId));
+        Course course = studentAttenService.findCourseById(Long.parseLong(courseId));
         List<Enrollment> enrollments = studentAttenService.findEnrollmentBySectionId(Long.parseLong(secionId));
 
         Section section = null;
@@ -194,8 +203,8 @@ public class StudentAttenController {
                                        @PathVariable String enrollmentId,
                                        @PathVariable String type,
                                        @PathVariable String week) {
-        Course course = studentAttenService.getCourseById(Long.parseLong(courseId));
-        Enrollment enrollment = studentAttenService.getEnrollmentById(Long.parseLong(enrollmentId));
+        Course course = studentAttenService.findCourseById(Long.parseLong(courseId));
+        Enrollment enrollment = studentAttenService.findEnrollmentById(Long.parseLong(enrollmentId));
 
         model.addAttribute("type", type);
         model.addAttribute("week", week);
@@ -217,7 +226,7 @@ public class StudentAttenController {
     ) throws IOException {
         Byte[] byteObjects1 = this.convertToBytes(image1);
         Byte[] byteObjects2 = this.convertToBytes(image2);
-        Enrollment enrollment = studentAttenService.getEnrollmentById(Long.parseLong(enrollmentId));
+        Enrollment enrollment = studentAttenService.findEnrollmentById(Long.parseLong(enrollmentId));
         Attendance attendance = null;
 
         if ("lec".equals(type)) {

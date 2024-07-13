@@ -41,7 +41,7 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
-    public Course getCourseById(Long id) {
+    public Course findCourseById(Long id) {
         return courseDao.getCourseById(id);
     }
 
@@ -53,7 +53,7 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
-    public Student getStudent(String studentId) {
+    public Student findStudentById(String studentId) {
         return (Student) userDao.getById(Long.valueOf(studentId), Student.class);
     }
 
@@ -94,7 +94,7 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
-    public Curriculum getCurriculumById(Long id) {
+    public Curriculum findCurriculumById(Long id) {
         return curriculumDao.getCurriculumById(id);
     }
 
@@ -154,8 +154,14 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
-    public Enrollment getEnrollmentById(long id) {
+    public Enrollment findEnrollmentById(long id) {
         return enrollmentDao.findById(id);
+    }
+
+    @Override
+    @Transactional
+    public Attendance findAttendanceById(long id) {
+        return attendanceDao.findById(id);
     }
 
     @Override
@@ -166,7 +172,7 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
-    public Subject getSubjectById(long l) {
+    public Subject findSubjectById(long l) {
         return subjectDao.getSubjectById(l);
     }
 
@@ -178,7 +184,7 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
-    public Room getRoomById(long id) {
+    public Room findRoomById(long id) {
         return roomDao.getRoomById(id);
     }
 

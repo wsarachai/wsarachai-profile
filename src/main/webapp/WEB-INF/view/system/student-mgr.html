@@ -1,18 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" th:href="@{/assets/css/main.css}">
-    <title th:text="#{page.title}"></title>
-</head>
-
+<head th:include="layouts/general :: headerfiles"></head>
 <body>
-    <header>
-        <h1 th:text="#{page.title}"></h1>
-    </header>
+    <div th:replace="layouts/general :: header"></div>
     <main id="main-container">
         <section>
             <p class="title" th:text="#{page.student.title}"></p>
@@ -40,9 +30,9 @@
             </div>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2024 <span th:text="#{page.author}"></span></p>
-    </footer>
+    <div th:replace="layouts/general.html :: footer"></div>
+    <div th:replace="layouts/general.html :: scriptfiles"></div>
+    <script th:src="@{/assets/js/main.js}"></script>
 </body>
 
 </html>

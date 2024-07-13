@@ -83,7 +83,7 @@ public class StudentAttenController {
                 model.addAttribute("lecAtten", lecAtten);
                 model.addAttribute("labAtten", labAtten);
         }
-        return "student-list-atten-page";
+        return "list-each-students-atten";
     }
 
     @GetMapping("/view/{enrollmentId}/{attenId}")
@@ -98,7 +98,7 @@ public class StudentAttenController {
         model.addAttribute("enrollment", enrollment);
         model.addAttribute("attendance", attendance);
 
-        return "student-view-atten-page";
+        return "view-each-student-atten";
     }
 
     private String attentionPage(Model model, String courseId, String secionId, int userSelectedWeek) {
@@ -184,7 +184,7 @@ public class StudentAttenController {
         }
         model.addAttribute("attenDatas", attenDatas);
 
-        return "list-student-atten-page";
+        return "list-all-student-atten";
     }
 
     @GetMapping("/atten/{courseId}/{secionId}")
@@ -211,7 +211,7 @@ public class StudentAttenController {
         model.addAttribute("course", course);
         model.addAttribute("enrollment", enrollment);
 
-        return "student-atten-page";
+        return "student-do-atten";
     }
 
     @PostMapping("/atten/doatten")

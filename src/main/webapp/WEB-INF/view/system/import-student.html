@@ -1,37 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/main.css}">
-    <title th:text="#{page.title}"></title>
-</head>
+<head th:include="layouts/general :: headerfiles"></head>
 <body>
-    <header>
-        <h1 th:text="#{page.title}"></h1>
-    </header>
-    <main id="main-container">
-        <section>
-            <p class="title" th:text="#{page.student.import}"></p>
-            <div class="flex-container">
+    <div th:replace="layouts/general :: header"></div>
+    <main class="container course-container">
+        <h4 class="my-4 title" th:text="#{page.student.import}"></h4>
+        <div class="row">
+            <div class="col-12 course-item">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="course-header">
                         <p th:text="#{page.student.browse}"></p>
                     </div>
                     <div class="card-body">
                         <div class="flex-container-column">
                             <div class="flex-container-row">
-                                <form id="uploadForm" method="post" th:action="@{/system/student/upload}" enctype="multipart/form-data">
+                                <form id="uploadForm" method="post" th:action="@{/system/student/upload}" enctype="multipart/form-data"
+                                      class="col-12 form-horizontal">
                                     <input id="input-file" type="file" name="file" style="display: none"/>
                                     <input type="button" id="choose_file_btn" th:value="#{page.student.choose_file}"/>
-                                    <button class="btn btn-sm btn-outline-success float-right" type="submit">
+                                    <button class="btn btn-sm btn-danger float-right" type="submit">
                                         Upload
                                     </button>
                                     <label><input type="checkbox" name="read_header"/> Read header</label>
-                                    <h4 id="file-info"></h4>
+                                    <p id="file-info"></p>
                                 </form>
                             </div>
                             <div class="flex-container-row">
@@ -48,14 +39,11 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
-    <footer>
-        <p>&copy; 2024 <span th:text="#{page.author}"></span></p>
-    </footer>
-    <script th:src="@{/assets/js/jquery-3.7.1.min.js}"></script>
-    <script th:src="@{/assets/js/bootstrap.min.js}"></script>
-    <script th:src="@{/assets/js/file-upload/main.js}"></script>
+    <div th:replace="layouts/general.html :: footer"></div>
+    <div th:replace="layouts/general.html :: scriptfiles"></div>
+    <script th:src="@{/assets/js/file-upload.js}"></script>
 </body>
 
 </html>

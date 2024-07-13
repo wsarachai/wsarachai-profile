@@ -1,10 +1,12 @@
 package org.itsci.config;
 
+import org.apache.commons.codec.CharEncoding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Description;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.multipart.MultipartResolver;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.resource.VersionResourceResolver;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.util.List;
 
@@ -36,6 +39,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addConverter(new DateToStringConverter());
     }
 
+    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/assets/**")
                 .addResourceLocations("/WEB-INF/assets/")
@@ -50,6 +54,17 @@ public class WebConfig implements WebMvcConfigurer {
         springTemplateResolver.setPrefix("/WEB-INF/view/");
         springTemplateResolver.setSuffix(".html");
         return springTemplateResolver;
+    }
+
+    @Bean
+    public ClassLoaderTemplateResolver webPageTemplateResolver(){
+        ClassLoaderTemplateResolver webPageTemplateResolver = new ClassLoaderTemplateResolver();
+        webPageTemplateResolver.setPrefix("templates/");
+        webPageTemplateResolver.setSuffix(".html");
+        webPageTemplateResolver.setTemplateMode("HTML5");
+        webPageTemplateResolver.setCharacterEncoding(CharEncoding.UTF_8);
+        webPageTemplateResolver.setOrder(1);
+        return webPageTemplateResolver;
     }
 
     @Bean

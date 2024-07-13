@@ -1,4 +1,10 @@
 # wsarachai-profile
+## More reference about Thymeleaf
+- [Thymeleaf](https://www.thymeleaf.org/)
+- [Thymeleaf - Spring Boot](https://www.thymeleaf.org/doc/articles/springbootforms.html)
+- [Thymeleaf - Spring Boot - Layout Dialect](https://www.thymeleaf.org/doc/articles/layouts.html)
+- [Thymeleaf - MVC Temlate](https://www.baeldung.com/thymeleaf-in-spring-mvc)
+
 ## MySQL Settings
 ### คำสั่งสำหรับสร้างฐานข้อมูล
 ```

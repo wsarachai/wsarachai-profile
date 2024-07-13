@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layouts/general :: headerfiles"></head>
+<body>
+    <div th:replace="layouts/general :: header"></div>
+    <main class="container course-container">
+        <p class="my-4 title"><a th:href="@{'/'}" th:text="#{page.home}"></a>&nbsp;/&nbsp;<span th:text="#{page.student.login.title}"></span></p>
+        <div class="row">
+            <section class="col-12 flex-container-column">
+                <div class="flex-container-row">
+                    <div class="item1">
+                        <p th:text="#{page.student.atten.subjects}">:</p>
+                        <p th:text="#{page.student.atten.group}">:</p>
+                        <p th:text="#{page.student.atten.semester}">:</p>
+                        <p th:text="#{page.student.code}">:</p>
+                        <p th:text="#{page.user.firstname}">:</p>
+                        <p th:text="#{page.location}">: </p>
+                    </div>
+                    <div class="item2" th:with="section=${enrollment.getSection()}">
+                        <p th:text="${section.getCourse().getSubject().getCode() + ' ' + section.getCourse().getSubject().getThaiName()}"></p>
+                        <p th:text="${section.getGroupNumber()}"></p>
+                        <p th:text="${section.getCourse().getSemester()}"></p>
+                        <p th:text="${enrollment.getStudent().getStudentId()}"></p>
+                        <p th:text="${enrollment.getStudent().getPrename()+' '+enrollment.getStudent().getFirstName()+' '+enrollment.getStudent().getLastName()}"></p>
+                        <p><span th:text="${attendance.getLatitude()}"></span>, <span th:text="${attendance.getLongitude()}"></span></p>
+                    </div>
+                </div>
+                <div class="flex-container-row">
+                    <div class="item4">
+                        <div class="wrapper">
+                            <img th:src="@{'/pub/images/'+${attendance.getId()}+'/lec'}" alt="Your image" />
+                        </div>
+                        <div class="wrapper">
+                            <img th:src="@{'/pub/images/'+${attendance.getId()}+'/lab'}" alt="Reference image" />
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-container-row">
+                    <div class="item5">
+                        <a th:href="@{'/pub/student/manage/'+${enrollment.getId()}}"><span th:text="#{page.navigate.back}"></span></a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <div th:replace="layouts/general.html :: footer"></div>
+    <div th:replace="layouts/general.html :: scriptfiles"></div>
+</body>
+</html>

@@ -1,18 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="mobile-web-app-capable" content="yes">
-        <!-- Reference Bootstrap files -->
-        <link rel="stylesheet" th:href="@{assets/css/bootstrap.min.css}">
-        <title th:text="#{page.title}"></title>
-    </head>
-    <body>
-        <div class="container">
-            <div id="loginbox" style="margin-top: 50px;"
-                 class="mainbox col-md-3 col-md-offset-4 col-sm-6 col-sm-offset-2">
+<head th:include="layouts/general :: headerfiles"></head>
+<body>
+    <div th:replace="layouts/general :: header"></div>
+    <main class="container course-container">
+        <div class="row">
+            <section style="margin-top: 50px;" class="col-12 flex-container-column">
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <div class="panel-title">Sign In</div>
@@ -43,20 +36,19 @@
                             </div>
                             <!-- Login/Submit Button -->
                             <div style="margin-top: 10px" class="form-group">
-                                <div class="col-sm-6 controls">
-                                    <button type="submit" class="btn btn-success" th:text="#{page.login}"></button>
-                                </div>
+                                <button type="submit" class="btn btn-success" th:text="#{page.login}"></button>
                             </div>
                         </form>
                         <p>
-<!--                            <a th:href="@{/register}" th:text="#{page.menu.register}"></a><br>-->
+    <!--                            <a th:href="@{/register}" th:text="#{page.menu.register}"></a><br>-->
                             <a th:href="@{/}" th:text="#{page.back-to-home}"></a>
                         </p>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
-        <script th:src="@{assets/js/jquery-3.7.1.min.js}"></script>
-        <script th:src="@{assets/js/bootstrap.min.js}"></script>
-    </body>
+    </main>
+    <div th:replace="layouts/general.html :: footer"></div>
+    <div th:replace="layouts/general.html :: scriptfiles"></div>
+</body>
 </html>

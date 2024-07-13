@@ -14,7 +14,10 @@
     <h1 th:text="#{page.title}"></h1>
 </header>
 <main id="main-container">
-    <p class="title"><a th:href="@{'/'}" th:text="#{page.home}"></a>&nbsp;/&nbsp;<span th:text="#{page.student.profile}"></span></p>
+    <p class="title">
+        <a th:href="@{'/pub/student/atten/' + ${enrollment.getSection().getCourse().getId()} + '/' + ${enrollment.getSection().getId()}}"
+           th:text="#{page.navigate.back}"></a>&nbsp;|&nbsp;<span th:text="#{page.student.profile}"></span>
+    </p>
     <section class="flex-container-column">
         <div class="flex-container-row">
             <!-- Display course header of data table -->
@@ -38,7 +41,7 @@
             <!-- Display Attendance header of data table -->
             <div class="divTableHeading">
                 <div class="divTableRow">
-                    <div class="divTableHead" th:text="#{page.no}"></div>
+                    <div class="divTableHead" th:text="#{page.week.no}"></div>
                     <div class="divTableHead" th:text="#{page.student.atten.lec}"></div>
                     <div class="divTableHead" th:text="#{page.student.atten.lab}"></div>
                 </div>

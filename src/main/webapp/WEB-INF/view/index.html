@@ -14,39 +14,39 @@
             <h1 class="my-4" th:text="#{page.home.title}"></h1>
             <input type="text" id="searchInput" onkeyup="filterCourses()" placeholder="Search for courses..." class="form-control mb-4">
             <div class="row">
-                <div class="col-12 course-item" th:each="c : ${courses}">
+                <div class="col-12 course-item" th:each="course : ${courses}">
                     <div class="card">
                         <div class="course-header">
-                            <span  th:text="${c.subject.getCode()}"/> <span  th:text="${c.subject.getThaiName()}"/>
+                            <span  th:text="${course.subject.getCode()}"/> <span  th:text="${course.subject.getThaiName()}"/>
                         </div>
                         <div class="card-body">
-                            <p class="card-text course-description" th:text="${c.getSubject().getDescription()}"></p>
-                            <div class="course-detail-section" th:each="cs : ${c.getSections()}">
+                            <p class="card-text course-description" th:text="${course.getSubject().getDescription()}"></p>
+                            <div class="course-detail-section" th:each="section : ${course.getSections()}">
                                 <div class="course-detail-header">
-                                    <span th:text="#{page.student.atten.group}">:</span> <span th:text="${cs.getGroupNumber()}"/>
+                                    <span th:text="#{page.student.atten.group}">:</span> <span th:text="${section.getGroupNumber()}"/>
                                     <span style="float: right">
-                                        <a th:href="@{'/pub/student/atten/' + ${c.getId()} + '/' + ${cs.getId()}}"><span th:text="#{page.home.signin}"></span></a>
+                                        <a th:href="@{'/pub/student/atten/' + ${course.getId()} + '/' + ${section.getId()}}"><span th:text="#{page.home.signin}"></span></a>
                                     </span>
                                 </div>
                                 <div class="container">
                                     <!-- Lec -->
                                     <div class="item" th:text="#{section.lec}"></div>
-                                    <div class="item" th:text="${#messages.msgOrNull('day.' + cs.getLecDay())}"></div>
+                                    <div class="item" th:text="${#messages.msgOrNull('day.' + section.getLecDay())}"></div>
                                     <div class="item" th:inline="text">
-                                        <span th:text="#{page.time}"/> [[${cs.getStartLectureTime()}]]-[[${cs.getEndLectureTime()}]]
+                                        <span th:text="#{page.time}"/> [[${section.getStartLectureTime()}]]-[[${section.getEndLectureTime()}]]
                                     </div>
                                     <div class="item">
-                                        <span th:text="#{page.room}"/>: <span th:text="${cs.getLecRoom().getRoomId()}" />
+                                        <span th:text="#{page.room}"/>: <span th:text="${section.getLecRoom().getRoomId()}" />
                                     </div>
 
                                     <!-- Lab -->
                                     <div class="item" th:text="#{section.lab}"></div>
-                                    <div class="item" th:text="${#messages.msgOrNull('day.' + cs.getLabDay())}"></div>
+                                    <div class="item" th:text="${#messages.msgOrNull('day.' + section.getLabDay())}"></div>
                                     <div class="item" th:inline="text">
-                                        <span th:text="#{page.time}"/> [[${cs.getStartLabTime()}]]-[[${cs.getEndLabTime()}]]
+                                        <span th:text="#{page.time}"/> [[${section.getStartLabTime()}]]-[[${section.getEndLabTime()}]]
                                     </div>
                                     <div class="item">
-                                        <span th:text="#{page.room}"/>: <span th:text="${cs.getLabRoom().getRoomId()}" />
+                                        <span th:text="#{page.room}"/>: <span th:text="${section.getLabRoom().getRoomId()}" />
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="fixed-footer">
-            Watcharin Sarachai
+            &copy; 2024 <span th:text="#{page.author}"></span>
         </div>
         <!-- Bootstrap JS and dependencies -->
         <script th:src="@{'assets/js/libs/jquery-3.5.1.slim.min.js'}"></script>

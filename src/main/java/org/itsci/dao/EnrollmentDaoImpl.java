@@ -38,4 +38,11 @@ public class EnrollmentDaoImpl implements EnrollmentDao {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(courseSectionRegistration);
     }
+
+    @Override
+    public Enrollment findById(long id) {
+        Session session = sessionFactory.getCurrentSession();
+        Enrollment enrollment = session.get(Enrollment.class, id);
+        return enrollment;
+    }
 }

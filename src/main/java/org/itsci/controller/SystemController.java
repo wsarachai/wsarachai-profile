@@ -38,6 +38,7 @@ public class SystemController {
 
     @GetMapping("/student/import")
     public String studentImportPage(Model model) {
+
         model.addAttribute("message", null);
         return "system/import-student";
     }
@@ -150,6 +151,6 @@ public class SystemController {
             systemService.saveEnrollment(enrollment);
         }
 
-        return "redirect:/";
+        return "redirect:/system/student/import";
     }
 }

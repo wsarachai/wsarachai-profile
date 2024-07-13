@@ -15,7 +15,7 @@
         <div class="container">
             <h2 style="text-align: center;" th:text="#{page.access-denied.title}"></h2>
             <div style="text-align:center">
-                <a href="${pageContext.request.contextPath}/" th:text="#{page.access-denied.back}"></a>
+                <a th:href="@{/}" th:text="#{page.access-denied.back}"></a>
             </div>
         </div>
         <footer id="footer">

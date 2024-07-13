@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Set;
 
 public interface StudentAttenService {
-    Course getCourseById(Long id);
+    Course findCourseById(Long id);
 
     List<Enrollment> findEnrollmentBySectionId(Long id);
 
-    Student getStudent(String studentId);
+    Student findStudentById(String studentId);
 
     void saveEnrollment(Enrollment enrollment);
 
-    Enrollment findCourseSectionRegistrationBySectionId(String secionId);
+    Enrollment findSectionBySectionId(String secionId);
 
     void saveAttendance(Attendance attendance);
 
@@ -24,7 +24,7 @@ public interface StudentAttenService {
 
     List<Subject> findAllSubjects();
 
-    Curriculum getCurriculumById(Long i);
+    Curriculum findCurriculumById(Long i);
 
     void saveSubject(Subject subject);
 
@@ -40,11 +40,11 @@ public interface StudentAttenService {
 
     List<Course> findAllCourse();
 
-    Subject getSubjectById(long l);
+    Subject findSubjectById(long l);
 
     void saveCourse(Course course1);
 
-    Room getRoomById(long id);
+    Room findRoomById(long id);
 
     Authority findByRoleName(EAuthorityType role);
 
@@ -57,4 +57,8 @@ public interface StudentAttenService {
     Section findSectionById(long id);
 
     void updateCourse(Course course);
+
+    Enrollment findEnrollmentById(long id);
+
+    Attendance findAttendanceById(long id);
 }

@@ -1,37 +1,28 @@
 package org.itsci.controller;
 
 import org.itsci.model.EAttendanceStatus;
+import org.itsci.model.Enrollment;
 import org.itsci.model.Student;
 
 public class AttenData {
-    private Student student;
-    private String status;
+    private Enrollment enrollment;
     private EAttendanceStatus[] attenLec = new EAttendanceStatus[15];
     private EAttendanceStatus [] attenLab = new EAttendanceStatus[15];
 
-    public AttenData(Student student, String status) {
-        this.student = student;
-        this.status = status;
+    public AttenData(Enrollment enrollment) {
+        this.enrollment = enrollment;
         for (int i = 0; i < 15; i++) {
             attenLec[i] = EAttendanceStatus.NA;
             attenLab[i] = EAttendanceStatus.NA;
         }
     }
 
-    public Student getStudent() {
-        return student;
+    public Enrollment getEnrollment() {
+        return enrollment;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setEnrollment(Enrollment enrollment) {
+        this.enrollment = enrollment;
     }
 
     public EAttendanceStatus[] getAttenLec() {

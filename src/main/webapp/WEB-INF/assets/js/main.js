@@ -38,17 +38,18 @@ var dayNames = [
   "วันเสาร์ที่",
 ];
 
-function getLocation(location) {
+function getLocation(location, latitudeInput, longitudeInput) {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition.bind(null, location));
+    navigator.geolocation.getCurrentPosition(showPosition.bind(null, location, latitudeInput, longitudeInput));
   } else {
     location.innerHTML = "Geolocation is not supported by this browser.";
   }
 }
 
-function showPosition(location, position) {
-  location.innerHTML =
-    position.coords.latitude + ", " + position.coords.latitude;
+function showPosition(location, latitudeInput, longitudeInput, position) {
+  latitudeInput.value = position.coords.latitude;
+  longitudeInput.value = position.coords.longitude;
+  location.innerHTML = position.coords.latitude + ", " + position.coords.longitude;
 }
 
 const initElement = function () {
@@ -200,8 +201,10 @@ const updateTime = function () {
 };
 
 const init = () => {
-  const location = document.getElementById("location");
-  getLocation(location);
+  const latitudeInput = document.getElementById("latitudeInput");
+  const longitudeInput = document.getElementById("longitudeInput");
+    const location = document.getElementById("location");
+  getLocation(location, latitudeInput, longitudeInput);
   initElement();
   initEvent();
   timeHandler = setInterval(updateTime, 1000);

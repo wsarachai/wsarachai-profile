@@ -14,20 +14,20 @@ public class AttendanceDaoImpl implements AttendanceDao {
     SessionFactory sessionFactory;
 
     @Override
-    public void saveAttendance(Attendance attendance) {
+    public void save(Attendance attendance) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(attendance);
     }
 
     @Override
-    public Attendance updateAttendance(Attendance attendance) {
+    public Attendance update(Attendance attendance) {
         Session session = sessionFactory.getCurrentSession();
         attendance = (Attendance) session.merge(attendance);
         return attendance;
     }
 
     @Override
-    public void deleteAttendance(Long id) {
+    public void delete(Long id) {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("delete from Attendance where id=:id");
         query.setParameter("id", id);
@@ -35,7 +35,7 @@ public class AttendanceDaoImpl implements AttendanceDao {
     }
 
     @Override
-    public Attendance findAttendanceById(long id) {
+    public Attendance findById(long id) {
         Session session = sessionFactory.getCurrentSession();
         Attendance attendance = session.get(Attendance.class, id);
         return attendance;

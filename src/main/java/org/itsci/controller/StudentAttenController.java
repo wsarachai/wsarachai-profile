@@ -6,6 +6,7 @@ import org.itsci.service.UserService;
 import org.itsci.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +23,74 @@ public class StudentAttenController {
     ResourceBundleMessageSource messageSource;
 
     @Autowired
-    private UserService<Teacher> userService;
+    private UserService<Student> userService;
 
     @Autowired
     private StudentAttenService studentAttenService;
+
+    @GetMapping("/manage/{enrollmentId}")
+    public String authenticated_home(Model model, @PathVariable String enrollmentId) {
+            Enrollment enrollment = studentAttenService.getEnrollmentById(Long.parseLong(enrollmentId));
+            List<Attendance> lecAtten = new ArrayList<>();
+            List<Attendance> labAtten = new ArrayList<>();
+            List<Attendance> lecAttendances = new ArrayList<>(enrollment.getLecAtten());
+            List<Attendance> labAttendances = new ArrayList<>(enrollment.getLabAtten());
+            for (int i=0; i<15; i++) {
+                try {
+                    boolean found = false;
+                    for (Attendance att : lecAttendances) {
+                        if (att.getWeekNo() == i) {
+                            lecAtten.add(att);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        Attendance newAtt = new Attendance();
+                        newAtt.setWeekNo(i);
+                        newAtt.setStatus(EAttendanceStatus.ABSENT);
+                        lecAtten.add(newAtt);
+                    }
+                } catch (Exception ex) {
+                    Attendance newAtt = new Attendance();
+                    newAtt.setWeekNo(i);
+                    newAtt.setStatus(EAttendanceStatus.ABSENT);
+                    lecAtten.add(newAtt);
+                }
+
+                try {
+                    boolean found = false;
+                    for (Attendance att : labAttendances) {
+                        if (att.getWeekNo() == i) {
+                            labAtten.add(att);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        Attendance newAtt = new Attendance();
+                        newAtt.setWeekNo(i);
+                        newAtt.setStatus(EAttendanceStatus.ABSENT);
+                        labAtten.add(newAtt);
+                    }
+                } catch (Exception ex) {
+                    Attendance newAtt = new Attendance();
+                    newAtt.setWeekNo(i);
+                    newAtt.setStatus(EAttendanceStatus.ABSENT);
+                    labAtten.add(newAtt);
+                }
+
+                model.addAttribute("enrollment", enrollment);
+                model.addAttribute("lecAtten", lecAtten);
+                model.addAttribute("labAtten", labAtten);
+        }
+        return "manage";
+    }
+
+    @GetMapping("/view/{enrollmentId}/{attenId}")
+    private String viewAttenuation(Model model, @PathVariable String enrollmentId, @PathVariable String attenId) {
+        return "redirect:/pub/student/manage/" + enrollmentId;
+    }
 
     private String attentionPage(Model model, String courseId, String secionId, int userSelectedWeek) {
         Course course = studentAttenService.getCourseById(Long.parseLong(courseId));

@@ -1,14 +1,76 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="mobile-web-app-capable" content="yes">
-        <link rel="stylesheet" th:href="@{assets/css/main.css}">
-        <title th:text="#{page.title}"></title>
-    </head>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+    <title th:text="#{page.title}"></title>
+</head>
+
 <body>
-<h1 th:text="#{page.home}"></h1>
+<header>
+    <h1 th:text="#{page.title}"></h1>
+</header>
+<main id="main-container">
+    <p class="title"><a th:href="@{'/'}" th:text="#{page.home}"></a>&nbsp;/&nbsp;<span th:text="#{page.student.profile}"></span></p>
+    <section class="flex-container-column">
+        <div class="flex-container-row">
+            <!-- Display course header of data table -->
+            <div class="item1">
+                <p th:text="#{page.student.atten.subjects}">:</p>
+                <p th:text="#{page.student.atten.group}">:</p>
+                <p th:text="#{page.student.atten.semester}">:</p>
+                <p th:text="#{page.student.code}">:</p>
+                <p th:text="#{bean.user.firstname}">:</p>
+            </div>
+            <!-- Display course header details of data table -->
+            <div class="item2" th:with="section=${enrollment.getSection()}">
+                <p th:with="sub=${section.getCourse().getSubject()}" th:text="${sub.getCode() + ' ' + sub.getThaiName()}"></p>
+                <p th:text="${section.getGroupNumber()}"></p>
+                <p th:text="${section.getCourse().getSemester()}"></p>
+                <p th:text="${enrollment.getStudent().getStudentId()}">:</p>
+                <p th:with="stu=${enrollment.getStudent()}" th:text="${stu.getPrename()+' '+stu.getFirstName()+' '+stu.getLastName()}"></p>
+            </div>
+        </div>
+        <div class="divTable blueTable">
+            <!-- Display Attendance header of data table -->
+            <div class="divTableHeading">
+                <div class="divTableRow">
+                    <div class="divTableHead" th:text="#{page.no}"></div>
+                    <div class="divTableHead" th:text="#{page.student.atten.lec}"></div>
+                    <div class="divTableHead" th:text="#{page.student.atten.lab}"></div>
+                </div>
+            </div>
+            <!-- Display Attendance data table -->
+            <div class="divTableBody">
+                <div class="divTableRow" th:each="i : ${#numbers.sequence(0, 14)}">
+                    <div class="divTableCell" th:text="${i+1}"></div>
+                    <div class="divTableCell" th:with="atten=${lecAtten.get(i)}" th:switch="${atten.getStatus().name()}">
+                        <a th:case="'NA'" th:href="@{'/pub/student/view/'+${enrollment.getId()}+'/'+${atten.getId()}}"><img th:src="@{/assets/images/na.png}"/></a>
+                        <a th:case="'ABSENT'" th:href="@{'/pub/student/view/'+${enrollment.getId()}+'/'+${atten.getId()}}"><img th:src="@{/assets/images/absent.png}"/></a>
+                        <a th:case="'LATE'" th:href="@{'/pub/student/view/'+${enrollment.getId()}+'/'+${atten.getId()}}"><img th:src="@{/assets/images/late.png}"/></a>
+                        <a th:case="'LETTERS'" th:href="@{'/pub/student/view/'+${enrollment.getId()}+'/'+${atten.getId()}}"><img th:src="@{/assets/images/letters.png}"/></a>
+                        <a th:case="'ATTENDED'" th:href="@{'/pub/student/view/'+${enrollment.getId()}+'/'+${atten.getId()}}"><img th:src="@{/assets/images/atten.png}"/></a>
+                        <a th:case="*" th:href="@{'/pub/student/view/'+${enrollment.getId()}+'/'+${atten.getId()}}"><p th:text="${atten.getStatus().name()}"></p></a>
+                    </div>
+                    <div class="divTableCell" th:with="atten=${labAtten.get(i)}" th:switch="${atten.getStatus().name()}">
+                        <a th:case="'NA'" th:href="@{'/pub/student/view/'+${enrollment.getId()}+'/'+${atten.getId()}}"><img th:src="@{/assets/images/na.png}"/></a>
+                        <a th:case="'ABSENT'" th:href="@{'/pub/student/view/'+${enrollment.getId()}+'/'+${atten.getId()}}"><img th:src="@{/assets/images/absent.png}"/></a>
+                        <a th:case="'LATE'" th:href="@{'/pub/student/view/'+${enrollment.getId()}+'/'+${atten.getId()}}"><img th:src="@{/assets/images/late.png}"/></a>
+                        <a th:case="'LETTERS'" th:href="@{'/pub/student/view/'+${enrollment.getId()}+'/'+${atten.getId()}}"><img th:src="@{/assets/images/letters.png}"/></a>
+                        <a th:case="'ATTENDED'" th:href="@{'/pub/student/view/'+${enrollment.getId()}+'/'+${atten.getId()}}"><img th:src="@{/assets/images/atten.png}"/></a>
+                        <a th:case="*" th:href="@{'/pub/student/view/'+${enrollment.getId()}+'/'+${atten.getId()}}"><p th:text="${atten.getStatus().name()}"></p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2024 <span th:text="#{page.author}"></span></p>
+</footer>
 </body>
+
 </html>

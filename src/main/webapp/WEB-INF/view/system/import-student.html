@@ -4,7 +4,10 @@
 <body>
     <div th:replace="layouts/general :: header"></div>
     <main class="container course-container">
-        <h4 class="my-4 title" th:text="#{page.student.import}"></h4>
+        <div class="my-4">
+            <h4 th:text="#{page.student.import}"></h4>
+            <a th:href="@{/}" th:text="#{page.navigate.back}"></a>
+        </div>
         <div class="row">
             <div class="col-12 course-item">
                 <div class="card">

@@ -1,64 +1,71 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="mobile-web-app-capable" content="yes">
-        <link rel="stylesheet" th:href="@{/assets/css/main.css}">
-        <title th:text="#{page.title}"></title>
-    </head>
-
-    <body>
-        <header>
-            <h1 th:text="#{page.title}"></h1>
-        </header>
-        <main id="main-container">
-            <section class="flex-container-column">
-                <div class="flex-container-row">
-                    <form th:action="@{/system/student/enroll}" method="post">
-                        <h3>Select field mapping</h3>
-                        <div>No:*</div>
-                        <div>
-                            <select name="no">
-                                <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
-                            </select>
+<head th:include="layouts/general :: headerfiles"></head>
+<body>
+    <div th:replace="layouts/general :: header"></div>
+    <main class="container course-container">
+        <div class="my-4">
+            <h4 th:text="#{page.menu.register}"></h4>
+            <a th:href="@{/system/student/import}" th:text="#{page.navigate.back}"></a>
+        </div>
+        <div class="row">
+            <section class="col-12 flex-container-column">
+                <h5 th:text="#{page.student.import.select}"></h5>
+                <form th:action="@{/system/student/enroll}" method="post">
+                    <div  class="upload-form-container">
+                        <div class="field-group upload-form-item">
+                            <label for="no" th:text="#{page.no}">:*</label>
+                            <div>
+                                <select id="no" name="no">
+                                    <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
+                                </select>
+                            </div>
                         </div>
-                        <div>Code:*</div>
-                        <div>
-                            <select name="code">
-                                <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
-                            </select>
+                        <div class="field-group upload-form-item">
+                            <label for="code" th:text="#{page.student.code}">:*</label>
+                            <div>
+                                <select id="code" name="code">
+                                    <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
+                                </select>
+                            </div>
                         </div>
-                        <div>Prename:*</div>
-                        <div>
-                            <select name="prename">
-                                <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
-                            </select>
+                        <div class="field-group upload-form-item">
+                            <label for="prename" th:text="#{page.user.prename}">:*</label>
+                            <div>
+                                <select id="prename" name="prename">
+                                    <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
+                                </select>
+                            </div>
                         </div>
-                        <div>Firstname:*</div>
-                        <div>
-                            <select name="firstname">
-                                <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
-                            </select>
+                        <div class="field-group upload-form-item">
+                            <label for="firstname" th:text="#{page.user.firstname}">:*</label>
+                            <div>
+                                <select id="firstname" name="firstname">
+                                    <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
+                                </select>
+                            </div>
                         </div>
-                        <div>Lastname:*</div>
-                        <div>
-                            <select name="lastname">
-                                <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
-                            </select>
+                        <div class="field-group upload-form-item">
+                            <label for="lastname" th:text="#{page.user.lastname}">:*</label>
+                            <div>
+                                <select id="lastname" name="lastname">
+                                    <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
+                                </select>
+                            </div>
                         </div>
-                        <div>Section:*</div>
-                        <div>
-                            <select name="section_id">
-                                <option th:each="sec : ${sections}" th:value="${sec.getId()}" th:text="${sec.getCourse().getSubject().getCode()+'-sec'+sec.getGroupNumber()}"></option>
-                            </select>
+                        <div class="field-group upload-form-item">
+                            <label for="section_id" th:text="#{page.menu.register}">:*</label>
+                            <div>
+                                <select id="section_id" name="section_id">
+                                    <option th:each="sec : ${sections}" th:value="${sec.getId()}" th:text="${sec.getCourse().getSubject().getCode()+'-sec'+sec.getGroupNumber()}"></option>
+                                </select>
+                            </div>
                         </div>
-                        <div>
-                            <input type="submit" value="Submit">
+                        <div class="field-group upload-form-btn">
+                            <button class="btn btn-sm btn-danger" type="submit" th:text="#{page.student.import.btn}">
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
                 <div class="divTable blueTable">
                     <div class="divTableHeading">
                         <div class="divTableRow">
@@ -72,10 +79,10 @@
                     </div>
                 </div>
             </section>
-        </main>
-        <footer>
-            <p>&copy; 2024 <span th:text="#{page.author}"></span></p>
-        </footer>
-    </body>
+        </div>
+    </main>
+    <div th:replace="layouts/general.html :: footer"></div>
+    <div th:replace="layouts/general.html :: scriptfiles"></div>
+</body>
 
 </html>

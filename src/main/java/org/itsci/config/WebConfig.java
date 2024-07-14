@@ -92,7 +92,19 @@ public class WebConfig implements WebMvcConfigurer {
     public ViewResolver viewResolver(){
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(springTemplateEngine());
+        viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
+    }
+
+    @Bean
+    public ClassLoaderTemplateResolver webPageTemplateResolver(){
+        ClassLoaderTemplateResolver webPageTemplateResolver = new ClassLoaderTemplateResolver();
+        webPageTemplateResolver.setPrefix("layouts/");
+        webPageTemplateResolver.setSuffix(".html");
+        webPageTemplateResolver.setTemplateMode("HTML5");
+        webPageTemplateResolver.setCharacterEncoding(CharEncoding.UTF_8);
+        webPageTemplateResolver.setOrder(1);
+        return webPageTemplateResolver;
     }
 
 //    @Bean
@@ -101,17 +113,6 @@ public class WebConfig implements WebMvcConfigurer {
 //        viewResolver.setTemplateEngine(springTemplateEngine());
 //        viewResolver.setCharacterEncoding("UTF-8");
 //        return viewResolver;
-//    }
-
-//    @Bean
-//    public ClassLoaderTemplateResolver webPageTemplateResolver(){
-//        ClassLoaderTemplateResolver webPageTemplateResolver = new ClassLoaderTemplateResolver();
-//        webPageTemplateResolver.setPrefix("templates/");
-//        webPageTemplateResolver.setSuffix(".html");
-//        webPageTemplateResolver.setTemplateMode("HTML5");
-//        webPageTemplateResolver.setCharacterEncoding(CharEncoding.UTF_8);
-//        webPageTemplateResolver.setOrder(1);
-//        return webPageTemplateResolver;
 //    }
 
 //    @Bean

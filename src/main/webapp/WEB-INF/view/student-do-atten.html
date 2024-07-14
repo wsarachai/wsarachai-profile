@@ -2,34 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:include="layouts/general :: headerfiles"></head>
 <body>
-    <div th:replace="layouts/general :: header"></div>
-    <main class="container course-container">
-        <p class="my-4 title"><a th:href="@{'/'}" th:text="#{page.home}"></a>&nbsp;/&nbsp;<span th:text="#{page.student.login.title}"></span></p>
-        <div class="row">
-            <section class="col-12 flex-container-column">
-                <div class="flex-container-row">
-                    <div class="item1">
-                        <p th:text="#{page.student.atten.subjects}">:</p>
-                        <p th:text="#{page.student.atten.group}">:</p>
-                        <p th:text="#{page.student.atten.semester}">:</p>
-                        <p th:text="#{page.student.code}">:</p>
-                        <p th:text="#{page.user.firstname}">:</p>
-                        <p th:text="#{page.location}">: </p>
-                        <p th:text="#{page.date}">:</p>
-                        <p th:text="#{page.student.atten.time}"></p>
-                    </div>
-                    <div class="item2">
-                        <p th:text="${course.getSubject().getCode() + ' ' + course.getSubject().getThaiName()}"></p>
-                        <p th:text="${enrollment.getSection().getGroupNumber()}"></p>
-                        <p th:text="${course.getSemester()}"></p>
-                        <p th:text="${enrollment.getStudent().getStudentId()}"></p>
-                        <p th:text="${enrollment.getStudent().getPrename()+' '+enrollment.getStudent().getFirstName()+' '+enrollment.getStudent().getLastName()}"></p>
-                        <p id="location"></p>
-                        <p>
-                            <span id="currentDate"></span>
-                            <span th:text="#{page.time}+' '"></span><span id="currentTime"></span>
-                        </p>
-                        <p>
+<div th:replace="layouts/general :: header"></div>
+<main class="container course-container">
+    <p class="my-4 title"><a th:href="@{'/'}" th:text="#{page.home}"></a>&nbsp;/&nbsp;<span th:text="#{page.student.login.title}"></span></p>
+    <div class="row">
+        <section class="col-12 flex-container-column">
+            <div class="flex-container-row">
+                <div class="item1">
+                    <p th:text="#{page.student.atten.subjects}">:</p>
+                    <p th:text="#{page.student.atten.group}">:</p>
+                    <p th:text="#{page.student.atten.semester}">:</p>
+                    <p th:text="#{page.student.code}">:</p>
+                    <p th:text="#{page.user.firstname}">:</p>
+                    <p th:text="#{page.location}">: </p>
+                    <p th:text="#{page.date}">:</p>
+                    <p th:text="#{page.student.atten.time}"></p>
+                </div>
+                <div class="item2">
+                    <p th:text="${course.getSubject().getCode() + ' ' + course.getSubject().getThaiName()}"></p>
+                    <p th:text="${enrollment.getSection().getGroupNumber()}"></p>
+                    <p th:text="${course.getSemester()}"></p>
+                    <p th:text="${enrollment.getStudent().getStudentId()}"></p>
+                    <p th:text="${enrollment.getStudent().getPrename()+' '+enrollment.getStudent().getFirstName()+' '+enrollment.getStudent().getLastName()}"></p>
+                    <p id="location"></p>
+                    <p>
+                        <span id="currentDate"></span>
+                        <span th:text="#{page.time}+' '"></span><span id="currentTime"></span>
+                    </p>
+                    <p>
                             <span th:switch="${type}">
                                 <span th:case="lec">
                                     <span th:text="#{section.lec}"></span>
@@ -60,49 +60,49 @@
                                 </span>
                                 <span th:case="*" th:text="${type}"></span>
                             </span>
-                        </p>
+                    </p>
+                </div>
+            </div>
+            <div class="flex-container-row">
+                <div class="item3">
+                    <div class="wrapper">
+                        <video></video>
+                        <br />
+                        <button id="newphoto"
+                                th:state1="#{page.student.takepicture.st1}"
+                                th:state2="#{page.student.takepicture.st2}"
+                                th:text="#{page.student.takepicture.st1}">
+                        </button>
                     </div>
                 </div>
-                <div class="flex-container-row">
-                    <div class="item3">
-                        <div class="wrapper">
-                            <video></video>
-                            <br />
-                            <button id="newphoto"
-                                    th:state1="#{page.student.takepicture.st1}"
-                                    th:state2="#{page.student.takepicture.st2}"
-                                    th:text="#{page.student.takepicture.st1}">
-                            </button>
-                        </div>
+                <div class="item4">
+                    <div class="wrapper">
+                        <canvas id="canvas1"></canvas>
+                        <p th:text="#{page.student.takepicture.st1}"></p>
                     </div>
-                    <div class="item4">
-                        <div class="wrapper">
-                            <canvas id="canvas1"></canvas>
-                            <p th:text="#{page.student.takepicture.st1}"></p>
-                        </div>
-                        <div class="wrapper">
-                            <canvas id="canvas2"></canvas>
-                            <p th:text="#{page.student.takepicture.st2}"></p>
-                        </div>
+                    <div class="wrapper">
+                        <canvas id="canvas2"></canvas>
+                        <p th:text="#{page.student.takepicture.st2}"></p>
                     </div>
                 </div>
-                <div class="flex-container-row">
-                    <div class="item5">
-                        <form th:method="post" th:action="@{/pub/student/atten/doatten}" enctype="multipart/form-data">
-                            <input type="hidden" th:name="enrollmentId" th:value="${enrollment.getId()}">
-                            <input type="hidden" th:name="type" th:value="${type}">
-                            <input type="hidden" th:name="week" th:value="${week}">
-                            <input type="hidden" th:name="latitude" id="latitudeInput">
-                            <input type="hidden" th:name="longitude" id="longitudeInput">
-                            <input type="file" id="inputImage1" th:name="image1" accept="image/*" style="display: none">
-                            <input type="file" id="inputImage2" th:name="image2" accept="image/*" style="display: none">
-                            <button type="submit" id="attbutton" disabled="disabled" th:text="#{page.student.takepciture.btn}"></button>
-                        </form>
-                    </div>
+            </div>
+            <div class="flex-container-row">
+                <div class="item5">
+                    <form th:method="post" th:action="@{/pub/student/atten/doatten}" enctype="multipart/form-data">
+                        <input type="hidden" th:name="enrollmentId" th:value="${enrollment.getId()}">
+                        <input type="hidden" th:name="type" th:value="${type}">
+                        <input type="hidden" th:name="week" th:value="${week}">
+                        <input type="hidden" th:name="latitude" id="latitudeInput">
+                        <input type="hidden" th:name="longitude" id="longitudeInput">
+                        <input type="file" id="inputImage1" th:name="image1" accept="image/*" style="display: none">
+                        <input type="file" id="inputImage2" th:name="image2" accept="image/*" style="display: none">
+                        <button type="submit" id="attbutton" disabled="disabled" th:text="#{page.student.takepciture.btn}"></button>
+                    </form>
                 </div>
-            </section>
-        </div>
-    </main>
-    <div th:replace="layouts/general.html :: footer"></div>
-    <div th:replace="layouts/general.html :: scriptfiles"></div>
+            </div>
+        </section>
+    </div>
+</main>
+<div th:replace="layouts/general.html :: footer"></div>
+<div th:replace="layouts/general.html :: scriptfiles"></div>
 </html>

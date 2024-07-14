@@ -3,6 +3,48 @@ body {
     padding-bottom: 60px; /* Space for the fixed footer */
 }
 
+/* Used in th index.html */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Adjust alignment as needed */
+}
+
+.item {
+    flex: 1 1 calc(25% - 20px); /* Adjust based on margin/padding */
+    margin: 0px; /* Adjust margin between items */
+    background-color: #f0f0f0;
+    padding: 5px;
+    box-sizing: border-box;
+    text-align: center;
+}
+/* Used in th index.html */
+
+/* Used in th upload-form.html */
+.upload-form-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.upload-form-item {
+    flex: 1 1 calc(16% - 2px);
+    margin: 0px;
+    background-color: #f0f0f0;
+    padding: 5px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.upload-form-btn {
+    margin: 10px auto 10px auto;
+}
+
+.upload-form-btn > button {
+    width: 200px;
+}
+/* end of upload-form.html */
+
 .title {
     width: 100%;
 }
@@ -12,12 +54,25 @@ body {
     margin: 0;
 }
 
-.fixed-header, .fixed-footer {
+.custom_ctl_group > label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.fixed-header {
+    font-size: 1.5rem;
+}
+
+.fixed-footer {
+    font-size: 1.0rem;
+}
+
+.fixed-header,
+.fixed-footer {
     background-color: #1d3557;
     color: white;
     text-align: center;
     padding: 15px 0;
-    font-size: 1.5rem;
 }
 .fixed-header {
     position: fixed;
@@ -45,6 +100,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
 }
+
 .course-header {
     background-color: #1d3557;
     color: white;
@@ -55,17 +111,21 @@ body {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
+
 .course-title {
     font-size: 1.5rem;
     font-weight: bold;
 }
+
 .course-description {
     margin-top: 10px;
 }
+
 .course-details {
     margin-top: 10px;
     font-size: 1rem;
 }
+
 .course-detail-section {
     display: flex;
     flex-wrap: wrap;
@@ -75,26 +135,25 @@ body {
     background-color: #f8f9fa;
     border-radius: 5px;
 }
+
 .course-detail-section:nth-child(even) {
     background-color: #e9ecef;
 }
+
 .course-detail-header {
     flex-basis: 100%;
     font-weight: bold;
     margin-bottom: 10px;
 }
+
 .course-detail-item {
     flex: 1;
     min-width: 100px;
     margin-right: 10px;
 }
+
 .course-detail-item:last-child {
     margin-right: 0;
-}
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start; /* Adjust alignment as needed */
 }
 
 .flex-container-column {
@@ -117,6 +176,7 @@ body {
     justify-content: flex-start;
     align-items: stretch;
     flex-direction: row;
+    flex-wrap: wrap;
     background-color: #bbdefb;
     height: 100%;
     padding: 15px;
@@ -127,15 +187,6 @@ body {
     background: #fff;
     border-radius: 5px;
     padding: 8px;
-}
-
-.item {
-    flex: 1 1 calc(25% - 20px); /* Adjust based on margin/padding */
-    margin: 0px; /* Adjust margin between items */
-    background-color: #f0f0f0;
-    padding: 5px;
-    box-sizing: border-box;
-    text-align: center;
 }
 
 .item1 {
@@ -288,4 +339,38 @@ div.blueTable {
 
 #file-info {
     margin-top: 20px;
+}
+
+.footer-menu {
+    list-style: none;
+    padding: 0;
+    margin: 10px auto 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-style: italic;
+}
+
+.footer-menu li {
+    margin: 0 10px;
+}
+
+.footer-menu a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.footer-menu a i {
+    margin-right: 8px;
+}
+
+.footer-menu a:hover {
+    color: #ff6347; /* Tomato color */
+}
+
+.footer-menu .separator {
+    color: #fff;
 }

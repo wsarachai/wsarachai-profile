@@ -30,7 +30,7 @@
         <aspectjweaver.version>1.9.7</aspectjweaver.version>
         <mysql.version>8.0.30</mysql.version>
         <mariadb.version>3.0.6</mariadb.version>
-        <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+        <thymeleaf.version>3.1.0.RELEASE</thymeleaf.version>
     </properties>
 
     <dependencies>
@@ -188,6 +188,11 @@
         <dependency>
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-spring5</artifactId>
+            <version>${thymeleaf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
             <version>${thymeleaf.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.linecorp.bot/line-bot-api-client -->

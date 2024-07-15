@@ -45,4 +45,10 @@ public class EnrollmentDaoImpl implements EnrollmentDao {
         Enrollment enrollment = session.get(Enrollment.class, id);
         return enrollment;
     }
+
+    @Override
+    public void update(Enrollment enrollment) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(enrollment);
+    }
 }

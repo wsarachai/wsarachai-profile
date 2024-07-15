@@ -166,6 +166,12 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
+    public void updateEnrollment(Enrollment enrollment) {
+        enrollmentDao.update(enrollment);
+    }
+
+    @Override
+    @Transactional
     public List<Course> findAllCourse() {
         return courseDao.findAll();
     }

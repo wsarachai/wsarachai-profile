@@ -46,36 +46,12 @@ public class SecurityConfig {
                     configurer.antMatchers("/home/**").authenticated()
                             .antMatchers("/member/**").hasRole("MEMBER")
                             .antMatchers("/system/**").hasRole("ADMIN")
-//                            .antMatchers("/pub/student/manage/**").hasRole("STUDENT")
+                            .antMatchers("/api/**").hasAnyRole("ADMIN", "TEACHER")
                             .antMatchers("/**").permitAll()
                             .and().csrf()
                             .ignoringAntMatchers("/api/**")
                             .ignoringAntMatchers("/system/**")
                             .ignoringAntMatchers("/pub/**");
-
-//                            .authorizeRequests()
-//                            .antMatchers("/test/**").permitAll()
-//                            .antMatchers("/admin/**","/user/secure").hasRole("ADMIN")
-//                            .antMatchers("/**").permitAll()
-//                            .anyRequest().anonymous()
-//                            .and()
-//                            .exceptionHandling().accessDeniedPage("/denied")
-//                            .and()
-//                            .formLogin()
-//                            .loginPage("/login")
-//                            .failureUrl("/error-login")
-//                            .permitAll()
-//                            .and()
-//                            .logout()
-//                            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                            .logoutSuccessUrl("/")
-//                            .and()
-//                            .rememberMe()
-//                            .userDetailsService(userAccessDetails)
-//                            .tokenRepository(persistentTokenRepository())
-//                            .tokenValiditySeconds(16000);
-
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

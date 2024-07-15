@@ -22,9 +22,6 @@ public class StudentAttenController {
     ResourceBundleMessageSource messageSource;
 
     @Autowired
-    private UserService<Student> userService;
-
-    @Autowired
     private StudentAttenService studentAttenService;
 
     @GetMapping("/manage/{enrollmentId}")
@@ -164,19 +161,21 @@ public class StudentAttenController {
                         if (att.getWeekNo() == i) {
                             attenData.getAttenLec()[i] = att.getStatus();
                             found = true;
-                            switch(att.getStatus()) {
-                                case ATTENDED:
-                                    attendedCountLec = i == displayWeek ? attendedCountLec+1 : attendedCountLec;
-                                    break;
-                                case LATE:
-                                    lateCountLec = i == displayWeek ? lateCountLec+1 : lateCountLec;
-                                    break;
-                                case LETTERS:
-                                    letterCountLec = i == displayWeek ? letterCountLec+1 : letterCountLec;
-                                    break;
-                                case ABSENT:
-                                    absentCountLec = i == absentCountLec ? absentCountLec+1 : absentCountLec;
-                                    break;
+                            if (i == displayWeek) {
+                                switch (att.getStatus()) {
+                                    case ATTENDED:
+                                        attendedCountLec++;
+                                        break;
+                                    case LATE:
+                                        lateCountLec++;
+                                        break;
+                                    case LETTERS:
+                                        letterCountLec++;
+                                        break;
+                                    case ABSENT:
+                                        absentCountLec++;
+                                        break;
+                                }
                             }
                             break;
                         }
@@ -190,30 +189,27 @@ public class StudentAttenController {
                     absentCountLec = i == displayWeek ? absentCountLec+1 : absentCountLec;
                 }
 
-                model.addAttribute("attendedCountLec", attendedCountLec);
-                model.addAttribute("lateCountLec", lateCountLec);
-                model.addAttribute("letterCountLec", letterCountLec);
-                model.addAttribute("absentCountLec", absentCountLec);
-
                 try {
                     boolean found = false;
                     for (Attendance att : labAttendances) {
                         if (att.getWeekNo() == i) {
                             attenData.getAttenLab()[i] = att.getStatus();
                             found = true;
-                            switch(att.getStatus()) {
-                                case ATTENDED:
-                                    attendedCountLab = i == displayWeek ? attendedCountLab+1 : attendedCountLab;
-                                    break;
-                                case LATE:
-                                    lateCountLab = i == displayWeek ? lateCountLab+1 : lateCountLab;
-                                    break;
-                                case LETTERS:
-                                    letterCountLab = i == displayWeek ? letterCountLab+1 : letterCountLab;
-                                    break;
-                                case ABSENT:
-                                    absentCountLab = i == displayWeek ? absentCountLab+1 : absentCountLab;
-                                    break;
+                            if (i == displayWeek) {
+                                switch (att.getStatus()) {
+                                    case ATTENDED:
+                                        attendedCountLab++;
+                                        break;
+                                    case LATE:
+                                        lateCountLab++;
+                                        break;
+                                    case LETTERS:
+                                        letterCountLab++;
+                                        break;
+                                    case ABSENT:
+                                        absentCountLab++;
+                                        break;
+                                }
                             }
                             break;
                         }

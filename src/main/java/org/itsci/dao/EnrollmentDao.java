@@ -10,4 +10,6 @@ public interface EnrollmentDao {
     void save(Enrollment courseSectionRegistration);
 
     Enrollment findById(long id);
+
+    void update(Enrollment enrollment);
 }

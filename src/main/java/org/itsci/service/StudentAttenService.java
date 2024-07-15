@@ -61,4 +61,6 @@ public interface StudentAttenService {
     Enrollment findEnrollmentById(long id);
 
     Attendance findAttendanceById(long id);
+
+    void updateEnrollment(Enrollment enrollment);
 }

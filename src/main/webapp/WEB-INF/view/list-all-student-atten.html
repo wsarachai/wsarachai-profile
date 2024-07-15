@@ -47,10 +47,10 @@
                             <img th:src="@{/assets/images/absent.png}"/>
                             <span class="value" th:text="${absentCountLec}"></span>
                             <span>&nbsp;|&nbsp;</span>
-                            <img th:src="@{/assets/images/letters.png}"/>
+                            <img th:src="@{/assets/images/late.png}"/>
                             <span class="value" th:text="${lateCountLec}"></span>
                             <span>&nbsp;|&nbsp;</span>
-                            <img th:src="@{/assets/images/late.png}"/>
+                            <img th:src="@{/assets/images/letters.png}"/>
                             <span class="value" th:text="${letterCountLec}"></span>
                             <span>&nbsp;|&nbsp;</span>
                             <img th:src="@{/assets/images/atten.png}"/>
@@ -61,10 +61,10 @@
                             <img th:src="@{/assets/images/absent.png}"/>
                             <span class="value" th:text="${absentCountLab}"></span>
                             <span>&nbsp;|&nbsp;</span>
-                            <img th:src="@{/assets/images/letters.png}"/>
+                            <img th:src="@{/assets/images/late.png}"/>
                             <span class="value" th:text="${lateCountLab}"></span>
                             <span>&nbsp;|&nbsp;</span>
-                            <img th:src="@{/assets/images/late.png}"/>
+                            <img th:src="@{/assets/images/letters.png}"/>
                             <span class="value" th:text="${letterCountLab}"></span>
                             <span>&nbsp;|&nbsp;</span>
                             <img th:src="@{/assets/images/atten.png}"/>
@@ -101,7 +101,8 @@
                         <div class="divTableCell"
                              sec:authorize="hasRole('ROLE_TEACHER')"
                              th:with="status=${csReg.getAttenLec()[displayWeek].name()}">
-                            <select th:id="'attendanceLecStatus-'+${i.index}">
+                            <select th:id="'attendance-lec-status-'+${i.index}"
+                                    th:onchange="'attenStatusChange(\'lec\',' + ${i.index} +',' + ${csReg.getEnrollment().getId()} + ',' + ${displayWeek} + ');'">
                                 <option value="NA" th:selected="(${status}=='NA')">...</option>
                                 <option value="ABSENT"
                                         th:selected="(${status}=='ABSENT')"
@@ -121,7 +122,7 @@
                                 </option>
                             </select>
                         </div>
-                        <div sec:authorize="!hasRole('ROLE_TEACHER')"class="divTableCell" th:switch="${csReg.getAttenLec()[displayWeek].name()}">
+                        <div sec:authorize="!hasRole('ROLE_TEACHER')" class="divTableCell" th:switch="${csReg.getAttenLec()[displayWeek].name()}">
                             <img th:case="'NA'" th:src="@{/assets/images/na.png}"/>
                             <img th:case="'ABSENT'" th:src="@{/assets/images/absent.png}"/>
                             <img th:case="'LATE'" th:src="@{/assets/images/late.png}"/>
@@ -137,7 +138,8 @@
                         <div class="divTableCell"
                              sec:authorize="hasRole('ROLE_TEACHER')"
                              th:with="status=${csReg.getAttenLab()[displayWeek].name()}">
-                            <select th:id="'attendanceLabStatus-'+${i.index}">
+                            <select th:id="'attendance-lab-status-'+${i.index}"
+                                    th:onchange="'attenStatusChange(\'lab\',' + ${i.index} +',' + ${csReg.getEnrollment().getId()} + ',' + ${displayWeek} + ');'">
                                 <option value="NA" th:selected="(${status}=='NA')">...</option>
                                 <option value="ABSENT"
                                         th:selected="(${status}=='ABSENT')"
@@ -174,6 +176,7 @@
 </main>
 <div th:replace="layouts/general.html :: footer"></div>
 <div th:replace="layouts/general.html :: scriptfiles"></div>
+<script th:src="@{'/assets/js/atten.js'}" sec:authorize="hasRole('ROLE_TEACHER')"></script>
 </body>
 
 </html>

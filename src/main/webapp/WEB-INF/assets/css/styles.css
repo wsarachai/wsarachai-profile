@@ -3,6 +3,10 @@ body {
     padding-bottom: 60px; /* Space for the fixed footer */
 }
 
+main {
+    padding-bottom: 50px;
+}
+
 /* Used in th index.html */
 .container {
     display: flex;

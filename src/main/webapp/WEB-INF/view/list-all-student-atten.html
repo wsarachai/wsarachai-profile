@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:include="layouts/general :: headerfiles"></head>
 <body>
 <div th:replace="layouts/general :: header"></div>
@@ -97,7 +98,30 @@
                                th:href="@{'/pub/student/atten/'+${courseId}+'/'+${csReg.getEnrollment().getId()}+'/lec/'+${currentWeek}}"
                                th:text="#{page.student.login.atten}"></a>
                         </div>
-                        <div class="divTableCell" th:switch="${csReg.getAttenLec()[displayWeek].name()}">
+                        <div class="divTableCell"
+                             sec:authorize="hasRole('ROLE_TEACHER')"
+                             th:with="status=${csReg.getAttenLec()[displayWeek].name()}">
+                            <select th:id="'attendanceLecStatus-'+${i.index}">
+                                <option value="NA" th:selected="(${status}=='NA')">...</option>
+                                <option value="ABSENT"
+                                        th:selected="(${status}=='ABSENT')"
+                                        th:text="#{page.student.atten.absent}">
+                                </option>
+                                <option value="LATE"
+                                        th:selected="(${status}=='LATE')"
+                                        th:text="#{page.student.atten.late}">
+                                </option>
+                                <option value="LETTERS"
+                                        th:selected="(${status}=='LETTERS')"
+                                        th:text="#{page.student.atten.letters}">
+                                </option>
+                                <option value="ATTENDED"
+                                        th:selected="(${status}=='ATTENDED')"
+                                        th:text="#{page.student.atten.atten}">
+                                </option>
+                            </select>
+                        </div>
+                        <div sec:authorize="!hasRole('ROLE_TEACHER')"class="divTableCell" th:switch="${csReg.getAttenLec()[displayWeek].name()}">
                             <img th:case="'NA'" th:src="@{/assets/images/na.png}"/>
                             <img th:case="'ABSENT'" th:src="@{/assets/images/absent.png}"/>
                             <img th:case="'LATE'" th:src="@{/assets/images/late.png}"/>
@@ -110,7 +134,30 @@
                                th:href="@{'/pub/student/atten/'+${courseId}+'/'+${csReg.getEnrollment().getId()}+'/lab/'+${currentWeek}}"
                                th:text="#{page.student.login.atten}"></a>
                         </div>
-                        <div class="divTableCell" th:switch="${csReg.getAttenLab()[displayWeek].name()}">
+                        <div class="divTableCell"
+                             sec:authorize="hasRole('ROLE_TEACHER')"
+                             th:with="status=${csReg.getAttenLab()[displayWeek].name()}">
+                            <select th:id="'attendanceLabStatus-'+${i.index}">
+                                <option value="NA" th:selected="(${status}=='NA')">...</option>
+                                <option value="ABSENT"
+                                        th:selected="(${status}=='ABSENT')"
+                                        th:text="#{page.student.atten.absent}">
+                                </option>
+                                <option value="LATE"
+                                        th:selected="(${status}=='LATE')"
+                                        th:text="#{page.student.atten.late}">
+                                </option>
+                                <option value="LETTERS"
+                                        th:selected="(${status}=='LETTERS')"
+                                        th:text="#{page.student.atten.letters}">
+                                </option>
+                                <option value="ATTENDED"
+                                        th:selected="(${status}=='ATTENDED')"
+                                        th:text="#{page.student.atten.atten}">
+                                </option>
+                            </select>
+                        </div>
+                        <div sec:authorize="!hasRole('ROLE_TEACHER')" class="divTableCell" th:switch="${csReg.getAttenLab()[displayWeek].name()}">
                             <img th:case="'NA'" th:src="@{/assets/images/na.png}"/>
                             <img th:case="'ABSENT'" th:src="@{/assets/images/absent.png}"/>
                             <img th:case="'LATE'" th:src="@{/assets/images/late.png}"/>

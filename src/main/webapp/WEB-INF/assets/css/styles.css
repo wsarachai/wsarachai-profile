@@ -14,6 +14,17 @@ main {
     justify-content: flex-start; /* Adjust alignment as needed */
 }
 
+.item-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.item-row > img {
+    width: 10px;
+}
+
 .item {
     flex: 1 1 calc(25% - 20px); /* Adjust based on margin/padding */
     margin: 0px; /* Adjust margin between items */
@@ -299,10 +310,23 @@ div.blueTable {
 
 .blueTable .tableFootStyle .dif-ref {
     text-align: right;
+    margin-top: 10px;
 }
+
 .blueTable .tableFootStyle .dif-ref span {
     color: black;
     font-weight: 1;
+}
+
+.blueTable .tableFootStyle .summary {
+    color: black;
+    font-weight: normal;
+    margin-top: 10px;
+}
+
+.blueTable .tableFootStyle .summary .value {
+    color: #dc3545;
+    font-size: 12px;
 }
 
 .blueTable.outerTableFooter {
@@ -312,7 +336,8 @@ div.blueTable {
     padding: 1px 1px;
 }
 .tableFootStyle img {
-    width: 15px;
+    width: 10px;
+    margin: 5px;
 }
 .divTable.blueTable .divTableCell img {
     width: 15px;
@@ -339,6 +364,13 @@ div.blueTable {
 }
 .divTableBody {
     display: table-row-group;
+}
+
+.divTableBody > .summary {
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: center;
+    margin-top: 10px;
 }
 
 #file-info {

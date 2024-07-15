@@ -142,7 +142,17 @@ public class StudentAttenController {
         model.addAttribute("course", course);
         model.addAttribute("section", section);
 
-        List<AttenData> attenDatas = new ArrayList<>();
+        int total = enrollments.size();
+        int absentCountLec = 0;
+        int absentCountLab = 0;
+        int attendedCountLec = 0;
+        int attendedCountLab = 0;
+        int lateCountLec = 0;
+        int lateCountLab = 0;
+        int letterCountLec = 0;
+        int letterCountLab = 0;
+
+        List<AttenData> attendanceList = new ArrayList<>();
         for (Enrollment enrollment : enrollments) {
             AttenData attenData = new AttenData(enrollment);
             List<Attendance> lecAttendances = new ArrayList<>(enrollment.getLecAtten());
@@ -154,15 +164,36 @@ public class StudentAttenController {
                         if (att.getWeekNo() == i) {
                             attenData.getAttenLec()[i] = att.getStatus();
                             found = true;
+                            switch(att.getStatus()) {
+                                case ATTENDED:
+                                    attendedCountLec = i == displayWeek ? attendedCountLec+1 : attendedCountLec;
+                                    break;
+                                case LATE:
+                                    lateCountLec = i == displayWeek ? lateCountLec+1 : lateCountLec;
+                                    break;
+                                case LETTERS:
+                                    letterCountLec = i == displayWeek ? letterCountLec+1 : letterCountLec;
+                                    break;
+                                case ABSENT:
+                                    absentCountLec = i == absentCountLec ? absentCountLec+1 : absentCountLec;
+                                    break;
+                            }
                             break;
                         }
                     }
                     if (!found) {
                         attenData.getAttenLec()[i] = EAttendanceStatus.ABSENT;
+                        absentCountLec = i == displayWeek ? absentCountLec+1 : absentCountLec;
                     }
                 } catch (Exception ex) {
                     attenData.getAttenLec()[i] = EAttendanceStatus.ABSENT;
+                    absentCountLec = i == displayWeek ? absentCountLec+1 : absentCountLec;
                 }
+
+                model.addAttribute("attendedCountLec", attendedCountLec);
+                model.addAttribute("lateCountLec", lateCountLec);
+                model.addAttribute("letterCountLec", letterCountLec);
+                model.addAttribute("absentCountLec", absentCountLec);
 
                 try {
                     boolean found = false;
@@ -170,19 +201,47 @@ public class StudentAttenController {
                         if (att.getWeekNo() == i) {
                             attenData.getAttenLab()[i] = att.getStatus();
                             found = true;
+                            switch(att.getStatus()) {
+                                case ATTENDED:
+                                    attendedCountLab = i == displayWeek ? attendedCountLab+1 : attendedCountLab;
+                                    break;
+                                case LATE:
+                                    lateCountLab = i == displayWeek ? lateCountLab+1 : lateCountLab;
+                                    break;
+                                case LETTERS:
+                                    letterCountLab = i == displayWeek ? letterCountLab+1 : letterCountLab;
+                                    break;
+                                case ABSENT:
+                                    absentCountLab = i == displayWeek ? absentCountLab+1 : absentCountLab;
+                                    break;
+                            }
                             break;
                         }
                     }
                     if (!found) {
                         attenData.getAttenLab()[i] = EAttendanceStatus.ABSENT;
+                        absentCountLab = i == displayWeek ? absentCountLab+1 : absentCountLab;
                     }
                 } catch (Exception ex) {
                     attenData.getAttenLab()[i] = EAttendanceStatus.ABSENT;
+                    absentCountLab = i == displayWeek ? absentCountLab+1 : absentCountLab;
                 }
             }
-            attenDatas.add(attenData);
+
+            attendanceList.add(attenData);
         }
-        model.addAttribute("attenDatas", attenDatas);
+
+        model.addAttribute("total", total);
+        model.addAttribute("attendedCountLec", attendedCountLec);
+        model.addAttribute("lateCountLec", lateCountLec);
+        model.addAttribute("letterCountLec", letterCountLec);
+        model.addAttribute("absentCountLec", absentCountLec);
+        model.addAttribute("attendedCountLab", attendedCountLab);
+        model.addAttribute("lateCountLab", lateCountLab);
+        model.addAttribute("letterCountLab", letterCountLab);
+        model.addAttribute("absentCountLab", absentCountLab);
+
+        model.addAttribute("attenDatas", attendanceList);
 
         return "list-all-student-atten";
     }

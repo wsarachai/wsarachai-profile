@@ -30,15 +30,45 @@
                            th:href="@{'/pub/student/atten/'+${courseId}+'/'+${secionId}+'/'+${i}}"></a>
                     </div>
                     <div class="dif-ref">
-                        <img th:src="@{/assets/images/na.png}"/> <span th:text="#{page.student.atten.na}"></span>
+                        <img th:src="@{/assets/images/na.png}"/> <span th:text="#{page.student.atten.na}"/>
                         <span>&nbsp;|&nbsp;</span>
-                        <img th:src="@{/assets/images/absent.png}"/> <span th:text="#{page.student.atten.absent}"></span>
+                        <img th:src="@{/assets/images/absent.png}"/> <span th:text="#{page.student.atten.absent}"/>
                         <span>&nbsp;|&nbsp;</span>
-                        <img th:src="@{/assets/images/late.png}"/> <span th:text="#{page.student.atten.late}"></span>
+                        <img th:src="@{/assets/images/late.png}"/> <span th:text="#{page.student.atten.late}"/>
                         <span>&nbsp;|&nbsp;</span>
-                        <img th:src="@{/assets/images/letters.png}"/> <span th:text="#{page.student.atten.letters}"></span>
+                        <img th:src="@{/assets/images/letters.png}"/> <span th:text="#{page.student.atten.letters}"/>
                         <span>&nbsp;|&nbsp;</span>
-                        <img th:src="@{/assets/images/atten.png}"/> <span th:text="#{page.student.atten.atten}"></span>
+                        <img th:src="@{/assets/images/atten.png}"/> <span th:text="#{page.student.atten.atten}"/>
+                    </div>
+                    <div class="summary container">
+                        <div class="item-row">
+                            <span style="margin-right: 10px" th:text="#{section.lec}"></span>
+                            <img th:src="@{/assets/images/absent.png}"/>
+                            <span class="value" th:text="${absentCountLec}"></span>
+                            <span>&nbsp;|&nbsp;</span>
+                            <img th:src="@{/assets/images/letters.png}"/>
+                            <span class="value" th:text="${lateCountLec}"></span>
+                            <span>&nbsp;|&nbsp;</span>
+                            <img th:src="@{/assets/images/late.png}"/>
+                            <span class="value" th:text="${letterCountLec}"></span>
+                            <span>&nbsp;|&nbsp;</span>
+                            <img th:src="@{/assets/images/atten.png}"/>
+                            <span class="value" th:text="${attendedCountLec}"></span>
+                        </div>
+                        <div class="item-row">
+                            <span style="margin-right: 10px"  th:text="#{section.lab}"></span>
+                            <img th:src="@{/assets/images/absent.png}"/>
+                            <span class="value" th:text="${absentCountLab}"></span>
+                            <span>&nbsp;|&nbsp;</span>
+                            <img th:src="@{/assets/images/letters.png}"/>
+                            <span class="value" th:text="${lateCountLab}"></span>
+                            <span>&nbsp;|&nbsp;</span>
+                            <img th:src="@{/assets/images/late.png}"/>
+                            <span class="value" th:text="${letterCountLab}"></span>
+                            <span>&nbsp;|&nbsp;</span>
+                            <img th:src="@{/assets/images/atten.png}"/>
+                            <span class="value" th:text="${attendedCountLab}"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -55,6 +85,7 @@
                         <div class="divTableHead" th:text="#{page.student.login.status}"></div>
                     </div>
                 </div>
+                <!-- End display Attendance header of data table -->
                 <!-- Display Attendance data table -->
                 <div class="divTableBody">
                     <div class="divTableRow" th:each="csReg, i : ${attenDatas}">
@@ -89,6 +120,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- End display Attendance data table -->
             </div>
         </section>
     </div>

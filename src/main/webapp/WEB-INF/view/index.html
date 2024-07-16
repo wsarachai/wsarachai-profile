@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:include="layouts/general :: headerfiles"></head>
 <body>
 <div th:replace="layouts/general :: header"></div>
@@ -17,9 +18,9 @@
                     <div class="course-detail-section" th:each="section : ${course.getSections()}">
                         <div class="course-detail-header">
                             <span th:text="#{page.student.atten.group}">:</span> <span th:text="${section.getGroupNumber()}"/>
-                            <span style="float: right">
-                                        <a th:href="@{'/pub/student/atten/' + ${course.getId()} + '/' + ${section.getId()}}"><span th:text="#{page.home.signin}"></span></a>
-                                    </span>
+                            <span style="float: right" sec:authorize="isAuthenticated()">
+                                <a th:href="@{'/pub/student/atten/' + ${course.getId()} + '/' + ${section.getId()}}"><span th:text="#{page.home.signin}"></span></a>
+                            </span>
                         </div>
                         <div class="container">
                             <!-- Lec -->

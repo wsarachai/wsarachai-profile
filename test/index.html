@@ -3,21 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <title>Main Menu</title>
     <link rel="stylesheet" href="assets/css/styles.css">
-    <title>Footer Link Menu with Icons</title>
 </head>
 <body>
-    <!-- Other content -->
-     <h1>Footer Link Menu with Icons</h1>
-
-    <footer>
-        <ul class="footer-menu">
-            <li><a href="#login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-            <li><a href="#logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-            <li><a href="#register"><i class="fas fa-user-plus"></i> Register</a></li>
+    <nav class="main-menu">
+        <div class="logo">ITSCI</div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#profile">Profile</a></li>
+            <li class="dropdown">
+                <a href="#settings" class="dropbtn">Settings</a>
+                <ul class="dropdown-content">
+                    <li><a href="#menu1">Menu 1</a></li>
+                    <li><a href="#menu2">Menu 2</a></li>
+                    <li><a href="#menu3">Menu 3</a></li>
+                </ul>
+            </li>
         </ul>
-    </footer>
+    </nav>
 </body>
 </html>

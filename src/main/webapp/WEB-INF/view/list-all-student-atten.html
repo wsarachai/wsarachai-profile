@@ -5,7 +5,7 @@
 <body>
 <div th:replace="layouts/general :: header"></div>
 <main class="container course-container">
-    <p class="my-4 title"><a th:href="@{'/'}" th:text="#{page.home}"></a>&nbsp;|&nbsp;<span th:text="#{page.student.login.title}"></span></p>
+    <h4 class="my-4 title"><span th:text="#{page.student.login.title}"></span></h4>
     <div class="row">
         <section class="col-12 flex-container-column">
             <div class="flex-container-row">
@@ -91,10 +91,17 @@
                 <div class="divTableBody">
                     <div class="divTableRow" th:each="csReg, i : ${attenDatas}">
                         <div class="divTableCell" th:text="${i.index+1}"></div>
-                        <div class="divTableCell"><a th:href="@{'/pub/student/manage/'+${csReg.getEnrollment().getId()}}" th:text="${csReg.getEnrollment().getStudent().getStudentId()}"></a></div>
+                        <div class="divTableCell">
+                            <a sec:authorize="isAuthenticated()"
+                               th:href="@{'/pub/student/manage/'+${csReg.getEnrollment().getId()}}"
+                               th:text="${csReg.getEnrollment().getStudent().getStudentId()}"></a>
+                            <span sec:authorize="!isAuthenticated()"
+                                  th:text="${csReg.getEnrollment().getStudent().getStudentId()}"></span>
+                        </div>
                         <div class="divTableCell" th:text="${csReg.getEnrollment().getStudent().getPrename()+' '+csReg.getEnrollment().getStudent().getFirstName()+' '+csReg.getEnrollment().getStudent().getLastName()}"></div>
                         <div class="divTableCell">
                             <a th:if="${isInTimeForLecAttend}"
+                               sec:authorize="isAuthenticated()"
                                th:href="@{'/pub/student/atten/'+${courseId}+'/'+${csReg.getEnrollment().getId()}+'/lec/'+${currentWeek}}"
                                th:text="#{page.student.login.atten}"></a>
                         </div>
@@ -132,6 +139,7 @@
                         </div>
                         <div class="divTableCell">
                             <a th:if="${isInTimeForLabAttend}"
+                               sec:authorize="isAuthenticated()"
                                th:href="@{'/pub/student/atten/'+${courseId}+'/'+${csReg.getEnrollment().getId()}+'/lab/'+${currentWeek}}"
                                th:text="#{page.student.login.atten}"></a>
                         </div>

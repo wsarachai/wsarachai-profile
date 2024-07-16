@@ -4,10 +4,10 @@
 <body>
 <div th:replace="layouts/general :: header"></div>
 <main class="container course-container">
-    <p class="my-4 title">
-        <a th:href="@{'/pub/student/atten/' + ${enrollment.getSection().getCourse().getId()} + '/' + ${enrollment.getSection().getId()}}"
-           th:text="#{page.navigate.back}"></a>&nbsp;|&nbsp;<span th:text="#{page.student.profile}"></span>
-    </p>
+    <h4 class="my-4 title" th:text="#{page.student.profile}"></h4>
+    <div class="nav-div"><a th:href="@{'/pub/student/atten/' + ${enrollment.getSection().getCourse().getId()} + '/' + ${enrollment.getSection().getId()}}"
+       th:text="#{page.navigate.back}"></a>
+    </div>
     <div class="row">
         <section class="col-12 flex-container-column">
             <div class="flex-container-row">

@@ -6,6 +6,7 @@ public class MemberBean {
     private long id;
     private String username;
     private String password;
+    private String confirmPassword;
     private String newPassword;
     private String prename;
     private String firstName;
@@ -43,6 +44,14 @@ public class MemberBean {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public void setPassword(String password) {

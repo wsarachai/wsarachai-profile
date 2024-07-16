@@ -48,14 +48,64 @@ public class MemberController {
         return "user/change-password";
     }
 
+    public boolean checkIfPasswordValid(String password) {
+        boolean result = false;
+        try {
+            if (password != null) {
+                String MIN_LENGTH = "8";
+                String MAX_LENGTH = "20";
+                boolean ONE_DIGIT_NEEDED = false;
+                boolean LOWER_CASE_NEEDED = false;
+                boolean UPPER_CASE_NEEDED = false;
+                boolean SPECIAL_CHAR_NEEDED = false;
+                boolean SPACE_NEEDED = false;
+
+                String ONE_DIGIT = ONE_DIGIT_NEEDED ? "(?=.*[0-9])" : "";
+                String LOWER_CASE = LOWER_CASE_NEEDED ? "(?=.*[a-z])" : "";
+                String UPPER_CASE = UPPER_CASE_NEEDED ? "(?=.*[A-Z])" : "";
+                String SPECIAL_CHAR = SPECIAL_CHAR_NEEDED ? "(?=.*[@#$%^&+=])" : "";
+                String NO_SPACE = SPACE_NEEDED ? "(?=\\S+$)" : "";
+
+                String MIN_MAX_CHAR = ".{" + MIN_LENGTH + "," + MAX_LENGTH + "}";
+                String PATTERN = ONE_DIGIT + LOWER_CASE + UPPER_CASE + SPECIAL_CHAR + NO_SPACE + MIN_MAX_CHAR;
+
+                return password.matches(PATTERN);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return result;
+    }
+
     @PostMapping("/change-password")
-    public String changePassword(@ModelAttribute("member") MemberBean member,
-                                 BindingResult bindingResult,
-                                 Model model,
-                                 Locale locale,
-                                 RedirectAttributes redirectAttrs) {
-        Member user = memberService.getMember(member.getId());
-        return "redirect:/";
+    public String changePassword(Authentication authentication, Model model, @ModelAttribute("member") MemberBean memberBean) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        Member user = memberService.getMember(memberBean.getId());
+        model.addAttribute("member", memberBean);
+
+        boolean match = passwordEncoder.matches(memberBean.getPassword(), user.getPassword().replace("{bcrypt}", ""));  // remove {bcrypt} from password
+        if (!match) {
+            model.addAttribute("success", null);
+            model.addAttribute("error", messageSource.getMessage("bean.user.password.wrong", null, Locale.getDefault()));
+            return "redirect:/member/change-password";
+        }
+        if (!memberBean.getNewPassword().equals(memberBean.getConfirmPassword())) {
+            model.addAttribute("error", messageSource.getMessage("bean.user.password.notmatch", null, Locale.getDefault()));
+            model.addAttribute("success", null);
+            return "redirect:/member/change-password";
+        }
+        if (!checkIfPasswordValid(memberBean.getNewPassword())) {
+            model.addAttribute("error", messageSource.getMessage("bean.user.password.invalid", null, Locale.getDefault()));
+            model.addAttribute("success", null);
+            return "redirect:/member/change-password";
+        }
+
+        user.setPassword("{bcrypt}" + passwordEncoder.encode(memberBean.getNewPassword()));
+
+        model.addAttribute("error", null);
+        model.addAttribute("success", messageSource.getMessage("bean.user.password.success", null, Locale.getDefault()));
+        memberService.saveMember(user);
+        return "redirect:/member/change-password";
     }
 
     @GetMapping("/profile")

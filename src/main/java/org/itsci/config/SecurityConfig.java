@@ -47,6 +47,7 @@ public class SecurityConfig {
                             .antMatchers("/member/**").hasRole("MEMBER")
                             .antMatchers("/system/**").hasRole("ADMIN")
                             .antMatchers("/api/**").hasAnyRole("ADMIN", "TEACHER")
+                            .antMatchers("/pub/student/**").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
                             .antMatchers("/**").permitAll()
                             .and().csrf()
                             .ignoringAntMatchers("/api/**")

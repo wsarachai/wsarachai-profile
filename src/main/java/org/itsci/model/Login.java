@@ -18,8 +18,6 @@ public class Login {
     private String username;
     @Column(name="password", nullable = false)
     private String password;
-    @Transient
-    private String confirmPassword;
     @Column(columnDefinition = "TINYINT(1)")
     private boolean enabled;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -46,14 +44,6 @@ public class Login {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 
     public String getUsername() {

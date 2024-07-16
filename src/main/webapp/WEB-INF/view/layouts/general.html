@@ -22,17 +22,21 @@
         <div class="fixed-header logo" th:text="#{page.title}"></div>
         <ul>
             <li><a th:href="@{/}"><i class="fa-solid fa-house"></i> <span th:text="#{page.home}"/></a></li>
-            <li class="dropdown" sec:authorize="isAuthenticated()">
-                <a href="#settings" class="dropbtn"><i class="fa-solid fa-gear"></i> <span th:text="#{page.home.settings}"/></a>
-                <ul class="dropdown-content">
-                    <li><a href="#profile" th:text="#{page.home.profile}"></a></li>
-                    <li><a href="#changepassword" th:text="#{page.home.settings.changepassword}"></a></li>
-                    <li sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_ADMIN')"><a th:href="@{system/student/import}" th:text="#{page.student.import}"></a></li>
-                </ul>
-            </li>
             <li><a href="https://itsci.mju.ac.th/~watcharin" target="_blank"><i class="fa-solid fa-blog"></i> <span th:text="#{page.link.blog}"></span></a></li>
             <li><a href="https://itsci.mju.ac.th" target="_blank"><i class="fa-solid fa-user-graduate"></i></i> <span th:text="#{page.home.itsci}"></span></a></li>
-
+            <li class="dropdown" sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_ADMIN')">
+                <a href="#settings" class="dropbtn"><i class="fa-solid fa-gear"></i> <span th:text="#{page.home.settings}"/></a>
+                <ul class="dropdown-content">
+                    <li><a th:href="@{system/student/import}" th:text="#{page.student.import}"></a></li>
+                </ul>
+            </li>
+            <li class="dropdown" sec:authorize="isAuthenticated()">
+                <a href="#user" class="dropbtn"><i class="fa-solid fa-user"></i></a>
+                <ul class="dropdown-content">
+                    <li><a href="#profile" th:text="${session.login_name}" th:unless="${session == null}"></a></li>
+                    <li><a th:href="@{/member/change-password}" th:text="#{page.home.settings.changepassword}"></a></li>
+                </ul>
+            </li>
             <li sec:authorize="!isAuthenticated()" ><a th:href="@{/login}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
             <li sec:authorize="isAuthenticated()"><a href="#" onclick="javascript: frmLogout.submit();"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
         </ul>
@@ -50,7 +54,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type='text/javascript' th:src="@{'/assets/js/libs/popper.min.js'}"></script>
     <script type='text/javascript' th:src="@{'/assets/js/libs/bootstrap.min.js'}"></script>
-    <script type='text/javascript' th:src="@{'/assets/js/scripts.js'}"></script>
     <script th:inline="javascript"> var _ctx = /*[[@{/}]]*/ ''; </script>
 </div>
 </body>

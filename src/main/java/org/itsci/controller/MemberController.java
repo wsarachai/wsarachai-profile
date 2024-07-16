@@ -1,5 +1,6 @@
 package org.itsci.controller;
 
+import org.itsci.controller.bean.MemberBean;
 import org.itsci.model.Authority;
 import org.itsci.model.EAuthorityType;
 import org.itsci.model.Member;
@@ -24,6 +25,7 @@ import java.util.Locale;
 import java.util.Set;
 
 @Controller
+@RequestMapping("/member")
 public class MemberController {
     @Autowired
     ResourceBundleMessageSource messageSource;
@@ -37,7 +39,26 @@ public class MemberController {
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    @GetMapping("/member/profile")
+    @GetMapping("/change-password")
+    public String changePasswordForm(Authentication authentication, Model model) {
+        Member member = (Member) authentication.getPrincipal();
+        MemberBean memberBean = new MemberBean(member);
+        memberBean.setPassword("");
+        model.addAttribute("member", memberBean);
+        return "user/change-password";
+    }
+
+    @PostMapping("/change-password")
+    public String changePassword(@ModelAttribute("member") MemberBean member,
+                                 BindingResult bindingResult,
+                                 Model model,
+                                 Locale locale,
+                                 RedirectAttributes redirectAttrs) {
+        Member user = memberService.getMember(member.getId());
+        return "redirect:/";
+    }
+
+    @GetMapping("/profile")
     public String memberProfile(Authentication authentication, Model model) {
         User currUser = (User) authentication.getPrincipal();
         User user = memberService.getMember(currUser.getId());
@@ -46,7 +67,7 @@ public class MemberController {
         return "user/profile";
     }
 
-    @GetMapping("/system/user/form")
+    @GetMapping("/form")
     public String userForm(Authentication authentication, Model model) {
         User currUser = (User) authentication.getPrincipal();
         Member member = memberService.getMember(currUser.getId());
@@ -55,7 +76,7 @@ public class MemberController {
         return "member/form";
     }
 
-    @PostMapping("/member/profile")
+    @PostMapping("/profile")
     public String userSave(@ModelAttribute("member") Member memberFrm,
                            BindingResult bindingResult,
                            Model model,
@@ -87,14 +108,14 @@ public class MemberController {
         }
     }
 
-    @GetMapping("/system/member/list")
+    @GetMapping("/list")
     public String listShop(Model model) {
         model.addAttribute("title", messageSource.getMessage("page.user.list", null, Locale.getDefault()));
         model.addAttribute("members", memberService.getMembers());
         return "member/list";
     }
 
-    @GetMapping("/system/member/create")
+    @GetMapping("/create")
     public String showFormForAdd(Locale locale, Model model) {
         model.addAttribute("title", messageSource.getMessage("page.user.add", null, Locale.getDefault()));
         model.addAttribute("authorities", EAuthorityType.getAuthorityOptions(messageSource, locale));
@@ -104,7 +125,7 @@ public class MemberController {
         return "member/form";
     }
 
-    @GetMapping("/system/member/{id}/update")
+    @GetMapping("/{id}/update")
     public String showFormForUpdate(@PathVariable("id") int id, Locale locale, Model model) {
         Member member = memberService.getMember(Long.valueOf(id));
         model.addAttribute("title", messageSource.getMessage("page.user.update", null, Locale.getDefault()));
@@ -189,7 +210,7 @@ public class MemberController {
         }
     }
 
-    @GetMapping("/system/member/{id}/delete")
+    @GetMapping("/{id}/delete")
     public String deleteProduct(@PathVariable("id") Long id) {
         memberService.deleteMember(id);
         return "redirect:/system/member/list";

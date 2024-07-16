@@ -94,14 +94,6 @@ public class User implements UserDetails {
         this.login.setPassword(password);
     }
 
-    public String getConfirmPassword() {
-        return this.login.getConfirmPassword();
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.login.setConfirmPassword(confirmPassword);
-    }
-
     @Override
     public String getUsername() {
         return this.getLogin().getUsername();

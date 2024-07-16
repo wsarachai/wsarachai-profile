@@ -3,9 +3,11 @@ package org.itsci.controller;
 import org.apache.log4j.Logger;
 import org.itsci.model.Course;
 import org.itsci.model.Teacher;
+import org.itsci.model.User;
 import org.itsci.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +28,14 @@ public class IndexController {
     private UserService<Teacher> userService;
 
     @GetMapping("/")
-    public String index(Model model, HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
+    public String index(HttpSession session, Authentication authentication, Model model, HttpServletRequest request) {
         Teacher teacher = null;
+
+        if (authentication!= null && authentication.isAuthenticated()) {
+            User loginUser = (User) authentication.getPrincipal();
+            String login_name = loginUser.getPrename() + " " + loginUser.getFirstName() + " " + loginUser.getLastName();
+            session.setAttribute("login_name", login_name);
+        }
 
         if (session != null) {
             teacher = (Teacher) session.getAttribute("teacher");

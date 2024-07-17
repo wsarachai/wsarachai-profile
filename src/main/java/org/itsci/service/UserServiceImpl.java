@@ -106,6 +106,7 @@ public class UserServiceImpl<T extends User> implements UserService<T>, UserDeta
 
     @Override
     @Transactional
+    @Cacheable("login")
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return loginDao.findByUsername(username);
     }

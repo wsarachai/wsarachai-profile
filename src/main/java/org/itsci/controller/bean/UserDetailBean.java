@@ -4,35 +4,30 @@ import org.itsci.model.Login;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 public class UserDetailBean implements UserDetails  {
     private static final long serialVersionUID = 1L;
 
-    private String username;
-    private String password;
-    private Collection<GrantedAuthority> authorities = new ArrayList<>();
+    private Login login;
 
     public UserDetailBean(Login login) {
-        this.username = login.getUsername();
-        this.password = login.getPassword();
-        this.authorities = new ArrayList<>(login.getAuthorities());
+        this.login = login;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities;
+        return this.login.getAuthorities();
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return login.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return login.getUsername();
     }
 
     @Override

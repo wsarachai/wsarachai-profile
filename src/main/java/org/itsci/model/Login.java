@@ -1,6 +1,6 @@
 package org.itsci.model;
 
-import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "logins")
-public class Login {
+public class Login implements UserDetails {
     @Id
     @Column(name="username", length = 50, nullable = false, unique = true)
     private String username;
@@ -38,10 +38,6 @@ public class Login {
         return username;
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
@@ -52,5 +48,23 @@ public class Login {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
     }
 }

@@ -315,6 +315,7 @@ public class StudentAttenController {
                 attendance.setStatus(status);
                 attendance.setStudentImage(byteObjects1);
                 attendance.setCodeImage(byteObjects2);
+                attendance.setAttendanceTime(new Date());
                 studentAttenService.saveEnrollment(enrollment);
             }
         }

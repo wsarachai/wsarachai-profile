@@ -27,7 +27,7 @@
             <li class="dropdown" sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_ADMIN')">
                 <a href="#settings" class="dropbtn"><i class="fa-solid fa-gear"></i> <span th:text="#{page.home.settings}"/></a>
                 <ul class="dropdown-content">
-                    <li><a th:href="@{system/student/import}" th:text="#{page.student.import}"></a></li>
+                    <li><a th:href="@{/system/student/import}" th:text="#{page.student.import}"></a></li>
                 </ul>
             </li>
             <li class="dropdown" sec:authorize="isAuthenticated()">

@@ -3,6 +3,7 @@ package org.itsci.controller;
 import org.itsci.model.Attendance;
 import org.itsci.service.StudentAttenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +43,7 @@ public class ImageController {
             value = "/images/{attenId}/{imageId}",
             produces = MediaType.IMAGE_JPEG_VALUE
     )
+    @Cacheable(value = "images")
     public @ResponseBody
     byte[] getImageFromAttendanceById(Model model, @PathVariable("attenId") String attenId, @PathVariable("imageId") String imageId) {
         Attendance attendance = studentAttenService.findAttendanceById(Long.valueOf(attenId));

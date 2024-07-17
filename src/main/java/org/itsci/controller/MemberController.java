@@ -1,14 +1,17 @@
 package org.itsci.controller;
 
 import org.itsci.controller.bean.MemberBean;
+import org.itsci.controller.bean.UserDetailBean;
 import org.itsci.dao.LoginDao;
 import org.itsci.model.*;
 import org.itsci.service.MemberService;
+import org.itsci.service.UserService;
 import org.itsci.utils.UIValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +35,7 @@ public class MemberController {
     MemberService memberService;
 
     @Autowired
-    private LoginDao loginDao;
+    private UserService userService;
 
     @InitBinder
     public void initBuilder(WebDataBinder dataBinder) {
@@ -42,8 +45,8 @@ public class MemberController {
 
     @GetMapping("/change-password")
     public String changePasswordForm(Authentication authentication, Model model) {
-        Member member = (Member) authentication.getPrincipal();
-        MemberBean memberBean = new MemberBean(member);
+        UserDetailBean userDetailBean = (UserDetailBean) authentication.getPrincipal();
+        MemberBean memberBean = new MemberBean(userDetailBean.getLogin());
         memberBean.setPassword("");
         model.addAttribute("member", memberBean);
         return "user/change-password";
@@ -81,8 +84,8 @@ public class MemberController {
     @PostMapping("/change-password")
     public String changePassword(Authentication authentication, Model model, @ModelAttribute("member") MemberBean memberBean) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        Member user = memberService.getMember(memberBean.getId());
-        Login login = user.getLogin();
+        Login login = userService.findByUsername(memberBean.getUsername());
+
         model.addAttribute("member", memberBean);
 
         boolean match = passwordEncoder.matches(memberBean.getPassword(), login.getPassword().replace("{bcrypt}", ""));  // remove {bcrypt} from password
@@ -106,7 +109,7 @@ public class MemberController {
 
         model.addAttribute("error", null);
         model.addAttribute("success", messageSource.getMessage("bean.user.password.success", null, Locale.getDefault()));
-        loginDao.saveOrUpdate(login);
+        userService.saveOrUpdateLogin(login);
         return "redirect:/member/change-password";
     }
 

@@ -11,6 +11,14 @@ public class UserDetailBean implements UserDetails  {
 
     private Login login;
 
+    public Login getLogin() {
+        return login;
+    }
+
+    public void setLogin(Login login) {
+        this.login = login;
+    }
+
     public UserDetailBean(Login login) {
         this.login = login;
     }

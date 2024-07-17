@@ -1,5 +1,6 @@
 package org.itsci.service;
 
+import org.itsci.controller.bean.UserDetailBean;
 import org.itsci.dao.AuthorityDao;
 import org.itsci.dao.LoginDao;
 import org.itsci.dao.UserDao;
@@ -106,7 +107,22 @@ public class UserServiceImpl<T extends User> implements UserService<T>, UserDeta
 
     @Override
     @Transactional
-    @Cacheable("login")
+    public Login findByUsername(String username) {
+        UserDetailBean userDetailBean = (UserDetailBean) loginDao.findByUsername(username);
+        if (userDetailBean != null) {
+            return userDetailBean.getLogin();
+        }
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public void saveOrUpdateLogin(Login login) {
+        loginDao.saveOrUpdate(login);
+    }
+
+    @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return loginDao.findByUsername(username);
     }

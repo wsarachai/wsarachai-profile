@@ -25,4 +25,8 @@ public interface UserService<T> {
     T findByUsernameGeneric(String username);
 
     Login getLoginById(Long id);
+
+    Login findByUsername(String username);
+
+    void saveOrUpdateLogin(Login login);
 }

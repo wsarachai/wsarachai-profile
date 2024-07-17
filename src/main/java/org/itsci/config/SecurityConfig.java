@@ -44,7 +44,7 @@ public class SecurityConfig {
             public void customize(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry configurer) {
                 try {
                     configurer.antMatchers("/home/**").authenticated()
-                            .antMatchers("/system/**").hasRole("ADMIN")
+//                            .antMatchers("/system/**").hasRole("ADMIN")
                             .antMatchers("/api/**").hasAnyRole("ADMIN", "TEACHER")
                             .antMatchers("/member/**").hasAnyRole("MEMBER", "STUDENT", "TEACHER", "ADMIN")
                             .antMatchers("/pub/student/**").hasAnyRole("ADMIN", "TEACHER", "STUDENT")

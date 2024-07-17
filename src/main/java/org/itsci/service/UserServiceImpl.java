@@ -7,9 +7,7 @@ import org.itsci.model.EAuthorityType;
 import org.itsci.model.Login;
 import org.itsci.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class UserServiceImpl<T extends User> implements UserService<T>, UserDetailsService {
+public class UserServiceImpl<T extends User> implements UserService<T> {
 
     @Autowired
     private AuthorityDao authorityDao;
@@ -29,6 +27,7 @@ public class UserServiceImpl<T extends User> implements UserService<T>, UserDeta
 
     @Override
     @Transactional
+    @Cacheable("courses")
     public T getUser(Long id, Class<?> c) {
         T user = userDao.getById(id, c);
         return user;
@@ -96,11 +95,5 @@ public class UserServiceImpl<T extends User> implements UserService<T>, UserDeta
     @Transactional
     public Login getLoginById(Long id) {
         return userDao.getLoginById(id);
-    }
-
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userDao.findByUsername(username);
     }
 }

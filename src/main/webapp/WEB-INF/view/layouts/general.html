@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:fragment="headerfiles">
+<th:block th:fragment="headerfiles">
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -14,9 +14,9 @@
     <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/assets/css/styles.css}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
-</head>
+</th:block>
 <body>
-<header th:fragment="header">
+<th:block th:fragment="header">
     <form th:action="@{/logout}" method="POST" name="frmLogout"></form>
     <nav class="main-menu">
         <div class="fixed-header logo" th:text="#{page.title}"></div>
@@ -33,7 +33,7 @@
             <li class="dropdown" sec:authorize="isAuthenticated()">
                 <a href="#user" class="dropbtn"><i class="fa-solid fa-user"></i></a>
                 <ul class="dropdown-content">
-                    <li><a href="#profile" th:text="${session.login_name}" th:unless="${session == null}"></a></li>
+                    <li><a href="#profile" th:text="#{page.home.profile}" th:unless="${session == null}"></a></li>
                     <li><a th:href="@{/member/change-password}" th:text="#{page.home.settings.changepassword}"></a></li>
                 </ul>
             </li>
@@ -41,20 +41,15 @@
             <li sec:authorize="isAuthenticated()"><a href="#" onclick="javascript: frmLogout.submit();"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
         </ul>
     </nav>
-</header>
-<p>Go to the next page to see fragments in action</p>
-<aside>
-    <div>This is a sidebar</div>
-</aside>
-<div class="another">This is another sidebar</div>
-<footer class="fixed-footer" th:fragment="footer">
+</th:block>
+<th:block th:fragment="footer">
     <div>&copy; 2024 <span th:text="#{page.author}"></span>, <span th:text="#{page.footer}"></span></div>
-</footer>
-<div th:fragment="scriptfiles">
+</th:block>
+<th:block th:fragment="scriptfiles">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type='text/javascript' th:src="@{'/assets/js/libs/popper.min.js'}"></script>
     <script type='text/javascript' th:src="@{'/assets/js/libs/bootstrap.min.js'}"></script>
     <script th:inline="javascript"> var _ctx = /*[[@{/}]]*/ ''; </script>
-</div>
+</th:block>
 </body>
 </html>

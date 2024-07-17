@@ -10,10 +10,6 @@ import java.util.Set;
 @Table(name = "logins")
 public class Login {
     @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GenericGenerator(name = "increment", strategy = "increment")
-    private long id;
     @Column(name="username", length = 50, nullable = false, unique = true)
     private String username;
     @Column(name="password", nullable = false)
@@ -25,14 +21,6 @@ public class Login {
             joinColumns= { @JoinColumn(name = "login_id")},
             inverseJoinColumns= { @JoinColumn(name = "authority_id")})
     private Set<Authority> authorities = new HashSet<>();
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public void setUsername(String username) {
         this.username = username;

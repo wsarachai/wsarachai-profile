@@ -1,6 +1,7 @@
 package org.itsci.controller;
 
 import org.apache.log4j.Logger;
+import org.itsci.controller.bean.UserDetailBean;
 import org.itsci.model.Course;
 import org.itsci.model.Teacher;
 import org.itsci.model.User;
@@ -28,22 +29,8 @@ public class IndexController {
     private UserService<Teacher> userService;
 
     @GetMapping("/")
-    public String index(HttpSession session, Authentication authentication, Model model, HttpServletRequest request) {
-        Teacher teacher = null;
-
-        if (authentication!= null && authentication.isAuthenticated()) {
-            User loginUser = (User) authentication.getPrincipal();
-            String login_name = loginUser.getPrename() + " " + loginUser.getFirstName() + " " + loginUser.getLastName();
-            session.setAttribute("login_name", login_name);
-        }
-
-        if (session != null) {
-            teacher = (Teacher) session.getAttribute("teacher");
-        }
-
-        if (teacher == null) {
-            teacher = userService.getUser(1l, Teacher.class);
-        }
+    public String index(Authentication authentication, Model model, HttpServletRequest request) {
+        Teacher teacher = userService.getUser(1l, Teacher.class);
 
         assert teacher != null;
 

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:include="layouts/general :: headerfiles"></head>
+<head th:insert="~{layouts/general :: headerfiles}"></head>
 <body>
-<div th:replace="layouts/general :: header"></div>
+<header th:insert="~{layouts/general :: header}"></header>
 <main class="container course-container">
     <h1 class="my-4" th:text="#{page.home.title}"></h1>
     <input type="text" id="searchInput" onkeyup="filterCourses()" th:placeholder="#{page.home.search.courses}+'...'" class="form-control mb-4">
@@ -49,8 +49,8 @@
         </div>
     </div>
 </main>
-<div th:replace="layouts/general.html :: footer"></div>
-<div th:replace="layouts/general.html :: scriptfiles"></div>
+<footer class="fixed-footer" th:insert="~{layouts/general.html :: footer}"></footer>
+<script type='text/javascript' th:replace="~{layouts/general.html :: scriptfiles}"></script>
 <script type='text/javascript' th:src="@{'/assets/js/scripts.js'}"></script>
 </body>
 </html>

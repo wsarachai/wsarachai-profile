@@ -18,8 +18,8 @@ public class MemberBean {
 
     public MemberBean(Member member) {
         this.id = member.getId();
-        this.username = member.getUsername();
-        this.password = member.getPassword();
+        this.username = member.getLogin().getUsername();
+        this.password = member.getLogin().getPassword();
         this.prename = member.getPrename();
         this.firstName = member.getFirstName();
         this.lastName = member.getLastName();

@@ -1,10 +1,8 @@
 package org.itsci.controller;
 
 import org.itsci.controller.bean.MemberBean;
-import org.itsci.model.Authority;
-import org.itsci.model.EAuthorityType;
-import org.itsci.model.Member;
-import org.itsci.model.User;
+import org.itsci.dao.LoginDao;
+import org.itsci.model.*;
 import org.itsci.service.MemberService;
 import org.itsci.utils.UIValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +30,9 @@ public class MemberController {
 
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    private LoginDao loginDao;
 
     @InitBinder
     public void initBuilder(WebDataBinder dataBinder) {
@@ -81,9 +82,10 @@ public class MemberController {
     public String changePassword(Authentication authentication, Model model, @ModelAttribute("member") MemberBean memberBean) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Member user = memberService.getMember(memberBean.getId());
+        Login login = user.getLogin();
         model.addAttribute("member", memberBean);
 
-        boolean match = passwordEncoder.matches(memberBean.getPassword(), user.getPassword().replace("{bcrypt}", ""));  // remove {bcrypt} from password
+        boolean match = passwordEncoder.matches(memberBean.getPassword(), login.getPassword().replace("{bcrypt}", ""));  // remove {bcrypt} from password
         if (!match) {
             model.addAttribute("success", null);
             model.addAttribute("error", messageSource.getMessage("bean.user.password.wrong", null, Locale.getDefault()));
@@ -100,11 +102,11 @@ public class MemberController {
             return "redirect:/member/change-password";
         }
 
-        user.setPassword("{bcrypt}" + passwordEncoder.encode(memberBean.getNewPassword()));
+        login.setPassword("{bcrypt}" + passwordEncoder.encode(memberBean.getNewPassword()));
 
         model.addAttribute("error", null);
         model.addAttribute("success", messageSource.getMessage("bean.user.password.success", null, Locale.getDefault()));
-        memberService.saveMember(user);
+        loginDao.saveOrUpdate(login);
         return "redirect:/member/change-password";
     }
 
@@ -216,12 +218,12 @@ public class MemberController {
             Member dbMember = memberService.getMember(member.getId());
             if (dbMember == null) {
                 dbMember = new Member();
-                BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-                String encrypted = bCryptPasswordEncoder.encode(member.getUsername().trim());
-                dbMember.getLogin().setPassword("{bcrypt}" + encrypted);
+//                BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+//                String encrypted = bCryptPasswordEncoder.encode(member.getUsername().trim());
+//                dbMember.getLogin().setPassword("{bcrypt}" + encrypted);
             }
 
-            dbMember.getLogin().setUsername(member.getUsername());
+//            dbMember.getLogin().setUsername(member.getUsername());
             dbMember.setFirstName(member.getFirstName());
             dbMember.setLastName(member.getLastName());
             dbMember.setValidFrom(member.getValidFrom());

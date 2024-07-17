@@ -137,7 +137,7 @@ public class PopulateDataController {
         if (users.size() <= 0) {
             Login login1 = new Login();
             login1.setUsername("keng");
-            login1.setPassword("{bcrypt}$2a$10$/GUlfBF1jG6Z7h2IiF6UGOCniw.HQeza8pWpW/x2eGWm6LL/rAlLO");
+            login1.setPassword("{bcrypt}$2a$10$qH/4NYQsFpKcOyOUce6VLuG8fC045j7z498JF81yS3x4NBCguonEi");
             Authority authority1 = studentAttenService.findByRoleName(EAuthorityType.ROLE_ADMIN);
             Authority authority2 = studentAttenService.findByRoleName(EAuthorityType.ROLE_TEACHER);
             login1.getAuthorities().add(authority1);

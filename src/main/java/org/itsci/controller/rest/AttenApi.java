@@ -5,6 +5,7 @@ import org.itsci.model.EAttendanceStatus;
 import org.itsci.model.Enrollment;
 import org.itsci.service.StudentAttenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,7 @@ public class AttenApi {
     @Autowired
     private StudentAttenService studentAttenService;
 
+    @CacheEvict(value = {"enrollments"}, allEntries = true)
     @PostMapping(value="/atten/update", consumes = "application/json", produces = "application/json")
     public ResponseEntity<String> addMember(@RequestBody UpdateParamBean param) {
         Enrollment enrollment = studentAttenService.findEnrollmentById(Long.parseLong(param.getEnrollmentId()));

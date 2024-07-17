@@ -44,18 +44,14 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
-//    @Cacheable("courses")
-//    @CacheEvict(value="courses", allEntries=true)
-    @CachePut(value="courses")
+    @Cacheable("courses")
     public Course findCourseById(Long id) {
         return courseDao.getCourseById(id);
     }
 
     @Override
     @Transactional
-//    @Cacheable("enrollments")
-//    @CacheEvict(value="enrollments", allEntries=true)
-    @CachePut(value="enrollments")
+    @Cacheable("enrollments")
     public List<Enrollment> findEnrollmentBySectionId(Long id) {
         return enrollmentDao.findBySectionId(id);
     }
@@ -68,6 +64,7 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
+    @CacheEvict(value = {"courses", "enrollments"}, allEntries = true)
     public void saveEnrollment(Enrollment enrollment) {
         enrollmentDao.save(enrollment);
     }

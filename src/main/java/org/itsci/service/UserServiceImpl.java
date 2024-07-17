@@ -1,6 +1,7 @@
 package org.itsci.service;
 
 import org.itsci.dao.AuthorityDao;
+import org.itsci.dao.LoginDao;
 import org.itsci.dao.UserDao;
 import org.itsci.model.Authority;
 import org.itsci.model.EAuthorityType;
@@ -8,6 +9,9 @@ import org.itsci.model.Login;
 import org.itsci.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,13 +21,16 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class UserServiceImpl<T extends User> implements UserService<T> {
+public class UserServiceImpl<T extends User> implements UserService<T>, UserDetailsService {
 
     @Autowired
     private AuthorityDao authorityDao;
 
     @Autowired
     private UserDao<T> userDao;
+
+    @Autowired
+    private LoginDao loginDao;
 
     @Override
     @Transactional
@@ -95,5 +102,11 @@ public class UserServiceImpl<T extends User> implements UserService<T> {
     @Transactional
     public Login getLoginById(Long id) {
         return userDao.getLoginById(id);
+    }
+
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return loginDao.findByUsername(username);
     }
 }

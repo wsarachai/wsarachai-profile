@@ -1,15 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="mobile-web-app-capable" content="yes">
-        <!-- Reference Bootstrap files -->
-        <link rel="stylesheet" th:href="@{assets/css/bootstrap.min.css}">
-        <title th:text="#{page.title}"></title>
-    </head>
-    <body>
+<head th:insert="~{layouts/general :: headerfiles}"></head>
+<body>
+<header th:insert="~{layouts/general :: header}"></header>
+    <main class="container course-container">
         <h1 style="text-align:center">Access Denied</h1>
         <hr>
         <div class="container">
@@ -18,14 +12,8 @@
                 <a th:href="@{/}" th:text="#{page.access-denied.back}"></a>
             </div>
         </div>
-        <footer id="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12" style="text-align: center; margin-top: 5px; margin-bottom: 5px; color: white;">
-                        Information Technology Division, Faculty of Science, Maejo University<br> Sansai, Chiangmai 50290 THAILAND
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </body>
+    </main>
+    <footer class="fixed-footer" th:insert="~{layouts/general.html :: footer}"></footer>
+    <script type='text/javascript' th:replace="~{layouts/general.html :: scriptfiles}"></script>
+</body>
 </html>

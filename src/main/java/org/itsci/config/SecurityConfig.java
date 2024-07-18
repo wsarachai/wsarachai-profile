@@ -10,15 +10,15 @@ import org.springframework.security.config.annotation.web.configurers.Expression
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.linecorp.bot.client.LineMessagingClient;
-import com.linecorp.bot.client.LineMessagingClientBuilder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+// import com.linecorp.bot.client.LineMessagingClient;
+// import com.linecorp.bot.client.LineMessagingClientBuilder;
+// import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import java.io.IOException;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+// import java.io.IOException;
+// import java.net.URI;
+// import java.util.ArrayList;
+// import java.util.Collections;
+// import java.util.List;
 
 @Configuration
 @EnableWebSecurity

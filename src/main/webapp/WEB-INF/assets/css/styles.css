@@ -384,6 +384,37 @@ div.blueTable {
     padding: 0 16px;
 }
 
+.nav-links {
+    display: flex;
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    background-color: white;
+    height: 3px;
+    margin: 4px;
+    width: 25px;
+}
+
+@media (max-width: 880px) {
+    .nav-links {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .menu-toggle.active + .nav-links {
+        display: flex;
+    }
+}
+
 .main-menu .logo {
     color: white;
     font-size: 24px;
@@ -392,7 +423,6 @@ div.blueTable {
 }
 
 .main-menu ul {
-    display: flex;
     list-style-type: none;
     margin: 0;
     padding: 0;

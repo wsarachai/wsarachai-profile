@@ -1,29 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Change Password</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
-</head>
-<body>
-    <div class="form-container">
-        <form action="/change-password" method="post">
-            <h2>Change Password</h2>
-            <div class="form-group">
-                <label for="current-password">Current Password</label>
-                <input type="password" id="current-password" name="current-password" required>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta
+      name="description"
+      content="Watcharin is a professor in the Information Technology Division at Maejo University located in Chiangmai, Thailand. With extensive experience in his field, he has dedicated his research to several major areas of interest and expertise, including Supervised Learning, Neural Networks, Artificial Intelligence, Object Recognition, the Internet of Things, and Embedded Systems."
+    />
+    <meta
+      name="keywords"
+      content="Watcharin Sarachai, Information Technology, Maejo University, Image Processing, Classification, Machine Learning"
+    />
+    <meta name="author" content="Watcharin Sarachai" />
+    <title>Responsive Main Menu</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/css/styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="outer-warp">
+      <div id="warp" class="clearfix">
+        <!-- Top bar -->
+        <div id="top-bar-wrap" class="clearfix">
+          <div id="top-bar" class="clearfix container">
+            <div id="top-bar-inner" class="clearfix">
+              <div id="top-bar-content" class="clearfix top-bar-left">
+                <span class="topbar-content">
+                  <i class="fa-solid fa-phone"></i> 053-873901 &nbsp;
+                  <i class="fa-solid fa-envelope"></i> watcharin_s@mju.ac.th
+                  &nbsp;
+                </span>
+              </div>
+              <div id="top-bar-social" class="clearfix top-bar-right">
+                <ul class="clr">
+                  <li>
+                    <a href="https://www.facebook.com/wsarachai" target="_blank"
+                      ><i class="fa-brands fa-facebook"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.linkedin.com/in/watcharin-sarachai-223b0a8a/"
+                      ><i class="fa-brands fa-linkedin"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/wsarachai"
+                      ><i class="fa-brands fa-github"></i
+                    ></a>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div class="form-group">
-                <label for="new-password">New Password</label>
-                <input type="password" id="new-password" name="new-password" required>
+          </div>
+        </div>
+        <!-- End of Top bar -->
+        <!-- Header section -->
+        <header id="site-header">
+          <div id="site-header-inner" class="clearfix container">
+            <div id="site-logo" class="clearfix">
+              <div id="site-logo-inner" class="clearfix">
+                <a
+                  href="https://itsci.mju.ac.th/~watcharin/"
+                  rel="home"
+                  class="site-title site-logo-text"
+                  >อ.ดร.วัชรินทร์ สาระไชย</a
+                >
+              </div>
             </div>
-            <div class="form-group">
-                <label for="confirm-password">Confirm New Password</label>
-                <input type="password" id="confirm-password" name="confirm-password" required>
+            <div id="site-navigator-warp" class="clearfix">
+              <nav id="site-navigator" class="navigator clearfix">
+                <ul class="dropdown-menu">
+                  <li><a href="#">Home</a></li>
+                  <li>
+                    <a href="#">Home</a>
+                    <ul class="sub-menu">
+                      <li><a href="#">Home</a></li>
+                      <li><a href="#">Home</a></li>
+                      <li><a href="#">Home</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="#">Home</a></li>
+                  <li><a href="#">Home</a></li>
+                </ul>
+              </nav>
             </div>
-            <button type="submit">Change Password</button>
-        </form>
+            <div id="btn-down" class="menu-toggle">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </header>
+        <!-- End of Header section -->
+      </div>
     </div>
-</body>
+    <script src="assets/js/scripts.js"></script>
+  </body>
 </html>

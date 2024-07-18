@@ -20,7 +20,7 @@
     <form th:action="@{/logout}" method="POST" name="frmLogout"></form>
     <nav class="main-menu">
         <div class="fixed-header logo" th:text="#{page.title}"></div>
-        <ul>
+        <ul class="nav-links">
             <li><a th:href="@{/}"><i class="fa-solid fa-house"></i> <span th:text="#{page.home}"/></a></li>
             <li><a href="https://itsci.mju.ac.th/~watcharin" target="_blank"><i class="fa-solid fa-blog"></i> <span th:text="#{page.link.blog}"></span></a></li>
             <li><a href="https://itsci.mju.ac.th" target="_blank"><i class="fa-solid fa-user-graduate"></i></i> <span th:text="#{page.home.itsci}"></span></a></li>
@@ -40,6 +40,11 @@
             <li sec:authorize="!isAuthenticated()" ><a th:href="@{/login}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
             <li sec:authorize="isAuthenticated()"><a href="#" onclick="javascript: frmLogout.submit();"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
         </ul>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </nav>
 </th:block>
 <th:block th:fragment="footer">

@@ -126,6 +126,12 @@ h1 {
     width: 100%;
 }
 
+h2 {
+    font-size: 1.3em;
+    margin: 0.67em 0;
+    width: 100%;
+}
+
 div {
     display: block;
     unicode-bidi: isolate;
@@ -408,6 +414,10 @@ ul.sub-menu li > a {
     padding: 5px;
     box-sizing: border-box;
     text-align: center;
+}
+
+.form-control-container {
+    width: 100%;;
 }
 
 .form-control {

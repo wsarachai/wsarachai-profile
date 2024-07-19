@@ -6,7 +6,7 @@
         <header th:insert="~{layouts/general :: header}"></header>
 <!--        Main content-->
         <main class="flex-container course-container">
-            <h1 th:text="#{page.home.title}"></h1>
+            <h2 th:text="#{page.home.title}"></h2>
             <input type="text" id="searchInput" onkeyup="filterCourses()" th:placeholder="#{page.home.search.courses}+'...'" class="form-control mb-4">
             <div id="course-container">
                 <div th:each="course : ${courses}">

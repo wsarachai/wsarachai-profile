@@ -5,7 +5,7 @@
 <header th:insert="~{layouts/general :: header}"></header>
 <main class="flex-container">
     <h2><i class="fas fa-sign-in-alt"></i> <span th:text="#{page.login.title}"></span></h2>
-    <div class="form-control-container">
+    <div class="form-container">
         <!-- Login Form -->
         <form th:action="@{/authenticate}" th:method="post" class="form-horizontal">
             <!-- Place for messages: error, alert etc ... -->

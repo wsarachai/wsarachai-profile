@@ -10,13 +10,13 @@
         </div>
         <div class="import-items-container">
             <section class="flex-container-column">
-                <h5 th:text="#{page.student.import.select}"></h5>
+                <h3 th:text="#{page.student.import.select}"></h3>
                 <form th:action="@{/system/student/enroll}" method="post">
                     <div  class="upload-form-container">
                         <div class="field-group upload-form-item">
                             <label for="no" th:text="#{page.no}">:*</label>
                             <div>
-                                <select id="no" name="no">
+                                <select class="basic" id="no" name="no">
                                     <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
                                 </select>
                             </div>
@@ -24,7 +24,7 @@
                         <div class="field-group upload-form-item">
                             <label for="code" th:text="#{page.student.code}">:*</label>
                             <div>
-                                <select id="code" name="code">
+                                <select class="basic" id="code" name="code">
                                     <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
                                 </select>
                             </div>
@@ -32,7 +32,7 @@
                         <div class="field-group upload-form-item">
                             <label for="prename" th:text="#{page.user.prename}">:*</label>
                             <div>
-                                <select id="prename" name="prename">
+                                <select class="basic" id="prename" name="prename">
                                     <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
                                 </select>
                             </div>
@@ -40,7 +40,7 @@
                         <div class="field-group upload-form-item">
                             <label for="firstname" th:text="#{page.user.firstname}">:*</label>
                             <div>
-                                <select id="firstname" name="firstname">
+                                <select class="basic" id="firstname" name="firstname">
                                     <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
                                 </select>
                             </div>
@@ -48,7 +48,7 @@
                         <div class="field-group upload-form-item">
                             <label for="lastname" th:text="#{page.user.lastname}">:*</label>
                             <div>
-                                <select id="lastname" name="lastname">
+                                <select class="basic" id="lastname" name="lastname">
                                     <option th:each="field, i : ${fields}" th:value="${i.index}" th:text="${field}"></option>
                                 </select>
                             </div>
@@ -56,13 +56,13 @@
                         <div class="field-group upload-form-item">
                             <label for="section_id" th:text="#{page.menu.register}">:*</label>
                             <div>
-                                <select id="section_id" name="section_id">
+                                <select class="basic" id="section_id" name="section_id">
                                     <option th:each="sec : ${sections}" th:value="${sec.getId()}" th:text="${sec.getCourse().getSubject().getCode()+'-sec'+sec.getGroupNumber()}"></option>
                                 </select>
                             </div>
                         </div>
                         <div class="field-group upload-form-btn">
-                            <button class="btn btn-sm btn-danger" type="submit" th:text="#{page.student.import.btn}">
+                            <button class="basic" type="submit" th:text="#{page.student.import.btn}"/>
                         </div>
                     </div>
                 </form>

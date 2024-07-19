@@ -132,6 +132,12 @@ h2 {
     width: 100%;
 }
 
+h5 {
+    font-size: 1.1em;
+    margin: 0.67em 0;
+    width: 100%;
+}
+
 div {
     display: block;
     unicode-bidi: isolate;
@@ -824,4 +830,48 @@ div.blueTable {
 
 #uploadForm > p {
     color: blue;
+}
+
+button.basic {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove border */
+    color: white; /* White text */
+    padding: 5px 25px; /* Padding */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Get the element to behave like an inline element while still allowing width and height */
+    font-size: 16px; /* Font size */
+    margin: 4px 2px; /* Margin */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 8px; /* Rounded corners */
+}
+
+input.basic {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove border */
+    color: white; /* White text */
+    padding: 5px 25px; /* Padding */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Inline-block display */
+    font-size: 16px; /* Font size */
+    margin: 4px 2px; /* Margin */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 8px; /* Rounded corners */
+}
+
+select.basic {
+    width: 100%; /* Full width */
+    padding: 12px; /* Padding */
+    border: 1px solid #ccc; /* Border */
+    border-radius: 4px; /* Rounded corners */
+    background-color: white; /* White background */
+    font-size: 16px; /* Font size */
+    color: black; /* Black text */
+}
+
+.upload-form-container label {
+    display: block;
+    margin: 10px;
+    font-weight: bold;
 }

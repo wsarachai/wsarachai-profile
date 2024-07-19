@@ -19,8 +19,8 @@
                             <form id="uploadForm" method="post" th:action="@{/system/student/upload}" enctype="multipart/form-data"
                                   class="col-12 form-horizontal">
                                 <input id="input-file" type="file" name="file" style="display: none"/>
-                                <input type="button" id="choose_file_btn" th:value="#{page.student.choose_file}"/>
-                                <button type="submit">
+                                <input class="basic" type="button" id="choose_file_btn" th:value="#{page.student.choose_file}"/>
+                                <button class="basic" type="submit">
                                     <span th:text="#{page.btn.Upload}"></span>
                                 </button>
     <!--                            <label><input type="checkbox" name="read_header"/> Read header</label>-->
@@ -30,7 +30,7 @@
                         <div class="flex-container-row" th:if="${message != null}">
                             <div class="alert-danger" role="alert">
                                 [[${message}]]
-                                <button type="button">
+                                <button class="basic" type="button">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>

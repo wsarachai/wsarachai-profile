@@ -3,13 +3,12 @@
 <head th:insert="~{layouts/general :: headerfiles}"></head>
 <body>
 <header th:insert="~{layouts/general :: header}"></header>
-<main class="container course-container">
-    <div class="my-4">
-        <h4 th:text="#{page.student.import}"></h4>
-        <a th:href="@{/}" th:text="#{page.navigate.back}"></a>
-    </div>
-    <div class="row">
-        <div class="col-12 course-item">
+    <main class="flex-container">
+        <div>
+            <h2 th:text="#{page.student.import}"></h2>
+            <a class="nav-div" th:href="@{/}" th:text="#{page.navigate.back}"></a>
+        </div>
+        <section class="import-items-container">
             <div class="card">
                 <div class="course-header">
                     <p th:text="#{page.student.browse}"></p>
@@ -21,19 +20,17 @@
                                   class="col-12 form-horizontal">
                                 <input id="input-file" type="file" name="file" style="display: none"/>
                                 <input type="button" id="choose_file_btn" th:value="#{page.student.choose_file}"/>
-                                <button class="btn btn-sm btn-danger float-right" type="submit">
-                                    Upload
+                                <button type="submit">
+                                    <span th:text="#{page.btn.Upload}"></span>
                                 </button>
-                                <label><input type="checkbox" name="read_header"/> Read header</label>
+    <!--                            <label><input type="checkbox" name="read_header"/> Read header</label>-->
                                 <p id="file-info"></p>
                             </form>
                         </div>
-                        <div class="flex-container-row">
-                            <div th:if="${message != null}"
-                                 class="alert alert-secondary alert-dismissible fade show text-center message mt-3"
-                                 role="alert">
+                        <div class="flex-container-row" th:if="${message != null}">
+                            <div class="alert-danger" role="alert">
                                 [[${message}]]
-                                <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+                                <button type="button">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -41,12 +38,11 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</main>
-<footer class="fixed-footer" th:insert="~{layouts/general.html :: footer}"></footer>
-<script type='text/javascript' th:replace="~{layouts/general.html :: scriptfiles}"></script>
-<script th:src="@{/assets/js/file-upload.js}"></script>
+        </section>
+    </main>
+    <footer class="fixed-footer" th:insert="~{layouts/general.html :: footer}"></footer>
+    <script type='text/javascript' th:replace="~{layouts/general.html :: scriptfiles}"></script>
+    <script th:src="@{/assets/js/file-upload.js}"></script>
 </body>
 
 </html>

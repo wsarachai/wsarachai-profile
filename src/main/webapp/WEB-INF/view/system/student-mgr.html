@@ -3,10 +3,9 @@
 <head th:insert="~{layouts/general :: headerfiles}"></head>
 <body>
 <header th:insert="~{layouts/general :: header}"></header>
-<main class="container course-container">
-    <h4 class="my-4 title" th:text="#{page.student.title}"></h4>
-    <div class="row">
-        <div class="col-12 course-item">
+    <main class="flex-container">
+        <h2 th:text="#{page.student.title}"></h2>
+        <section class="course-item">
             <div class="divTable blueTable">
                 <div class="divTableHeading">
                     <div class="divTableRow">
@@ -29,9 +28,8 @@
                     </div>
                 </div>
             </div>
-            </section>
-        </div>
-</main>
+        </section>
+    </main>
 <footer class="fixed-footer" th:insert="~{layouts/general.html :: footer}"></footer>
 <script type='text/javascript' th:replace="~{layouts/general.html :: scriptfiles}"></script>
 <script th:src="@{/assets/js/main.js}"></script>

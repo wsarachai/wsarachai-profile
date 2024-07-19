@@ -1,56 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:insert="~{layouts/general :: headerfiles}"></head>
-<body>
-<header th:insert="~{layouts/general :: header}"></header>
-<main class="container course-container">
-    <h1 class="my-4" th:text="#{page.home.title}"></h1>
-    <input type="text" id="searchInput" onkeyup="filterCourses()" th:placeholder="#{page.home.search.courses}+'...'" class="form-control mb-4">
-    <div class="row">
-        <div class="col-12 course-item" th:each="course : ${courses}">
-            <div class="card">
-                <div class="course-header">
-                    <span  th:text="${course.subject.getCode()}"/> <span  th:text="${course.subject.getThaiName()}"/>
-                </div>
-                <div class="card-body">
-                    <p class="card-text course-description" th:text="${course.getSubject().getDescription()}"></p>
-                    <div class="course-detail-section" th:each="section : ${course.getSections()}">
-                        <div class="course-detail-header">
-                            <span th:text="#{page.student.atten.group}">:</span> <span th:text="${section.getGroupNumber()}"/>
-                            <span style="float: right" sec:authorize="isAuthenticated()">
-                                <a th:href="@{'/pub/student/atten/' + ${course.getId()} + '/' + ${section.getId()}}"><span th:text="#{page.home.signin}"></span></a>
-                            </span>
-                        </div>
-                        <div class="container">
-                            <!-- Lec -->
-                            <div class="item" th:text="#{section.lec}"></div>
-                            <div class="item" th:text="${#messages.msgOrNull('day.' + section.getLecDay())}"></div>
-                            <div class="item" th:inline="text">
-                                <span th:text="#{page.time}"/> [[${section.getStartLectureTime()}]]-[[${section.getEndLectureTime()}]]
-                            </div>
-                            <div class="item">
-                                <span th:text="#{page.room}"/>: <span th:text="${section.getLecRoom().getRoomId()}" />
-                            </div>
-
-                            <!-- Lab -->
-                            <div class="item" th:text="#{section.lab}"></div>
-                            <div class="item" th:text="${#messages.msgOrNull('day.' + section.getLabDay())}"></div>
-                            <div class="item" th:inline="text">
-                                <span th:text="#{page.time}"/> [[${section.getStartLabTime()}]]-[[${section.getEndLabTime()}]]
-                            </div>
-                            <div class="item">
-                                <span th:text="#{page.room}"/>: <span th:text="${section.getLabRoom().getRoomId()}" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
-<footer class="fixed-footer" th:insert="~{layouts/general.html :: footer}"></footer>
-<script type='text/javascript' th:replace="~{layouts/general.html :: scriptfiles}"></script>
-<script type='text/javascript' th:src="@{'/assets/js/scripts.js'}"></script>
-</body>
+    <head th:insert="~{layouts/general :: headerfiles}"></head>
+    <body>
+        <header th:insert="~{layouts/general :: header}"></header>
+        <script src="assets/js/scripts.js"></script>
+    </body>
 </html>

@@ -17,3 +17,21 @@ const filterCourses = function() {
         }
     }
 }
+
+let btnDown = {};
+let siteNavigator = {};
+
+const dropButton = function() {
+    if (siteNavigator.style.display === "") {
+        siteNavigator.style.display = "block";
+    } else {
+        siteNavigator.style.display = "";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    btnDown = document.getElementById("drop-btn");
+    siteNavigator = document.getElementById("site-navigator");
+
+    btnDown.addEventListener("click", dropButton);
+});

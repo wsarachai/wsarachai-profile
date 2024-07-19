@@ -10,42 +10,95 @@
     <meta name="keywords" content="Watcharin Sarachai, Information Technology, Maejo University, Image Processing, Classification, Machine Learning">
     <meta name="author" content="Watcharin Sarachai">
     <title th:text="#{page.title}"></title>
-    <!-- Bootstrap CSS -->
-    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/assets/css/styles.css}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
 </th:block>
 <body>
 <th:block th:fragment="header">
+
     <form th:action="@{/logout}" method="POST" name="frmLogout"></form>
-    <nav class="main-menu">
-        <div class="fixed-header logo" th:text="#{page.title}"></div>
-        <ul class="nav-links">
-            <li><a th:href="@{/}"><i class="fa-solid fa-house"></i> <span th:text="#{page.home}"/></a></li>
-            <li><a href="https://itsci.mju.ac.th/~watcharin" target="_blank"><i class="fa-solid fa-blog"></i> <span th:text="#{page.link.blog}"></span></a></li>
-            <li><a href="https://itsci.mju.ac.th" target="_blank"><i class="fa-solid fa-user-graduate"></i></i> <span th:text="#{page.home.itsci}"></span></a></li>
-            <li class="dropdown" sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_ADMIN')">
-                <a href="#settings" class="dropbtn"><i class="fa-solid fa-gear"></i> <span th:text="#{page.home.settings}"/></a>
-                <ul class="dropdown-content">
-                    <li><a th:href="@{/system/student/import}" th:text="#{page.student.import}"></a></li>
-                </ul>
-            </li>
-            <li class="dropdown" sec:authorize="isAuthenticated()">
-                <a href="#user" class="dropbtn"><i class="fa-solid fa-user"></i></a>
-                <ul class="dropdown-content">
-                    <li><a href="#profile" th:text="#{page.home.profile}" th:unless="${session == null}"></a></li>
-                    <li><a th:href="@{/member/change-password}" th:text="#{page.home.settings.changepassword}"></a></li>
-                </ul>
-            </li>
-            <li sec:authorize="!isAuthenticated()" ><a th:href="@{/login}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-            <li sec:authorize="isAuthenticated()"><a href="#" onclick="javascript: frmLogout.submit();"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-        </ul>
-        <div class="menu-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
+
+    <!-- Top bar -->
+    <div id="top-bar-wrap" class="clearfix">
+        <div id="top-bar" class="clearfix container">
+            <div id="top-bar-inner" class="clearfix">
+                <div id="top-bar-content" class="clearfix top-bar-left">
+                <span class="topbar-content">
+                  <i class="fa-solid fa-phone"></i> 053-873901 &nbsp;
+                  <i class="fa-solid fa-envelope"></i> watcharin_s@mju.ac.th
+                  &nbsp;
+                </span>
+                </div>
+                <div id="top-bar-social" class="clearfix top-bar-right">
+                    <ul class="clr">
+                        <li>
+                            <a href="https://www.facebook.com/wsarachai" target="_blank"
+                            ><i class="fa-brands fa-facebook"></i
+                            ></a>
+                        </li>
+                        <li>
+                            <a
+                                    href="https://www.linkedin.com/in/watcharin-sarachai-223b0a8a/"
+                            ><i class="fa-brands fa-linkedin"></i
+                            ></a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/wsarachai"
+                            ><i class="fa-brands fa-github"></i
+                            ></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </nav>
+    </div>
+    <!-- End of Top bar -->
+
+    <!-- Header section -->
+    <header id="site-header">
+        <div id="site-header-inner" class="clearfix container">
+            <div id="site-logo" class="clearfix">
+                <div id="site-logo-inner" class="clearfix">
+                    <a
+                            href="https://itsci.mju.ac.th/~watcharin/"
+                            rel="home"
+                            class="site-title site-logo-text"
+                            th:text="#{page.title}"></a>
+                </div>
+            </div>
+            <div id="site-navigator-warp" class="clearfix">
+                <nav id="site-navigator" class="navigator clearfix">
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/}"><i class="fa-solid fa-house"></i> <span th:text="#{page.home}"/></a></li>
+                        <li><a href="https://itsci.mju.ac.th/~watcharin" target="_blank"><i class="fa-solid fa-blog"></i> <span th:text="#{page.link.blog}"></span></a></li>
+                        <li><a href="https://itsci.mju.ac.th" target="_blank"><i class="fa-solid fa-user-graduate"></i></i> <span th:text="#{page.home.itsci}"></span></a></li>
+                        <li sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_ADMIN')">
+                            <a href="#settings" class="dropbtn"><i class="fa-solid fa-gear"></i> <span th:text="#{page.home.settings}"/></a>
+                            <ul class="sub-menu">
+                                <li><a th:href="@{/system/student/import}" th:text="#{page.student.import}"></a></li>
+                            </ul>
+                        </li>
+                        <li sec:authorize="isAuthenticated()">
+                            <a href="#user" class="dropbtn"><i class="fa-solid fa-user"></i></a>
+                            <ul class="sub-menu">
+                                <li><a href="#profile" th:text="#{page.home.profile}" th:unless="${session == null}"></a></li>
+                                <li><a th:href="@{/member/change-password}" th:text="#{page.home.settings.changepassword}"></a></li>
+                            </ul>
+                        </li>
+                        <li sec:authorize="!isAuthenticated()" ><a th:href="@{/login}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                        <li sec:authorize="isAuthenticated()"><a href="#" onclick="javascript: frmLogout.submit();"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div id="drop-btn" class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+    <!-- End of Header section -->
+
 </th:block>
 <th:block th:fragment="footer">
     <div>&copy; 2024 <span th:text="#{page.author}"></span>, <span th:text="#{page.footer}"></span></div>

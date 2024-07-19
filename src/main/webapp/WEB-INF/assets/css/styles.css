@@ -295,7 +295,7 @@ p {
     display: block;
     color: #ffffff;
     padding: 0 14px;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 74px;
     letter-spacing: 0.6px;
 }
@@ -361,12 +361,18 @@ ul.sub-menu li > a {
 }
 
 @media screen and (max-width: 600px) {
+    .dropdown-menu {
+        position: relative;
+        z-index: 999;
+        background-color: black;
+    }
+
     #site-navigator-warp .navigator {
         display: none;
     }
 
     .dropdown-menu li a > span {
-        display: inline-block;
+        display: inline;
     }
 
     .menu-toggle {
@@ -390,11 +396,15 @@ ul.sub-menu li > a {
 
     #site-navigator-warp .navigator .dropdown-menu > li > a {
         line-height: 40px;
-        width: 200px;
+        width: 220px;
     }
 
     ul.sub-menu {
         left: -40px;
+        background-color: #1D1C3F;
+    }
+
+    #site-navigator-warp .navigator .dropdown-menu > li > a:hover {
         background-color: #1D1C3F;
     }
 

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 @RestController
 @RequestMapping("/api/v1")
 public class AttenApi {
@@ -38,6 +40,9 @@ public class AttenApi {
                 Attendance atten = new Attendance();
                 atten.setWeekNo(Integer.parseInt(param.getWeek()));
                 atten.setStatus(EAttendanceStatus.valueOf(param.getStatus()));
+                atten.setLatitude(999.0);
+                atten.setLongitude(999.0);
+                atten.setAttendanceTime(new Date());
                 enrollment.getLecAtten().add(atten);
                 studentAttenService.updateEnrollment(enrollment);
             }
@@ -55,6 +60,9 @@ public class AttenApi {
                 Attendance atten = new Attendance();
                 atten.setWeekNo(Integer.parseInt(param.getWeek()));
                 atten.setStatus(EAttendanceStatus.valueOf(param.getStatus()));
+                atten.setLatitude(999.0);
+                atten.setLongitude(999.0);
+                atten.setAttendanceTime(new Date());
                 enrollment.getLabAtten().add(atten);
                 studentAttenService.updateEnrollment(enrollment);
             }

@@ -11,14 +11,17 @@ function attenStatusChange(type, index, enrollmentId, week) {
         "week": week
     });
 
-    jQuery.ajax ({
-        url: url,
-        type: "POST",
-        data: data,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function(){
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: data
+    }).then(response => {
+        if (response.ok) {
             console.log("success");
+        } else {
+            console.log("fail");
         }
     });
 }

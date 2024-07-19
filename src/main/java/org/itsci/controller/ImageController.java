@@ -3,18 +3,25 @@ package org.itsci.controller;
 import org.itsci.model.Attendance;
 import org.itsci.service.StudentAttenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
+import java.io.*;
+import java.nio.file.Files;
 
 @Controller
 @RequestMapping("/pub")
 public class ImageController {
+
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     @Autowired
     private StudentAttenService studentAttenService;
@@ -56,6 +63,7 @@ public class ImageController {
         }
 
         Byte[] image = null;
+        byte [] outputs = null;
 
         if ("lec".equals(imageId)) {
             image = attendance.getStudentImage();
@@ -63,9 +71,19 @@ public class ImageController {
             image = attendance.getCodeImage();
         }
 
-        byte [] outputs = new byte[image.length];
-        for (int i = 0; i < image.length; i++) {
-            outputs[i] = image[i].byteValue();
+        if (image == null) {
+            Resource unknownImage = resourceLoader.getResource("classpath:unknow.png");
+            try {
+                File file = unknownImage.getFile();
+                outputs = Files.readAllBytes(file.toPath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            outputs = new byte[image.length];
+            for (int i = 0; i < image.length; i++) {
+                outputs[i] = image[i].byteValue();
+            }
         }
 
         return outputs;

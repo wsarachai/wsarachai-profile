@@ -22,7 +22,7 @@
                                         <a th:href="@{'/pub/student/atten/' + ${course.getId()} + '/' + ${section.getId()}}"><span th:text="#{page.home.signin}"></span></a>
                                     </span>
                             </div>
-                            <div class="flex-container">
+                            <div class="course-flex-container">
                                 <!-- Lec -->
                                 <div class="item" th:text="#{section.lec}"></div>
                                 <div class="item" th:text="${#messages.msgOrNull('day.' + section.getLecDay())}"></div>
@@ -49,6 +49,8 @@
             </div>
         </main>
 <!--        End of main content-->
+        <footer class="fixed-footer" th:insert="~{layouts/general.html :: footer}"></footer>
+        <script type='text/javascript' th:replace="~{layouts/general.html :: scriptfiles}"></script>
         <script src="assets/js/scripts.js"></script>
     </body>
 </html>

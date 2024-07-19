@@ -114,27 +114,17 @@ dl:after,
     height: 0;
 }
 
-a.tooltiplink {
-    position: relative;
+a,
+a:hover,
+a:focus {
+    text-decoration: none;
 }
 
-a.tooltiplink:hover::after {
-    content: attr(data-title);
-    background-color: #8fbc8f;
-    color: #fff;
-    padding: 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    line-height: 14px;
-    display: block;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    z-index: 1;
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+    width: 100%;
 }
-
 
 div {
     display: block;
@@ -145,10 +135,9 @@ nav {
     display: block;
 }
 
-a,
-a:hover,
-a:focus {
-    text-decoration: none;
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
 }
 
 #warp {
@@ -343,21 +332,25 @@ ul.sub-menu li > a {
     width: 25px;
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 960px) {
     #site-navigator-warp .navigator {
         display: block;
     }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 960px) {
     .dropdown-menu li a > span {
         display: none;
     }
 }
 
-@media screen and (max-width: 560px) {
+@media screen and (max-width: 600px) {
     #site-navigator-warp .navigator {
         display: none;
+    }
+
+    .dropdown-menu li a > span {
+        display: inline-block;
     }
 
     .menu-toggle {
@@ -392,4 +385,79 @@ ul.sub-menu li > a {
     #site-navigator-warp .navigator .dropdown-menu > li ul.sub-menu > li:hover {
         background-color: #474747;
     }
+}
+
+.flex-container {
+    width: 1200px;
+    max-width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Adjust alignment as needed */
+}
+
+.flex-container .item {
+    flex: 1 1 calc(25% - 20px); /* Adjust based on margin/padding */
+    margin: 0px; /* Adjust margin between items */
+    background-color: #f0f0f0;
+    padding: 5px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+#course-container {
+    width: 100%;
+    margin: 20px auto 50px auto;
+}
+
+.course-header {
+    background-color: #1d3557;
+    color: white;
+    padding: 10px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+}
+
+.course-detail-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+.course-detail-header {
+    flex-basis: 100%;
+    font-weight: bold;
+    margin-bottom: 10px;
 }

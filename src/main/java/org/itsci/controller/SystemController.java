@@ -3,6 +3,7 @@ package org.itsci.controller;
 import org.itsci.model.*;
 import org.itsci.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -40,6 +41,12 @@ public class SystemController {
 
         model.addAttribute("message", null);
         return "system/import-student";
+    }
+
+    @GetMapping("/clear/cache")
+    @CacheEvict(value = { "enrollments", "images", "courses" }, allEntries = true)
+    public String clearCache() {
+        return "redirect:/";
     }
 
 

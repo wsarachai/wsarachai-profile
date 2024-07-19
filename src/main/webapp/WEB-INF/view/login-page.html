@@ -10,13 +10,13 @@
         <form th:action="@{/authenticate}" th:method="post" class="form-horizontal">
             <!-- Place for messages: error, alert etc ... -->
             <div class="form-group">
-                <div class="col-xs-15">
+                <div>
                     <div th:if="${param.error != null}"
                          th:text="#{page.error.invalid-user}"
-                         class="alert alert-danger col-xs-offset-1 col-xs-10"></div>
+                         class="alert-danger"></div>
                     <div th:if="${param.logout != null}"
                          th:text="#{page.login.already_loggedout}"
-                         class="alert alert-success col-xs-offset-1 col-xs-10"></div>
+                         class="alert-success"></div>
                 </div>
             </div>
             <!-- User name -->

@@ -626,12 +626,15 @@ div.blueTable {
     font-weight: bold;
     color: #ffffff;
 }
+
 .blueTable .tableFootStyle {
     font-size: 14px;
 }
+
 .blueTable .tableFootStyle .links {
     text-align: right;
 }
+
 .blueTable .tableFootStyle .links a {
     display: inline-block;
     background: #1c6ea4;
@@ -703,25 +706,54 @@ div.blueTable {
     justify-content: flex-end;
     width: 100%;
 }
+
 .divTable {
     display: table;
 }
+
 .divTableRow {
     display: table-row;
 }
+
 .divTableHeading {
     display: table-header-group;
 }
+
 .divTableCell,
 .divTableHead {
     display: table-cell;
 }
+
 .divTableHeading {
     display: table-header-group;
 }
+
 .divTableFoot {
     display: table-footer-group;
 }
+
 .divTableBody {
     display: table-row-group;
+}
+
+.nav-div {
+    font-size: 1.1rem;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }

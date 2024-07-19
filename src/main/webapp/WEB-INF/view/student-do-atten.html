@@ -2,11 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:insert="~{layouts/general :: headerfiles}"></head>
 <body>
-<header th:insert="~{layouts/general :: header}"></header>
-<main class="container course-container">
-    <h4 class="my-4 title" th:text="#{page.student.login.title}"></h4>
-    <div class="row">
-        <section class="col-12 flex-container-column">
+    <header th:insert="~{layouts/general :: header}"></header>
+    <main class="flex-container">
+        <h2 th:text="#{page.student.login.title}"></h2>
+        <section class="flex-container-column">
             <div class="flex-container-row">
                 <div class="item1">
                     <p th:text="#{page.student.atten.subjects}">:</p>
@@ -30,36 +29,36 @@
                         <span th:text="#{page.time}+' '"></span><span id="currentTime"></span>
                     </p>
                     <p>
-                            <span th:switch="${type}">
-                                <span th:case="lec">
-                                    <span th:text="#{section.lec}"></span>
-                                    <span th:switch="${enrollment.getSection().getLecDay().name()}">
+                        <span th:switch="${type}">
+                            <span th:case="lec">
+                                <span th:text="#{section.lec}"></span>
+                                <span th:switch="${enrollment.getSection().getLecDay().name()}">
+                                    <span th:case="'MONDAY'" th:text="#{day.MONDAY}"></span>
+                                    <span th:case="'TUESDAY'" th:text="#{day.TUESDAY}"></span>
+                                    <span th:case="'WEDNESDAY'" th:text="#{day.WEDNESDAY}"></span>
+                                    <span th:case="'THURSDAY'" th:text="#{day.THURSDAY}"></span>
+                                    <span th:case="'FRIDAY'" th:text="#{day.FRIDAY}"></span>
+                                    <span th:case="'SATURDAY'" th:text="#{day.SATURDAY}"></span>
+                                    <span th:case="'SUNDAY'" th:text="#{day.SUNDAY}"></span>
+                                </span>
+                                <span th:text="${enrollment.getSection().getStartLectureTime()+'-'+enrollment.getSection().getEndLectureTime()}"></span>
+                            </span>
+                                <span th:case="lab">
+                                    <span th:text="#{section.lab}"></span>
+                                    <span th:switch="${enrollment.getSection().getLabDay().name()}">
                                         <span th:case="'MONDAY'" th:text="#{day.MONDAY}"></span>
                                         <span th:case="'TUESDAY'" th:text="#{day.TUESDAY}"></span>
                                         <span th:case="'WEDNESDAY'" th:text="#{day.WEDNESDAY}"></span>
                                         <span th:case="'THURSDAY'" th:text="#{day.THURSDAY}"></span>
                                         <span th:case="'FRIDAY'" th:text="#{day.FRIDAY}"></span>
                                         <span th:case="'SATURDAY'" th:text="#{day.SATURDAY}"></span>
-                                        <span th:case="'SUNDAY'" th:text="#{day.SUNDAY}"></span>
+                                        <span th:case="'SUNDAY'" th:text="#{day.SUNDAY}">
                                     </span>
-                                    <span th:text="${enrollment.getSection().getStartLectureTime()+'-'+enrollment.getSection().getEndLectureTime()}"></span>
+                                    <span th:text="${enrollment.getSection().getStartLabTime()+'-'+enrollment.getSection().getEndLabTime()}"></span>
                                 </span>
-                                    <span th:case="lab">
-                                        <span th:text="#{section.lab}"></span>
-                                        <span th:switch="${enrollment.getSection().getLabDay().name()}">
-                                            <span th:case="'MONDAY'" th:text="#{day.MONDAY}"></span>
-                                            <span th:case="'TUESDAY'" th:text="#{day.TUESDAY}"></span>
-                                            <span th:case="'WEDNESDAY'" th:text="#{day.WEDNESDAY}"></span>
-                                            <span th:case="'THURSDAY'" th:text="#{day.THURSDAY}"></span>
-                                            <span th:case="'FRIDAY'" th:text="#{day.FRIDAY}"></span>
-                                            <span th:case="'SATURDAY'" th:text="#{day.SATURDAY}"></span>
-                                            <span th:case="'SUNDAY'" th:text="#{day.SUNDAY}">
-                                        </span>
-                                        <span th:text="${enrollment.getSection().getStartLabTime()+'-'+enrollment.getSection().getEndLabTime()}"></span>
-                                    </span>
-                                </span>
-                                <span th:case="*" th:text="${type}"></span>
                             </span>
+                            <span th:case="*" th:text="${type}"></span>
+                        </span>
                     </p>
                 </div>
             </div>
@@ -101,9 +100,9 @@
                 </div>
             </div>
         </section>
-    </div>
-</main>
-<footer class="fixed-footer" th:insert="~{layouts/general.html :: footer}"></footer>
-<script type='text/javascript' th:replace="~{layouts/general.html :: scriptfiles}"></script>
-<script th:src="@{'/assets/js/main.js'}"></script>
+    </main>
+    <footer class="fixed-footer" th:insert="~{layouts/general.html :: footer}"></footer>
+    <script type='text/javascript' th:replace="~{layouts/general.html :: scriptfiles}"></script>
+    <script th:src="@{'/assets/js/main.js'}"></script>
+</body>
 </html>

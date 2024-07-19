@@ -18,6 +18,9 @@ public class LoginDaoImpl implements LoginDao {
     public UserDetails findByUsername(String username) {
         Session session = sessionFactory.getCurrentSession();
         Login login = session.get(Login.class, username);
+        if (login == null) {
+            return null;
+        }
         UserDetailBean userDetailBean = new UserDetailBean(login);
         return userDetailBean;
     }

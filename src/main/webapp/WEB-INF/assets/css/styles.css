@@ -506,3 +506,222 @@ ul.sub-menu li > a {
     padding: 15px 0;
     width: 100%;
 }
+
+.flex-container-column {
+    display: flex;
+    flex-direction: column;
+    background-color: #bbdefb;
+    height: 100%;
+    width: 100%;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 70px;
+}
+
+.flex-container-column > div {
+    border-radius: 5px;
+    padding: 8px;
+    width: 100%;
+}
+
+.flex-container-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: #bbdefb;
+    height: 100%;
+    padding: 15px;
+    gap: 5px;
+}
+
+.flex-container-row > div {
+    background: #fff;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+.flex-container-row .item1 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-grow: 1;
+    align-self: auto;
+}
+
+.flex-container-row .item1 > p {
+    padding: 8px;
+    margin: 0px;
+    min-height: 22px;
+}
+
+.flex-container-row .item2 {
+    flex-grow: 4;
+    align-self: auto;
+}
+
+.flex-container-row .item2 > p {
+    padding: 8px;
+    margin: 0px;
+    min-height: 22px;
+}
+
+.flex-container-row .item3 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: auto;
+}
+
+.flex-container-row .item4 {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    gap: 5px;
+    flex-grow: 2;
+    align-self: auto;
+}
+div.blueTable {
+    background-color: #eeeeee;
+    text-align: left;
+    border-collapse: collapse;
+}
+.divTable.blueTable .divTableCell,
+.divTable.blueTable .divTableHead {
+    border: 1px solid #aaaaaa;
+    padding: 3px 2px;
+}
+.divTable.blueTable .divTableBody .divTableCell {
+    font-size: 13px;
+}
+.divTable.blueTable .divTableRow:nth-child(even) {
+    background: #d0e4f5;
+}
+.divTable.blueTable .divTableHeading {
+    background: #1c6ea4;
+    background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1c6ea4 100%);
+    background: -webkit-linear-gradient(
+            top,
+            #5592bb 0%,
+            #327cad 66%,
+            #1c6ea4 100%
+    );
+    background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1c6ea4 100%);
+    border-bottom: 2px solid #444444;
+}
+.divTable.blueTable .divTableHeading .divTableHead {
+    font-size: 15px;
+    font-weight: bold;
+    color: #ffffff;
+    border-left: 2px solid #d0e4f5;
+}
+.divTable.blueTable .divTableHeading .divTableHead:first-child {
+    border-left: none;
+}
+
+.blueTable .tableFootStyle {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+}
+.blueTable .tableFootStyle {
+    font-size: 14px;
+}
+.blueTable .tableFootStyle .links {
+    text-align: right;
+}
+.blueTable .tableFootStyle .links a {
+    display: inline-block;
+    background: #1c6ea4;
+    color: #ffffff;
+    padding: 2px 8px;
+    margin: 3px;
+    border-radius: 5px;
+}
+
+.blueTable .tableFootStyle .links .active {
+    background-color: darkgoldenrod;
+}
+
+.blueTable .tableFootStyle .dif-ref {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.blueTable .tableFootStyle .dif-ref span {
+    color: black;
+    font-weight: 1;
+}
+
+.blueTable .tableFootStyle .summary {
+    color: black;
+    font-weight: normal;
+    margin-top: 10px;
+}
+
+.blueTable .tableFootStyle .summary .value {
+    margin-top: 4px;
+    color: #dc3545;
+    font-size: 12px;
+}
+
+.blueTable.outerTableFooter {
+    border-top: none;
+}
+
+.blueTable.outerTableFooter .tableFootStyle {
+    padding: 1px 1px;
+}
+
+.tableFootStyle > .dif-ref > img {
+    position: relative;
+    top: 6px;
+    width: 10px;
+    margin: 5px;
+}
+
+.tableFootStyle .summary .item-row > img {
+    position: relative;
+    width: 10px;
+    margin: 5px;
+}
+
+.divTable.blueTable .divTableCell img {
+    width: 15px;
+}
+
+.blueTable .tableFootStyle > .summary {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.blueTable .tableFootStyle > .summary > .item-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    width: 100%;
+}
+.divTable {
+    display: table;
+}
+.divTableRow {
+    display: table-row;
+}
+.divTableHeading {
+    display: table-header-group;
+}
+.divTableCell,
+.divTableHead {
+    display: table-cell;
+}
+.divTableHeading {
+    display: table-header-group;
+}
+.divTableFoot {
+    display: table-footer-group;
+}
+.divTableBody {
+    display: table-row-group;
+}

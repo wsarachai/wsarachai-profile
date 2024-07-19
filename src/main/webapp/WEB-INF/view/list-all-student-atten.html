@@ -5,10 +5,10 @@
 <body>
 <header th:insert="~{layouts/general :: header}"></header>
     <main class="flex-container">
-    <h4 th:text="#{page.student.login.title}"></h4>
+    <h2 th:text="#{page.student.login.title}"></h2>
     <section class="flex-container-column">
+        <!-- Display course header of data table -->
         <div class="flex-container-row">
-            <!-- Display course header of data table -->
             <div class="item1">
                 <p th:text="#{page.student.atten.subjects}">:</p>
                 <p th:text="#{page.student.atten.group}">:</p>
@@ -21,6 +21,7 @@
                 <p th:text="${course.getSemester()}"></p>
             </div>
         </div>
+        <!-- End display course header of data table -->
         <!-- Display 1-15 weeks links -->
         <div class="blueTable outerTableFooter">
             <div class="tableFootStyle">
@@ -40,9 +41,9 @@
                     <span>&nbsp;|&nbsp;</span>
                     <img th:src="@{/assets/images/atten.png}"/> <span th:text="#{page.student.atten.atten}"/>
                 </div>
-                <div class="summary container">
+                <div class="summary">
                     <div class="item-row">
-                        <span style="margin-right: 10px" th:text="#{section.lec}"></span>
+                        <span th:text="#{section.lec}"></span>
                         <img th:src="@{/assets/images/absent.png}"/>
                         <span class="value" th:text="${absentCountLec}"></span>
                         <span>&nbsp;|&nbsp;</span>
@@ -56,7 +57,7 @@
                         <span class="value" th:text="${attendedCountLec}"></span>
                     </div>
                     <div class="item-row">
-                        <span style="margin-right: 10px"  th:text="#{section.lab}"></span>
+                        <span th:text="#{section.lab}"></span>
                         <img th:src="@{/assets/images/absent.png}"/>
                         <span class="value" th:text="${absentCountLab}"></span>
                         <span>&nbsp;|&nbsp;</span>
@@ -72,8 +73,9 @@
                 </div>
             </div>
         </div>
+        <!-- Emd display 1-15 weeks links -->
+        <!-- Display Attendance header of data table -->
         <div class="divTable blueTable">
-            <!-- Display Attendance header of data table -->
             <div class="divTableHeading">
                 <div class="divTableRow">
                     <div class="divTableHead" th:text="#{page.no}"></div>

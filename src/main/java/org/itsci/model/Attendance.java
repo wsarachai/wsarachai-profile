@@ -1,5 +1,6 @@
 package org.itsci.model;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class Attendance implements Comparable<Attendance> {
     @Column(name="status", columnDefinition = "VARCHAR(30)")
     @Convert(converter = EAttendanceStatusConverter.class)
     private EAttendanceStatus status;
+    @CreationTimestamp
     @Column(name="attendance_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date attendanceTime;

@@ -28,7 +28,7 @@
                 <div class="links">
                     <a th:each="i : ${#numbers.sequence(0, 14)}" th:text="${i+1}"
                        th:classappend="${displayWeek == i} ? 'active': ''"
-                       th:href="@{'/pub/student/atten/'+${courseId}+'/'+${secionId}+'/'+${i}}"></a>
+                       th:href="${displayWeek == i} ? '#' : @{'/pub/student/atten/'+${courseId}+'/'+${secionId}+'/'+${i}}"></a>
                 </div>
                 <div class="dif-ref">
                     <img th:src="@{/assets/images/na.png}"/> <span th:text="#{page.student.atten.na}"/>
@@ -107,9 +107,8 @@
                            th:text="#{page.student.login.atten}"></a>
                     </div>
                     <div class="divTableCell"
-                         sec:authorize="hasRole('ROLE_TEACHER')"
                          th:with="status=${csReg.getAttenLec()[displayWeek].name()}">
-                        <select th:id="'attendance-lec-status-'+${i.index}"
+                        <select sec:authorize="hasRole('ROLE_TEACHER')" th:id="'attendance-lec-status-'+${i.index}"
                                 th:onchange="'attenStatusChange(\'lec\',' + ${i.index} +',' + ${csReg.getEnrollment().getId()} + ',' + ${displayWeek} + ');'">
                             <option value="NA" th:selected="(${status}=='NA')">...</option>
                             <option value="ABSENT"
@@ -140,14 +139,12 @@
                     </div>
                     <div class="divTableCell">
                         <a th:if="${isInTimeForLabAttend}"
-                           sec:authorize="isAuthenticated()"
                            th:href="@{'/pub/student/atten/'+${courseId}+'/'+${csReg.getEnrollment().getId()}+'/lab/'+${currentWeek}}"
                            th:text="#{page.student.login.atten}"></a>
                     </div>
                     <div class="divTableCell"
-                         sec:authorize="hasRole('ROLE_TEACHER')"
                          th:with="status=${csReg.getAttenLab()[displayWeek].name()}">
-                        <select th:id="'attendance-lab-status-'+${i.index}"
+                        <select sec:authorize="hasRole('ROLE_TEACHER')" th:id="'attendance-lab-status-'+${i.index}"
                                 th:onchange="'attenStatusChange(\'lab\',' + ${i.index} +',' + ${csReg.getEnrollment().getId()} + ',' + ${displayWeek} + ');'">
                             <option value="NA" th:selected="(${status}=='NA')">...</option>
                             <option value="ABSENT"

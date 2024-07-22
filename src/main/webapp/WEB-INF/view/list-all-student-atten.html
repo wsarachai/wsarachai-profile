@@ -45,30 +45,30 @@
                     <div class="item-row">
                         <span th:text="#{section.lec}"></span>
                         <img th:src="@{/assets/images/absent.png}"/>
-                        <span class="value" th:text="${absentCountLec}"></span>
-                        <span>&nbsp;|&nbsp;</span>
+                        <span class="value" th:text="'['+${absentCountLec}+']'"></span>
+                        <span class="sep">&nbsp;|&nbsp;</span>
                         <img th:src="@{/assets/images/late.png}"/>
-                        <span class="value" th:text="${lateCountLec}"></span>
-                        <span>&nbsp;|&nbsp;</span>
+                        <span class="value" th:text="'['+${lateCountLec}+']'"></span>
+                        <span class="sep">&nbsp;|&nbsp;</span>
                         <img th:src="@{/assets/images/letters.png}"/>
-                        <span class="value" th:text="${letterCountLec}"></span>
-                        <span>&nbsp;|&nbsp;</span>
+                        <span class="value" th:text="'['+${letterCountLec}+']'"></span>
+                        <span class="sep">&nbsp;|&nbsp;</span>
                         <img th:src="@{/assets/images/atten.png}"/>
-                        <span class="value" th:text="${attendedCountLec}"></span>
+                        <span class="value" th:text="'['+${attendedCountLec}+']'"></span>
                     </div>
                     <div class="item-row">
                         <span th:text="#{section.lab}"></span>
                         <img th:src="@{/assets/images/absent.png}"/>
-                        <span class="value" th:text="${absentCountLab}"></span>
-                        <span>&nbsp;|&nbsp;</span>
+                        <span class="value" th:text="'['+${absentCountLab}+']'"></span>
+                        <span class="sep">&nbsp;|&nbsp;</span>
                         <img th:src="@{/assets/images/late.png}"/>
-                        <span class="value" th:text="${lateCountLab}"></span>
-                        <span>&nbsp;|&nbsp;</span>
+                        <span class="value" th:text="'['+${lateCountLab}+']'"></span>
+                        <span class="sep">&nbsp;|&nbsp;</span>
                         <img th:src="@{/assets/images/letters.png}"/>
-                        <span class="value" th:text="${letterCountLab}"></span>
-                        <span>&nbsp;|&nbsp;</span>
+                        <span class="value" th:text="'['+${letterCountLab}+']'"></span>
+                        <span class="sep">&nbsp;|&nbsp;</span>
                         <img th:src="@{/assets/images/atten.png}"/>
-                        <span class="value" th:text="${attendedCountLab}"></span>
+                        <span class="value" th:text="'['+${attendedCountLab}+']'"></span>
                     </div>
                 </div>
             </div>

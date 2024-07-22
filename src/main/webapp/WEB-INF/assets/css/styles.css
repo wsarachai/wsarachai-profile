@@ -708,15 +708,18 @@ div.blueTable {
 }
 
 .tableFootStyle > .dif-ref > img {
-    position: relative;
-    top: 6px;
-    width: 10px;
-    margin: 5px;
+    width: 12px;
+    height: 12px;
+    margin-top: 5px;
 }
 
 .tableFootStyle .summary .item-row > img {
-    position: relative;
-    width: 10px;
+    width: 12px;
+    height: 12px;
+    margin: 5px;
+}
+
+.tableFootStyle .summary .item-row > .sep {
     margin: 5px;
 }
 

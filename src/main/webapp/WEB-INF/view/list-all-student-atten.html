@@ -129,14 +129,14 @@
                                     th:text="#{page.student.atten.atten}">
                             </option>
                         </select>
-                    </div>
-                    <div sec:authorize="!hasRole('ROLE_TEACHER')" class="divTableCell" th:switch="${csReg.getAttenLec()[displayWeek].name()}">
-                        <img th:case="'NA'" th:src="@{/assets/images/na.png}"/>
-                        <img th:case="'ABSENT'" th:src="@{/assets/images/absent.png}"/>
-                        <img th:case="'LATE'" th:src="@{/assets/images/late.png}"/>
-                        <img th:case="'LETTERS'" th:src="@{/assets/images/letters.png}"/>
-                        <img th:case="'ATTENDED'" th:src="@{/assets/images/atten.png}"/>
-                        <p th:case="*" th:text="${csReg.getAttenLec()[displayWeek]}"></p>
+                        <span th:switch="${csReg.getAttenLec()[displayWeek].name()}">
+                            <img th:case="'NA'" th:src="@{/assets/images/na.png}"/>
+                            <img th:case="'ABSENT'" th:src="@{/assets/images/absent.png}"/>
+                            <img th:case="'LATE'" th:src="@{/assets/images/late.png}"/>
+                            <img th:case="'LETTERS'" th:src="@{/assets/images/letters.png}"/>
+                            <img th:case="'ATTENDED'" th:src="@{/assets/images/atten.png}"/>
+                            <p th:case="*" th:text="${csReg.getAttenLec()[displayWeek]}"></p>
+                        </span>
                     </div>
                     <div class="divTableCell">
                         <a th:if="${isInTimeForLabAttend}"
@@ -167,14 +167,14 @@
                                     th:text="#{page.student.atten.atten}">
                             </option>
                         </select>
-                    </div>
-                    <div sec:authorize="!hasRole('ROLE_TEACHER')" class="divTableCell" th:switch="${csReg.getAttenLab()[displayWeek].name()}">
-                        <img th:case="'NA'" th:src="@{/assets/images/na.png}"/>
-                        <img th:case="'ABSENT'" th:src="@{/assets/images/absent.png}"/>
-                        <img th:case="'LATE'" th:src="@{/assets/images/late.png}"/>
-                        <img th:case="'LETTERS'" th:src="@{/assets/images/letters.png}"/>
-                        <img th:case="'ATTENDED'" th:src="@{/assets/images/atten.png}"/>
-                        <p th:case="*" th:text="${csReg.getAttenLab()[displayWeek]}"></p>
+                        <span th:switch="${csReg.getAttenLab()[displayWeek].name()}">
+                            <img th:case="'NA'" th:src="@{/assets/images/na.png}"/>
+                            <img th:case="'ABSENT'" th:src="@{/assets/images/absent.png}"/>
+                            <img th:case="'LATE'" th:src="@{/assets/images/late.png}"/>
+                            <img th:case="'LETTERS'" th:src="@{/assets/images/letters.png}"/>
+                            <img th:case="'ATTENDED'" th:src="@{/assets/images/atten.png}"/>
+                            <p th:case="*" th:text="${csReg.getAttenLab()[displayWeek]}"></p>
+                        </span>
                     </div>
                 </div>
             </div>

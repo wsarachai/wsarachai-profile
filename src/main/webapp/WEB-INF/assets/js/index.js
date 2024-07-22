@@ -4,8 +4,8 @@ const filterCourses = function() {
     let input, filter, courseContainer, courseItems, courseHeader, i, txtValue;
     input = document.getElementById('searchInput');
     filter = input.value.toUpperCase();
-    courseContainer = document.querySelector('.course-container .row');
-    courseItems = courseContainer.getElementsByClassName('course-item');
+    courseContainer = document.getElementById('course-container');
+    courseItems = courseContainer.getElementsByClassName('card');
 
     for (i = 0; i < courseItems.length; i++) {
         courseHeader = courseItems[i].getElementsByClassName('course-header')[0];

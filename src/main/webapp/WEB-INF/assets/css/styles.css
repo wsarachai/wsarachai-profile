@@ -416,7 +416,7 @@ ul.sub-menu li > a {
 .flex-container {
     width: 1200px;
     max-width: 90%;
-    margin: 106px auto 0px auto;
+    margin: 110px auto 40px auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start; /* Adjust alignment as needed */

@@ -27,6 +27,7 @@ public class StudentAttenController {
     @GetMapping("/manage/{enrollmentId}")
     public String authenticated_home(Model model, @PathVariable String enrollmentId) {
             Enrollment enrollment = studentAttenService.findEnrollmentById(Long.parseLong(enrollmentId));
+
             List<Attendance> lecAtten = new ArrayList<>();
             List<Attendance> labAtten = new ArrayList<>();
             List<Attendance> lecAttendances = new ArrayList<>(enrollment.getLecAtten());
@@ -296,8 +297,16 @@ public class StudentAttenController {
                 attendance.setLatitude(Double.parseDouble(latitude));
                 attendance.setLongitude(Double.parseDouble(longitude));
                 attendance.setStatus(status);
-                attendance.setStudentImage(byteObjects1);
-                attendance.setCodeImage(byteObjects2);
+                Image _image1 = new Image();
+                _image1.setImage(byteObjects1);
+                Image _image2 = new Image();
+                _image2.setImage(byteObjects2);
+                studentAttenService.saveImage(_image1);
+                studentAttenService.saveImage(_image2);
+                attendance.setImage1_id(_image1.getId());
+                attendance.setImage2_id(_image2.getId());
+//                attendance.setStudentImage(byteObjects1);
+//                attendance.setCodeImage(byteObjects2);
                 studentAttenService.saveEnrollment(enrollment);
             }
         } else if ("lab".equals(type)) {
@@ -312,8 +321,16 @@ public class StudentAttenController {
                 attendance.setLatitude(Double.parseDouble(latitude));
                 attendance.setLongitude(Double.parseDouble(longitude));
                 attendance.setStatus(status);
-                attendance.setStudentImage(byteObjects1);
-                attendance.setCodeImage(byteObjects2);
+                Image _image1 = new Image();
+                _image1.setImage(byteObjects1);
+                Image _image2 = new Image();
+                _image2.setImage(byteObjects2);
+                studentAttenService.saveImage(_image1);
+                studentAttenService.saveImage(_image2);
+                attendance.setImage1_id(_image1.getId());
+                attendance.setImage2_id(_image2.getId());
+//                attendance.setStudentImage(byteObjects1);
+//                attendance.setCodeImage(byteObjects2);
                 studentAttenService.saveEnrollment(enrollment);
             }
         }

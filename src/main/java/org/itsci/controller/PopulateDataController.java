@@ -25,6 +25,27 @@ public class PopulateDataController {
     @Autowired
     private StudentAttenService studentAttenService;
 
+    @GetMapping("/fiximage")
+    public String fixImage(Model model) {
+        List<Attendance> attendances = studentAttenService.findAllAttendances();
+        for (Attendance attendance : attendances) {
+            if (attendance.getStudentImage() != null) {
+                Image image = new Image();
+                image.setImage(attendance.getStudentImage());
+                studentAttenService.saveImage(image);
+                attendance.setImage1_id(image.getId());
+            }
+            if (attendance.getCodeImage() != null) {
+                Image image = new Image();
+                image.setImage(attendance.getCodeImage());
+                studentAttenService.saveImage(image);
+                attendance.setImage2_id(image.getId());
+            }
+            studentAttenService.updateAttendance(attendance);
+        }
+        return "index";
+    }
+
     @GetMapping("/populate")
     public String populateStudent(Model model) {
 

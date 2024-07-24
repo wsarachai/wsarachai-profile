@@ -1,10 +1,13 @@
 package org.itsci.model;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "attendances")
@@ -27,6 +30,12 @@ public class Attendance implements Comparable<Attendance> {
     private Double latitude;
     @Column(name="longitude")
     private Double longitude;
+    @Column(name="image1_id")
+    @ColumnDefault("-1")
+    private long image1_id;
+    @Column(name="image2_id")
+    @ColumnDefault("-1")
+    private long image2_id;
     @Lob
     @Column(name="student_image")
     private Byte[] studentImage;
@@ -80,6 +89,22 @@ public class Attendance implements Comparable<Attendance> {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public long getImage1_id() {
+        return image1_id;
+    }
+
+    public void setImage1_id(long image1_id) {
+        this.image1_id = image1_id;
+    }
+
+    public long getImage2_id() {
+        return image2_id;
+    }
+
+    public void setImage2_id(long image2_id) {
+        this.image2_id = image2_id;
     }
 
     public Byte[] getStudentImage() {

@@ -1,6 +1,7 @@
 package org.itsci.controller;
 
 import org.itsci.model.Attendance;
+import org.itsci.model.Image;
 import org.itsci.service.StudentAttenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,7 +51,6 @@ public class ImageController {
             value = "/images/{attenId}/{imageId}",
             produces = MediaType.IMAGE_JPEG_VALUE
     )
-    @Cacheable(value = "images")
     public @ResponseBody
     byte[] getImageFromAttendanceById(Model model, @PathVariable("attenId") String attenId, @PathVariable("imageId") String imageId) {
         Attendance attendance = studentAttenService.findAttendanceById(Long.valueOf(attenId));
@@ -65,10 +65,17 @@ public class ImageController {
         Byte[] image = null;
         byte [] outputs = null;
 
-        if ("lec".equals(imageId)) {
-            image = attendance.getStudentImage();
-        } else {
-            image = attendance.getCodeImage();
+        if ("img1".equals(imageId)) {
+            Image image1 = studentAttenService.getImageById(attendance.getImage1_id());
+            if (image1 != null) {
+                image = image1.getImage();
+            }
+        }
+        if ("img2".equals(imageId)) {
+            Image image2 = studentAttenService.getImageById(attendance.getImage2_id());
+            if (image2 != null) {
+                image = image2.getImage();
+            }
         }
 
         if (image == null) {

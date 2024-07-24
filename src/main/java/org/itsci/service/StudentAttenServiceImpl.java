@@ -41,6 +41,9 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     @Autowired
     private AttendanceDao attendanceDao;
 
+    @Autowired
+    private ImageDao imageDao;
+
     @Override
     @Transactional
     @Cacheable("courses")
@@ -173,6 +176,30 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     @Transactional
     public void updateEnrollment(Enrollment enrollment) {
         enrollmentDao.update(enrollment);
+    }
+
+    @Override
+    @Transactional
+    public List<Attendance> findAllAttendances() {
+        return attendanceDao.findAll();
+    }
+
+    @Override
+    @Transactional
+    public void saveImage(Image image) {
+        imageDao.save(image);
+    }
+
+    @Override
+    @Transactional
+    public void updateAttendance(Attendance attendance) {
+        attendanceDao.update(attendance);
+    }
+
+    @Override
+    @Transactional
+    public Image getImageById(long image_id) {
+        return imageDao.getByID(image_id);
     }
 
     @Override

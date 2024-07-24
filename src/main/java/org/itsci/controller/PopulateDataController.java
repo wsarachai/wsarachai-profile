@@ -162,7 +162,6 @@ public class PopulateDataController {
             course1.setSubject(studentAttenService.findSubjectById(1l));
 
             Section section1 = new Section();
-            section1.setCourse(studentAttenService.findCourseById(1l));
             section1.setGroupNumber("01");
             section1.setLecDay(EDayOfWeek.WEDNESDAY);
             section1.setStartLectureTime("8:30");
@@ -184,7 +183,6 @@ public class PopulateDataController {
             course2.setSubject(studentAttenService.findSubjectById(2l));
 
             Section section3 = new Section();
-            section3.setCourse(studentAttenService.findCourseById(2l));
             section3.setGroupNumber("01");
             section3.setLecDay(EDayOfWeek.WEDNESDAY);
             section3.setStartLectureTime("12:00");
@@ -197,7 +195,6 @@ public class PopulateDataController {
             section3.setNumberOfSeat(61);
 
             Section section4 = new Section();
-            section4.setCourse(studentAttenService.findCourseById(2l));
             section4.setGroupNumber("02");
             section4.setLecDay(EDayOfWeek.WEDNESDAY);
             section4.setStartLectureTime("12:00");
@@ -222,7 +219,6 @@ public class PopulateDataController {
             course3.setSubject(studentAttenService.findSubjectById(3l));
 
             Section section2 = new Section();
-            section2.setCourse(studentAttenService.findCourseById(3l));
             section2.setGroupNumber("01");
             section2.setLecDay(EDayOfWeek.WEDNESDAY);
             section2.setStartLectureTime("8:30");

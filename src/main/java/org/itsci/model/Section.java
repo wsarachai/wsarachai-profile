@@ -42,10 +42,10 @@ public class Section implements Comparable<Section> {
     private Double latitue;
     @Column(name="longitude")
     private Double longitude;
-    @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="course_id")
     private Course course;
-    @OneToMany(mappedBy = "section", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "section", fetch = FetchType.LAZY)
     private Set<Enrollment> enrollments = new HashSet<>();
 
     public long getId() {

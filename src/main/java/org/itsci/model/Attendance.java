@@ -36,12 +36,6 @@ public class Attendance implements Comparable<Attendance> {
     @Column(name="image2_id")
     @ColumnDefault("-1")
     private long image2_id;
-    @Lob
-    @Column(name="student_image")
-    private Byte[] studentImage;
-    @Lob
-    @Column(name="code_image")
-    private Byte[] codeImage;
 
     public long getId() {
         return id;
@@ -105,22 +99,6 @@ public class Attendance implements Comparable<Attendance> {
 
     public void setImage2_id(long image2_id) {
         this.image2_id = image2_id;
-    }
-
-    public Byte[] getStudentImage() {
-        return studentImage;
-    }
-
-    public void setStudentImage(Byte[] studentImage) {
-        this.studentImage = studentImage;
-    }
-
-    public Byte[] getCodeImage() {
-        return codeImage;
-    }
-
-    public void setCodeImage(Byte[] codeImage) {
-        this.codeImage = codeImage;
     }
 
     @Override

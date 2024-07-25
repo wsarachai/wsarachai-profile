@@ -30,3 +30,4 @@ replay_pid*
 target
 misc-data
 wordpress
+persistence.properties

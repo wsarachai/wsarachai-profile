@@ -44,7 +44,7 @@ public class SystemController {
     }
 
     @GetMapping("/clear/cache")
-    @CacheEvict(value = { "enrollments", "images", "courses" }, allEntries = true)
+    @CacheEvict(value = { "enrollments", "courses" }, allEntries = true)
     public String clearCache() {
         return "redirect:/";
     }

@@ -48,37 +48,24 @@ public class ImageController {
     }
 
     @GetMapping(
-            value = "/images/{attenId}/{imageId}",
+            value = "/images/{ids}",
             produces = MediaType.IMAGE_JPEG_VALUE
     )
     public @ResponseBody
-    byte[] getImageFromAttendanceById(Model model, @PathVariable("attenId") String attenId, @PathVariable("imageId") String imageId) {
-        Attendance attendance = studentAttenService.findAttendanceById(Long.valueOf(attenId));
-        if (attendance == null) {
+    byte[] getImageFromAttendanceById(@PathVariable("ids") String ids) {
+        if (ids == null || ids.isEmpty()) {
             return null;
         }
 
-        if (imageId == null || imageId.isEmpty()) {
-            return null;
-        }
-
-        Byte[] image = null;
+        Byte[] images = null;
         byte [] outputs = null;
 
-        if ("img1".equals(imageId)) {
-            Image image1 = studentAttenService.getImageById(attendance.getImage1_id());
-            if (image1 != null) {
-                image = image1.getImage();
-            }
-        }
-        if ("img2".equals(imageId)) {
-            Image image2 = studentAttenService.getImageById(attendance.getImage2_id());
-            if (image2 != null) {
-                image = image2.getImage();
-            }
+        Image image = studentAttenService.getImageById(Long.parseLong(ids));
+        if (image != null) {
+            images = image.getImage();
         }
 
-        if (image == null) {
+        if (images == null) {
             Resource unknownImage = resourceLoader.getResource("classpath:unknow.png");
             try {
                 File file = unknownImage.getFile();
@@ -87,9 +74,9 @@ public class ImageController {
                 e.printStackTrace();
             }
         } else {
-            outputs = new byte[image.length];
-            for (int i = 0; i < image.length; i++) {
-                outputs[i] = image[i].byteValue();
+            outputs = new byte[images.length];
+            for (int i = 0; i < images.length; i++) {
+                outputs[i] = images[i];
             }
         }
 

@@ -280,6 +280,7 @@ public class StudentAttenController {
                           @RequestParam("image1") MultipartFile image1,
                           @RequestParam("image2") MultipartFile image2
     ) throws IOException {
+        Image _image1 = null, _image2 = null;
         Byte[] byteObjects1 = this.convertToBytes(image1);
         Byte[] byteObjects2 = this.convertToBytes(image2);
         Enrollment enrollment = studentAttenService.findEnrollmentById(Long.parseLong(enrollmentId));
@@ -297,16 +298,14 @@ public class StudentAttenController {
                 attendance.setLatitude(Double.parseDouble(latitude));
                 attendance.setLongitude(Double.parseDouble(longitude));
                 attendance.setStatus(status);
-                Image _image1 = new Image();
+                _image1 = new Image();
+                _image2 = new Image();
                 _image1.setImage(byteObjects1);
-                Image _image2 = new Image();
                 _image2.setImage(byteObjects2);
                 studentAttenService.saveImage(_image1);
                 studentAttenService.saveImage(_image2);
                 attendance.setImage1_id(_image1.getId());
                 attendance.setImage2_id(_image2.getId());
-//                attendance.setStudentImage(byteObjects1);
-//                attendance.setCodeImage(byteObjects2);
                 studentAttenService.saveEnrollment(enrollment);
             }
         } else if ("lab".equals(type)) {
@@ -321,16 +320,14 @@ public class StudentAttenController {
                 attendance.setLatitude(Double.parseDouble(latitude));
                 attendance.setLongitude(Double.parseDouble(longitude));
                 attendance.setStatus(status);
-                Image _image1 = new Image();
+                _image1 = new Image();
+                _image2 = new Image();
                 _image1.setImage(byteObjects1);
-                Image _image2 = new Image();
                 _image2.setImage(byteObjects2);
                 studentAttenService.saveImage(_image1);
                 studentAttenService.saveImage(_image2);
                 attendance.setImage1_id(_image1.getId());
                 attendance.setImage2_id(_image2.getId());
-//                attendance.setStudentImage(byteObjects1);
-//                attendance.setCodeImage(byteObjects2);
                 studentAttenService.saveEnrollment(enrollment);
             }
         }

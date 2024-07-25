@@ -5,6 +5,9 @@
     <header th:insert="~{layouts/general :: header}"></header>
     <main class="flex-container">
     <h2 th:text="#{page.student.profile}"></h2>
+    <div class="nav-div">
+        <a th:href="@{'/pub/student/manage/'+${enrollment.getId()}}"><span th:text="#{page.navigate.back}"></span></a>
+    </div>
     <section class="flex-container-column">
         <div class="flex-container-row">
             <div class="item1">
@@ -27,16 +30,11 @@
         <div class="flex-container-row">
             <div class="item4">
                 <div class="wrapper">
-                    <img th:src="@{'/pub/images/'+${attendance.getId()}+'/img1'}" alt="Your image" />
+                    <img th:src="@{'/pub/images/'+${attendance.getImage1_id()}}" alt="Your image" />
                 </div>
                 <div class="wrapper">
-                    <img th:src="@{'/pub/images/'+${attendance.getId()}+'/img2'}" alt="Reference image" />
+                    <img th:src="@{'/pub/images/'+${attendance.getImage2_id()}}" alt="Reference image" />
                 </div>
-            </div>
-        </div>
-        <div class="flex-container-row">
-            <div class="item5">
-                <a th:href="@{'/pub/student/manage/'+${enrollment.getId()}}"><span th:text="#{page.navigate.back}"></span></a>
             </div>
         </div>
     </section>

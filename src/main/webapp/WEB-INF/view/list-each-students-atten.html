@@ -5,8 +5,9 @@
     <header th:insert="~{layouts/general :: header}"></header>
     <main class="flex-container">
     <h2 th:text="#{page.student.profile}"></h2>
-    <div class="nav-div"><a th:href="@{'/pub/student/atten/' + ${enrollment.getSection().getCourse().getId()} + '/' + ${enrollment.getSection().getId()}}"
-       th:text="#{page.navigate.back}"></a>
+    <div class="nav-div">
+        <a th:href="@{'/pub/student/atten/' + ${enrollment.getSection().getCourse().getId()} + '/' + ${enrollment.getSection().getId()}}"
+           th:text="#{page.navigate.back}"></a>
     </div>
     <section class="flex-container-column">
         <div class="flex-container-row">

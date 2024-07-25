@@ -8,9 +8,11 @@
     <artifactId>wsarachai-profile</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
+    <description>
+        This is a simple web application for the profile of Watcharin Sarachai.
+    </description>
 
     <name>wsarachai-profile</name>
-    <!-- FIXME change it to the project's website -->
     <url>http://www.itsci.mju.ac.th/wsarachai</url>
 
     <properties>
@@ -32,6 +34,25 @@
         <mariadb.version>3.0.6</mariadb.version>
         <thymeleaf.version>3.1.0.RELEASE</thymeleaf.version>
     </properties>
+
+    <developers>
+        <developer>
+            <id>wsarachai</id>
+            <name>Watcharin Sarachai</name>
+            <email>watcharin_s@mju.ac.th</email>
+            <roles>
+                <role>Lead Developer</role>
+            </roles>
+            <timezone>+7</timezone>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
 
     <dependencies>
         <dependency>

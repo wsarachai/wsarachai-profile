@@ -45,7 +45,7 @@ public class Section implements Comparable<Section> {
     @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="course_id")
     private Course course;
-    @OneToMany(mappedBy = "section", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "section", fetch = FetchType.LAZY)
     private Set<Enrollment> enrollments = new HashSet<>();
 
     public long getId() {

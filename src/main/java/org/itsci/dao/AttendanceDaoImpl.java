@@ -7,6 +7,11 @@ import org.itsci.model.Attendance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
+
 @Repository
 public class AttendanceDaoImpl implements AttendanceDao {
 
@@ -20,10 +25,9 @@ public class AttendanceDaoImpl implements AttendanceDao {
     }
 
     @Override
-    public Attendance update(Attendance attendance) {
+    public void update(Attendance attendance) {
         Session session = sessionFactory.getCurrentSession();
-        attendance = (Attendance) session.merge(attendance);
-        return attendance;
+        session.saveOrUpdate(attendance);
     }
 
     @Override
@@ -39,5 +43,19 @@ public class AttendanceDaoImpl implements AttendanceDao {
         Session session = sessionFactory.getCurrentSession();
         Attendance attendance = session.get(Attendance.class, id);
         return attendance;
+    }
+
+    @Override
+    public List<Attendance> findAll() {
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Attendance> criteria = builder.createQuery(Attendance.class);
+        Root<Attendance> root = criteria.from(Attendance.class);
+        criteria.select(root);
+
+        Query<Attendance> query = session.createQuery(criteria);
+        List<Attendance> attendances = query.getResultList();
+
+        return attendances;
     }
 }

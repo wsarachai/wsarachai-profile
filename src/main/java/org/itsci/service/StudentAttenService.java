@@ -63,4 +63,12 @@ public interface StudentAttenService {
     Attendance findAttendanceById(long id);
 
     void updateEnrollment(Enrollment enrollment);
+
+    List<Attendance> findAllAttendances();
+
+    void saveImage(Image image);
+
+    void updateAttendance(Attendance attendance);
+
+    Image getImageById(long image_id);
 }

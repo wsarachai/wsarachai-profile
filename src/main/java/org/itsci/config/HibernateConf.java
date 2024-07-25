@@ -18,7 +18,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource("classpath:persistence.properties")
+@PropertySource("classpath:persistence.properties.template")
 public class HibernateConf {
 
     @Autowired

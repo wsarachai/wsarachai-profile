@@ -201,11 +201,11 @@
             <version>${thymeleaf.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.linecorp.bot/line-bot-api-client -->
-        <dependency>
-            <groupId>com.linecorp.bot</groupId>
-            <artifactId>line-bot-api-client</artifactId>
-            <version>6.0.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.linecorp.bot</groupId>-->
+<!--            <artifactId>line-bot-api-client</artifactId>-->
+<!--            <version>6.0.0</version>-->
+<!--        </dependency>-->
         <!-- Apache Commons FileUpload -->
         <dependency>
             <groupId>commons-fileupload</groupId>

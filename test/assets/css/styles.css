@@ -1,16 +1,46 @@
-.menu span {
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f4f4f4;
+}
+
+.processing-button {
   position: relative;
-  padding-right: 16px; /* Add some padding to accommodate the separator */
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.menu span::after {
-  content: "|"; /* The separator symbol */
-  position: absolute;
-  right: 0; /* Position it to the right of the span */
-  top: 50%;
-  transform: translateY(-50%);
+.processing-button .spinner {
+  display: none;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
 }
 
-.menu span:last-child::after {
-  content: ""; /* Remove the separator after the last span */
+.processing-button.loading .spinner {
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

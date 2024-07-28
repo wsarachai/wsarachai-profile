@@ -1,20 +1,21 @@
-To insert a separator symbol after a span element using CSS, you can use the
-::after pseudo-element. Here's an example to demonstrate how you can achieve
-this. HTML: html Copy code
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Separator Example</title>
+    <title>Processing Button</title>
     <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
   <body>
-    <div class="menu">
-      <span>Home</span>
-      <span>Menu1</span>
-      <span>Menu2</span>
-      <span>Menu3</span>
-    </div>
+    <button
+      id="locationButton"
+      class="processing-button"
+      onclick="getLocation()"
+    >
+      <div class="spinner"></div>
+      Get Location
+    </button>
+
+    <script src="assets/js/scripts.js"></script>
   </body>
 </html>

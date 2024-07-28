@@ -286,14 +286,20 @@ public class StudentAttenController {
         Enrollment enrollment = studentAttenService.findEnrollmentById(Long.parseLong(enrollmentId));
         Attendance attendance = null;
 
+        SortedSet<Attendance> lecAttendances = studentAttenService.findAttendancesByType(enrollment, "lec");
+        SortedSet<Attendance> labAttendances = studentAttenService.findAttendancesByType(enrollment, "lab");
+
+        enrollment.setLecAtten(lecAttendances);
+        enrollment.setLabAtten(labAttendances);
+
         if ("lec".equals(type)) {
             EAttendanceStatus status = DateUtils.checkAttendanceStatus(enrollment.getSection().getStartLectureTime(), enrollment.getSection().getEndLectureTime());
             if (status == EAttendanceStatus.ATTENDED || status == EAttendanceStatus.LATE) {
-                attendance = this.findAttendanceByWeek(enrollment.getLecAtten(), week);
+                attendance = this.findAttendanceByWeek(lecAttendances, week);
                 if (attendance == null) {
                     attendance = new Attendance();
                     attendance.setWeekNo(Integer.parseInt(week));
-                    enrollment.getLecAtten().add(attendance);
+                    lecAttendances.add(attendance);
                 }
                 attendance.setLatitude(Double.parseDouble(latitude));
                 attendance.setLongitude(Double.parseDouble(longitude));
@@ -311,15 +317,27 @@ public class StudentAttenController {
         } else if ("lab".equals(type)) {
             EAttendanceStatus status = DateUtils.checkAttendanceStatus(enrollment.getSection().getStartLabTime(), enrollment.getSection().getEndLabTime());
             if (status == EAttendanceStatus.ATTENDED || status == EAttendanceStatus.LATE) {
-                attendance = this.findAttendanceByWeek(enrollment.getLabAtten(), week);
+                attendance = this.findAttendanceByWeek(labAttendances, week);
                 if (attendance == null) {
                     attendance = new Attendance();
                     attendance.setWeekNo(Integer.parseInt(week));
-                    enrollment.getLabAtten().add(attendance);
+                    labAttendances.add(attendance);
                 }
-                attendance.setLatitude(Double.parseDouble(latitude));
-                attendance.setLongitude(Double.parseDouble(longitude));
+
+                double iLatitude = 0.0;
+                double iLongitude = 0.0;
+
+                try {
+                    iLatitude = Double.parseDouble(latitude);
+                    iLongitude = Double.parseDouble(longitude);
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+
+                attendance.setLatitude(iLatitude);
+                attendance.setLongitude(iLongitude);
                 attendance.setStatus(status);
+
                 _image1 = new Image();
                 _image2 = new Image();
                 _image1.setImage(byteObjects1);

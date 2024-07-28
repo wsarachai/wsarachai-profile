@@ -11,7 +11,12 @@ let buttonNewPhoto = {};
 let attenButton = {};
 let currentDate = {};
 let currentTime = {};
+let takepcitureBtn = {};
+let gpsBtn = {};
+let take2Picture = {};
 let timeHandler = undefined;
+let isLocationReady = false;
+let isPhotoReady = false;
 
 var monthNamesThai = [
   "มกราคม",
@@ -38,6 +43,30 @@ var dayNames = [
   "วันเสาร์ที่",
 ];
 
+function enableTakePictureButton() {
+  if (isLocationReady) {
+    gpsBtn.classList.remove("show");
+  } else {
+    if (!gpsBtn.classList.contains("show")) {
+      gpsBtn.classList.add("show");
+    }
+  }
+  if (isPhotoReady) {
+    take2Picture.classList.remove("show");
+  } else {
+    if (!take2Picture.classList.contains("show")) {
+      take2Picture.classList.add("show");
+    }
+  }
+  if (isLocationReady && isPhotoReady) {
+    attenButton.classList.remove("loading");
+    attenButton.removeAttribute("disabled");
+    if (!takepcitureBtn.classList.contains("show")) {
+      takepcitureBtn.classList.add("show");
+    }
+  }
+}
+
 function getLocation(location, latitudeInput, longitudeInput) {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition.bind(null, location, latitudeInput, longitudeInput));
@@ -50,6 +79,8 @@ function showPosition(location, latitudeInput, longitudeInput, position) {
   latitudeInput.value = position.coords.latitude;
   longitudeInput.value = position.coords.longitude;
   location.innerHTML = position.coords.latitude + ", " + position.coords.longitude;
+  isLocationReady = true;
+  enableTakePictureButton();
 }
 
 const initElement = function () {
@@ -61,6 +92,9 @@ const initElement = function () {
   inputImage2 = document.getElementById("inputImage2");
   currentDate = document.getElementById("currentDate");
   currentTime = document.getElementById("currentTime");
+  takepcitureBtn = document.getElementById("takepcitureBtn");
+  gpsBtn = document.getElementById("gpsBtn");
+  take2Picture = document.getElementById("take2Picture");
   canvas1.width = 210;
   canvas2.width = 210;
 
@@ -96,6 +130,8 @@ const initElement = function () {
       });
     };
   }
+  attenButton.classList.add("loading");
+  gpsBtn.classList.add("show");
 };
 
 const onLoadVideo = function () {
@@ -163,7 +199,8 @@ function onTakeAPhoto() {
     // link.setAttribute("href", canvas1.toDataURL("image/jpeg"));
     // link.dispatchEvent(new MouseEvent("click"));
     // numOfPhoto = 0;
-    attenButton.removeAttribute("disabled");
+    isPhotoReady = true;
+    enableTakePictureButton();
   }
 }
 
@@ -203,7 +240,7 @@ const updateTime = function () {
 const init = () => {
   const latitudeInput = document.getElementById("latitudeInput");
   const longitudeInput = document.getElementById("longitudeInput");
-    const location = document.getElementById("location");
+  const location = document.getElementById("location");
   getLocation(location, latitudeInput, longitudeInput);
   initElement();
   initEvent();

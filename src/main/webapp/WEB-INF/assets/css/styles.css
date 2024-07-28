@@ -888,3 +888,58 @@ select.basic {
     margin: 10px;
     font-weight: bold;
 }
+
+.processing-button {
+    position: relative;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.processing-button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+.processing-button .spinner {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+}
+
+.processing-button span {
+    display: none;
+}
+
+.processing-button.loading .spinner {
+    display: inline-block;
+}
+
+.processing-button.loading .show {
+    display: inline-block;
+}
+
+.processing-button .show {
+     display: inline-block;
+ }
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

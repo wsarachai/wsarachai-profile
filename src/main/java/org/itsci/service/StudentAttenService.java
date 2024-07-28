@@ -4,6 +4,7 @@ import org.itsci.model.*;
 
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 
 public interface StudentAttenService {
     Course findCourseById(Long id);
@@ -71,4 +72,6 @@ public interface StudentAttenService {
     void updateAttendance(Attendance attendance);
 
     Image getImageById(long image_id);
+
+    SortedSet<Attendance> findAttendancesByType(Enrollment enrollment, String type);
 }

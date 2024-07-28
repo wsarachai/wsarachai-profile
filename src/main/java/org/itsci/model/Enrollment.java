@@ -20,11 +20,11 @@ public class Enrollment {
     @ManyToOne
     @JoinColumn(name="student_id")
     private Student student;
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="lec_atten_id")
     @OrderBy("weekNo ASC")
     private SortedSet<Attendance> lecAtten = new TreeSet<>();
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="lab_atten_id")
     @OrderBy("weekNo ASC")
     private SortedSet<Attendance> labAtten = new TreeSet<>();

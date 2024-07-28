@@ -30,8 +30,8 @@ public class StudentAttenController {
 
             List<Attendance> lecAtten = new ArrayList<>();
             List<Attendance> labAtten = new ArrayList<>();
-            List<Attendance> lecAttendances = new ArrayList<>(enrollment.getLecAtten());
-            List<Attendance> labAttendances = new ArrayList<>(enrollment.getLabAtten());
+            SortedSet<Attendance> lecAttendances = studentAttenService.findAttendancesByType(enrollment, "lec");
+            SortedSet<Attendance> labAttendances = studentAttenService.findAttendancesByType(enrollment, "lab");
             for (int i=0; i<15; i++) {
                 try {
                     boolean found = false;
@@ -153,8 +153,8 @@ public class StudentAttenController {
         List<AttenData> attendanceList = new ArrayList<>();
         for (Enrollment enrollment : enrollments) {
             AttenData attenData = new AttenData(enrollment);
-            List<Attendance> lecAttendances = new ArrayList<>(enrollment.getLecAtten());
-            List<Attendance> labAttendances = new ArrayList<>(enrollment.getLabAtten());
+            SortedSet<Attendance> lecAttendances = studentAttenService.findAttendancesByType(enrollment, "lec");
+            SortedSet<Attendance> labAttendances = studentAttenService.findAttendancesByType(enrollment, "lab");
             for (int i=0; i<15; i++) {
                 try {
                     boolean found = false;

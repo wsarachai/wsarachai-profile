@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Service
 public class StudentAttenServiceImpl implements StudentAttenService {
@@ -66,7 +67,7 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
-    @CacheEvict(value = {"courses", "enrollments"}, allEntries = true)
+    @CacheEvict(value = {"attendances"}, allEntries = true)
     public void saveEnrollment(Enrollment enrollment) {
         enrollmentDao.save(enrollment);
     }
@@ -200,6 +201,13 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     @Transactional
     public Image getImageById(long image_id) {
         return imageDao.getByID(image_id);
+    }
+
+    @Override
+    @Transactional
+    @Cacheable(value="attendances", key="#enrollment.id+#type")
+    public SortedSet<Attendance> findAttendancesByType(Enrollment enrollment, String type) {
+        return attendanceDao.findByType(enrollment, type);
     }
 
     @Override

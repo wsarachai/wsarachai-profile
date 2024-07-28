@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.List;
+import java.util.SortedSet;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -21,14 +23,20 @@ public class AttenApi {
     @Autowired
     private StudentAttenService studentAttenService;
 
-    @CacheEvict(value = {"enrollments"}, allEntries = true)
+    @CacheEvict(value = {"attendances"}, key = "#param.enrollmentId+#param.type")
     @PostMapping(value="/atten/update", consumes = "application/json", produces = "application/json")
     public ResponseEntity<String> addMember(@RequestBody UpdateParamBean param) {
         Enrollment enrollment = studentAttenService.findEnrollmentById(Long.parseLong(param.getEnrollmentId()));
 
+        SortedSet<Attendance> lecAttens = studentAttenService.findAttendancesByType(enrollment, "lec");
+        SortedSet<Attendance> labAttens = studentAttenService.findAttendancesByType(enrollment, "lab");
+
+        enrollment.setLecAtten(lecAttens);
+        enrollment.setLabAtten(labAttens);
+
         if ("lec".equals(param.getType())) {
             boolean found = false;
-            for (Attendance atten : enrollment.getLecAtten()) {
+            for (Attendance atten : lecAttens) {
                 if (atten.getWeekNo() == Integer.parseInt(param.getWeek())) {
                     atten.setStatus(EAttendanceStatus.valueOf(param.getStatus()));
                     studentAttenService.updateEnrollment(enrollment);
@@ -43,12 +51,12 @@ public class AttenApi {
                 atten.setLatitude(999.0);
                 atten.setLongitude(999.0);
                 atten.setAttendanceTime(new Date());
-                enrollment.getLecAtten().add(atten);
+                lecAttens.add(atten);
                 studentAttenService.updateEnrollment(enrollment);
             }
         } else if ("lab".equals(param.getType())) {
             boolean found = false;
-            for (Attendance atten : enrollment.getLabAtten()) {
+            for (Attendance atten : labAttens) {
                 if (atten.getWeekNo() == Integer.parseInt(param.getWeek())) {
                     atten.setStatus(EAttendanceStatus.valueOf(param.getStatus()));
                     studentAttenService.updateEnrollment(enrollment);
@@ -63,7 +71,7 @@ public class AttenApi {
                 atten.setLatitude(999.0);
                 atten.setLongitude(999.0);
                 atten.setAttendanceTime(new Date());
-                enrollment.getLabAtten().add(atten);
+                labAttens.add(atten);
                 studentAttenService.updateEnrollment(enrollment);
             }
         } else {

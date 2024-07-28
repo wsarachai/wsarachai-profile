@@ -14,23 +14,28 @@
                     <p th:text="#{page.student.atten.subjects}">:</p>
                     <p th:text="#{page.student.atten.group}">:</p>
                     <p th:text="#{page.student.atten.semester}">:</p>
+                    <p th:text="#{page.week.no}"></p>
                 </div>
                 <!-- Display course header details of data table -->
                 <div class="item2">
                     <p th:text="${course.getSubject().getCode() + ' ' + course.getSubject().getThaiName()}"></p>
                     <p th:text="${section.getGroupNumber()}"></p>
                     <p th:text="${course.getSemester()}"></p>
+                    <p th:text="${displayWeek + 1}"></p>
                 </div>
             </div>
             <!-- End display course header of data table -->
-            <!-- Display 1-15 weeks links -->
             <div class="blueTable outerTableFooter">
                 <div class="tableFootStyle">
+                    <!-- Display 1-15 weeks links -->
                     <div class="links">
-                        <a th:each="i : ${#numbers.sequence(0, 14)}" th:text="${i+1}"
-                           th:classappend="${displayWeek == i} ? 'active': ''"
-                           th:href="${displayWeek == i} ? '#' : @{'/pub/student/atten/'+${courseId}+'/'+${secionId}+'/'+${i}}"></a>
+                        <div sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_ADMIN')">
+                            <a th:each="i : ${#numbers.sequence(0, 14)}" th:text="${i+1}"
+                               th:classappend="${displayWeek == i} ? 'active': ''"
+                               th:href="${displayWeek == i} ? '#' : @{'/pub/student/atten/'+${courseId}+'/'+${secionId}+'/'+${i}}"></a>
+                        </div>
                     </div>
+                    <!-- Emd display 1-15 weeks links -->
                     <div class="dif-ref">
                         <img th:src="@{/assets/images/na.png}"/> <span th:text="#{page.student.atten.na}"/>
                         <span>&nbsp;|&nbsp;</span>
@@ -74,7 +79,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Emd display 1-15 weeks links -->
             <!-- Display Attendance header of data table -->
             <div class="divTable blueTable">
                 <div class="divTableHeading">

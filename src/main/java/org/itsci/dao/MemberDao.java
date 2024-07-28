@@ -15,4 +15,6 @@ public interface MemberDao {
     Member getMember(Long id);
 
     void deleteMember(Long id);
+
+    Member findByUsername(String username);
 }

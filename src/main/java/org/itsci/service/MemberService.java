@@ -20,4 +20,6 @@ public interface MemberService {
     void updateMember(Member member, List<Authority> authorityToRemove, List<Authority> authorityToAdd);
 
     void register(Member member);
+
+    Member findByUsername(String username);
 }

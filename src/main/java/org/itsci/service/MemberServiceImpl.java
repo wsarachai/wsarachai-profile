@@ -6,6 +6,7 @@ import org.itsci.model.Authority;
 import org.itsci.model.EAuthorityType;
 import org.itsci.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,5 +80,12 @@ public class MemberServiceImpl implements MemberService {
         member.getLogin().setAuthorities(authorities);
         member.getLogin().setEnabled(true);
         memberDao.saveMember(member);
+    }
+
+    @Override
+    @Transactional
+    @Cacheable("members")
+    public Member findByUsername(String username) {
+        return memberDao.findByUsername(username);
     }
 }

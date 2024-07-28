@@ -2,7 +2,6 @@ package org.itsci.controller;
 
 import org.itsci.controller.bean.MemberBean;
 import org.itsci.controller.bean.UserDetailBean;
-import org.itsci.dao.LoginDao;
 import org.itsci.model.*;
 import org.itsci.service.MemberService;
 import org.itsci.service.UserService;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +39,19 @@ public class MemberController {
     public void initBuilder(WebDataBinder dataBinder) {
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+    }
+
+    @GetMapping("/profile")
+    public String profile(Authentication authentication, Model model) {
+        UserDetailBean userDetailBean = (UserDetailBean) authentication.getPrincipal();
+        Member member = memberService.findByUsername(userDetailBean.getUsername());
+        if (member instanceof Student) {
+            Student student = (Student) member;
+            String studentId = student.getStudentId();
+            model.addAttribute("studentId", studentId);
+        }
+        model.addAttribute("member", member);
+        return "user/profile";
     }
 
     @GetMapping("/change-password")
@@ -111,15 +122,6 @@ public class MemberController {
         model.addAttribute("success", messageSource.getMessage("bean.user.password.success", null, Locale.getDefault()));
         userService.saveOrUpdateLogin(login);
         return "redirect:/member/change-password";
-    }
-
-    @GetMapping("/profile")
-    public String memberProfile(Authentication authentication, Model model) {
-        User currUser = (User) authentication.getPrincipal();
-        User user = memberService.getMember(currUser.getId());
-        model.addAttribute("member", user);
-        model.addAttribute("title", messageSource.getMessage("page.user.profile", null, Locale.getDefault()));
-        return "user/profile";
     }
 
     @GetMapping("/form")

@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.itsci.controller.bean.UserDetailBean;
 import org.itsci.model.Course;
 import org.itsci.model.Teacher;
-import org.itsci.model.User;
 import org.itsci.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -14,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -30,6 +28,14 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Authentication authentication, Model model, HttpServletRequest request) {
+        UserDetailBean userDetailBean = null;
+        if (authentication != null) {
+            userDetailBean = (UserDetailBean) authentication.getPrincipal();
+            logging.info("User " + userDetailBean.getUsername() + " is accessing the system");
+        } else {
+            logging.info("User is not authenticated");
+        }
+
         Teacher teacher = userService.getUser(1l, Teacher.class);
 
         assert teacher != null;

@@ -70,17 +70,12 @@
                 <nav id="site-navigator" class="navigator clearfix">
                     <ul class="dropdown-menu">
                         <li><a th:href="@{/}"><i class="fa-solid fa-house"></i> <span th:text="#{page.home}"/></a></li>
-
-                        <li>
-
-                        </li>
-
                         <li><a href="https://itsci.mju.ac.th/~watcharin" target="_blank"><i class="fa-solid fa-blog"></i> <span th:text="#{page.link.blog}"></span></a></li>
                         <li><a href="https://itsci.mju.ac.th" target="_blank"><i class="fa-solid fa-user-graduate"></i></i> <span th:text="#{page.home.itsci}"></span></a></li>
                         <li sec:authorize="isAuthenticated()">
-                            <a href="#user" class="dropbtn"><i class="fa-solid fa-user"></i></a>
+                            <a href="#user" class="dropbtn"><i class="fa-solid fa-user"></i> <span th:text="${#authentication.getPrincipal().getUsername()}"></span></a>
                             <ul class="sub-menu">
-                                <li><a href="#profile" th:text="#{page.home.profile}" th:unless="${session == null}"></a></li>
+                                <li><a th:href="@{/member/profile}" th:text="#{page.home.profile}" th:unless="${session == null}"></a></li>
                                 <li sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_ADMIN')"><a th:href="@{/system/student/import}" th:text="#{page.student.import}"></a></li>
                                 <li><a th:href="@{/member/change-password}" th:text="#{page.home.settings.changepassword}"></a></li>
                             </ul>

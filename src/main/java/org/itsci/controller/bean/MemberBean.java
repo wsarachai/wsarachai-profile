@@ -1,12 +1,14 @@
 package org.itsci.controller.bean;
 
 import org.itsci.model.Login;
+import org.itsci.model.Member;
 
 public class MemberBean {
     private String username;
     private String password;
     private String confirmPassword;
     private String newPassword;
+    private Member member;
 
     public MemberBean() {
     }
@@ -48,5 +50,13 @@ public class MemberBean {
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
     }
 }

@@ -59,4 +59,19 @@ public class MemberDaoImpl implements MemberDao {
         session.delete(member);
         session.flush() ;
     }
+
+    @Override
+    public Member findByUsername(String username) {
+        Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Member> criteria = builder.createQuery(Member.class);
+        Root<Member> root = criteria.from(Member.class);
+        criteria.select(root);
+        criteria.where(builder.equal(root.get("login").get("username"), username));
+
+        Query<Member> query = session.createQuery(criteria);
+        Member member = query.getSingleResult();
+
+        return member;
+    }
 }

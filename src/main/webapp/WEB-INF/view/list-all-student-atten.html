@@ -47,6 +47,7 @@
                         <span>&nbsp;|&nbsp;</span>
                         <img th:src="@{/assets/images/atten.png}"/> <span th:text="#{page.student.atten.atten}"/>
                     </div>
+                    <!-- Display summary of student attendance -->
                     <div class="summary">
                         <div class="item-row">
                             <span th:text="#{section.lec}"></span>
@@ -77,6 +78,7 @@
                             <span class="value" th:text="'['+${attendedCountLab}+']'"></span>
                         </div>
                     </div>
+                    <!-- End display summary of student attendance -->
                 </div>
             </div>
             <!-- Display Attendance header of data table -->
@@ -133,6 +135,7 @@
                                         th:text="#{page.student.atten.atten}">
                                 </option>
                             </select>
+                            &nbsp;&nbsp;&nbsp;
                             <span th:switch="${csReg.getAttenLec()[displayWeek].name()}">
                                 <img th:case="'NA'" th:src="@{/assets/images/na.png}"/>
                                 <img th:case="'ABSENT'" th:src="@{/assets/images/absent.png}"/>
@@ -169,6 +172,7 @@
                                         th:text="#{page.student.atten.atten}">
                                 </option>
                             </select>
+                            &nbsp;&nbsp;&nbsp;
                             <span th:switch="${csReg.getAttenLab()[displayWeek].name()}">
                                 <img th:case="'NA'" th:src="@{/assets/images/na.png}"/>
                                 <img th:case="'ABSENT'" th:src="@{/assets/images/absent.png}"/>

@@ -3,13 +3,13 @@ package org.itsci.controller;
 import org.itsci.model.*;
 import org.itsci.service.StudentAttenService;
 import org.itsci.service.SystemService;
+import org.itsci.utils.CSVHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,24 +40,6 @@ public class SystemController {
     @Autowired
     SystemService systemService;
 
-    public String convertToCSV(String[] data) {
-        return Stream.of(data)
-                .map(this::escapeSpecialCharacters)
-                .collect(Collectors.joining(","));
-    }
-
-    private String escapeSpecialCharacters(String data) {
-        if (data == null) {
-            throw new IllegalArgumentException("Input data connot be null");
-        }
-        String escapedData = data.replaceAll("\\R", " ");
-        if (data.contains(",") || data.contains("\"") || data.contains("'")) {
-            data = data.replace("\"", "\"\"");
-            escapedData = "\"" + data + "\"";
-        }
-        return escapedData;
-    }
-
     @GetMapping("/student/atten/export/cvs/{courseId}/{sectionId}")
     public HttpEntity<byte[]> exportCVSAttendance(@PathVariable long courseId, @PathVariable long sectionId) throws IOException {
         String filename = "students.csv";
@@ -85,25 +67,11 @@ public class SystemController {
             dataLines.add(dataArr);
         }
 
-        File csvOutputFile = new File(filename);
-        try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
-            dataLines.stream()
-                    .map(this::convertToCSV)
-                    .forEach(pw::println);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        byte[] documentBody = null;
 
-        byte [] documentBody = new byte[(int) csvOutputFile.length()];
-
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(csvOutputFile);
-            fis.read(documentBody);
-        } finally {
-            if (fis != null) {
-                fis.close();
-            }
+        try (OutputStream csvOutputFile = new ByteArrayOutputStream()) {
+            CSVHelper.convertToCSVBytes(csvOutputFile, dataLines);
+            documentBody = csvOutputFile.toString().getBytes();
         }
 
         HttpHeaders header = new HttpHeaders();

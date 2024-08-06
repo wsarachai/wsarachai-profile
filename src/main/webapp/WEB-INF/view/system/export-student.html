@@ -14,7 +14,6 @@
                         <p th:text="#{page.student.atten.subjects}">:</p>
                         <p th:text="#{page.student.atten.group}">:</p>
                         <p th:text="#{page.student.atten.semester}">:</p>
-                        <p th:text="#{page.student.atten.semester}">:</p>
                     </div>
                     <!-- Display course header details of data table -->
                     <div class="item2">
@@ -22,8 +21,8 @@
                         <p th:text="${section.getGroupNumber()}"></p>
                         <p th:text="${course.getSemester()}"></p>
                         <p>
-                            <button id="btn-lec" class="hide" th:text="#{page.student.atten.lec}"></button>
-                            <button id="btn-lab" th:text="#{page.student.atten.lab}"></button>
+                            <button id="btn-lec" th:text="#{page.student.atten.lec}"></button>
+                            <button id="btn-lab" class="hide" th:text="#{page.student.atten.lab}"></button>
                             <span>&nbsp;&nbsp;</span>
                             <a sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_ADMIN')"
                                th:href="@{'/system/student/atten/export/cvs/' + ${course.getId()} + '/' + ${section.getId()}}">

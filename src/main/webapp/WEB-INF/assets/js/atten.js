@@ -50,14 +50,14 @@ function init() {
     imgLab = document.querySelectorAll('.img-lab');
 
     btnLecture.addEventListener('click', () => {
-        hideElements(imgLab);
-        showElements(imgLec);
+        hideElements(imgLec);
+        showElements(imgLab);
         btnLab.classList.remove('hide');
         btnLecture.classList.add('hide');
     });
     btnLab.addEventListener('click', () => {
-        hideElements(imgLec);
-        showElements(imgLab);
+        hideElements(imgLab);
+        showElements(imgLec);
         btnLab.classList.add('hide');
         btnLecture.classList.remove('hide');
     });

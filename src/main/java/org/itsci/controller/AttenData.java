@@ -5,13 +5,14 @@ import org.itsci.model.Enrollment;
 import org.itsci.model.Student;
 
 public class AttenData {
+    public static final int numberOfWeek = 16;
     private Enrollment enrollment;
-    private EAttendanceStatus[] attenLec = new EAttendanceStatus[15];
-    private EAttendanceStatus [] attenLab = new EAttendanceStatus[15];
+    private EAttendanceStatus[] attenLec = new EAttendanceStatus[numberOfWeek];
+    private EAttendanceStatus [] attenLab = new EAttendanceStatus[numberOfWeek];
 
     public AttenData(Enrollment enrollment) {
         this.enrollment = enrollment;
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < numberOfWeek; i++) {
             attenLec[i] = EAttendanceStatus.NA;
             attenLab[i] = EAttendanceStatus.NA;
         }

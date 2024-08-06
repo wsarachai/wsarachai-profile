@@ -1,11 +1,15 @@
 package org.itsci.controller;
 
 import org.itsci.model.*;
+import org.itsci.service.StudentAttenService;
 import org.itsci.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +18,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.SortedSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/system")
@@ -27,7 +35,151 @@ public class SystemController {
     ResourceBundleMessageSource messageSource;
 
     @Autowired
+    private StudentAttenService studentAttenService;
+
+    @Autowired
     SystemService systemService;
+
+    public String convertToCSV(String[] data) {
+        return Stream.of(data)
+                .map(this::escapeSpecialCharacters)
+                .collect(Collectors.joining(","));
+    }
+
+    private String escapeSpecialCharacters(String data) {
+        if (data == null) {
+            throw new IllegalArgumentException("Input data connot be null");
+        }
+        String escapedData = data.replaceAll("\\R", " ");
+        if (data.contains(",") || data.contains("\"") || data.contains("'")) {
+            data = data.replace("\"", "\"\"");
+            escapedData = "\"" + data + "\"";
+        }
+        return escapedData;
+    }
+
+    @GetMapping("/student/atten/export/cvs/{courseId}/{sectionId}")
+    public HttpEntity<byte[]> exportCVSAttendance(@PathVariable long courseId, @PathVariable long sectionId) throws IOException {
+        String filename = "students.csv";
+        List<Enrollment> enrollments = studentAttenService.findEnrollmentBySectionId(sectionId);
+
+        List<AttenData> attendanceList = createAttenData(enrollments);
+        List<String[]> dataLines = new ArrayList<>();
+
+        for(AttenData attenData : attendanceList) {
+            List<String> dataLineList = new ArrayList<>();
+
+            dataLineList.add(attenData.getEnrollment().getStudent().getStudentId());
+            for(EAttendanceStatus status : attenData.getAttenLec()) {
+                dataLineList.add(status.name());
+            }
+            for(EAttendanceStatus status : attenData.getAttenLab()) {
+                dataLineList.add(status.name());
+            }
+
+            String [] dataArr = new String[dataLineList.size()];
+            for (int i=0; i<dataLineList.size(); i++) {
+                dataArr[i] = dataLineList.get(i);
+            }
+
+            dataLines.add(dataArr);
+        }
+
+        File csvOutputFile = new File(filename);
+        try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
+            dataLines.stream()
+                    .map(this::convertToCSV)
+                    .forEach(pw::println);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        byte [] documentBody = new byte[(int) csvOutputFile.length()];
+
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(csvOutputFile);
+            fis.read(documentBody);
+        } finally {
+            if (fis != null) {
+                fis.close();
+            }
+        }
+
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.parseMediaType("application/csv"));
+        header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename);
+        header.setContentLength(documentBody.length);
+
+        return new HttpEntity<>(documentBody, header);
+    }
+
+    @GetMapping("/student/atten/export/{courseId}/{sectionId}")
+    public String exportAttendance(Model model, @PathVariable long courseId, @PathVariable long sectionId) {
+        Course course = studentAttenService.findCourseById(courseId);
+        List<Enrollment> enrollments = studentAttenService.findEnrollmentBySectionId(sectionId);
+
+        Section section = null;
+        for (Section sec : course.getSections()) {
+            if (sec.getId() == sectionId) {
+                section = sec;
+                break;
+            }
+        }
+
+        assert section != null;
+
+        List<AttenData> attendanceList = createAttenData(enrollments);
+        model.addAttribute("course", course);
+        model.addAttribute("section", section);
+        model.addAttribute("attenDatas", attendanceList);
+
+        return "system/export-student";
+    }
+
+    private List<AttenData> createAttenData(List<Enrollment> enrollments) {
+        List<AttenData> attenDataList = new ArrayList<>();
+        for (Enrollment enrollment : enrollments) {
+            AttenData attenData = new AttenData(enrollment);
+            SortedSet<Attendance> lecAttendances = studentAttenService.findAttendancesByType(enrollment, "lec");
+            SortedSet<Attendance> labAttendances = studentAttenService.findAttendancesByType(enrollment, "lab");
+            for (int i=0; i<AttenData.numberOfWeek; i++) {
+                try {
+                    boolean found = false;
+                    for (Attendance att : lecAttendances) {
+                        if (att.getWeekNo() == i) {
+                            attenData.getAttenLec()[i] = att.getStatus();
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        attenData.getAttenLec()[i] = EAttendanceStatus.ABSENT;
+                    }
+                } catch (Exception ex) {
+                    attenData.getAttenLec()[i] = EAttendanceStatus.ABSENT;
+                }
+
+                try {
+                    boolean found = false;
+                    for (Attendance att : labAttendances) {
+                        if (att.getWeekNo() == i) {
+                            attenData.getAttenLab()[i] = att.getStatus();
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        attenData.getAttenLab()[i] = EAttendanceStatus.ABSENT;
+                    }
+                } catch (Exception ex) {
+                    attenData.getAttenLab()[i] = EAttendanceStatus.ABSENT;
+                }
+            }
+            attenDataList.add(attenData);
+        }
+        return attenDataList;
+    }
 
     @GetMapping("/student/list/{term}")
     public String studentMgrPage(Model model, @PathVariable String term) {

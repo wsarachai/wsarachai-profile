@@ -25,14 +25,15 @@
                 </div>
             </div>
             <!-- End display course header of data table -->
+            <!-- Select attendance buttons -->
             <div class="blueTable outerTableFooter">
                 <div class="tableFootStyle">
                     <!-- Display 1-15 weeks links -->
                     <div class="links">
                         <div sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_ADMIN')">
-                            <a th:each="i : ${#numbers.sequence(0, 14)}" th:text="${i+1}"
+                            <a th:each="i : ${#numbers.sequence(0, 15)}" th:text="${i+1}"
                                th:classappend="${displayWeek == i} ? 'active': ''"
-                               th:href="${displayWeek == i} ? '#' : @{'/pub/student/atten/'+${courseId}+'/'+${secionId}+'/'+${i}}"></a>
+                               th:href="${displayWeek == i} ? '#' : @{'/pub/student/atten/'+${courseId}+'/'+${sectionId}+'/'+${i}}"></a>
                         </div>
                     </div>
                     <!-- Emd display 1-15 weeks links -->
@@ -81,8 +82,10 @@
                     <!-- End display summary of student attendance -->
                 </div>
             </div>
-            <!-- Display Attendance header of data table -->
+            <!-- End select attendance buttons -->
+            <!-- Display student attendance data table -->
             <div class="divTable blueTable">
+                <!-- Display Attendance header of data table -->
                 <div class="divTableHeading">
                     <div class="divTableRow">
                         <div class="divTableHead" th:text="#{page.no}"></div>
@@ -95,7 +98,7 @@
                     </div>
                 </div>
                 <!-- End display Attendance header of data table -->
-                <!-- Display Attendance data table -->
+                <!-- Display attendance data table details -->
                 <div class="divTableBody">
                     <div class="divTableRow" th:each="csReg, i : ${attenDatas}">
                         <div class="divTableCell" th:text="${i.index+1}"></div>
@@ -184,8 +187,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- End display Attendance data table -->
+                <!-- End display attendance data table details -->
             </div>
+            <!-- End display student attendance data table -->
         </section>
     </main>
     <footer class="fixed-footer" th:insert="~{layouts/general.html :: footer}"></footer>

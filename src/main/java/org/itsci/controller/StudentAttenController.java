@@ -2,7 +2,6 @@ package org.itsci.controller;
 
 import org.itsci.model.*;
 import org.itsci.service.StudentAttenService;
-import org.itsci.service.UserService;
 import org.itsci.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -99,13 +98,13 @@ public class StudentAttenController {
         return "view-each-student-atten";
     }
 
-    private String attentionPage(Model model, String courseId, String secionId, int userSelectedWeek) {
-        Course course = studentAttenService.findCourseById(Long.parseLong(courseId));
-        List<Enrollment> enrollments = studentAttenService.findEnrollmentBySectionId(Long.parseLong(secionId));
+    private String attentionPage(Model model, long courseId, long sectionId, int userSelectedWeek) {
+        Course course = studentAttenService.findCourseById(courseId);
+        List<Enrollment> enrollments = studentAttenService.findEnrollmentBySectionId(sectionId);
 
         Section section = null;
         for (Section sec : course.getSections()) {
-            if (sec.getId() == Long.parseLong(secionId)) {
+            if (sec.getId() == sectionId) {
                 section = sec;
                 break;
             }
@@ -136,7 +135,7 @@ public class StudentAttenController {
         model.addAttribute("currentWeek", currentWeek);
         model.addAttribute("displayWeek", displayWeek);
         model.addAttribute("courseId", courseId);
-        model.addAttribute("secionId", secionId);
+        model.addAttribute("sectionId", sectionId);
         model.addAttribute("course", course);
         model.addAttribute("section", section);
 
@@ -243,14 +242,14 @@ public class StudentAttenController {
         return "list-all-student-atten";
     }
 
-    @GetMapping("/atten/{courseId}/{secionId}")
-    public String attentionPage(Model model, @PathVariable String courseId, @PathVariable String secionId) {
-        return attentionPage(model, courseId, secionId, -1);
+    @GetMapping("/atten/{courseId}/{sectionId}")
+    public String attentionPage(Model model, @PathVariable long courseId, @PathVariable long sectionId) {
+        return attentionPage(model, courseId, sectionId, -1);
     }
 
-    @GetMapping("/atten/{courseId}/{secionId}/{week}")
-    public String attentionPage(Model model, @PathVariable String courseId, @PathVariable String secionId, @PathVariable String week) {
-        return attentionPage(model, courseId, secionId, Integer.parseInt(week));
+    @GetMapping("/atten/{courseId}/{sectionId}/{week}")
+    public String attentionPage(Model model, @PathVariable long courseId, @PathVariable long sectionId, @PathVariable String week) {
+        return attentionPage(model, courseId, sectionId, Integer.parseInt(week));
     }
 
     @GetMapping("/atten/{courseId}/{enrollmentId}/{type}/{week}")

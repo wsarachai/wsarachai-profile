@@ -19,8 +19,13 @@
                             <div class="course-detail-header">
                                 <span th:text="#{page.student.atten.group}">:</span> <span th:text="${section.getGroupNumber()}"/>
                                 <span style="float: right" sec:authorize="isAuthenticated()">
-                                        <a th:href="@{'/pub/student/atten/' + ${course.getId()} + '/' + ${section.getId()}}"><span th:text="#{page.home.signin}"></span></a>
-                                    </span>
+                                    <a th:href="@{'/pub/student/atten/' + ${course.getId()} + '/' + ${section.getId()}}"><span th:text="#{page.home.signin}"></span></a>
+                                    <span sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_ADMIN')">&nbsp;|&nbsp;</span>
+                                    <a sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_ADMIN')"
+                                       th:href="@{'/system/student/atten/export/' + ${course.getId()} + '/' + ${section.getId()}}">
+                                        <span th:text="#{page.student.export}"></span>
+                                    </a>
+                                </span>
                             </div>
                             <div class="course-flex-container">
                                 <!-- Lec -->

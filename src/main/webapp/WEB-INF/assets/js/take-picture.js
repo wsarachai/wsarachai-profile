@@ -205,7 +205,7 @@ function onTakeAPhoto() {
 }
 
 function onMediaError(err) {
-  message.innerHTML = err.name + ": " + err.message;
+  console.log(err.name + ": " + err.message);
 }
 
 const initEvent = function () {

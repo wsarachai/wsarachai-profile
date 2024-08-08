@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configurers.ExceptionH
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 // import com.linecorp.bot.client.LineMessagingClient;
 // import com.linecorp.bot.client.LineMessagingClientBuilder;
@@ -81,6 +82,9 @@ public class SecurityConfig {
                            }
                        }
         );
+
+        http.addFilterBefore(new RequestAndResponseLoggingFilter(), BasicAuthenticationFilter.class);
+
         return http.build();
     }
 }

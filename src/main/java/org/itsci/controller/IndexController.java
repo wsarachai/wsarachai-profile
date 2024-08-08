@@ -1,6 +1,5 @@
 package org.itsci.controller;
-
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.itsci.controller.bean.UserDetailBean;
 import org.itsci.model.Course;
 import org.itsci.model.Teacher;
@@ -16,9 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 
+@Slf4j
 @Controller
 public class IndexController {
-    private static final Logger logging = Logger.getLogger(IndexController.class);
 
     @Autowired
     ResourceBundleMessageSource messageSource;
@@ -31,9 +30,7 @@ public class IndexController {
         UserDetailBean userDetailBean = null;
         if (authentication != null) {
             userDetailBean = (UserDetailBean) authentication.getPrincipal();
-            logging.info("User " + userDetailBean.getUsername() + " is accessing the system");
-        } else {
-            logging.info("User is not authenticated");
+            log.info("User " + userDetailBean.getUsername() + " is accessing the system");
         }
 
         Teacher teacher = userService.getUser(1l, Teacher.class);

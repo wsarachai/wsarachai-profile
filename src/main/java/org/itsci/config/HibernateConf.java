@@ -1,7 +1,6 @@
 package org.itsci.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,8 +22,6 @@ public class HibernateConf {
 
     @Autowired
     private Environment env;
-
-    private static final Logger logging = Logger.getLogger(HibernateConf.class);
 
     @Bean
     public PlatformTransactionManager hibernateTransactionManager() {
@@ -63,10 +60,6 @@ public class HibernateConf {
         } catch (PropertyVetoException exc) {
             throw new RuntimeException(exc);
         }
-
-        // log the connection props
-        logging.info(">>> jdbc.url=" + env.getProperty("jdbc.url"));
-        logging.info(">>> jdbc.user=" + env.getProperty("jdbc.user"));
 
         // set database connection props
         securityDataSource.setJdbcUrl(env.getProperty("jdbc.url"));

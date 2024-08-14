@@ -32,20 +32,19 @@
                 <div id="top-bar-social" class="clearfix top-bar-right">
                     <ul class="clr">
                         <li>
-                            <a href="https://www.facebook.com/wsarachai" target="_blank"
-                            ><i class="fa-brands fa-facebook"></i
-                            ></a>
+                            <a href="https://www.facebook.com/wsarachai" target="_blank">
+                                <i class="fa-brands fa-facebook"></i>
+                            </a>
                         </li>
                         <li>
-                            <a
-                                    href="https://www.linkedin.com/in/watcharin-sarachai-223b0a8a/"
-                            ><i class="fa-brands fa-linkedin"></i
-                            ></a>
+                            <a href="https://www.linkedin.com/in/watcharin-sarachai-223b0a8a/">
+                                <i class="fa-brands fa-linkedin"></i>
+                            </a>
                         </li>
                         <li>
-                            <a href="https://github.com/wsarachai"
-                            ><i class="fa-brands fa-github"></i
-                            ></a>
+                            <a href="https://github.com/wsarachai">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -59,18 +58,17 @@
         <div id="site-header-inner" class="clearfix container">
             <div id="site-logo" class="clearfix">
                 <div id="site-logo-inner" class="clearfix">
-                    <a
-                            href="https://itsci.mju.ac.th/~watcharin/"
-                            rel="home"
-                            class="site-title site-logo-text"
-                            th:text="#{page.title}"></a>
+                    <a href="https://itsci.mju.ac.th/~watcharin/"
+                       rel="home"
+                       class="site-title site-logo-text"
+                       th:text="#{page.title}"></a>
                 </div>
             </div>
             <div id="site-navigator-warp" class="clearfix">
                 <nav id="site-navigator" class="navigator clearfix">
                     <ul class="dropdown-menu">
                         <li><a th:href="@{/}"><i class="fa-solid fa-house"></i> <span th:text="#{page.home}"/></a></li>
-                        <li><a href="https://itsci.mju.ac.th/~watcharin" target="_blank"><i class="fa-solid fa-blog"></i> <span th:text="#{page.link.blog}"></span></a></li>
+                        <li><a href="https://itsci.mju.ac.th/~watcharin"><i class="fa-solid fa-blog"></i> <span th:text="#{page.link.blog}"></span></a></li>
                         <li><a href="https://itsci.mju.ac.th" target="_blank"><i class="fa-solid fa-user-graduate"></i></i> <span th:text="#{page.home.itsci}"></span></a></li>
                         <li sec:authorize="isAuthenticated()">
                             <a href="#user" class="dropbtn"><i class="fa-solid fa-user"></i> <span th:text="${#authentication.getPrincipal().getUsername()}"></span></a>

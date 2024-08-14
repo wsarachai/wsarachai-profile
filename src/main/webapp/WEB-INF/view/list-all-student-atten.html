@@ -6,7 +6,9 @@
 <header th:insert="~{layouts/general :: header}"></header>
     <main class="flex-container">
         <h2 th:text="#{page.student.login.title}"></h2>
-        <div class="nav-div"><a th:href="@{'/'}" th:text="#{page.navigate.back}"></a></div>
+        <div class="nav-div">
+            <button onClick="history_back()" class="basic" th:text="#{page.navigate.back}"></button>
+        </div>
         <section class="flex-container-column">
             <!-- Display course header of data table -->
             <div class="flex-container-row">
@@ -117,7 +119,7 @@
                                th:text="#{page.student.login.atten}"></a>
                         </div>
                         <div class="divTableCell"
-                             th:with="status=${csReg.getAttenLec()[displayWeek].name()}">
+                             th:with="status=${csReg.getAttenLec()[displayWeek].getStatus().name()}">
                             <select sec:authorize="hasRole('ROLE_TEACHER')" th:id="'attendance-lec-status-'+${i.index}"
                                     th:onchange="'attenStatusChange(\'lec\',' + ${i.index} +',' + ${csReg.getEnrollment().getId()} + ',' + ${displayWeek} + ');'">
                                 <option value="NA" th:selected="(${status}=='NA')">...</option>
@@ -139,13 +141,13 @@
                                 </option>
                             </select>
                             &nbsp;&nbsp;&nbsp;
-                            <span th:switch="${csReg.getAttenLec()[displayWeek].name()}">
+                            <span th:switch="${csReg.getAttenLec()[displayWeek].getStatus().name()}">
                                 <img th:case="'NA'" th:src="@{/assets/images/na.png}"/>
                                 <img th:case="'ABSENT'" th:src="@{/assets/images/absent.png}"/>
                                 <img th:case="'LATE'" th:src="@{/assets/images/late.png}"/>
                                 <img th:case="'LETTERS'" th:src="@{/assets/images/letters.png}"/>
                                 <img th:case="'ATTENDED'" th:src="@{/assets/images/atten.png}"/>
-                                <p th:case="*" th:text="${csReg.getAttenLec()[displayWeek]}"></p>
+                                <p th:case="*" th:text="${csReg.getAttenLec()[displayWeek].getStatus().name()}"></p>
                             </span>
                         </div>
                         <div class="divTableCell">
@@ -154,7 +156,7 @@
                                th:text="#{page.student.login.atten}"></a>
                         </div>
                         <div class="divTableCell"
-                             th:with="status=${csReg.getAttenLab()[displayWeek].name()}">
+                             th:with="status=${csReg.getAttenLab()[displayWeek].getStatus().name()}">
                             <select sec:authorize="hasRole('ROLE_TEACHER')" th:id="'attendance-lab-status-'+${i.index}"
                                     th:onchange="'attenStatusChange(\'lab\',' + ${i.index} +',' + ${csReg.getEnrollment().getId()} + ',' + ${displayWeek} + ');'">
                                 <option value="NA" th:selected="(${status}=='NA')">...</option>
@@ -176,13 +178,13 @@
                                 </option>
                             </select>
                             &nbsp;&nbsp;&nbsp;
-                            <span th:switch="${csReg.getAttenLab()[displayWeek].name()}">
+                            <span th:switch="${csReg.getAttenLab()[displayWeek].getStatus().name()}">
                                 <img th:case="'NA'" th:src="@{/assets/images/na.png}"/>
                                 <img th:case="'ABSENT'" th:src="@{/assets/images/absent.png}"/>
                                 <img th:case="'LATE'" th:src="@{/assets/images/late.png}"/>
                                 <img th:case="'LETTERS'" th:src="@{/assets/images/letters.png}"/>
                                 <img th:case="'ATTENDED'" th:src="@{/assets/images/atten.png}"/>
-                                <p th:case="*" th:text="${csReg.getAttenLab()[displayWeek]}"></p>
+                                <p th:case="*" th:text="${csReg.getAttenLab()[displayWeek].getStatus().name()}"></p>
                             </span>
                         </div>
                     </div>

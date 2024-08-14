@@ -9,7 +9,7 @@
         <div class="container">
             <h2 style="text-align: center;" th:text="#{page.access-denied.title}"></h2>
             <div style="text-align:center">
-                <a th:href="@{/}" th:text="#{page.access-denied.back}"></a>
+                <button onClick="history_back()" class="basic" th:text="#{page.navigate.back}"></button>
             </div>
         </div>
     </main>

@@ -159,7 +159,7 @@ public class StudentAttenController {
                     boolean found = false;
                     for (Attendance att : lecAttendances) {
                         if (att.getWeekNo() == i) {
-                            attenData.getAttenLec()[i] = att.getStatus();
+                            attenData.getAttenLec()[i] = att;
                             found = true;
                             if (i == displayWeek) {
                                 switch (att.getStatus()) {
@@ -181,11 +181,13 @@ public class StudentAttenController {
                         }
                     }
                     if (!found) {
-                        attenData.getAttenLec()[i] = EAttendanceStatus.ABSENT;
+                        attenData.getAttenLec()[i] = new Attendance();
+                        attenData.getAttenLec()[i].setStatus(EAttendanceStatus.ABSENT);
                         absentCountLec = i == displayWeek ? absentCountLec+1 : absentCountLec;
                     }
                 } catch (Exception ex) {
-                    attenData.getAttenLec()[i] = EAttendanceStatus.ABSENT;
+                    attenData.getAttenLec()[i] = new Attendance();
+                    attenData.getAttenLec()[i].setStatus(EAttendanceStatus.ABSENT);
                     absentCountLec = i == displayWeek ? absentCountLec+1 : absentCountLec;
                 }
 
@@ -193,7 +195,7 @@ public class StudentAttenController {
                     boolean found = false;
                     for (Attendance att : labAttendances) {
                         if (att.getWeekNo() == i) {
-                            attenData.getAttenLab()[i] = att.getStatus();
+                            attenData.getAttenLab()[i] = att;
                             found = true;
                             if (i == displayWeek) {
                                 switch (att.getStatus()) {
@@ -215,11 +217,13 @@ public class StudentAttenController {
                         }
                     }
                     if (!found) {
-                        attenData.getAttenLab()[i] = EAttendanceStatus.ABSENT;
+                        attenData.getAttenLab()[i] = new Attendance();
+                        attenData.getAttenLab()[i].setStatus(EAttendanceStatus.ABSENT);
                         absentCountLab = i == displayWeek ? absentCountLab+1 : absentCountLab;
                     }
                 } catch (Exception ex) {
-                    attenData.getAttenLab()[i] = EAttendanceStatus.ABSENT;
+                    attenData.getAttenLab()[i] = new Attendance();
+                    attenData.getAttenLab()[i].setStatus(EAttendanceStatus.ABSENT);
                     absentCountLab = i == displayWeek ? absentCountLab+1 : absentCountLab;
                 }
             }

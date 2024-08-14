@@ -6,8 +6,7 @@
     <main class="flex-container">
     <h2 th:text="#{page.student.profile}"></h2>
     <div class="nav-div">
-        <a th:href="@{'/pub/student/atten/' + ${enrollment.getSection().getCourse().getId()} + '/' + ${enrollment.getSection().getId()}}"
-           th:text="#{page.navigate.back}"></a>
+        <button onClick="history_back()" class="basic" th:text="#{page.navigate.back}"></button>
     </div>
     <section class="flex-container-column">
         <div class="flex-container-row">

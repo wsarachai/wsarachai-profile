@@ -52,11 +52,11 @@ public class SystemController {
             List<String> dataLineList = new ArrayList<>();
 
             dataLineList.add(attenData.getEnrollment().getStudent().getStudentId());
-            for(EAttendanceStatus status : attenData.getAttenLec()) {
-                dataLineList.add(status.name());
+            for(Attendance atten : attenData.getAttenLec()) {
+                dataLineList.add(atten.getStatus().name());
             }
-            for(EAttendanceStatus status : attenData.getAttenLab()) {
-                dataLineList.add(status.name());
+            for(Attendance atten : attenData.getAttenLab()) {
+                dataLineList.add(atten.getStatus().name());
             }
 
             String [] dataArr = new String[dataLineList.size()];
@@ -116,32 +116,32 @@ public class SystemController {
                     boolean found = false;
                     for (Attendance att : lecAttendances) {
                         if (att.getWeekNo() == i) {
-                            attenData.getAttenLec()[i] = att.getStatus();
+                            attenData.getAttenLec()[i] = att;
                             found = true;
                             break;
                         }
                     }
                     if (!found) {
-                        attenData.getAttenLec()[i] = EAttendanceStatus.ABSENT;
+                        attenData.getAttenLec()[i].setStatus(EAttendanceStatus.ABSENT);
                     }
                 } catch (Exception ex) {
-                    attenData.getAttenLec()[i] = EAttendanceStatus.ABSENT;
+                    attenData.getAttenLec()[i].setStatus(EAttendanceStatus.ABSENT);
                 }
 
                 try {
                     boolean found = false;
                     for (Attendance att : labAttendances) {
                         if (att.getWeekNo() == i) {
-                            attenData.getAttenLab()[i] = att.getStatus();
+                            attenData.getAttenLab()[i] = att;
                             found = true;
                             break;
                         }
                     }
                     if (!found) {
-                        attenData.getAttenLab()[i] = EAttendanceStatus.ABSENT;
+                        attenData.getAttenLab()[i].setStatus(EAttendanceStatus.ABSENT);
                     }
                 } catch (Exception ex) {
-                    attenData.getAttenLab()[i] = EAttendanceStatus.ABSENT;
+                    attenData.getAttenLab()[i].setStatus(EAttendanceStatus.ABSENT);
                 }
             }
             attenDataList.add(attenData);

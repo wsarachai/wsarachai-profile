@@ -6,7 +6,9 @@
         <header th:insert="~{layouts/general :: header}"></header>
         <main class="flex-container">
             <h2 th:text="#{page.student.login.title}"></h2>
-            <div class="nav-div"><a th:href="@{'/'}" th:text="#{page.navigate.back}"></a></div>
+            <div class="nav-div">
+                <button onClick="history_back()" class="basic" th:text="#{page.navigate.back}"></button>
+            </div>
             <section class="flex-container-column">
                 <!-- Display course header of data table -->
                 <div class="flex-container-row">
@@ -21,8 +23,8 @@
                         <p th:text="${section.getGroupNumber()}"></p>
                         <p th:text="${course.getSemester()}"></p>
                         <p>
-                            <button id="btn-lec" th:text="#{page.student.atten.lec}"></button>
-                            <button id="btn-lab" class="hide" th:text="#{page.student.atten.lab}"></button>
+                            <button id="btn-lec" class="info" th:text="#{page.student.atten.lec}"></button>
+                            <button id="btn-lab" class="hide info" th:text="#{page.student.atten.lab}"></button>
                             <span>&nbsp;&nbsp;</span>
                             <a sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_ADMIN')"
                                th:href="@{'/system/student/atten/export/cvs/' + ${course.getId()} + '/' + ${section.getId()}}">
@@ -54,21 +56,21 @@
                             <div class="divTableCell" th:text="${csReg.getEnrollment().getStudent().getPrename()+' '+csReg.getEnrollment().getStudent().getFirstName()+' '+csReg.getEnrollment().getStudent().getLastName()}"></div>
                             <div class="divTableCell"
                                  th:each="i : ${#numbers.sequence(0, 15)}">
-                                <span class="img-lec" th:switch="${csReg.getAttenLec()[i].name()}">
-                                    <img th:case="'NA'" th:src="@{/assets/images/na.png}"/>
-                                    <img th:case="'ABSENT'" th:src="@{/assets/images/absent.png}"/>
-                                    <img th:case="'LATE'" th:src="@{/assets/images/late.png}"/>
-                                    <img th:case="'LETTERS'" th:src="@{/assets/images/letters.png}"/>
-                                    <img th:case="'ATTENDED'" th:src="@{/assets/images/atten.png}"/>
-                                    <p th:case="*" th:text="${csReg.getAttenLec()[displayWeek]}"></p>
+                                <span class="img-lec" th:switch="${csReg.getAttenLec()[i].getStatus().name()}">
+                                    <a th:case="'NA'" th:href="@{'/pub/student/view/'+${csReg.getEnrollment().getId()}+'/'+${csReg.getAttenLec()[i].getId()}}"><img th:src="@{/assets/images/na.png}"/></a>
+                                    <a th:case="'ABSENT'" th:href="@{'/pub/student/view/'+${csReg.getEnrollment().getId()}+'/'+${csReg.getAttenLec()[i].getId()}}"><img th:src="@{/assets/images/absent.png}"/></a>
+                                    <a th:case="'LATE'" th:href="@{'/pub/student/view/'+${csReg.getEnrollment().getId()}+'/'+${csReg.getAttenLec()[i].getId()}}"><img th:src="@{/assets/images/late.png}"/></a>
+                                    <a th:case="'LETTERS'" th:href="@{'/pub/student/view/'+${csReg.getEnrollment().getId()}+'/'+${csReg.getAttenLec()[i].getId()}}"><img th:src="@{/assets/images/letters.png}"/></a>
+                                    <a th:case="'ATTENDED'" th:href="@{'/pub/student/view/'+${csReg.getEnrollment().getId()}+'/'+${csReg.getAttenLec()[i].getId()}}"><img th:src="@{/assets/images/atten.png}"/></a>
+                                    <p th:case="*" th:text="${csReg.getAttenLec()[i].getStatus().name()}"></p>
                                 </span>
-                                <span class="img-lab hide" th:switch="${csReg.getAttenLab()[i].name()}">
-                                    <img th:case="'NA'" th:src="@{/assets/images/na.png}"/>
-                                    <img th:case="'ABSENT'" th:src="@{/assets/images/absent.png}"/>
-                                    <img th:case="'LATE'" th:src="@{/assets/images/late.png}"/>
-                                    <img th:case="'LETTERS'" th:src="@{/assets/images/letters.png}"/>
-                                    <img th:case="'ATTENDED'" th:src="@{/assets/images/atten.png}"/>
-                                    <p th:case="*" th:text="${csReg.getAttenLec()[displayWeek]}"></p>
+                                <span class="img-lab hide" th:switch="${csReg.getAttenLab()[i].getStatus().name()}">
+                                    <a th:case="'NA'" th:href="@{'/pub/student/view/'+${csReg.getEnrollment().getId()}+'/'+${csReg.getAttenLab()[i].getId()}}"><img th:src="@{/assets/images/na.png}"/></a>
+                                    <a th:case="'ABSENT'" th:href="@{'/pub/student/view/'+${csReg.getEnrollment().getId()}+'/'+${csReg.getAttenLab()[i].getId()}}"><img th:src="@{/assets/images/absent.png}"/></a>
+                                    <a th:case="'LATE'" th:href="@{'/pub/student/view/'+${csReg.getEnrollment().getId()}+'/'+${csReg.getAttenLab()[i].getId()}}"><img th:src="@{/assets/images/late.png}"/></a>
+                                    <a th:case="'LETTERS'" th:href="@{'/pub/student/view/'+${csReg.getEnrollment().getId()}+'/'+${csReg.getAttenLab()[i].getId()}}"><img th:src="@{/assets/images/letters.png}"/></a>
+                                    <a th:case="'ATTENDED'" th:href="@{'/pub/student/view/'+${csReg.getEnrollment().getId()}+'/'+${csReg.getAttenLab()[i].getId()}}"><img th:src="@{/assets/images/atten.png}"/></a>
+                                    <p th:case="*" th:text="${csReg.getAttenLab()[i].getStatus().name()}"></p>
                                 </span>
                             </div>
                         </div>

@@ -17,6 +17,10 @@ const closeNavigator = function() {
     siteNavigator.style.display = "";
 }
 
+const history_back = function() {
+    window.history.back();
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     body = document.getElementsByTagName("body")[0];
     btnDown = document.getElementById("drop-btn");

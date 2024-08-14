@@ -1,5 +1,6 @@
 package org.itsci.controller;
 
+import org.itsci.model.Attendance;
 import org.itsci.model.EAttendanceStatus;
 import org.itsci.model.Enrollment;
 import org.itsci.model.Student;
@@ -7,14 +8,16 @@ import org.itsci.model.Student;
 public class AttenData {
     public static final int numberOfWeek = 16;
     private Enrollment enrollment;
-    private EAttendanceStatus[] attenLec = new EAttendanceStatus[numberOfWeek];
-    private EAttendanceStatus [] attenLab = new EAttendanceStatus[numberOfWeek];
+    private Attendance[] attenLec = new Attendance[numberOfWeek];
+    private Attendance [] attenLab = new Attendance[numberOfWeek];
 
     public AttenData(Enrollment enrollment) {
         this.enrollment = enrollment;
         for (int i = 0; i < numberOfWeek; i++) {
-            attenLec[i] = EAttendanceStatus.NA;
-            attenLab[i] = EAttendanceStatus.NA;
+            attenLec[i] = new Attendance();
+            attenLab[i] = new Attendance();
+            attenLab[i].setStatus(EAttendanceStatus.NA);
+            attenLec[i].setStatus(EAttendanceStatus.NA);
         }
     }
 
@@ -26,19 +29,19 @@ public class AttenData {
         this.enrollment = enrollment;
     }
 
-    public EAttendanceStatus[] getAttenLec() {
+    public Attendance[] getAttenLec() {
         return attenLec;
     }
 
-    public void setAttenLec(EAttendanceStatus[] attenLec) {
+    public void setAttenLec(Attendance[] attenLec) {
         this.attenLec = attenLec;
     }
 
-    public EAttendanceStatus[] getAttenLab() {
+    public Attendance[] getAttenLab() {
         return attenLab;
     }
 
-    public void setAttenLab(EAttendanceStatus[] attenLab) {
+    public void setAttenLab(Attendance[] attenLab) {
         this.attenLab = attenLab;
     }
 }

@@ -1,11 +1,6 @@
-const canvas = document.getElementById("clock");
-const ctx = canvas.getContext("2d");
-let radius = canvas.height / 2;
-ctx.translate(radius, radius);
-radius = radius * 0.9;
-setInterval(drawClock, 1000);
+'use strict';
 
-function drawClock() {
+function drawClock(ctx, radius) {
     drawFace(ctx, radius);
     drawNumbers(ctx, radius);
     drawTime(ctx, radius);
@@ -57,6 +52,10 @@ function drawTime(ctx, radius) {
     let hour = now.getHours();
     let minute = now.getMinutes();
     let second = now.getSeconds();
+
+    const currentDateTime = now.toLocaleDateString("th-TH");
+    document.getElementById("current-date").innerHTML = currentDateTime;
+
     //hour
     hour = hour % 12;
     hour =
@@ -83,3 +82,12 @@ function drawHand(ctx, pos, length, width, color) {
     ctx.stroke();
     ctx.rotate(-pos);
 }
+
+window.addEventListener("DOMContentLoaded", (event) => {
+    const canvas = document.getElementById("clock");
+    const ctx = canvas.getContext("2d");
+    let radius = canvas.height / 2;
+    ctx.translate(radius, radius);
+    radius = radius * 0.9;
+    setInterval(drawClock.bind(null, ctx, radius), 1000);
+});

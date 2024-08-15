@@ -5,7 +5,7 @@
     <body>
         <header th:insert="~{layouts/general :: header}"></header>
         <main class="flex-container">
-            <h2 th:text="#{page.student.login.title}"></h2>
+            <h2><i class="fa-solid fa-file-export"></i> <span th:text="#{page.student.export}"></span></h2>
             <div class="nav-div">
                 <button onClick="history_back()" class="basic" th:text="#{page.navigate.back}"></button>
             </div>

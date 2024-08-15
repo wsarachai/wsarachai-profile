@@ -5,7 +5,7 @@
 <header th:insert="~{layouts/general :: header}"></header>
     <main class="flex-container">
         <div>
-            <h2 th:text="#{page.student.import}"></h2>
+            <h2><i class="fa-solid fa-file-import"></i> <span th:text="#{page.student.import}"></span></h2>
             <button onClick="history_back()" class="basic" th:text="#{page.navigate.back}"></button>
         </div>
         <section class="import-items-container">

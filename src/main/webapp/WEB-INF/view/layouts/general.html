@@ -57,6 +57,9 @@
     <header id="site-header">
         <div id="site-header-inner" class="clearfix container">
             <div id="site-logo" class="clearfix">
+                <canvas id="clock" width="74" height="74">
+                    Sorry, your browser does not support canvas.
+                </canvas>
                 <div id="site-logo-inner" class="clearfix">
                     <a href="https://itsci.mju.ac.th/~watcharin/"
                        rel="home"
@@ -98,6 +101,7 @@
 </th:block>
 <th:block th:fragment="scriptfiles">
     <script th:src="@{'/assets/js/main.js'}"></script>
+    <script th:src="@{'/assets/js/clock.js'}"></script>
     <script th:inline="javascript"> var _ctx = /*[[@{/}]]*/ ''; </script>
 </th:block>
 </body>

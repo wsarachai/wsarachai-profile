@@ -1063,3 +1063,8 @@ select.basic {
 .hide {
     display: none;
 }
+
+#clock {
+    margin-right: 10px;
+    background-color:#26263F
+}

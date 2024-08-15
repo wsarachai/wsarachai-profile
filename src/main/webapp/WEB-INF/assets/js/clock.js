@@ -63,22 +63,23 @@ function drawTime(ctx, radius) {
         (hour * Math.PI) / 6 +
         (minute * Math.PI) / (6 * 60) +
         (second * Math.PI) / (360 * 60);
-    drawHand(ctx, hour, radius * 0.5, radius * 0.07);
+    drawHand(ctx, hour, radius * 0.5, radius * 0.07, "blue");
     //minute
     minute = (minute * Math.PI) / 30 + (second * Math.PI) / (30 * 60);
-    drawHand(ctx, minute, radius * 0.8, radius * 0.07);
+    drawHand(ctx, minute, radius * 0.8, radius * 0.07, "green");
     // second
     second = (second * Math.PI) / 30;
-    drawHand(ctx, second, radius * 0.9, radius * 0.02);
+    drawHand(ctx, second, radius * 0.9, radius * 0.02, "red");
 }
 
-function drawHand(ctx, pos, length, width) {
+function drawHand(ctx, pos, length, width, color) {
     ctx.beginPath();
     ctx.lineWidth = width;
     ctx.lineCap = "round";
     ctx.moveTo(0, 0);
     ctx.rotate(pos);
     ctx.lineTo(0, -length);
+    ctx.strokeStyle = color;
     ctx.stroke();
     ctx.rotate(-pos);
 }

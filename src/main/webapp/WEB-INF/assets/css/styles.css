@@ -152,6 +152,10 @@ p {
     margin-bottom: 1rem;
 }
 
+footer > div {
+    margin: 10px;
+}
+
 #warp {
     position: relative;
 }
@@ -220,6 +224,7 @@ p {
 }
 
 #site-header {
+    color: #fff;
     position: absolute;
     top: 32px;
     width: 100%;
@@ -416,7 +421,7 @@ ul.sub-menu li > a {
 .flex-container {
     width: 1200px;
     max-width: 90%;
-    margin: 110px auto 40px auto;
+    margin: 110px auto 80px auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start; /* Adjust alignment as needed */

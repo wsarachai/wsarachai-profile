@@ -60,14 +60,7 @@
                     Sorry, your browser does not support canvas.
                 </canvas>
                 <div id="site-logo-inner" class="clearfix">
-                    <span class="date-box">
-                        <i class="fa fa-calendar"></i> <span id="current-date"></span>
-                        &nbsp;|&nbsp;
-                    </span>
-                    <a href="https://itsci.mju.ac.th/~watcharin/"
-                       rel="home"
-                       class="site-title site-logo-text"
-                       th:text="#{page.title}"></a>
+                    <span class="site-title site-logo-text" th:text="#{page.title}"></span>
                 </div>
             </div>
             <div id="site-navigator-warp" class="clearfix">
@@ -100,6 +93,7 @@
 
 </th:block>
 <th:block th:fragment="footer">
+    <div><i class="fa fa-calendar"></i> <span id="current-date"></span></div>
     <div>&copy; 2024 <span th:text="#{page.author}"></span>, <span th:text="#{page.footer}"></span></div>
 </th:block>
 <th:block th:fragment="scriptfiles">

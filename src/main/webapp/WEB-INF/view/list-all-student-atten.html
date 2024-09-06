@@ -121,7 +121,11 @@
                         <div class="divTableCell"
                              th:with="status=${csReg.getAttenLec()[displayWeek].getStatus().name()}">
                             <select sec:authorize="hasRole('ROLE_TEACHER')" th:id="'attendance-lec-status-'+${i.index}"
-                                    th:onchange="'attenStatusChange(\'lec\',' + ${i.index} +',' + ${csReg.getEnrollment().getId()} + ',' + ${displayWeek} + ');'">
+                                    th:data-type="lec"
+                                    th:data-enrollment="${csReg.getEnrollment().getId()}"
+                                    th:data-week="${displayWeek}"
+                                    th:onchange="'attenStatusChange(\'lec\',' + ${i.index} + ');'"
+                                    class="atten-lec">
                                 <option value="NA" th:selected="(${status}=='NA')">...</option>
                                 <option value="ABSENT"
                                         th:selected="(${status}=='ABSENT')"
@@ -158,7 +162,11 @@
                         <div class="divTableCell"
                              th:with="status=${csReg.getAttenLab()[displayWeek].getStatus().name()}">
                             <select sec:authorize="hasRole('ROLE_TEACHER')" th:id="'attendance-lab-status-'+${i.index}"
-                                    th:onchange="'attenStatusChange(\'lab\',' + ${i.index} +',' + ${csReg.getEnrollment().getId()} + ',' + ${displayWeek} + ');'">
+                                    th:data-type="lab"
+                                    th:data-enrollment="${csReg.getEnrollment().getId()}"
+                                    th:data-week="${displayWeek}"
+                                    th:onchange="'attenStatusChange(\'lab\',' + ${i.index} + ');'"
+                                    class="atten-lab">
                                 <option value="NA" th:selected="(${status}=='NA')">...</option>
                                 <option value="ABSENT"
                                         th:selected="(${status}=='ABSENT')"
@@ -188,6 +196,33 @@
                             </span>
                         </div>
                     </div>
+
+                    <div class="divTableRow" sec:authorize="hasRole('ROLE_TEACHER')">
+                        <div class="divTableCell"></div>
+                        <div class="divTableCell"></div>
+                        <div class="divTableCell"></div>
+                        <div class="divTableCell"></div>
+                        <div class="divTableCell">
+                            <select th:id="'attendance-status-all-lec'">
+                                <option value="NA">...</option>
+                                <option value="ABSENT" th:text="#{page.student.atten.absent}"></option>
+                                <option value="LATE" th:text="#{page.student.atten.late}"></option>
+                                <option value="LETTERS" th:text="#{page.student.atten.letters}"></option>
+                                <option value="ATTENDED" th:text="#{page.student.atten.atten}"></option>
+                            </select>
+                            <button th:onclick="'changeAllLecStatus();'">Change</button>
+                        </div>
+                        <div class="divTableCell"></div>
+                        <div class="divTableCell">
+                            <select th:id="'attendance-status-all-lab'">
+                                <option value="NA">...</option>
+                                <option value="ABSENT" th:text="#{page.student.atten.absent}"></option>
+                                <option value="LATE" th:text="#{page.student.atten.late}"></option>
+                                <option value="LETTERS" th:text="#{page.student.atten.letters}"></option>
+                                <option value="ATTENDED" th:text="#{page.student.atten.atten}"></option>
+                            </select>
+                            <button th:onclick="'changeAllLabStatus();'">Change</button>
+                        </div>
                 </div>
                 <!-- End display attendance data table details -->
             </div>

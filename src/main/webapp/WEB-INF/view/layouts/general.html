@@ -67,7 +67,7 @@
                 <nav id="site-navigator" class="navigator clearfix">
                     <ul class="dropdown-menu">
                         <li><a th:href="@{/}"><i class="fa-solid fa-house"></i> <span th:text="#{page.home}"/></a></li>
-                        <li><a href="https://itsci.mju.ac.th/~watcharin"><i class="fa-solid fa-blog"></i> <span th:text="#{page.link.blog}"></span></a></li>
+                        <li><a href="https://itsci.mju.ac.th/~watcharin"><i class="fa-solid fa-blog"></i> <span th:text="#{page.link.study}"></span></a></li>
                         <li><a href="https://itsci.mju.ac.th" target="_blank"><i class="fa-solid fa-user-graduate"></i></i> <span th:text="#{page.home.itsci}"></span></a></li>
                         <li sec:authorize="isAuthenticated()">
                             <a href="#user" class="dropbtn"><i class="fa-solid fa-user"></i> <span th:text="${#authentication.getPrincipal().getUsername()}"></span></a>

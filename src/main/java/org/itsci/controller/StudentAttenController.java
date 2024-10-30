@@ -113,7 +113,7 @@ public class StudentAttenController {
         assert section != null;
 
         int currentWeek = DateUtils.getCurrentWeekSemester(course);
-        int displayWeek = currentWeek;
+        int displayWeek = Math.min(currentWeek, 15);
         boolean allowAttend = false;
 
         // If user selected a week, display that week

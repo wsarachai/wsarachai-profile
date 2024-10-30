@@ -29,7 +29,7 @@ public class DateUtils {
         int startWeek = c1.get(Calendar.WEEK_OF_YEAR);
         int curWeek = c2.get(Calendar.WEEK_OF_YEAR);
 
-        return curWeek-startWeek;
+        return curWeek - startWeek;
     }
 
     public static Date getDateFrom(int year, int month, int day) {

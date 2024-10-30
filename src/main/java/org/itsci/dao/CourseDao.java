@@ -4,6 +4,7 @@ import org.itsci.model.Course;
 import org.itsci.model.Teacher;
 
 import java.util.List;
+import java.util.Set;
 
 public interface CourseDao {
     Course getCourseById(Long id);

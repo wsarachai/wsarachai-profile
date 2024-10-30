@@ -6,14 +6,15 @@ import java.util.Set;
 
 @Entity
 public class Teacher extends Staff {
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Course> courses = new HashSet<>();
 
-    public Set<Course> getCourses() {
-        return courses;
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
+    private Set<TeacherCourse> teacherCourses = new HashSet<>();
+
+    public Set<TeacherCourse> getTeacherCourses() {
+        return teacherCourses;
     }
 
-    public void setCourses(Set<Course> courses) {
-        this.courses = courses;
+    public void setTeacherCourses(Set<TeacherCourse> teacherCourses) {
+        this.teacherCourses = teacherCourses;
     }
 }

@@ -13,16 +13,21 @@ public class Course implements Comparable<Course> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
+
     @ManyToOne
     @JoinColumn(name="subject_id")
     private Subject subject;
+
     @Column(name="semester")
     private String semester;
+
     @Temporal(TemporalType.DATE)
     @Column(name="start_semester")
     private Date startSemester;
-    @ManyToMany(mappedBy = "courses", fetch = FetchType.EAGER)
-    private Set<Teacher> teachers = new HashSet<>();
+
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
+    private Set<TeacherCourse> teacherCourses = new HashSet<>();
+
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy("groupNumber ASC")
     private SortedSet<Section> sections = new TreeSet<>();
@@ -59,12 +64,12 @@ public class Course implements Comparable<Course> {
         this.startSemester = startSemester;
     }
 
-    public Set<Teacher> getTeachers() {
-        return teachers;
+    public Set<TeacherCourse> getTeacherCourses() {
+        return teacherCourses;
     }
 
-    public void setTeachers(Set<Teacher> teachers) {
-        this.teachers = teachers;
+    public void setTeacherCourses(Set<TeacherCourse> teacherCourses) {
+        this.teacherCourses = teacherCourses;
     }
 
     public SortedSet<Section> getSections() {

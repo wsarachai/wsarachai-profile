@@ -2,6 +2,7 @@ package org.itsci.model;
 
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -17,6 +18,8 @@ public class User {
     private String firstName;
     @Column(name="last_name", nullable = false)
     private String lastName;
+    @Column(name="nickname")
+    private String nickname;
     @Column(name="address", columnDefinition="TEXT")
     private String address;
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
@@ -55,6 +58,14 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -69,5 +80,18 @@ public class User {
 
     public void setLogin(Login login) {
         this.login = login;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

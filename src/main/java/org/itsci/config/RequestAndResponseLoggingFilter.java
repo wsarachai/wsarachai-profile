@@ -1,6 +1,7 @@
 package org.itsci.config;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,9 +26,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-@Slf4j
 @Order(1)
 public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
+
+    private static final Logger log = LoggerFactory.getLogger(RequestAndResponseLoggingFilter.class);
+
     private static final List<MediaType> VISIBLE_TYPES = Arrays.asList(
             MediaType.valueOf("text/*"),
             MediaType.APPLICATION_FORM_URLENCODED,
@@ -38,8 +41,8 @@ public class RequestAndResponseLoggingFilter extends OncePerRequestFilter {
             MediaType.MULTIPART_FORM_DATA
     );
 
-//    private static final Path path = Paths.get("D:\\tmp\\logs\\wsarachai.txt");
-    private static final Path path = Paths.get("/tmp/wsarachai.txt");
+    private static final Path path = Paths.get("C:\\tmp\\logs\\wsarachai.txt");
+//    private static final Path path = Paths.get("/tmp/wsarachai.txt");
     private static BufferedWriter writer = null;
 
     public RequestAndResponseLoggingFilter() {

@@ -33,8 +33,8 @@ public class Subject {
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="curriculum_id")
     private Curriculum curriculum;
-    @OneToMany(mappedBy = "section", fetch = FetchType.EAGER)
-    private Set<Enrollment> studentCourses = new HashSet<>();
+//    @OneToMany(mappedBy = "section", fetch = FetchType.EAGER)
+//    private Set<Enrollment> studentCourses = new HashSet<>();
 
     public long getId() {
         return id;
@@ -116,11 +116,11 @@ public class Subject {
         this.curriculum = curriculum;
     }
 
-    public Set<Enrollment> getStudentCourses() {
-        return studentCourses;
-    }
-
-    public void setStudentCourses(Set<Enrollment> studentCourses) {
-        this.studentCourses = studentCourses;
-    }
+//    public Set<Enrollment> getStudentCourses() {
+//        return studentCourses;
+//    }
+//
+//    public void setStudentCourses(Set<Enrollment> studentCourses) {
+//        this.studentCourses = studentCourses;
+//    }
 }

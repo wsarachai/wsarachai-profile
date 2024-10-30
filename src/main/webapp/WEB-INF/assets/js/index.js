@@ -17,3 +17,11 @@ const filterCourses = function() {
         }
     }
 }
+
+function semesterSubmitForm() {
+    document.getElementById('semester-form').submit();
+}
+
+// Add change event listeners to both selects
+document.getElementById('year-select').addEventListener('change', semesterSubmitForm);
+document.getElementById('term-select').addEventListener('change', semesterSubmitForm);

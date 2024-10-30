@@ -92,10 +92,12 @@
     <!-- End of Header section -->
 
 </th:block>
+
 <th:block th:fragment="footer">
     <div><i class="fa fa-calendar"></i> <span id="current-date"></span></div>
     <div>&copy; 2024 <span th:text="#{page.author}"></span>, <span th:text="#{page.footer}"></span></div>
 </th:block>
+
 <th:block th:fragment="scriptfiles">
     <script th:src="@{'/assets/js/main.js'}"></script>
     <script th:src="@{'/assets/js/clock.js'}"></script>

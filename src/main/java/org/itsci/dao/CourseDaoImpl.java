@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class CourseDaoImpl implements CourseDao {
@@ -55,7 +56,6 @@ public class CourseDaoImpl implements CourseDao {
 
         Query<Course> query = session.createQuery(criteria);
         List<Course> courses = query.getResultList();
-
         return courses;
     }
 }

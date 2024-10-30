@@ -256,13 +256,13 @@ public class PopulateDataController {
 
             studentAttenService.saveCourse(course3);
 
-            course1.getTeachers().add(teacher1);
-            course2.getTeachers().add(teacher1);
-            course3.getTeachers().add(teacher1);
-            teacher1.getCourses().add(course1);
-            teacher1.getCourses().add(course2);
-            teacher1.getCourses().add(course3);
-            studentAttenService.updateUser(teacher1);
+//            course1.getTeachers().add(teacher1);
+//            course2.getTeachers().add(teacher1);
+//            course3.getTeachers().add(teacher1);
+//            teacher1.getCourses().add(course1);
+//            teacher1.getCourses().add(course2);
+//            teacher1.getCourses().add(course3);
+//            studentAttenService.updateUser(teacher1);
         }
 
         return "index";

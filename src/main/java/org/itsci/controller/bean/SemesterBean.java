@@ -1,4 +1,4 @@
-package org.itsci.handlingformsubmission;
+package org.itsci.controller.bean;
 
 public class SemesterBean {
     private String year;

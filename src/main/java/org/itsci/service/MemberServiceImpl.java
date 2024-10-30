@@ -6,6 +6,7 @@ import org.itsci.model.Authority;
 import org.itsci.model.EAuthorityType;
 import org.itsci.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
+    @CacheEvict(value = { "members" }, allEntries = true)
     public Member updateMember(Member member) {
         member = memberDao.updateMember(member);
         return member;
@@ -39,6 +41,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
+    @CacheEvict(value = { "members" }, allEntries = true)
     public void saveMember(Member user) {
         memberDao.saveMember(user);
     }

@@ -147,9 +147,12 @@ public class MemberController {
         if (!UIValidator.FieldNotNullValidator(memberFrm, "lastName")) {
             bindingResult.rejectValue("lastName", "NotNull");
         }
-        if (!UIValidator.FieldNotNullValidator(memberFrm, "address")) {
-            bindingResult.rejectValue("address", "NotNull");
+        if (!UIValidator.FieldNotNullValidator(memberFrm, "nickname")) {
+            bindingResult.rejectValue("nickname", "NotNull");
         }
+//        if (!UIValidator.FieldNotNullValidator(memberFrm, "address")) {
+//            bindingResult.rejectValue("address", "NotNull");
+//        }
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("title", messageSource.getMessage("page.error", null, Locale.getDefault()));
@@ -157,7 +160,8 @@ public class MemberController {
         } else {
             member.setFirstName(memberFrm.getFirstName());
             member.setLastName(memberFrm.getLastName());
-            member.setAddress(memberFrm.getAddress());
+            member.setNickname(memberFrm.getNickname());
+//            member.setAddress(memberFrm.getAddress());
             memberService.saveMember(member);
             String message = messageSource.getMessage("status.save.success", null, locale);
             redirectAttrs.addFlashAttribute("status", message);

@@ -1,6 +1,6 @@
 package org.itsci.controller;
 import org.itsci.controller.bean.UserDetailBean;
-import org.itsci.handlingformsubmission.SemesterBean;
+import org.itsci.controller.bean.SemesterBean;
 import org.itsci.model.Course;
 import org.itsci.model.Teacher;
 import org.itsci.model.TeacherCourse;

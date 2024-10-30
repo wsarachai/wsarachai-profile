@@ -11,6 +11,7 @@
         <section class="flex-container-column">
             <div class="form-container">
                 <form th:action="@{/member/profile}" th:object="${member}" th:method="post">
+                    <input type="hidden" th:field="*{id}">
                     <div th:if="${studentId}" class="form-group">
                         <label th:for="${#ids.next('studentId')}" th:text="#{page.student.code}"></label>
                         <input type="text" th:value="${studentId}" readonly="readonly">
@@ -27,8 +28,12 @@
                         <label th:for="${#ids.next('lastname')}" th:text="#{page.user.lastname}"></label>
                         <input type="text" th:field="*{lastName}" readonly="readonly">
                     </div>
+                    <div class="form-group">
+                        <label th:for="${#ids.next('nickname')}" th:text="#{page.user.nickname}"></label>
+                        <input type="text" th:field="*{nickname}">
+                    </div>
                     <!-- Login/Submit Button -->
-                    <button type="submit" class="danger" th:text="#{page.btn.save}" disabled="disabled"></button>
+                    <button type="submit" class="danger" th:text="#{page.btn.save}"></button>
                 </form>
             </div>
         </section>

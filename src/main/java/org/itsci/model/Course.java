@@ -25,9 +25,6 @@ public class Course implements Comparable<Course> {
     @Column(name="start_semester")
     private Date startSemester;
 
-    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
-    private Set<TeacherCourse> teacherCourses = new HashSet<>();
-
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy("groupNumber ASC")
     private SortedSet<Section> sections = new TreeSet<>();
@@ -62,14 +59,6 @@ public class Course implements Comparable<Course> {
 
     public void setStartSemester(Date startSemester) {
         this.startSemester = startSemester;
-    }
-
-    public Set<TeacherCourse> getTeacherCourses() {
-        return teacherCourses;
-    }
-
-    public void setTeacherCourses(Set<TeacherCourse> teacherCourses) {
-        this.teacherCourses = teacherCourses;
     }
 
     public SortedSet<Section> getSections() {

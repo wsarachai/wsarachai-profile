@@ -49,4 +49,10 @@ public class TeacherCourseDaoImpl implements TeacherCourseDao {
 
         return query.getResultList();
     }
+
+    @Override
+    public void save(TeacherCourse teacherCourse) {
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(teacherCourse);
+    }
 }

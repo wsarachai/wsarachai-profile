@@ -1,6 +1,7 @@
 package org.itsci.dao;
 
 import org.itsci.model.Course;
+import org.itsci.model.Subject;
 import org.itsci.model.Teacher;
 
 import java.util.List;
@@ -16,4 +17,8 @@ public interface CourseDao {
     void delete(Long id);
 
     List<Course> findAll();
+
+    List<Course> findBySemester(String semester);
+
+    Course findBySubject(Subject subject);
 }

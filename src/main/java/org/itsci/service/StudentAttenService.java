@@ -74,4 +74,12 @@ public interface StudentAttenService {
     Image getImageById(long image_id);
 
     SortedSet<Attendance> findAttendancesByType(Enrollment enrollment, String type);
+
+    Subject findBySubjectCode(String code);
+
+    List<Course> findCourseBySemester(String semester);
+
+    Course findCourseBySubject(Subject subject);
+
+    void saveTeacherCourse(TeacherCourse teacherCourse);
 }

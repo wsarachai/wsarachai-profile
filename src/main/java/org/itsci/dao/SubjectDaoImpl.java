@@ -46,4 +46,23 @@ public class SubjectDaoImpl implements SubjectDao {
         Subject subject = session.get(Subject.class, id);
         return subject;
     }
+
+    @Override
+    public Subject findByCode(String code) {
+        Subject subject = null;
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Subject> criteria = builder.createQuery(Subject.class);
+            Root<Subject> root = criteria.from(Subject.class);
+            criteria.select(root);
+            criteria.where(builder.equal(root.get("code"), code));
+
+            Query<Subject> query = session.createQuery(criteria);
+            subject = query.getSingleResult();
+        } catch (Exception ignored) {
+
+        }
+        return subject;
+    }
 }

@@ -43,6 +43,9 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     private AttendanceDao attendanceDao;
 
     @Autowired
+    private TeacherCourseDao teacherCourseDao;
+
+    @Autowired
     private ImageDao imageDao;
 
     @Override
@@ -208,6 +211,30 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     @Cacheable(value="attendances", key="#enrollment.id+#type")
     public SortedSet<Attendance> findAttendancesByType(Enrollment enrollment, String type) {
         return attendanceDao.findByType(enrollment, type);
+    }
+
+    @Override
+    @Transactional
+    public Subject findBySubjectCode(String code) {
+        return subjectDao.findByCode(code);
+    }
+
+    @Override
+    @Transactional
+    public List<Course> findCourseBySemester(String semester) {
+        return courseDao.findBySemester(semester);
+    }
+
+    @Override
+    @Transactional
+    public Course findCourseBySubject(Subject subject) {
+        return courseDao.findBySubject(subject);
+    }
+
+    @Override
+    @Transactional
+    public void saveTeacherCourse(TeacherCourse teacherCourse) {
+        teacherCourseDao.save(teacherCourse);
     }
 
     @Override

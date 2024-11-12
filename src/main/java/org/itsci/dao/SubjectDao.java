@@ -10,4 +10,6 @@ public interface SubjectDao {
     void save(Subject subject);
 
     Subject getSubjectById(long id);
+
+    Subject findByCode(String code);
 }

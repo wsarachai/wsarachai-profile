@@ -10,10 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/system")
@@ -46,8 +43,7 @@ public class PopulateDataController {
 //        return "index";
 //    }
 
-    @GetMapping("/populate")
-    public String populateStudent(Model model) {
+    private void populateData1_67() {
 
         Set<Authority> authorities =studentAttenService.findAllAuthorities();
         if (authorities.size() <= 0) {
@@ -264,6 +260,179 @@ public class PopulateDataController {
 //            teacher1.getCourses().add(course3);
 //            studentAttenService.updateUser(teacher1);
         }
+    }
+
+    private void populateData2_67() {
+
+         Subject subject = studentAttenService.findBySubjectCode("10306103");
+         if (subject == null) {
+             subject = new Subject();
+             subject.setCode("10306103");
+             subject.setCredit(3.0);
+             subject.setCreditDetail("3 (2-3-5)");
+             subject.setDescription("ปัญหาและกระบวนการแก้ปัญหาภาษาคอมพิวเตอร์ กระบวนการพัฒนาโปรแกรม ภาษาการโปรแกรม ลักษณะของโปรแกรมแบบโครงสร้าง โครงสร้างข้อมูลที่จำเป็นและการนำไป ใช้งาน การออกแบบเป็นโมดูล เทคนิคการแก้ปัญหา การเรียงลำดับและการค้นหา การทดสอบโปรแกรมในระดับหน่วย การจัดทำเอกสารประกอบโปรแกรม");
+             subject.setEnabled(true);
+             subject.setEngName("Software Development Process");
+             subject.setThaiName("กระบวนการพัฒนาซอฟต์แวร์");
+             subject.setType("แกน");
+             subject.setCurriculum(studentAttenService.findCurriculumById(2l));
+             studentAttenService.saveSubject(subject);
+         }
+
+        subject = studentAttenService.findBySubjectCode("10306214");
+        if (subject == null) {
+            subject = new Subject();
+            subject.setCode("10306214");
+            subject.setCredit(3.0);
+            subject.setCreditDetail("3 (2-3-5)");
+            subject.setDescription("ทบทวนแนวคิดเชิงวัตถุและความสัมพันธ์ระหว่างคลาส การจัดการไฟล์และ Exception การค้นหาคลาส Coupling และ Cohesion การสืบทอดและ Composition หลักการออกแบบคลาสเพื่อรองรับการแก้ไขปัญหาในระดับที่สามารถนำไปประยุกต์กับการแก้ไขปัญหาเพื่อการโปรแกรม ตลอดจนความรู้เบื้องต้นเกี่ยวกับการออกแบบรูปแบบมาตรฐานเชิงวัตถุ (Design Pattern) รวมถึงการทดสอบระดับหน่วย");
+            subject.setEnabled(true);
+            subject.setEngName("Object Oriented Programming");
+            subject.setThaiName("การโปรแกรมเชิงวัตถุ");
+            subject.setType("แกน");
+            subject.setCurriculum(studentAttenService.findCurriculumById(2l));
+            studentAttenService.saveSubject(subject);
+        }
+
+        subject = studentAttenService.findBySubjectCode("10300402");
+        if (subject == null) {
+            subject = new Subject();
+            subject.setCode("10300402");
+            subject.setCredit(3.0);
+            subject.setCreditDetail("3 (2-2-5)");
+            subject.setDescription("ศึกษาเกี่ยวกับแนวคิดเกี่ยวกับความเข้าใจและการใช้ดิจิทัล สิทธิและความรับผิดชอบ การใช้ชีวิตในสังคมดิจิทัล ความสำคัญของข้อมูลสารสนเทศ การเข้าถึงแหล่งข้อมูล การพัฒนาทักษะในการสืบค้นและอ้างอิงข้อมูล การใช้และจัดการสารสนเทศได้อย่างถูกต้องและมีประสิทธิภาพ และมีวิจารณญาณ ตระหนักในจรรยาบรรณและผลกระทบที่มีต่อบุคคลและสังคม รวมทั้งกฎหมายที่เกี่ยวข้อง");
+            subject.setEnabled(true);
+            subject.setEngName("Living in Digital Society");
+            subject.setThaiName("การใช้ชีวิตในสังคมดิจิทัล");
+            subject.setType("ศึกษาทั่วไป");
+            subject.setCurriculum(studentAttenService.findCurriculumById(2l));
+            studentAttenService.saveSubject(subject);
+        }
+
+        Teacher teacher = studentAttenService.findTeacherById(1L);
+
+        subject = studentAttenService.findBySubjectCode("10300402");
+        Course course = studentAttenService.findCourseBySubject(subject);
+        if (course == null) {
+            course = new Course();
+            course.setSemester("2/2567");
+            course.setStartSemester(DateUtils.getDateFrom(2567, 10, 18));
+            course.setSubject(subject);
+
+            SortedSet<Section> sectionList = course.getSections();
+            if (sectionList == null || sectionList.isEmpty()) {
+                Section section = new Section();
+                section.setGroupNumber("03");
+                section.setLecDay(EDayOfWeek.MONDAY);
+                section.setStartLectureTime("15:00");
+                section.setEndLectureTime("17:00");
+                section.setLabDay(EDayOfWeek.THURSDAY);
+                section.setStartLabTime("15:00");
+                section.setEndLabTime("17:00");
+                section.setLecRoom(studentAttenService.findRoomById(6l));
+                section.setLabRoom(studentAttenService.findRoomById(6l));
+                section.setNumberOfSeat(200);
+                section.setCourse(course);
+                course.getSections().add(section);
+
+                studentAttenService.saveCourse(course);
+
+                TeacherCourse teacherCourse = new TeacherCourse();
+                teacherCourse.setTeacher(teacher);
+                teacherCourse.setCourse(course);
+                teacherCourse.setStatus("true");
+                studentAttenService.saveTeacherCourse(teacherCourse);
+
+            }
+        }
+
+        subject = studentAttenService.findBySubjectCode("10306103");
+        course = studentAttenService.findCourseBySubject(subject);
+        if (course == null) {
+            course = new Course();
+            course.setSemester("2/2567");
+            course.setStartSemester(DateUtils.getDateFrom(2567, 10, 19));
+            course.setSubject(subject);
+
+            SortedSet<Section> sectionList = course.getSections();
+            if (sectionList == null || sectionList.isEmpty()) {
+                Section section = new Section();
+                section.setGroupNumber("01");
+                section.setLecDay(EDayOfWeek.TUESDAY);
+                section.setStartLectureTime("15:00");
+                section.setEndLectureTime("17:00");
+                section.setLabDay(EDayOfWeek.THURSDAY);
+                section.setStartLabTime("12:00");
+                section.setEndLabTime("15:00");
+                section.setLecRoom(studentAttenService.findRoomById(1l));
+                section.setLabRoom(studentAttenService.findRoomById(4l));
+                section.setNumberOfSeat(60);
+                section.setCourse(course);
+                course.getSections().add(section);
+
+                section = new Section();
+                section.setGroupNumber("02");
+                section.setLecDay(EDayOfWeek.THURSDAY);
+                section.setStartLectureTime("15:00");
+                section.setEndLectureTime("17:00");
+                section.setLabDay(EDayOfWeek.FRIDAY);
+                section.setStartLabTime("15:00");
+                section.setEndLabTime("18:00");
+                section.setLecRoom(studentAttenService.findRoomById(1l));
+                section.setLabRoom(studentAttenService.findRoomById(4l));
+                section.setNumberOfSeat(60);
+                section.setCourse(course);
+                course.getSections().add(section);
+
+                studentAttenService.saveCourse(course);
+
+                TeacherCourse teacherCourse = new TeacherCourse();
+                teacherCourse.setTeacher(teacher);
+                teacherCourse.setCourse(course);
+                teacherCourse.setStatus("true");
+                studentAttenService.saveTeacherCourse(teacherCourse);
+            }
+        }
+
+        subject = studentAttenService.findBySubjectCode("10306214");
+        course = studentAttenService.findCourseBySubject(subject);
+        if (course == null) {
+            course = new Course();
+            course.setSemester("2/2567");
+            course.setStartSemester(DateUtils.getDateFrom(2567, 10, 20));
+            course.setSubject(subject);
+
+            SortedSet<Section> sectionList = course.getSections();
+            if (sectionList == null || sectionList.isEmpty()) {
+                Section section = new Section();
+                section.setGroupNumber("01");
+                section.setLecDay(EDayOfWeek.WEDNESDAY);
+                section.setStartLectureTime("09:00");
+                section.setEndLectureTime("11:00");
+                section.setLabDay(EDayOfWeek.FRIDAY);
+                section.setStartLabTime("10:00");
+                section.setEndLabTime("13:00");
+                section.setLecRoom(studentAttenService.findRoomById(5l));
+                section.setLabRoom(studentAttenService.findRoomById(4l));
+                section.setNumberOfSeat(60);
+                section.setCourse(course);
+                course.getSections().add(section);
+
+                studentAttenService.saveCourse(course);
+
+                TeacherCourse teacherCourse = new TeacherCourse();
+                teacherCourse.setTeacher(teacher);
+                teacherCourse.setCourse(course);
+                teacherCourse.setStatus("true");
+                studentAttenService.saveTeacherCourse(teacherCourse);
+            }
+        }
+    }
+
+    @GetMapping("/populate")
+    public String populateStudent(Model model) {
+
+        populateData2_67();
 
         return "index";
     }

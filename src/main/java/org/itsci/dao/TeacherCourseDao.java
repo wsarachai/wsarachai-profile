@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface TeacherCourseDao {
     List<TeacherCourse> findCourseByTeacher(Teacher teacher, String semester, String status);
+
+    void save(TeacherCourse teacherCourse);
 }

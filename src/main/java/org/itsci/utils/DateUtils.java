@@ -122,14 +122,14 @@ public class DateUtils {
         Calendar curCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
         int curMonth = curCal.get(Calendar.MONTH);
         int curYear = curCal.get(Calendar.YEAR);
-        int year = curYear - 1;
+        int year = curYear;
 
         // Term 1: 5 - 9
         // Term 2: 10 - 11, 0 - 2
         // Summer 3 - 4
 
-        if (curMonth >= 6 && curMonth <= 9) {
-            year = curYear;
+        if (curMonth >= 6 && curMonth < 10) {
+            year = curYear - 1;
         }
 
         return String.valueOf(year);
@@ -145,7 +145,7 @@ public class DateUtils {
         // Term 2: 10 - 11, 0 - 2
         // Summer 3 - 4
 
-        if (curMonth >= 6 && curMonth <= 9) {
+        if (curMonth >= 6 && curMonth < 10) {
             term = 1;
         } else if (curMonth >= 10 || (curMonth >= 0 && curMonth <= 2)) {
             term = 2;

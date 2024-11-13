@@ -10,7 +10,6 @@ public class User {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GenericGenerator(name = "increment", strategy = "increment")
     private Long id;
     @Column(name="prename", length = 128)
     private String prename;

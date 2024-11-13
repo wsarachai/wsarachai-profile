@@ -5,7 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "teacher_course")
+@Table(name = "teacher_courses")
 public class TeacherCourse implements Comparable<TeacherCourse> {
     @Id
     @Column(name = "id", nullable = false)

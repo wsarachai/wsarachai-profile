@@ -26,6 +26,9 @@ public class SystemServiceImpl implements SystemService {
     @Autowired
     private EnrollmentDao enrollmentDao;
 
+    @Autowired
+    private LoginDao loginDao;
+
     @Override
     @Transactional
     public Course getCourseById(long id) {
@@ -78,5 +81,17 @@ public class SystemServiceImpl implements SystemService {
     @Transactional
     public void saveOrUpdateStudent(Student stu) {
         userDao.saveOrUpdate(stu);
+    }
+
+    @Override
+    @Transactional
+    public boolean isStudentEnrollment(Student student, Section section) {
+        List<Enrollment> enrollments = enrollmentDao.findBySectionId(section.getId());
+        for (Enrollment enrollment : enrollments) {
+            if (enrollment.getStudent().equals(student)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

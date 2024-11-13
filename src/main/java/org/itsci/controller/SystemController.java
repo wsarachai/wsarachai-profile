@@ -1,9 +1,12 @@
 package org.itsci.controller;
 
 import org.itsci.model.*;
+import org.itsci.service.CourseService;
 import org.itsci.service.StudentAttenService;
 import org.itsci.service.SystemService;
+import org.itsci.service.UserService;
 import org.itsci.utils.CSVHelper;
+import org.itsci.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -19,10 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.SortedSet;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -39,6 +39,12 @@ public class SystemController {
 
     @Autowired
     SystemService systemService;
+
+    @Autowired
+    UserService<Teacher> userService;
+
+    @Autowired
+    CourseService courseService;
 
     @GetMapping("/student/atten/export/cvs/{courseId}/{sectionId}")
     public HttpEntity<byte[]> exportCVSAttendance(@PathVariable long courseId, @PathVariable long sectionId) throws IOException {
@@ -176,7 +182,22 @@ public class SystemController {
         int numCol = 0;
         HttpSession session = request.getSession(false);
 
-        List<Section> sections = systemService.findAllSection();
+        String year = DateUtils.getCurrentSemesterYear();
+        String term = DateUtils.getCurrentSemesterTerm();
+
+        Teacher teacher = userService.getUser(1L, Teacher.class);
+
+        assert teacher != null;
+        String semester = term + "/" + year;
+
+        ArrayList<TeacherCourse> teacherCourses = new ArrayList<>(courseService.listCourseByTeacherAndSemester(teacher, semester));
+        Collections.sort(teacherCourses);
+
+        List<Section> sections = new ArrayList<>();
+
+        for (TeacherCourse tc : teacherCourses) {
+            sections.addAll(tc.getCourse().getSections());
+        }
 
         try {
             List<List<String>> records = new ArrayList<>();
@@ -218,6 +239,7 @@ public class SystemController {
     }
 
     @PostMapping("/student/enroll")
+    @CacheEvict(value = { "enrollments", "members" }, allEntries = true)
     public String enrollStudent(Model model,
                                 @RequestParam("no") String no,
                                 @RequestParam("code") String code,
@@ -270,11 +292,13 @@ public class SystemController {
         Section section = systemService.findSectionById(iSectionId);
 
         for (Student stu : students) {
-            Enrollment enrollment = new Enrollment();
-            enrollment.setStudent(stu);
-            enrollment.setSection(section);
-            systemService.saveOrUpdateStudent(stu);
-            systemService.saveEnrollment(enrollment);
+            if (!systemService.isStudentEnrollment(stu, section)) {
+                Enrollment enrollment = new Enrollment();
+                enrollment.setStudent(stu);
+                enrollment.setSection(section);
+                systemService.saveOrUpdateStudent(stu);
+                systemService.saveEnrollment(enrollment);
+            }
         }
 
         return "redirect:/system/student/import";

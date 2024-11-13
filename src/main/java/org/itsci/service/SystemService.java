@@ -22,4 +22,6 @@ public interface SystemService {
     Student findStudentByStudentId(String studentId);
 
     void saveOrUpdateStudent(Student stu);
+
+    boolean isStudentEnrollment(Student student, Section section);
 }

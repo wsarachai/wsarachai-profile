@@ -28,15 +28,15 @@
                 </div>
             </form>
 
-            <div id="course-container">
+            <div id="course-container" class="main-body-container">
                 <div class="card" th:each="course : ${courses}">
-                    <div class="course-header">
+                    <div class="card-header">
                         <span  th:text="${course.subject.getCode()}"/> <span  th:text="${course.subject.getThaiName()}"/>
                     </div>
                     <div class="card-body">
                         <p th:text="${course.getSubject().getDescription()}"></p>
-                        <div class="course-detail-section" th:each="section : ${course.getSections()}">
-                            <div class="course-detail-header">
+                        <div class="card-detail-section" th:each="section : ${course.getSections()}">
+                            <div class="card-detail-header">
                                 <span th:text="#{page.student.atten.group}">:</span> <span th:text="${section.getGroupNumber()}"/>
                                 <span style="float: right" sec:authorize="isAuthenticated()">
                                     <a th:href="@{'/pub/student/atten/' + ${course.getId()} + '/' + ${section.getId()}}"><span th:text="#{page.home.signin}"></span></a>
@@ -47,7 +47,7 @@
                                     </a>
                                 </span>
                             </div>
-                            <div class="course-flex-container">
+                            <div class="card-flex-container">
                                 <!-- Lec -->
                                 <div class="item" th:text="#{section.lec}"></div>
                                 <div class="item" th:text="${#messages.msgOrNull('day.' + section.getLecDay())}"></div>

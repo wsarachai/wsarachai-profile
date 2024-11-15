@@ -76,6 +76,11 @@ public class IndexController {
         return doIndex(authentication, model, semesterBean.getYear(), semesterBean.getTerm());
     }
 
+    @GetMapping("/semester")
+    public String index3(Authentication authentication, Model model) {
+        return doIndex(authentication, model, DateUtils.getCurrentSemesterYear(), DateUtils.getCurrentSemesterTerm());
+    }
+
     @GetMapping("/")
     public String index(Authentication authentication, Model model) {
         return doIndex(authentication, model, DateUtils.getCurrentSemesterYear(), DateUtils.getCurrentSemesterTerm());

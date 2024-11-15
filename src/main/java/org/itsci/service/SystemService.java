@@ -24,4 +24,8 @@ public interface SystemService {
     void saveOrUpdateStudent(Student stu);
 
     boolean isStudentEnrollment(Student student, Section section);
+
+    List<Subject> findAllSubject();
+
+    List<Curriculum> findAllCurriculum();
 }

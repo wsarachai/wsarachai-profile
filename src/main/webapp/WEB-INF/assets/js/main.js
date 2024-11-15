@@ -29,4 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
     siteNavigator.addEventListener("click", function(event) { event.stopPropagation(); });
     btnDown.addEventListener("click", dropButton, true);
     body.addEventListener("click", closeNavigator);
+
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function () {
+        history.pushState(null, null, document.URL);
+    });
 });

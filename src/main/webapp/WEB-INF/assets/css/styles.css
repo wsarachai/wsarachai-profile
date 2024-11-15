@@ -456,7 +456,23 @@ ul.sub-menu li > a {
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
-.course-flex-container {
+.form-control-inline {
+    display: inline-block;
+    width: 50%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.card-flex-container {
     width: 1200px;
     max-width: 90%;
     margin: 0px auto;
@@ -465,7 +481,7 @@ ul.sub-menu li > a {
     justify-content: flex-start; /* Adjust alignment as needed */
 }
 
-#course-container {
+.main-body-container {
     width: 100%;
     margin: 20px auto 50px auto;
 }
@@ -479,7 +495,7 @@ ul.sub-menu li > a {
     text-align: center;
 }
 
-.course-header {
+.card-header {
     background-color: #230855;
     color: white;
     padding: 10px;
@@ -513,7 +529,7 @@ ul.sub-menu li > a {
     padding: 1.25rem;
 }
 
-.course-detail-section {
+.card-detail-section {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -523,7 +539,7 @@ ul.sub-menu li > a {
     border-radius: 5px;
 }
 
-.course-detail-header {
+.card-detail-header {
     flex-basis: 100%;
     font-weight: bold;
     margin-bottom: 10px;
@@ -544,7 +560,7 @@ ul.sub-menu li > a {
 .flex-container-column {
     display: flex;
     flex-direction: column;
-    background-color: #bbdefb;
+    background-color: #f8f9fa;
     height: 100%;
     width: 100%;
     padding: 15px;
@@ -846,6 +862,14 @@ div.blueTable {
     border-radius: 4px;
 }
 
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
 #uploadForm > p {
     color: blue;
 }
@@ -931,6 +955,33 @@ button.info:focus {
 
 button.danger {
     background-color: #EA4C89;
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    height: 40px;
+    line-height: 20px;
+    list-style: none;
+    margin: 0;
+    outline: none;
+    padding: 10px 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: color 100ms;
+    vertical-align: baseline;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+button.info {
+    background-color: #167d2a;
     border-radius: 8px;
     border-style: none;
     box-sizing: border-box;

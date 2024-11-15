@@ -24,10 +24,13 @@ public class SystemServiceImpl implements SystemService {
     private SectionDao sectionDao;
 
     @Autowired
+    private SubjectDao subjectDao;
+
+    @Autowired
     private EnrollmentDao enrollmentDao;
 
     @Autowired
-    private LoginDao loginDao;
+    private CurriculumDao curriculumDao;
 
     @Override
     @Transactional
@@ -93,5 +96,18 @@ public class SystemServiceImpl implements SystemService {
             }
         }
         return false;
+    }
+
+    @Override
+    @Transactional
+    public List<Subject> findAllSubject() {
+        List<Subject> subjects = subjectDao.findAll();
+        return subjects;
+    }
+
+    @Override
+    @Transactional
+    public List<Curriculum> findAllCurriculum() {
+        return curriculumDao.findAll();
     }
 }

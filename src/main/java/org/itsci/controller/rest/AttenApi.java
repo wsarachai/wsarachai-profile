@@ -1,8 +1,10 @@
 package org.itsci.controller.rest;
 
+import org.itsci.controller.bean.SubjectBean;
 import org.itsci.model.Attendance;
 import org.itsci.model.EAttendanceStatus;
 import org.itsci.model.Enrollment;
+import org.itsci.model.Subject;
 import org.itsci.service.StudentAttenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
-import java.util.List;
 import java.util.SortedSet;
 
 @RestController
@@ -22,6 +23,24 @@ public class AttenApi {
 
     @Autowired
     private StudentAttenService studentAttenService;
+
+    @PostMapping(value="/subject/update", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<String> updateSubject(@RequestBody SubjectBean param) {
+        Subject subject = studentAttenService.findSubjectById(Long.parseLong(param.getId()));
+
+        subject.setCode(param.getCode());
+        subject.setCredit(Double.parseDouble(param.getCredit()));
+        subject.setEnabled(true);
+        subject.setCurriculum(studentAttenService.findCurriculumById(Long.parseLong(param.getCurriculum())));
+        subject.setDescription(param.getDescription());
+        subject.setType(param.getType());
+        subject.setCreditDetail(param.getCreditDetail());
+        subject.setEngName(param.getEngName());
+        subject.setThaiName(param.getThaiName());
+        studentAttenService.updateSubject(subject);
+
+        return ResponseEntity.ok("Update attendance successfully");
+    }
 
     @CacheEvict(value = {"attendances"}, key = "#param.enrollmentId+#param.type")
     @PostMapping(value="/atten/update", consumes = "application/json", produces = "application/json")

@@ -239,6 +239,12 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
+    public void updateSubject(Subject subject) {
+        subjectDao.save(subject);
+    }
+
+    @Override
+    @Transactional
     public List<Course> findAllCourse() {
         return courseDao.findAll();
     }

@@ -82,4 +82,6 @@ public interface StudentAttenService {
     Course findCourseBySubject(Subject subject);
 
     void saveTeacherCourse(TeacherCourse teacherCourse);
+
+    void updateSubject(Subject subject);
 }

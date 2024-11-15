@@ -46,6 +46,18 @@ public class SystemController {
     @Autowired
     CourseService courseService;
 
+    @GetMapping("/subject")
+    public String subjectForm(Model model)
+    {
+        List<Subject> subjects = systemService.findAllSubject();
+        List<Curriculum> curriculums = systemService.findAllCurriculum();
+
+        model.addAttribute("subjects", subjects);
+        model.addAttribute("curriculums", curriculums);
+
+        return "system/subject-form";
+    }
+
     @GetMapping("/student/atten/export/cvs/{courseId}/{sectionId}")
     public HttpEntity<byte[]> exportCVSAttendance(@PathVariable long courseId, @PathVariable long sectionId) throws IOException {
         String filename = "students.csv";

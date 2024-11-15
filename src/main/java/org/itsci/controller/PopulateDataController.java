@@ -311,43 +311,43 @@ public class PopulateDataController {
 
         Teacher teacher = studentAttenService.findTeacherById(1L);
 
-        subject = studentAttenService.findBySubjectCode("10300402");
-        Course course = studentAttenService.findCourseBySubject(subject);
-        if (course == null) {
-            course = new Course();
-            course.setSemester("2/2567");
-            course.setStartSemester(DateUtils.getDateFrom(2567, 10, 18));
-            course.setSubject(subject);
-
-            SortedSet<Section> sectionList = course.getSections();
-            if (sectionList == null || sectionList.isEmpty()) {
-                Section section = new Section();
-                section.setGroupNumber("03");
-                section.setLecDay(EDayOfWeek.MONDAY);
-                section.setStartLectureTime("15:00");
-                section.setEndLectureTime("17:00");
-                section.setLabDay(EDayOfWeek.THURSDAY);
-                section.setStartLabTime("15:00");
-                section.setEndLabTime("17:00");
-                section.setLecRoom(studentAttenService.findRoomById(6l));
-                section.setLabRoom(studentAttenService.findRoomById(6l));
-                section.setNumberOfSeat(200);
-                section.setCourse(course);
-                course.getSections().add(section);
-
-                studentAttenService.saveCourse(course);
-
-                TeacherCourse teacherCourse = new TeacherCourse();
-                teacherCourse.setTeacher(teacher);
-                teacherCourse.setCourse(course);
-                teacherCourse.setStatus("true");
-                studentAttenService.saveTeacherCourse(teacherCourse);
-
-            }
-        }
+//        subject = studentAttenService.findBySubjectCode("10300402");
+//        Course course = studentAttenService.findCourseBySubject(subject);
+//        if (course == null) {
+//            course = new Course();
+//            course.setSemester("2/2567");
+//            course.setStartSemester(DateUtils.getDateFrom(2567, 10, 18));
+//            course.setSubject(subject);
+//
+//            SortedSet<Section> sectionList = course.getSections();
+//            if (sectionList == null || sectionList.isEmpty()) {
+//                Section section = new Section();
+//                section.setGroupNumber("03");
+//                section.setLecDay(EDayOfWeek.MONDAY);
+//                section.setStartLectureTime("15:00");
+//                section.setEndLectureTime("17:00");
+//                section.setLabDay(EDayOfWeek.THURSDAY);
+//                section.setStartLabTime("15:00");
+//                section.setEndLabTime("17:00");
+//                section.setLecRoom(studentAttenService.findRoomById(6l));
+//                section.setLabRoom(studentAttenService.findRoomById(6l));
+//                section.setNumberOfSeat(200);
+//                section.setCourse(course);
+//                course.getSections().add(section);
+//
+//                studentAttenService.saveCourse(course);
+//
+//                TeacherCourse teacherCourse = new TeacherCourse();
+//                teacherCourse.setTeacher(teacher);
+//                teacherCourse.setCourse(course);
+//                teacherCourse.setStatus("true");
+//                studentAttenService.saveTeacherCourse(teacherCourse);
+//
+//            }
+//        }
 
         subject = studentAttenService.findBySubjectCode("10306103");
-        course = studentAttenService.findCourseBySubject(subject);
+        Course course = studentAttenService.findCourseBySubject(subject);
         if (course == null) {
             course = new Course();
             course.setSemester("2/2567");

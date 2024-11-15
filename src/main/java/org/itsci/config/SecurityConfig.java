@@ -76,14 +76,12 @@ public class SecurityConfig {
                                            .permitAll()
                                            .and()
                                            .logout().permitAll();
-                               } catch (Exception e) {
-                                   e.printStackTrace();
+                               } catch (Exception ignored) {
+
                                }
                            }
                        }
         );
-
-        http.addFilterBefore(new RequestAndResponseLoggingFilter(), BasicAuthenticationFilter.class);
 
         return http.build();
     }

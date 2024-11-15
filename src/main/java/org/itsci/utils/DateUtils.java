@@ -4,6 +4,7 @@ import org.itsci.model.Course;
 import org.itsci.model.EAttendanceStatus;
 import org.itsci.model.EDayOfWeek;
 import org.itsci.model.Section;
+import org.springframework.security.core.parameters.P;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -123,6 +124,11 @@ public class DateUtils {
         int curMonth = curCal.get(Calendar.MONTH);
         int curYear = curCal.get(Calendar.YEAR);
         int year = curYear;
+
+        if (curYear < 2500) {
+            curYear += 543;
+            year = curYear;
+        }
 
         // Term 1: 5 - 9
         // Term 2: 10 - 11, 0 - 2

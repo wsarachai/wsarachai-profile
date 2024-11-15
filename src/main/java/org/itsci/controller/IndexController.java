@@ -39,6 +39,9 @@ public class IndexController {
     private AttenConfigService attenConfigService;
 
     private String doIndex(Authentication authentication, Model model, String year, String term) {
+
+        log.info("[doIndex] year={}, term={}", year, term);
+
         UserDetailBean userDetailBean = null;
         if (authentication != null) {
             userDetailBean = (UserDetailBean) authentication.getPrincipal();

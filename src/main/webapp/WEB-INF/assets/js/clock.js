@@ -54,7 +54,7 @@ function drawTime(ctx, radius) {
     let second = now.getSeconds();
 
     const currentDateTime = now.toLocaleDateString("th-TH");
-    document.getElementById("current-date").innerHTML = currentDateTime;
+    document.getElementById("current-date").innerHTML = currentDateTime + " " + hour + ":" + minute + ":" + second;
 
     //hour
     hour = hour % 12;

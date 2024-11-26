@@ -65,16 +65,16 @@ function init() {
         btnLecture.addEventListener('click', () => {
             hideElements(imgLec);
             showElements(imgLab);
-            btnLab.classList.remove('hide');
-            btnLecture.classList.add('hide');
+            btnLab.classList.add('hide');
+            btnLecture.classList.remove('hide');
         });
     }
     if (btnLab) {
         btnLab.addEventListener('click', () => {
             hideElements(imgLab);
             showElements(imgLec);
-            btnLab.classList.add('hide');
-            btnLecture.classList.remove('hide');
+            btnLab.classList.remove('hide');
+            btnLecture.classList.add('hide');
         });
     }
 }

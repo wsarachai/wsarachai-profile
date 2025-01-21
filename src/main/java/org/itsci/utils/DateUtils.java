@@ -4,37 +4,49 @@ import org.itsci.model.Course;
 import org.itsci.model.EAttendanceStatus;
 import org.itsci.model.EDayOfWeek;
 import org.itsci.model.Section;
-import org.springframework.security.core.parameters.P;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.TimeZone;
 
 public class DateUtils {
-    public static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    public static Calendar calendarFor(int year, int month, int day) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.MONTH, month);
-        cal.set(Calendar.DAY_OF_MONTH, day);
-        return cal;
-    }
+    public static final ZoneId timeZone = ZoneId.of("Asia/Bangkok");
+    public static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public static int getCurrentWeekSemester(Course course) {
-        Calendar c1 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
-        Calendar c2 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
-        c1.setTime(course.getStartSemester());
+    public static long getCurrentWeekSemester(Course course) {
+        // Specify the time zone
+        long timeTick = course.getStartSemester().getTime();
+        Date date = new Date(timeTick);
+        LocalDate startDate = date
+                .toInstant()
+                .atZone(timeZone)
+                .toLocalDate();
 
-        int startWeek = c1.get(Calendar.WEEK_OF_YEAR);
-        int curWeek = c2.get(Calendar.WEEK_OF_YEAR);
+        ZonedDateTime startDateTime = startDate.atStartOfDay(timeZone);
 
-        return curWeek - startWeek;
+        LocalDate endDate = LocalDate.now(timeZone);
+
+        int year = endDate.getYear();
+        if (year < 2500) {
+            year += 543;
+        }
+
+        endDate = LocalDate.of(year, endDate.getMonth(), endDate.getDayOfMonth());
+        ZonedDateTime endDateTime = endDate.atStartOfDay(timeZone);
+
+
+        // Calculate the difference in weeks
+        return ChronoUnit.WEEKS.between(startDateTime, endDateTime);
     }
 
     public static Date getDateFrom(int year, int month, int day) {
-        return calendarFor(year, month, day).getTime();
+        // Create a LocalDate
+        LocalDate localDate = LocalDate.of(year, month, day);
+        // Convert LocalDate to Date
+        return Date.from(localDate.atStartOfDay(timeZone).toInstant());
     }
 
     public static boolean isInTimeForLecAttend(Section section) {
@@ -62,25 +74,34 @@ public class DateUtils {
     }
 
     private static boolean checkForInTime(int startHour, int startMinute, int endHour, int endMinute, EDayOfWeek dayOfWeek) {
-        Calendar curCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
+        // Get the current date and time in the specified time zone
+        ZonedDateTime curCal = ZonedDateTime.now(timeZone);
 
         // Check if today is the day of the week for the section
         int dayOfWeekNumber = EDayOfWeek.getDayOfWeekNumber(dayOfWeek);
-        int curDayOfWeek = curCal.get(Calendar.DAY_OF_WEEK);
+
+        int curDayOfWeek = curCal.getDayOfWeek().getValue();
         if (curDayOfWeek != dayOfWeekNumber) {
             return false;
         }
 
-        Calendar startCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
-        Calendar endCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
+        // set the start time for the calendar
+        ZonedDateTime startCal = ZonedDateTime.of(
+                curCal.getYear(),
+                curCal.getMonthValue(),
+                curCal.getDayOfMonth(),
+                startHour,
+                startMinute, 0, 0, timeZone);
 
-        startCal.set(Calendar.HOUR_OF_DAY, startHour);
-        startCal.set(Calendar.MINUTE, startMinute);
+        // set the end time for the calendar
+        ZonedDateTime endCal = ZonedDateTime.of(
+                curCal.getYear(),
+                curCal.getMonthValue(),
+                curCal.getDayOfMonth(),
+                endHour,
+                endMinute, 0, 0, timeZone);
 
-        endCal.set(Calendar.HOUR_OF_DAY, endHour);
-        endCal.set(Calendar.MINUTE, endMinute);
-
-        return curCal.after(startCal) && curCal.before(endCal);
+        return curCal.isAfter(startCal) && curCal.isBefore(endCal);
     }
 
     public static EAttendanceStatus checkAttendanceStatus(String startTime, String endTime) {
@@ -92,37 +113,48 @@ public class DateUtils {
         int endHour = Integer.parseInt(times[0]);
         int endMinute = Integer.parseInt(times[1]);
 
-        Calendar curCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
-        Calendar startCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
-        Calendar endCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
-        Calendar lateCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
+        // Get the current date and time in the specified time zone
+        ZonedDateTime curCal = ZonedDateTime.now(timeZone);
 
         // set the start time for the calendar
-        startCal.set(Calendar.HOUR_OF_DAY, startHour);
-        startCal.set(Calendar.MINUTE, startMinute);
+        ZonedDateTime startCal = ZonedDateTime.of(
+                curCal.getYear(),
+                curCal.getMonthValue(),
+                curCal.getDayOfMonth(),
+                startHour,
+                startMinute, 0, 0, timeZone);
 
         // set the end time for the calendar
-        endCal.set(Calendar.HOUR_OF_DAY, endHour);
-        endCal.set(Calendar.MINUTE, endMinute);
+        ZonedDateTime endCal = ZonedDateTime.of(
+                curCal.getYear(),
+                curCal.getMonthValue(),
+                curCal.getDayOfMonth(),
+                endHour,
+                endMinute, 0, 0, timeZone);
 
         // 30 minutes after start time
-        lateCal.set(Calendar.HOUR_OF_DAY, startHour);
-        lateCal.set(Calendar.MINUTE, startMinute);
-        lateCal.add(Calendar.MINUTE, 30);
+        ZonedDateTime lateCal = ZonedDateTime.of(
+                curCal.getYear(),
+                curCal.getMonthValue(),
+                curCal.getDayOfMonth(),
+                startHour,
+                startMinute, 30, 0, timeZone);
 
-        if (curCal.after(startCal) && curCal.before(lateCal)) {
+        if (curCal.isAfter(startCal) && curCal.isBefore(lateCal)) {
             return EAttendanceStatus.ATTENDED;
-        } else if (curCal.after(lateCal) && curCal.before(endCal)) {
+        } else if (curCal.isAfter(lateCal) && curCal.isBefore(endCal)) {
             return EAttendanceStatus.LATE;
         }
 
         return EAttendanceStatus.NA;
     }
 
-    public static String getCurrentSemesterYear() {
-        Calendar curCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
-        int curMonth = curCal.get(Calendar.MONTH);
-        int curYear = curCal.get(Calendar.YEAR);
+    public static int getCurrentSemesterYearNumber() {
+        // Get the current date and time in the specified time zone
+        ZonedDateTime zonedDateTime = ZonedDateTime.now(timeZone);
+
+        int curMonth = zonedDateTime.getMonthValue();
+        int curYear = zonedDateTime.getYear();
         int year = curYear;
 
         if (curYear < 2500) {
@@ -130,35 +162,55 @@ public class DateUtils {
             year = curYear;
         }
 
-        // Term 1: 5 - 9
-        // Term 2: 10 - 11, 0 - 2
+        // Term 1: Month between 7 - 10
+        // Term 2: Month between 11 - 12, Month between 1 - 3
         // Summer 3 - 4
 
-        if (curMonth >= 6 && curMonth < 10) {
+        if (curMonth <= 6) {
             year = curYear - 1;
         }
 
-        return String.valueOf(year);
+        return year;
+    }
+
+    public static String getCurrentSemesterYear() {
+        return String.valueOf(getCurrentSemesterYearNumber());
     }
 
 
     public static String getCurrentSemesterTerm() {
-        Calendar curCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Bangkok"));
-        int curMonth = curCal.get(Calendar.MONTH);
+        // Get the current date and time in the specified time zone
+        ZonedDateTime zonedDateTime = ZonedDateTime.now(timeZone);
+
+        // Get the current month as an integer (1 = January, 12 = December)
+        int curMonth = zonedDateTime.getMonthValue();
+
         int term = 1;
 
-        // Term 1: 5 - 9
-        // Term 2: 10 - 11, 0 - 2
+        // Term 1: 7 - 11
+        // Term 2: 11 - 12, 1 - 3
         // Summer 3 - 4
 
-        if (curMonth >= 6 && curMonth < 10) {
-            term = 1;
-        } else if (curMonth >= 10 || (curMonth >= 0 && curMonth <= 2)) {
+        if (curMonth >= 11 || curMonth <= 3) {
             term = 2;
-        } else {
+        } else if (curMonth < 7) {
             term = 3;
         }
 
         return String.valueOf(term);
+    }
+
+    public static String dateToString(Date date) {
+        LocalDate localDate = date.toInstant()
+                .atZone(timeZone)
+                .toLocalDate();
+        return localDate.format(dateFormat);
+    }
+
+    public static Date stringToDate(String dateString) {
+        // Parse the date strings into LocalDate objects
+        LocalDate localDate = LocalDate.parse(dateString, dateFormat);
+        // Convert LocalDate to Date
+        return Date.from(localDate.atStartOfDay(timeZone).toInstant());
     }
 }

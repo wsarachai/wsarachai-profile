@@ -27,6 +27,9 @@ replay_pid*
 .idea
 .vscode
 .DS_Store
+.classpath
+.project
+.settings
 
 target
 misc-data

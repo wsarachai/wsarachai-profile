@@ -30,8 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
     btnDown.addEventListener("click", dropButton, true);
     body.addEventListener("click", closeNavigator);
 
-    history.pushState(null, null, document.URL);
-    window.addEventListener('popstate', function () {
-        history.pushState(null, null, document.URL);
-    });
+    // history.pushState(null, null, document.URL);
+    // window.addEventListener('popstate', function () {
+    //     history.pushState(null, null, document.URL);
+    // });
 });

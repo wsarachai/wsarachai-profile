@@ -138,7 +138,7 @@ public class DateUtils {
                 curCal.getMonthValue(),
                 curCal.getDayOfMonth(),
                 startHour,
-                startMinute, 30, 0, timeZone);
+                30, 0, 0, timeZone);
 
         if (curCal.isAfter(startCal) && curCal.isBefore(lateCal)) {
             return EAttendanceStatus.ATTENDED;

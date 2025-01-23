@@ -193,7 +193,7 @@ public class SystemController {
         HttpSession session = request.getSession(false);
 
         String year = DateUtils.getCurrentSemesterYear();
-        String term = DateUtils.getCurrentSemesterTerm();
+        String term = DateUtils.getCurrentSemesterTerm(new Date());
 
         Teacher teacher = userService.getUser(1L, Teacher.class);
 

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -81,11 +82,11 @@ public class IndexController {
 
     @GetMapping("/semester")
     public String index3(Authentication authentication, Model model) {
-        return doIndex(authentication, model, DateUtils.getCurrentSemesterYear(), DateUtils.getCurrentSemesterTerm());
+        return doIndex(authentication, model, DateUtils.getCurrentSemesterYear(), DateUtils.getCurrentSemesterTerm(new Date()));
     }
 
     @GetMapping("/")
     public String index(Authentication authentication, Model model) {
-        return doIndex(authentication, model, DateUtils.getCurrentSemesterYear(), DateUtils.getCurrentSemesterTerm());
+        return doIndex(authentication, model, DateUtils.getCurrentSemesterYear(), DateUtils.getCurrentSemesterTerm(new Date()));
     }
 }

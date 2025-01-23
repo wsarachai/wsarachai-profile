@@ -16,6 +16,18 @@ public class DateUtils {
     public static final ZoneId timeZone = ZoneId.of("Asia/Bangkok");
     public static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+    public static boolean isLeapYear(int year) {
+        // Leap year logic
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                return year % 400 == 0; // Divisible by 400
+            } else {
+                return true; // Divisible by 4 but not 100
+            }
+        }
+        return false; // Not divisible by 4
+    }
+
     public static long getCurrentWeekSemester(Course course) {
         // Specify the time zone
         long timeTick = course.getStartSemester().getTime();
@@ -43,6 +55,21 @@ public class DateUtils {
     }
 
     public static Date getDateFrom(int year, int month, int day) {
+        if (year < 544 || year > 10542) {
+            throw new IllegalArgumentException("Invalid Buddhist year: " + year);
+        }
+//        if (month < 1 || month > 12) {
+//            throw new IllegalArgumentException("Invalid month: " + month);
+//        }
+//        if (day < 1 || day > 31) {
+//            throw new IllegalArgumentException("Invalid day: " + day);
+//        }
+//        if (!isLeapYear(year) && month == 2 && day > 28) {
+//            throw new IllegalArgumentException("Invalid day: " + day);
+//        }
+//        if (isLeapYear(year) && month == 2 && day > 29) {
+//            throw new IllegalArgumentException("Invalid day: " + day);
+//        }
         // Create a LocalDate
         LocalDate localDate = LocalDate.of(year, month, day);
         // Convert LocalDate to Date
@@ -178,9 +205,13 @@ public class DateUtils {
     }
 
 
-    public static String getCurrentSemesterTerm() {
-        // Get the current date and time in the specified time zone
-        ZonedDateTime zonedDateTime = ZonedDateTime.now(timeZone);
+    public static String getCurrentSemesterTerm(Date date) {
+        LocalDate startDate = date
+                .toInstant()
+                .atZone(timeZone)
+                .toLocalDate();
+
+        ZonedDateTime zonedDateTime = startDate.atStartOfDay(timeZone);
 
         // Get the current month as an integer (1 = January, 12 = December)
         int curMonth = zonedDateTime.getMonthValue();

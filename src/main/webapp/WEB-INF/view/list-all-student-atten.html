@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 <head th:insert="~{layouts/general :: headerfiles}"></head>
 <body>
 <header th:insert="~{layouts/general :: header}"></header>
@@ -9,7 +9,9 @@
         <div class="nav-div">
             <button onClick="history_back()" class="basic" th:text="#{page.navigate.back}"></button>
         </div>
+
         <section class="flex-container-column">
+
             <!-- Display course header of data table -->
             <div class="flex-container-row">
                 <div class="item1">
@@ -27,9 +29,13 @@
                 </div>
             </div>
             <!-- End display course header of data table -->
-            <!-- Select attendance buttons -->
+
+            <!-- Start list of week buttons and details -->
             <div class="blueTable outerTableFooter">
+
+                <!-- Select tableFootStyle -->
                 <div class="tableFootStyle">
+
                     <!-- Display 1-15 weeks links -->
                     <div class="links">
                         <div sec:authorize="hasAnyRole('ROLE_TEACHER','ROLE_ADMIN')">
@@ -39,6 +45,8 @@
                         </div>
                     </div>
                     <!-- Emd display 1-15 weeks links -->
+
+                    <!-- Display icon description -->
                     <div class="dif-ref">
                         <img th:src="@{/assets/images/na.png}"/> <span th:text="#{page.student.atten.na}"/>
                         <span>&nbsp;|&nbsp;</span>
@@ -50,6 +58,8 @@
                         <span>&nbsp;|&nbsp;</span>
                         <img th:src="@{/assets/images/atten.png}"/> <span th:text="#{page.student.atten.atten}"/>
                     </div>
+                    <!-- End icon description -->
+
                     <!-- Display summary of student attendance -->
                     <div class="summary">
                         <div class="item-row">
@@ -82,11 +92,16 @@
                         </div>
                     </div>
                     <!-- End display summary of student attendance -->
+
                 </div>
+                <!-- End tableFootStyle -->
+
             </div>
             <!-- End select attendance buttons -->
-            <!-- Display student attendance data table -->
+
+            <!-- Start Display student attendance data table -->
             <div class="divTable blueTable">
+
                 <!-- Display Attendance header of data table -->
                 <div class="divTableHeading">
                     <div class="divTableRow">
@@ -100,10 +115,18 @@
                     </div>
                 </div>
                 <!-- End display Attendance header of data table -->
+
                 <!-- Display attendance data table details -->
                 <div class="divTableBody">
+
+                    <!-- Attendance row details -->
                     <div class="divTableRow" th:each="csReg, i : ${attenDatas}">
+
+                        <!-- Attendance no col -->
                         <div class="divTableCell" th:text="${i.index+1}"></div>
+                        <!-- End attendance no col -->
+
+                        <!-- Attendance code col -->
                         <div class="divTableCell">
                             <a sec:authorize="isAuthenticated()"
                                th:href="@{'/pub/student/manage/'+${csReg.getEnrollment().getId()}}"
@@ -111,13 +134,23 @@
                             <span sec:authorize="!isAuthenticated()"
                                   th:text="${csReg.getEnrollment().getStudent().getStudentId()}"></span>
                         </div>
-                        <div class="divTableCell" th:text="${csReg.getEnrollment().getStudent().getPrename()+' '+csReg.getEnrollment().getStudent().getFirstName()+' '+csReg.getEnrollment().getStudent().getLastName()}"></div>
+                        <!-- End attendance code col -->
+
+                        <!-- Attendance name col -->
+                        <div class="divTableCell" th:text="${csReg.getEnrollment().getStudent().getPrename()+' '+csReg.getEnrollment().getStudent().getFirstName()+' '+csReg.getEnrollment().getStudent().getLastName()}">
+                        </div>
+                        <!-- End attendance name col -->
+
+                        <!-- Lecture link col -->
                         <div class="divTableCell">
                             <a th:if="${isInTimeForLecAttend}"
                                sec:authorize="isAuthenticated()"
                                th:href="@{'/pub/student/atten/'+${courseId}+'/'+${csReg.getEnrollment().getId()}+'/lec/'+${currentWeek}}"
                                th:text="#{page.student.login.atten}"></a>
                         </div>
+                        <!-- End Lecture link col -->
+
+                        <!-- Lecture status select col -->
                         <div class="divTableCell"
                              th:with="status=${csReg.getAttenLec()[displayWeek].getStatus().name()}">
                             <select sec:authorize="hasRole('ROLE_TEACHER')" th:id="'attendance-lec-status-'+${i.index}"
@@ -145,20 +178,26 @@
                                 </option>
                             </select>
                             &nbsp;&nbsp;&nbsp;
-                            <span th:switch="${csReg.getAttenLec()[displayWeek].getStatus().name()}">
+                            <span th:switch="${status}">
                                 <img th:case="'NA'" th:src="@{/assets/images/na.png}"/>
                                 <img th:case="'ABSENT'" th:src="@{/assets/images/absent.png}"/>
                                 <img th:case="'LATE'" th:src="@{/assets/images/late.png}"/>
                                 <img th:case="'LETTERS'" th:src="@{/assets/images/letters.png}"/>
                                 <img th:case="'ATTENDED'" th:src="@{/assets/images/atten.png}"/>
-                                <p th:case="*" th:text="${csReg.getAttenLec()[displayWeek].getStatus().name()}"></p>
+                                <span th:case="*" th:text="${csReg.getAttenLec()[displayWeek].getStatus().name()}"></span>
                             </span>
                         </div>
+                        <!-- End Lecture status select col -->
+
+                        <!-- Lab link col -->
                         <div class="divTableCell">
                             <a th:if="${isInTimeForLabAttend}"
                                th:href="@{'/pub/student/atten/'+${courseId}+'/'+${csReg.getEnrollment().getId()}+'/lab/'+${currentWeek}}"
                                th:text="#{page.student.login.atten}"></a>
                         </div>
+                        <!-- End Lab link col -->
+
+                        <!-- Lecture status select col -->
                         <div class="divTableCell"
                              th:with="status=${csReg.getAttenLab()[displayWeek].getStatus().name()}">
                             <select sec:authorize="hasRole('ROLE_TEACHER')" th:id="'attendance-lab-status-'+${i.index}"
@@ -186,17 +225,21 @@
                                 </option>
                             </select>
                             &nbsp;&nbsp;&nbsp;
-                            <span th:switch="${csReg.getAttenLab()[displayWeek].getStatus().name()}">
+                            <span th:switch="${status}">
                                 <img th:case="'NA'" th:src="@{/assets/images/na.png}"/>
                                 <img th:case="'ABSENT'" th:src="@{/assets/images/absent.png}"/>
                                 <img th:case="'LATE'" th:src="@{/assets/images/late.png}"/>
                                 <img th:case="'LETTERS'" th:src="@{/assets/images/letters.png}"/>
                                 <img th:case="'ATTENDED'" th:src="@{/assets/images/atten.png}"/>
-                                <p th:case="*" th:text="${csReg.getAttenLab()[displayWeek].getStatus().name()}"></p>
+                                <span th:case="*" th:text="${csReg.getAttenLab()[displayWeek].getStatus().name()}"></span>
                             </span>
                         </div>
-                    </div>
+                        <!-- End Lecture status select col -->
 
+                    </div>
+                    <!-- End Attendance row details -->
+
+                    <!-- Start summary attendance row details -->
                     <div class="divTableRow" sec:authorize="hasRole('ROLE_TEACHER')">
                         <div class="divTableCell"></div>
                         <div class="divTableCell"></div>
@@ -223,15 +266,23 @@
                             </select>
                             <button th:onclick="'changeAllLabStatus();'">Change</button>
                         </div>
+                    </div>
+                    <!-- End summary attendance row details -->
+
                 </div>
-                <!-- End display attendance data table details -->
+                <!-- End Display attendance data table details -->
+
             </div>
-            <!-- End display student attendance data table -->
+            <!-- End Display student attendance data table -->
+
         </section>
+
     </main>
+
     <footer class="fixed-footer" th:insert="~{layouts/general.html :: footer}"></footer>
     <script type='text/javascript' th:replace="~{layouts/general.html :: scriptfiles}"></script>
     <script th:src="@{'/assets/js/atten.js'}" sec:authorize="hasRole('ROLE_TEACHER')"></script>
+
 </body>
 
 </html>

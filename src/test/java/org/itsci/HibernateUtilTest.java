@@ -25,20 +25,7 @@ public class HibernateUtilTest {
     }
     @Test
     public void testCreate() {
-        createEntites();
-    }
-
-    private void createEntites() {
-        session.beginTransaction();
-        AttenConfig attenConfig = new AttenConfig();
-        attenConfig.setOptionName("yearMinOption");
-        attenConfig.setOptionValue("2010");
-        session.save(attenConfig);
-        attenConfig = new AttenConfig();
-        attenConfig.setOptionName("yearMaxOption");
-        attenConfig.setOptionValue("2012");
-        session.save(attenConfig);
-        session.getTransaction().commit();
+        DataServices.populateAttenConfig(session);
     }
 
     @Test
@@ -51,7 +38,7 @@ public class HibernateUtilTest {
 
     @Test
     public void testList() {
-        createEntites();
+        DataServices.populateAttenConfig(session);
 
         session.beginTransaction();
         List<AttenConfig> attendanceList = session.createQuery("from AttenConfig", AttenConfig.class).list();

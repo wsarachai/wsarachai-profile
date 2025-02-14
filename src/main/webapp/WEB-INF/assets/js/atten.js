@@ -63,16 +63,16 @@ function init() {
 
     if (btnLecture) {
         btnLecture.addEventListener('click', () => {
-            hideElements(imgLec);
-            showElements(imgLab)
+            hideElements(imgLab);
+            showElements(imgLec);
             btnLab.classList.remove('hide');
             btnLecture.classList.add('hide');
         });
     }
     if (btnLab) {
         btnLab.addEventListener('click', () => {
-            hideElements(imgLab);
-            showElements(imgLec);
+            hideElements(imgLec);
+            showElements(imgLab);
             btnLab.classList.add('hide');
             btnLecture.classList.remove('hide');
         });

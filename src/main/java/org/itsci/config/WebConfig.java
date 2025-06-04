@@ -23,7 +23,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 @Configuration
 @EnableWebMvc
-//@EnableAspectJAutoProxy
+// @EnableAspectJAutoProxy
 @ComponentScan(basePackages = "org.itsci")
 public class WebConfig implements WebMvcConfigurer {
 
@@ -58,16 +58,17 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/assets/**")
                 .addResourceLocations("/WEB-INF/assets/")
+                .setCachePeriod(31556926)
                 .resourceChain(true)
                 .addResolver(new VersionResourceResolver().addContentVersionStrategy("/**"));
     }
 
     /* **************************************************************** */
-    /*  THYMELEAF-SPECIFIC ARTIFACTS                                    */
-    /*  TemplateResolver <- TemplateEngine <- ViewResolver              */
+    /* THYMELEAF-SPECIFIC ARTIFACTS */
+    /* TemplateResolver <- TemplateEngine <- ViewResolver */
     /* **************************************************************** */
     @Bean
-    public SpringResourceTemplateResolver springTemplateResolver(){
+    public SpringResourceTemplateResolver springTemplateResolver() {
         SpringResourceTemplateResolver springTemplateResolver = new SpringResourceTemplateResolver();
         springTemplateResolver.setApplicationContext(this.applicationContext);
         springTemplateResolver.setPrefix("/WEB-INF/view/");
@@ -76,7 +77,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public SpringTemplateEngine springTemplateEngine(){
+    public SpringTemplateEngine springTemplateEngine() {
         SpringTemplateEngine springTemplateEngine = new SpringTemplateEngine();
         springTemplateEngine.setTemplateResolver(springTemplateResolver());
         springTemplateEngine.addDialect(new SpringSecurityDialect());
@@ -84,7 +85,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public ViewResolver viewResolver(){
+    public ViewResolver viewResolver() {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(springTemplateEngine());
         viewResolver.setCharacterEncoding("UTF-8");
@@ -92,7 +93,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public ClassLoaderTemplateResolver webPageTemplateResolver(){
+    public ClassLoaderTemplateResolver webPageTemplateResolver() {
         ClassLoaderTemplateResolver webPageTemplateResolver = new ClassLoaderTemplateResolver();
         webPageTemplateResolver.setPrefix("layouts/");
         webPageTemplateResolver.setSuffix(".html");
@@ -102,19 +103,20 @@ public class WebConfig implements WebMvcConfigurer {
         return webPageTemplateResolver;
     }
 
-//    @Bean
-//    public ViewResolver viewResolver(){
-//        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-//        viewResolver.setTemplateEngine(springTemplateEngine());
-//        viewResolver.setCharacterEncoding("UTF-8");
-//        return viewResolver;
-//    }
+    // @Bean
+    // public ViewResolver viewResolver(){
+    // ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+    // viewResolver.setTemplateEngine(springTemplateEngine());
+    // viewResolver.setCharacterEncoding("UTF-8");
+    // return viewResolver;
+    // }
 
-//    @Bean
-//    public ViewResolver viewResolver() {
-//        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-//        viewResolver.setPrefix("/WEB-INF/view/");
-//        viewResolver.setSuffix(".jsp");
-//        return viewResolver;
-//    }
+    // @Bean
+    // public ViewResolver viewResolver() {
+    // InternalResourceViewResolver viewResolver = new
+    // InternalResourceViewResolver();
+    // viewResolver.setPrefix("/WEB-INF/view/");
+    // viewResolver.setSuffix(".jsp");
+    // return viewResolver;
+    // }
 }

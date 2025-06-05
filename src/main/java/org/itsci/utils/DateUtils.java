@@ -49,7 +49,6 @@ public class DateUtils {
         endDate = LocalDate.of(year, endDate.getMonth(), endDate.getDayOfMonth());
         ZonedDateTime endDateTime = endDate.atStartOfDay(timeZone);
 
-
         // Calculate the difference in weeks
         return ChronoUnit.WEEKS.between(startDateTime, endDateTime);
     }
@@ -58,18 +57,18 @@ public class DateUtils {
         if (year < 544 || year > 10542) {
             throw new IllegalArgumentException("Invalid Buddhist year: " + year);
         }
-//        if (month < 1 || month > 12) {
-//            throw new IllegalArgumentException("Invalid month: " + month);
-//        }
-//        if (day < 1 || day > 31) {
-//            throw new IllegalArgumentException("Invalid day: " + day);
-//        }
-//        if (!isLeapYear(year) && month == 2 && day > 28) {
-//            throw new IllegalArgumentException("Invalid day: " + day);
-//        }
-//        if (isLeapYear(year) && month == 2 && day > 29) {
-//            throw new IllegalArgumentException("Invalid day: " + day);
-//        }
+        // if (month < 1 || month > 12) {
+        // throw new IllegalArgumentException("Invalid month: " + month);
+        // }
+        // if (day < 1 || day > 31) {
+        // throw new IllegalArgumentException("Invalid day: " + day);
+        // }
+        // if (!isLeapYear(year) && month == 2 && day > 28) {
+        // throw new IllegalArgumentException("Invalid day: " + day);
+        // }
+        // if (isLeapYear(year) && month == 2 && day > 29) {
+        // throw new IllegalArgumentException("Invalid day: " + day);
+        // }
         // Create a LocalDate
         LocalDate localDate = LocalDate.of(year, month, day);
         // Convert LocalDate to Date
@@ -77,7 +76,7 @@ public class DateUtils {
     }
 
     public static boolean isInTimeForLecAttend(Section section) {
-        String [] times = section.getStartLectureTime().split(":");
+        String[] times = section.getStartLectureTime().split(":");
         int startHour = Integer.parseInt(times[0]);
         int startMinute = Integer.parseInt(times[1]);
 
@@ -89,7 +88,7 @@ public class DateUtils {
     }
 
     public static boolean isInTimeForLabAttend(Section section) {
-        String [] times = section.getStartLabTime().split(":");
+        String[] times = section.getStartLabTime().split(":");
         int startHour = Integer.parseInt(times[0]);
         int startMinute = Integer.parseInt(times[1]);
 
@@ -100,7 +99,8 @@ public class DateUtils {
         return checkForInTime(startHour, startMinute, endHour, endMinute, section.getLabDay());
     }
 
-    private static boolean checkForInTime(int startHour, int startMinute, int endHour, int endMinute, EDayOfWeek dayOfWeek) {
+    private static boolean checkForInTime(int startHour, int startMinute, int endHour, int endMinute,
+            EDayOfWeek dayOfWeek) {
         // Get the current date and time in the specified time zone
         ZonedDateTime curCal = ZonedDateTime.now(timeZone);
 
@@ -132,7 +132,7 @@ public class DateUtils {
     }
 
     public static EAttendanceStatus checkAttendanceStatus(String startTime, String endTime) {
-        String [] times = startTime.split(":");
+        String[] times = startTime.split(":");
         int startHour = Integer.parseInt(times[0]);
         int startMinute = Integer.parseInt(times[1]);
 
@@ -193,7 +193,7 @@ public class DateUtils {
         // Term 2: Month between 11 - 12, Month between 1 - 3
         // Summer 3 - 4
 
-        if (curMonth <= 6) {
+        if (curMonth <= 5) {
             year = curYear - 1;
         }
 
@@ -203,7 +203,6 @@ public class DateUtils {
     public static String getCurrentSemesterYear() {
         return String.valueOf(getCurrentSemesterYearNumber());
     }
-
 
     public static String getCurrentSemesterTerm(Date date) {
         LocalDate startDate = date
@@ -224,7 +223,7 @@ public class DateUtils {
 
         if (curMonth >= 11 || curMonth <= 3) {
             term = 2;
-        } else if (curMonth < 7) {
+        } else if (curMonth < 6) {
             term = 3;
         }
 

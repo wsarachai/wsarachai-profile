@@ -5,9 +5,7 @@ import org.junit.jupiter.api.*;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -97,6 +95,7 @@ public class DateUtilsTest {
             DateUtils.getDateFrom(-1, 0, 0);
         });
     }
+
     @BeforeEach
     public void openSession() {
         System.out.println("Date Utils open session");

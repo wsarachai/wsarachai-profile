@@ -95,6 +95,7 @@ public class UserDaoImpl<T extends User> implements UserDao<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T getById(Long id, Class<?> c) {
         Session session = sessionFactory.getCurrentSession();
         T user = (T) session.get(c, id);
@@ -116,6 +117,7 @@ public class UserDaoImpl<T extends User> implements UserDao<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T findByUsernameGeneric(String username) {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();

@@ -3,8 +3,6 @@ package org.itsci.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "subjects")
@@ -14,27 +12,27 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
-    @Column(name="code")
+    @Column(name = "code")
     private String code;
-    @Column(name="type")
+    @Column(name = "type")
     private String type;
-    @Column(name="thai_name", nullable = false)
+    @Column(name = "thai_name", nullable = false)
     private String thaiName;
-    @Column(name="eng_name", nullable = false)
+    @Column(name = "eng_name", nullable = false)
     private String engName;
-    @Column(name="description", columnDefinition="TEXT")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
-    @Column(name="credit", nullable = false)
+    @Column(name = "credit", nullable = false)
     private Double credit;
     @Column(name = "credit_detail")
     private String creditDetail;
-    @Column(name="enabled", columnDefinition = "TINYINT(1)")
+    @Column(name = "enabled", columnDefinition = "TINYINT(1)")
     private boolean enabled;
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="curriculum_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "curriculum_id")
     private Curriculum curriculum;
-//    @OneToMany(mappedBy = "section", fetch = FetchType.EAGER)
-//    private Set<Enrollment> studentCourses = new HashSet<>();
+    // @OneToMany(mappedBy = "section", fetch = FetchType.EAGER)
+    // private Set<Enrollment> studentCourses = new HashSet<>();
 
     public long getId() {
         return id;
@@ -116,11 +114,11 @@ public class Subject {
         this.curriculum = curriculum;
     }
 
-//    public Set<Enrollment> getStudentCourses() {
-//        return studentCourses;
-//    }
-//
-//    public void setStudentCourses(Set<Enrollment> studentCourses) {
-//        this.studentCourses = studentCourses;
-//    }
+    // public Set<Enrollment> getStudentCourses() {
+    // return studentCourses;
+    // }
+    //
+    // public void setStudentCourses(Set<Enrollment> studentCourses) {
+    // this.studentCourses = studentCourses;
+    // }
 }

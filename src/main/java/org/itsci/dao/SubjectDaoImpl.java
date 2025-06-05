@@ -11,8 +11,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 @Repository
 public class SubjectDaoImpl implements SubjectDao {

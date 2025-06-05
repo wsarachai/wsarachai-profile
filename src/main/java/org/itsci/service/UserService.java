@@ -2,7 +2,6 @@ package org.itsci.service;
 
 import org.itsci.model.Authority;
 import org.itsci.model.Login;
-import org.itsci.model.User;
 
 import java.util.List;
 

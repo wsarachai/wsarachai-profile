@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 @Repository
@@ -21,17 +22,21 @@ public class UserDaoImpl<T extends User> implements UserDao<T> {
     private SessionFactory sessionFactory;
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<T> findAll() {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<User> criteria = builder.createQuery(User.class);
-        Root<User> root = criteria.from(User.class);
+
+        // Change this to use the generic type parameter
+        Class<T> entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+                .getActualTypeArguments()[0];
+
+        CriteriaQuery<T> criteria = builder.createQuery(entityClass);
+        Root<T> root = criteria.from(entityClass);
         criteria.select(root);
 
-        Query<User> query = session.createQuery(criteria);
-        List<T> users = (List<T>) query.getResultList();
-
-        return users;
+        Query<T> query = session.createQuery(criteria);
+        return query.getResultList();
     }
 
     @Override
@@ -62,7 +67,7 @@ public class UserDaoImpl<T extends User> implements UserDao<T> {
         Query<Student> query = session.createQuery(criteria);
         try {
             student = query.getSingleResult();
-        } catch (Exception ex){
+        } catch (Exception ex) {
             if (student == null) {
                 System.out.println(ex.getMessage());
             }

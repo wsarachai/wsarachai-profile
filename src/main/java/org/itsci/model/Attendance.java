@@ -6,8 +6,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "attendances")
@@ -17,23 +15,23 @@ public class Attendance implements Comparable<Attendance> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
-    @Column(name="status", columnDefinition = "VARCHAR(30)")
+    @Column(name = "status", columnDefinition = "VARCHAR(30)")
     @Convert(converter = EAttendanceStatusConverter.class)
     private EAttendanceStatus status;
     @CreationTimestamp
-    @Column(name="attendance_time")
+    @Column(name = "attendance_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date attendanceTime;
-    @Column(name="week_no")
+    @Column(name = "week_no")
     private int weekNo;
-    @Column(name="latitude")
+    @Column(name = "latitude")
     private Double latitude;
-    @Column(name="longitude")
+    @Column(name = "longitude")
     private Double longitude;
-    @Column(name="image1_id")
+    @Column(name = "image1_id")
     @ColumnDefault("-1")
     private long image1_id;
-    @Column(name="image2_id")
+    @Column(name = "image2_id")
     @ColumnDefault("-1")
     private long image2_id;
 

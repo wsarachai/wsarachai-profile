@@ -20,6 +20,7 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.springframework.lang.NonNull;
 
 @Configuration
 @EnableWebMvc
@@ -48,14 +49,14 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Override
-    public void addFormatters(final FormatterRegistry registry) {
+    public void addFormatters(@NonNull final FormatterRegistry registry) {
         registry.addConverter(new StringToAuthorityConverter());
         registry.addConverter(new StringToDateConverter());
         registry.addConverter(new DateToStringConverter());
     }
 
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    public void addResourceHandlers(@NonNull ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/assets/**")
                 .addResourceLocations("/WEB-INF/assets/")
                 .setCachePeriod(31556926)

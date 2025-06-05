@@ -3,13 +3,12 @@ package org.itsci.controller;
 import org.itsci.model.Attendance;
 import org.itsci.model.EAttendanceStatus;
 import org.itsci.model.Enrollment;
-import org.itsci.model.Student;
 
 public class AttenData {
     public static final int numberOfWeek = 16;
     private Enrollment enrollment;
     private Attendance[] attenLec = new Attendance[numberOfWeek];
-    private Attendance [] attenLab = new Attendance[numberOfWeek];
+    private Attendance[] attenLab = new Attendance[numberOfWeek];
 
     public AttenData(Enrollment enrollment) {
         this.enrollment = enrollment;

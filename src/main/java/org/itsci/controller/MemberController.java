@@ -33,8 +33,12 @@ public class MemberController {
     MemberService memberService;
 
     @Autowired
-    private UserService userService;
+    private UserService<Login> userService; // Parameterize with Login type
 
+    /**
+     * This method is used to trim all String fields in the form.
+     * It will convert empty String to null.
+     */
     @InitBinder
     public void initBuilder(WebDataBinder dataBinder) {
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
@@ -93,25 +97,32 @@ public class MemberController {
     }
 
     @PostMapping("/change-password")
-    public String changePassword(Authentication authentication, Model model, @ModelAttribute("member") MemberBean memberBean) {
+    public String changePassword(Authentication authentication, Model model,
+            @ModelAttribute("member") MemberBean memberBean) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Login login = userService.findByUsername(memberBean.getUsername());
 
         model.addAttribute("member", memberBean);
 
-        boolean match = passwordEncoder.matches(memberBean.getPassword(), login.getPassword().replace("{bcrypt}", ""));  // remove {bcrypt} from password
+        boolean match = passwordEncoder.matches(memberBean.getPassword(), login.getPassword().replace("{bcrypt}", "")); // remove
+                                                                                                                        // {bcrypt}
+                                                                                                                        // from
+                                                                                                                        // password
         if (!match) {
             model.addAttribute("success", null);
-            model.addAttribute("error", messageSource.getMessage("bean.user.password.wrong", null, Locale.getDefault()));
+            model.addAttribute("error",
+                    messageSource.getMessage("bean.user.password.wrong", null, Locale.getDefault()));
             return "redirect:/member/change-password";
         }
         if (!memberBean.getNewPassword().equals(memberBean.getConfirmPassword())) {
-            model.addAttribute("error", messageSource.getMessage("bean.user.password.notmatch", null, Locale.getDefault()));
+            model.addAttribute("error",
+                    messageSource.getMessage("bean.user.password.notmatch", null, Locale.getDefault()));
             model.addAttribute("success", null);
             return "redirect:/member/change-password";
         }
         if (!checkIfPasswordValid(memberBean.getNewPassword())) {
-            model.addAttribute("error", messageSource.getMessage("bean.user.password.invalid", null, Locale.getDefault()));
+            model.addAttribute("error",
+                    messageSource.getMessage("bean.user.password.invalid", null, Locale.getDefault()));
             model.addAttribute("success", null);
             return "redirect:/member/change-password";
         }
@@ -119,7 +130,8 @@ public class MemberController {
         login.setPassword("{bcrypt}" + passwordEncoder.encode(memberBean.getNewPassword()));
 
         model.addAttribute("error", null);
-        model.addAttribute("success", messageSource.getMessage("bean.user.password.success", null, Locale.getDefault()));
+        model.addAttribute("success",
+                messageSource.getMessage("bean.user.password.success", null, Locale.getDefault()));
         userService.saveOrUpdateLogin(login);
         return "redirect:/member/change-password";
     }
@@ -135,10 +147,10 @@ public class MemberController {
 
     @PostMapping("/profile")
     public String userSave(@ModelAttribute("member") Member memberFrm,
-                           BindingResult bindingResult,
-                           Model model,
-                           Locale locale,
-                           RedirectAttributes redirectAttrs) {
+            BindingResult bindingResult,
+            Model model,
+            Locale locale,
+            RedirectAttributes redirectAttrs) {
         Member member = memberService.getMember(memberFrm.getId());
 
         if (!UIValidator.FieldNotNullValidator(memberFrm, "firstName")) {
@@ -150,9 +162,9 @@ public class MemberController {
         if (!UIValidator.FieldNotNullValidator(memberFrm, "nickname")) {
             bindingResult.rejectValue("nickname", "NotNull");
         }
-//        if (!UIValidator.FieldNotNullValidator(memberFrm, "address")) {
-//            bindingResult.rejectValue("address", "NotNull");
-//        }
+        // if (!UIValidator.FieldNotNullValidator(memberFrm, "address")) {
+        // bindingResult.rejectValue("address", "NotNull");
+        // }
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("title", messageSource.getMessage("page.error", null, Locale.getDefault()));
@@ -161,7 +173,7 @@ public class MemberController {
             member.setFirstName(memberFrm.getFirstName());
             member.setLastName(memberFrm.getLastName());
             member.setNickname(memberFrm.getNickname());
-//            member.setAddress(memberFrm.getAddress());
+            // member.setAddress(memberFrm.getAddress());
             memberService.saveMember(member);
             String message = messageSource.getMessage("status.save.success", null, locale);
             redirectAttrs.addFlashAttribute("status", message);
@@ -196,10 +208,10 @@ public class MemberController {
         return "member/form";
     }
 
-    @RequestMapping(path="/system/member/save", method = RequestMethod.POST)
+    @RequestMapping(path = "/system/member/save", method = RequestMethod.POST)
     public String processForm(@ModelAttribute("member") Member member,
-                              BindingResult bindingResult,
-                              Model model) {
+            BindingResult bindingResult,
+            Model model) {
         List<Authority> authorityToAdd = new ArrayList<>();
         List<Authority> authorityToRemove = new ArrayList<>();
 
@@ -222,17 +234,16 @@ public class MemberController {
             model.addAttribute("member", member);
             model.addAttribute("disabled", "true");
             return "member/form";
-        }
-        else {
+        } else {
             Member dbMember = memberService.getMember(member.getId());
             if (dbMember == null) {
                 dbMember = new Member();
-//                BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-//                String encrypted = bCryptPasswordEncoder.encode(member.getUsername().trim());
-//                dbMember.getLogin().setPassword("{bcrypt}" + encrypted);
+                // BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+                // String encrypted = bCryptPasswordEncoder.encode(member.getUsername().trim());
+                // dbMember.getLogin().setPassword("{bcrypt}" + encrypted);
             }
 
-//            dbMember.getLogin().setUsername(member.getUsername());
+            // dbMember.getLogin().setUsername(member.getUsername());
             dbMember.setFirstName(member.getFirstName());
             dbMember.setLastName(member.getLastName());
             dbMember.setValidFrom(member.getValidFrom());

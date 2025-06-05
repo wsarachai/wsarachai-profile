@@ -28,7 +28,7 @@ public class StudentAttenServiceImpl implements StudentAttenService {
     private SectionDao sectionDao;
 
     @Autowired
-    private UserDao userDao;
+    private UserDao<User> userDao;
 
     @Autowired
     private SubjectDao subjectDao;
@@ -70,7 +70,7 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
-//    @CacheEvict(value = {"attendances"}, key="#enrollment.id+#type")
+    // @CacheEvict(value = {"attendances"}, key="#enrollment.id+#type")
     public void saveEnrollment(Enrollment enrollment) {
         enrollmentDao.save(enrollment);
     }
@@ -208,7 +208,7 @@ public class StudentAttenServiceImpl implements StudentAttenService {
 
     @Override
     @Transactional
-    @Cacheable(value="attendances", key="#enrollment.id+#type")
+    @Cacheable(value = "attendances", key = "#enrollment.id+#type")
     public SortedSet<Attendance> findAttendancesByType(Enrollment enrollment, String type) {
         return attendanceDao.findByType(enrollment, type);
     }

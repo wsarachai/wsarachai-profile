@@ -1,8 +1,6 @@
 package org.itsci.service;
 
-import org.itsci.dao.CourseDao;
 import org.itsci.dao.TeacherCourseDaoImpl;
-import org.itsci.model.Course;
 import org.itsci.model.Teacher;
 import org.itsci.model.TeacherCourse;
 import org.springframework.beans.factory.annotation.Autowired;

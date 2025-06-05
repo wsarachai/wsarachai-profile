@@ -1,11 +1,8 @@
 package org.itsci.controller;
 
-import org.itsci.model.Attendance;
 import org.itsci.model.Image;
 import org.itsci.service.StudentAttenService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.MediaType;
@@ -32,7 +29,7 @@ public class ImageController {
         return "upload_form";
     }
 
-    @PostMapping(path="/images/upload", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @PostMapping(path = "/images/upload", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public String uploadImage(Model model, @RequestParam("file") MultipartFile file) {
         String message = "";
 
@@ -47,18 +44,14 @@ public class ImageController {
         return "upload_form";
     }
 
-    @GetMapping(
-            value = "/images/{ids}",
-            produces = MediaType.IMAGE_JPEG_VALUE
-    )
-    public @ResponseBody
-    byte[] getImageFromAttendanceById(@PathVariable("ids") String ids) {
+    @GetMapping(value = "/images/{ids}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public @ResponseBody byte[] getImageFromAttendanceById(@PathVariable("ids") String ids) {
         if (ids == null || ids.isEmpty()) {
             return null;
         }
 
         Byte[] images = null;
-        byte [] outputs = null;
+        byte[] outputs = null;
 
         Image image = studentAttenService.getImageById(Long.parseLong(ids));
         if (image != null) {

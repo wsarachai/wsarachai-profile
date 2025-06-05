@@ -35,7 +35,7 @@ public class AttendanceDaoImpl implements AttendanceDao {
     @Override
     public void delete(Long id) {
         Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("delete from Attendance where id=:id");
+        Query<Attendance> query = session.createQuery("delete from Attendance where id=:id", Attendance.class);
         query.setParameter("id", id);
         query.executeUpdate();
     }

@@ -1,9 +1,7 @@
 package org.itsci.service;
 
-
 import org.itsci.dao.AttenConfigDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +10,6 @@ public class AttenConfigServiceImpl implements AttenConfigService {
 
     @Autowired
     private AttenConfigDao attenConfigDao;
-
 
     @Override
     @Transactional

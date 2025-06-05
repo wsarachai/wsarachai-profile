@@ -24,7 +24,7 @@ public class AuthorityDaoImpl implements AuthorityDao {
     @Override
     public void delete(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("delete from Authority where id=:id");
+        Query<Authority> query = session.createQuery("delete from Authority where id=:id", Authority.class);
         query.setParameter("id", id);
         query.executeUpdate();
     }

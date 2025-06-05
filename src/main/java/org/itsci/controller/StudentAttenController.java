@@ -25,60 +25,60 @@ public class StudentAttenController {
 
     @GetMapping("/manage/{enrollmentId}")
     public String authenticated_home(Model model, @PathVariable String enrollmentId) {
-            Enrollment enrollment = studentAttenService.findEnrollmentById(Long.parseLong(enrollmentId));
+        Enrollment enrollment = studentAttenService.findEnrollmentById(Long.parseLong(enrollmentId));
 
-            List<Attendance> lecAtten = new ArrayList<>();
-            List<Attendance> labAtten = new ArrayList<>();
-            SortedSet<Attendance> lecAttendances = studentAttenService.findAttendancesByType(enrollment, "lec");
-            SortedSet<Attendance> labAttendances = studentAttenService.findAttendancesByType(enrollment, "lab");
-            for (int i=0; i<15; i++) {
-                try {
-                    boolean found = false;
-                    for (Attendance att : lecAttendances) {
-                        if (att.getWeekNo() == i) {
-                            lecAtten.add(att);
-                            found = true;
-                            break;
-                        }
+        List<Attendance> lecAtten = new ArrayList<>();
+        List<Attendance> labAtten = new ArrayList<>();
+        SortedSet<Attendance> lecAttendances = studentAttenService.findAttendancesByType(enrollment, "lec");
+        SortedSet<Attendance> labAttendances = studentAttenService.findAttendancesByType(enrollment, "lab");
+        for (int i = 0; i < 15; i++) {
+            try {
+                boolean found = false;
+                for (Attendance att : lecAttendances) {
+                    if (att.getWeekNo() == i) {
+                        lecAtten.add(att);
+                        found = true;
+                        break;
                     }
-                    if (!found) {
-                        Attendance newAtt = new Attendance();
-                        newAtt.setWeekNo(i);
-                        newAtt.setStatus(EAttendanceStatus.ABSENT);
-                        lecAtten.add(newAtt);
-                    }
-                } catch (Exception ex) {
+                }
+                if (!found) {
                     Attendance newAtt = new Attendance();
                     newAtt.setWeekNo(i);
                     newAtt.setStatus(EAttendanceStatus.ABSENT);
                     lecAtten.add(newAtt);
                 }
+            } catch (Exception ex) {
+                Attendance newAtt = new Attendance();
+                newAtt.setWeekNo(i);
+                newAtt.setStatus(EAttendanceStatus.ABSENT);
+                lecAtten.add(newAtt);
+            }
 
-                try {
-                    boolean found = false;
-                    for (Attendance att : labAttendances) {
-                        if (att.getWeekNo() == i) {
-                            labAtten.add(att);
-                            found = true;
-                            break;
-                        }
+            try {
+                boolean found = false;
+                for (Attendance att : labAttendances) {
+                    if (att.getWeekNo() == i) {
+                        labAtten.add(att);
+                        found = true;
+                        break;
                     }
-                    if (!found) {
-                        Attendance newAtt = new Attendance();
-                        newAtt.setWeekNo(i);
-                        newAtt.setStatus(EAttendanceStatus.ABSENT);
-                        labAtten.add(newAtt);
-                    }
-                } catch (Exception ex) {
+                }
+                if (!found) {
                     Attendance newAtt = new Attendance();
                     newAtt.setWeekNo(i);
                     newAtt.setStatus(EAttendanceStatus.ABSENT);
                     labAtten.add(newAtt);
                 }
+            } catch (Exception ex) {
+                Attendance newAtt = new Attendance();
+                newAtt.setWeekNo(i);
+                newAtt.setStatus(EAttendanceStatus.ABSENT);
+                labAtten.add(newAtt);
+            }
 
-                model.addAttribute("enrollment", enrollment);
-                model.addAttribute("lecAtten", lecAtten);
-                model.addAttribute("labAtten", labAtten);
+            model.addAttribute("enrollment", enrollment);
+            model.addAttribute("lecAtten", lecAtten);
+            model.addAttribute("labAtten", labAtten);
         }
         return "list-each-students-atten";
     }
@@ -154,7 +154,7 @@ public class StudentAttenController {
             AttenData attenData = new AttenData(enrollment);
             SortedSet<Attendance> lecAttendances = studentAttenService.findAttendancesByType(enrollment, "lec");
             SortedSet<Attendance> labAttendances = studentAttenService.findAttendancesByType(enrollment, "lab");
-            for (int i=0; i<15; i++) {
+            for (int i = 0; i < 15; i++) {
                 try {
                     boolean found = false;
                     for (Attendance att : lecAttendances) {
@@ -175,6 +175,9 @@ public class StudentAttenController {
                                     case ABSENT:
                                         absentCountLec++;
                                         break;
+                                    case NA:
+                                        // Do nothing for NA status
+                                        break;
                                 }
                             }
                             break;
@@ -183,12 +186,12 @@ public class StudentAttenController {
                     if (!found) {
                         attenData.getAttenLec()[i] = new Attendance();
                         attenData.getAttenLec()[i].setStatus(EAttendanceStatus.ABSENT);
-                        absentCountLec = i == displayWeek ? absentCountLec+1 : absentCountLec;
+                        absentCountLec = i == displayWeek ? absentCountLec + 1 : absentCountLec;
                     }
                 } catch (Exception ex) {
                     attenData.getAttenLec()[i] = new Attendance();
                     attenData.getAttenLec()[i].setStatus(EAttendanceStatus.ABSENT);
-                    absentCountLec = i == displayWeek ? absentCountLec+1 : absentCountLec;
+                    absentCountLec = i == displayWeek ? absentCountLec + 1 : absentCountLec;
                 }
 
                 try {
@@ -211,6 +214,9 @@ public class StudentAttenController {
                                     case ABSENT:
                                         absentCountLab++;
                                         break;
+                                    case NA:
+                                        // Do nothing for NA status
+                                        break;
                                 }
                             }
                             break;
@@ -219,12 +225,12 @@ public class StudentAttenController {
                     if (!found) {
                         attenData.getAttenLab()[i] = new Attendance();
                         attenData.getAttenLab()[i].setStatus(EAttendanceStatus.ABSENT);
-                        absentCountLab = i == displayWeek ? absentCountLab+1 : absentCountLab;
+                        absentCountLab = i == displayWeek ? absentCountLab + 1 : absentCountLab;
                     }
                 } catch (Exception ex) {
                     attenData.getAttenLab()[i] = new Attendance();
                     attenData.getAttenLab()[i].setStatus(EAttendanceStatus.ABSENT);
-                    absentCountLab = i == displayWeek ? absentCountLab+1 : absentCountLab;
+                    absentCountLab = i == displayWeek ? absentCountLab + 1 : absentCountLab;
                 }
             }
 
@@ -252,16 +258,17 @@ public class StudentAttenController {
     }
 
     @GetMapping("/atten/{courseId}/{sectionId}/{week}")
-    public String attentionPage(Model model, @PathVariable long courseId, @PathVariable long sectionId, @PathVariable String week) {
+    public String attentionPage(Model model, @PathVariable long courseId, @PathVariable long sectionId,
+            @PathVariable String week) {
         return attentionPage(model, courseId, sectionId, Integer.parseInt(week));
     }
 
     @GetMapping("/atten/{courseId}/{enrollmentId}/{type}/{week}")
     public String attentionStudentPage(Model model,
-                                       @PathVariable String courseId,
-                                       @PathVariable String enrollmentId,
-                                       @PathVariable String type,
-                                       @PathVariable String week) {
+            @PathVariable String courseId,
+            @PathVariable String enrollmentId,
+            @PathVariable String type,
+            @PathVariable String week) {
         Course course = studentAttenService.findCourseById(Long.parseLong(courseId));
         Enrollment enrollment = studentAttenService.findEnrollmentById(Long.parseLong(enrollmentId));
 
@@ -275,14 +282,13 @@ public class StudentAttenController {
 
     @PostMapping("/atten/doatten")
     public String doAtten(Model model,
-                          @RequestParam("enrollmentId") String enrollmentId,
-                          @RequestParam("type") String type,
-                          @RequestParam("latitude") String latitude,
-                          @RequestParam("longitude") String longitude,
-                          @RequestParam("week") String week,
-                          @RequestParam("image1") MultipartFile image1,
-                          @RequestParam("image2") MultipartFile image2
-    ) throws IOException {
+            @RequestParam("enrollmentId") String enrollmentId,
+            @RequestParam("type") String type,
+            @RequestParam("latitude") String latitude,
+            @RequestParam("longitude") String longitude,
+            @RequestParam("week") String week,
+            @RequestParam("image1") MultipartFile image1,
+            @RequestParam("image2") MultipartFile image2) throws IOException {
         Image _image1 = null, _image2 = null;
         Byte[] byteObjects1 = this.convertToBytes(image1);
         Byte[] byteObjects2 = this.convertToBytes(image2);
@@ -296,7 +302,8 @@ public class StudentAttenController {
         enrollment.setLabAtten(labAttendances);
 
         if ("lec".equals(type)) {
-            EAttendanceStatus status = DateUtils.checkAttendanceStatus(enrollment.getSection().getStartLectureTime(), enrollment.getSection().getEndLectureTime());
+            EAttendanceStatus status = DateUtils.checkAttendanceStatus(enrollment.getSection().getStartLectureTime(),
+                    enrollment.getSection().getEndLectureTime());
             if (status == EAttendanceStatus.ATTENDED || status == EAttendanceStatus.LATE) {
                 attendance = this.findAttendanceByWeek(lecAttendances, week);
                 if (attendance == null) {
@@ -318,7 +325,8 @@ public class StudentAttenController {
                 studentAttenService.saveEnrollment(enrollment);
             }
         } else if ("lab".equals(type)) {
-            EAttendanceStatus status = DateUtils.checkAttendanceStatus(enrollment.getSection().getStartLabTime(), enrollment.getSection().getEndLabTime());
+            EAttendanceStatus status = DateUtils.checkAttendanceStatus(enrollment.getSection().getStartLabTime(),
+                    enrollment.getSection().getEndLabTime());
             if (status == EAttendanceStatus.ATTENDED || status == EAttendanceStatus.LATE) {
                 attendance = this.findAttendanceByWeek(labAttendances, week);
                 if (attendance == null) {
@@ -353,7 +361,8 @@ public class StudentAttenController {
             }
         }
 
-        return "redirect:/pub/student/atten/" + enrollment.getSection().getCourse().getId() + "/" + enrollment.getSection().getId();
+        return "redirect:/pub/student/atten/" + enrollment.getSection().getCourse().getId() + "/"
+                + enrollment.getSection().getId();
     }
 
     private Attendance findAttendanceByWeek(SortedSet<Attendance> attendances, String week) {

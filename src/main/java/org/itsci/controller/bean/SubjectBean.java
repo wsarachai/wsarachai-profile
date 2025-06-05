@@ -1,10 +1,5 @@
 package org.itsci.controller.bean;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.itsci.model.Curriculum;
-
-import javax.persistence.*;
-
 public class SubjectBean {
     private String id;
     private String code;

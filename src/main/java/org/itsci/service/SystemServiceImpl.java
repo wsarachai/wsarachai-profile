@@ -12,7 +12,7 @@ import java.util.List;
 public class SystemServiceImpl implements SystemService {
 
     @Autowired
-    private UserDao userDao;
+    private UserDao<User> userDao;
 
     @Autowired
     private CourseDao courseDao;

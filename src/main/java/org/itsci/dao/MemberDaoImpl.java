@@ -5,7 +5,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.itsci.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -58,7 +57,7 @@ public class MemberDaoImpl implements MemberDao {
         Session session = sessionFactory.getCurrentSession();
         Member member = session.get(Member.class, id);
         session.delete(member);
-        session.flush() ;
+        session.flush();
     }
 
     @Override

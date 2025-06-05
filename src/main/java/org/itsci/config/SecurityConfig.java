@@ -9,56 +9,34 @@ import org.springframework.security.config.annotation.web.configurers.ExceptionH
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-
-// import com.linecorp.bot.client.LineMessagingClient;
-// import com.linecorp.bot.client.LineMessagingClientBuilder;
-// import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-// import java.io.IOException;
-// import java.net.URI;
-// import java.util.ArrayList;
-// import java.util.Collections;
-// import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-//    @Bean
-//    public LineMessagingClient lineMessagingClient() {
-//        return LineMessagingClient
-//                .builder(new MyChannelTokenSupplier())
-//                .apiEndPoint(URI.create(""))
-//                .blobEndPoint(URI.create(""))
-//                .connectTimeout(1000)
-//                .readTimeout(1000)
-//                .writeTimeout(1000)
-//                .additionalInterceptors(null)
-//                .build();
-//    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests(new Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry>() {
-            @Override
-            public void customize(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry configurer) {
-                try {
-                    configurer.antMatchers("/home/**").authenticated()
-                            .antMatchers("/system/**").hasRole("ADMIN")
-                            .antMatchers("/api/**").hasAnyRole("ADMIN", "TEACHER")
-                            .antMatchers("/member/**").hasAnyRole("MEMBER", "STUDENT", "TEACHER", "ADMIN")
-                            .antMatchers("/pub/student/**").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
-                            .antMatchers("/**").permitAll()
-                            .and().csrf()
-                            .ignoringAntMatchers("/api/**")
-                            .ignoringAntMatchers("/system/**")
-                            .ignoringAntMatchers("/pub/**");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        http.authorizeRequests(
+                new Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry>() {
+                    @Override
+                    public void customize(
+                            ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry configurer) {
+                        try {
+                            configurer.antMatchers("/home/**").authenticated()
+                                    .antMatchers("/system/**").hasRole("ADMIN")
+                                    .antMatchers("/api/**").hasAnyRole("ADMIN", "TEACHER")
+                                    .antMatchers("/member/**").hasAnyRole("MEMBER", "STUDENT", "TEACHER", "ADMIN")
+                                    .antMatchers("/pub/student/**").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
+                                    .antMatchers("/**").permitAll()
+                                    .and().csrf()
+                                    .ignoringAntMatchers("/api/**")
+                                    .ignoringAntMatchers("/system/**")
+                                    .ignoringAntMatchers("/pub/**");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
 
         http.exceptionHandling(new Customizer<ExceptionHandlingConfigurer<HttpSecurity>>() {
             @Override
@@ -68,20 +46,19 @@ public class SecurityConfig {
         });
 
         http.formLogin(new Customizer<FormLoginConfigurer<HttpSecurity>>() {
-                           @Override
-                           public void customize(FormLoginConfigurer<HttpSecurity> configurer) {
-                               try {
-                                   configurer.loginPage("/login")
-                                           .loginProcessingUrl("/authenticate")
-                                           .permitAll()
-                                           .and()
-                                           .logout().permitAll();
-                               } catch (Exception ignored) {
+            @Override
+            public void customize(FormLoginConfigurer<HttpSecurity> configurer) {
+                try {
+                    configurer.loginPage("/login")
+                            .loginProcessingUrl("/authenticate")
+                            .permitAll()
+                            .and()
+                            .logout().permitAll();
+                } catch (Exception ignored) {
 
-                               }
-                           }
-                       }
-        );
+                }
+            }
+        });
 
         return http.build();
     }

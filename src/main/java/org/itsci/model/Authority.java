@@ -4,23 +4,23 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
-@Table(name="authorities")
+@Table(name = "authorities")
 public class Authority implements GrantedAuthority, Comparable<Authority> {
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment", strategy = "increment")
     private int id;
     @Enumerated(EnumType.STRING)
-    @Column(name="role_name", columnDefinition = "VARCHAR(30)", nullable = false, unique = true)
+    @Column(name = "role_name", columnDefinition = "VARCHAR(30)", nullable = false, unique = true)
     private EAuthorityType roleName;
-    @Column(name="description")
+    @Column(name = "description")
     private String description;
 
-    public Authority() {}
+    public Authority() {
+    }
 
     public Authority(EAuthorityType roleName) {
         this.roleName = roleName;

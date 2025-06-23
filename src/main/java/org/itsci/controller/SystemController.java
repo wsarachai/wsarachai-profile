@@ -179,6 +179,13 @@ public class SystemController {
         return "system/import-student";
     }
 
+    @GetMapping("/course/manage")
+    public String courseManagePage(Model model) {
+
+        model.addAttribute("message", null);
+        return "system/course-manage";
+    }
+
     @GetMapping("/clear/cache")
     @CacheEvict(value = { "enrollments", "courses", "members", "attendances", "config" }, allEntries = true)
     public String clearCache() {

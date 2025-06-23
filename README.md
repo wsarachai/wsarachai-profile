@@ -1,18 +1,24 @@
 # wsarachai-profile
+
 ## More reference about Thymeleaf
+
 - [Thymeleaf](https://www.thymeleaf.org/)
 - [Thymeleaf - Spring Boot](https://www.thymeleaf.org/doc/articles/springbootforms.html)
 - [Thymeleaf - Spring Boot - Layout Dialect](https://www.thymeleaf.org/doc/articles/layouts.html)
 - [Thymeleaf - MVC Temlate](https://www.baeldung.com/thymeleaf-in-spring-mvc)
 
 ## MySQL Settings
+
 ### คำสั่งสำหรับสร้างฐานข้อมูล
+
 ```
 CREATE SCHEMA `wsarachai_db` DEFAULT CHARACTER SET utf8mb4 ;
 ```
 
 ### คำสั่งสำหรับแทรกข้อมูลเริ่มต้นลงระบบฐานข้อมูล
+
 #### สำหรับตาราง authorities
+
 ```
 use wsarachai_db;
 INSERT INTO `wsarachai_db`.`authorities` (`authority`, `description`) VALUES ('ROLE_ADMIN', 'ผู้ดูแลระบบ');
@@ -62,7 +68,7 @@ INSERT INTO `wsarachai_db`.`users` (`DTYPE`, `first_name`, `last_name`, `prename
 
 #### สำหรับตาราง courses
 
-``` 
+```
 INSERT INTO `wsarachai_db`.`courses` (`semester`, `subject_id`) VALUES ('1/2567', '2');
 INSERT INTO `wsarachai_db`.`courses` (`semester`, `subject_id`) VALUES ('1/2567', '1');
 INSERT INTO `wsarachai_db`.`courses` (`semester`, `subject_id`) VALUES ('1/2567', '3');
@@ -70,7 +76,7 @@ INSERT INTO `wsarachai_db`.`courses` (`semester`, `subject_id`) VALUES ('1/2567'
 
 #### สำหรับตาราง course_sections
 
-``` 
+```
 INSERT INTO `wsarachai_db`.`course_sections` (`end_lab_time`, `end_lec_time`, `group_number`, `lab_day`, `lec_day`, `number_of_seat`, `start_lab_time`, `start_lec_time`, `lab_room_id`, `lec_room_id`, `course_id`) VALUES ('12:00', '14:00', '1', 'Monday', 'Wednesday', '61', '09:00', '12:00', '2', '1', '1');
 INSERT INTO `wsarachai_db`.`course_sections` (`end_lab_time`, `end_lec_time`, `group_number`, `lab_day`, `lec_day`, `number_of_seat`, `start_lab_time`, `start_lec_time`, `lab_room_id`, `lec_room_id`, `course_id`) VALUES ('16:00', '14:00', '2', 'Thursday', 'Wednesday', '60', '13:00', '12:00', '2', '1', '1');
 INSERT INTO `wsarachai_db`.`course_sections` (`end_lab_time`, `end_lec_time`, `group_number`, `lab_day`, `lec_day`, `number_of_seat`, `start_lab_time`, `start_lec_time`, `lab_room_id`, `lec_room_id`, `course_id`) VALUES ('11:30', '11:30', '1', 'Wednesday', 'Wednesday', '42', '8:30', '8:30', '3', '1', '2');
@@ -79,7 +85,7 @@ INSERT INTO `wsarachai_db`.`course_sections` (`end_lab_time`, `end_lec_time`, `g
 
 #### สำหรับตาราง user_authority
 
-``` 
+```
 INSERT INTO `wsarachai_db`.`user_authority` (`login_id`, `authority_id`) VALUES ('1', '1');
 INSERT INTO `wsarachai_db`.`user_authority` (`login_id`, `authority_id`) VALUES ('1', '2');
 INSERT INTO `wsarachai_db`.`user_authority` (`login_id`, `authority_id`) VALUES ('2', '4');
@@ -87,7 +93,7 @@ INSERT INTO `wsarachai_db`.`user_authority` (`login_id`, `authority_id`) VALUES 
 
 #### สำหรับตาราง users_courses
 
-``` 
+```
 INSERT INTO `wsarachai_db`.`users_courses` (`Teacher_id`, `courseSet_id`) VALUES ('1', '1');
 INSERT INTO `wsarachai_db`.`users_courses` (`Teacher_id`, `courseSet_id`) VALUES ('1', '2');
 INSERT INTO `wsarachai_db`.`users_courses` (`Teacher_id`, `courseSet_id`) VALUES ('1', '3');
@@ -100,10 +106,16 @@ INSERT INTO `wsarachai_db`.`course_section_registrations` (`attendance`, `course
 ```
 
 ## start project
-   - docker-compose up -d
+
+- docker-compose up -d
 
 ## stop project
-   - docker-compose down
+
+- docker-compose down
 
 ## Other
-   - check mysql port `netstat -an | grep -i listen | grep -E 3306`
+
+- check mysql port `netstat -an | grep -i listen | grep -E 3306`
+
+#run debug
+C:\share\apache-tomcat-9.0.95\bin> .\catalina.bat jpda start

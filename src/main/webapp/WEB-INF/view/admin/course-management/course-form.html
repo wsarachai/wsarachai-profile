@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{layouts/general :: headerfiles}">
+    <style>
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        .form-control:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        
+        .btn-primary { background: #007bff; color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn:hover { opacity: 0.8; }
+        
+        .error {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .row {
+            display: flex;
+            margin: -10px;
+        }
+        
+        .col {
+            flex: 1;
+            padding: 10px;
+        }
+        
+        .col-6 { flex: 0 0 50%; }
+        
+        .form-header {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .form-actions {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+<header th:insert="~{layouts/general :: header}"></header>
+
+<main class="flex-container">
+    <div class="form-container">
+        <div class="form-header">
+            <h2>
+                <i class="fa-solid fa-book"></i>
+                <span th:if="${formAction == 'create'}">Create New Course</span>
+                <span th:if="${formAction == 'edit'}">Edit Course</span>
+            </h2>
+        </div>
+        
+        <form th:object="${courseManagementBean}" 
+              th:action="${formAction == 'create'} ? @{/admin/course-management/course/create} : @{/admin/course-management/course/update}" 
+              method="post">
+            
+            <!-- Hidden field for edit mode -->
+            <input th:if="${formAction == 'edit'}" type="hidden" th:field="*{courseId}" />
+            
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label class="form-label" for="subjectId">Subject *</label>
+                        <select th:field="*{subjectId}" class="form-control" id="subjectId" required>
+                            <option value="">Select Subject</option>
+                            <option th:each="subject : ${subjects}" 
+                                    th:value="${subject.id}" 
+                                    th:text="${subject.code + ' - ' + subject.thaiName + ' (' + subject.credit + ' credits)'}">
+                            </option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('subjectId')}" th:errors="*{subjectId}" class="error"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label class="form-label" for="semester">Semester *</label>
+                        <select th:field="*{semester}" class="form-control" id="semester" required>
+                            <option value="">Select Semester</option>
+                            <option value="1/2567">1/2567</option>
+                            <option value="2/2567">2/2567</option>
+                            <option value="Summer/2567">Summer/2567</option>
+                            <option value="1/2568">1/2568</option>
+                            <option value="2/2568">2/2568</option>
+                            <option value="Summer/2568">Summer/2568</option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('semester')}" th:errors="*{semester}" class="error"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="startSemester">Start Semester Date *</label>
+                <input type="date" th:field="*{startSemester}" class="form-control" id="startSemester" required />
+                <div th:if="${#fields.hasErrors('startSemester')}" th:errors="*{startSemester}" class="error"></div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa-solid fa-save"></i>
+                    <span th:if="${formAction == 'create'}">Create Course</span>
+                    <span th:if="${formAction == 'edit'}">Update Course</span>
+                </button>
+                <a th:href="@{/admin/course-management}" class="btn btn-secondary">
+                    <i class="fa-solid fa-times"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</main>
+
+<footer class="fixed-footer" th:insert="~{layouts/general :: footer}"></footer>
+<script th:replace="~{layouts/general :: scriptfiles}"></script>
+
+</body>
+</html>

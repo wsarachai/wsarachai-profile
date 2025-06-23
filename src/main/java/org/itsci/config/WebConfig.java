@@ -46,13 +46,13 @@ public class WebConfig implements WebMvcConfigurer {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
         multipartResolver.setMaxUploadSize(500000000);
         return multipartResolver;
-    }
-
-    @Override
+    }    @Override
     public void addFormatters(@NonNull final FormatterRegistry registry) {
         registry.addConverter(new StringToAuthorityConverter());
         registry.addConverter(new StringToDateConverter());
         registry.addConverter(new DateToStringConverter());
+        registry.addConverter(new StringToEDayOfWeekConverter());
+        registry.addConverter(new EDayOfWeekToStringConverter());
     }
 
     @Override

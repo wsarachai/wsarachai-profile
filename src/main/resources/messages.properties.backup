@@ -1,5 +1,5 @@
 #Generated properties file with Unicode escapes
-#Mon Jun 23 10:39:29 ICT 2025
+#Mon Jun 23 10:34:50 ICT 2025
 bean.user.address=\u0E17\u0E35\u0E48\u0E2D\u0E22\u0E39\u0E48
 bean.user.expiredDate=Expired Date
 bean.user.firstname=\u0E0A\u0E37\u0E48\u0E2D
@@ -27,7 +27,6 @@ page.btn.add=\u0E40\u0E1E\u0E34\u0E48\u0E21
 page.btn.cancel=\u0E22\u0E01\u0E40\u0E25\u0E34\u0E01
 page.btn.delete=\u0E25\u0E1A
 page.btn.save=\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01
-page.course.manage=\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23\u0E23\u0E32\u0E22\u0E27\u0E34\u0E0A\u0E32
 page.date=\u0E27\u0E31\u0E19\u0E17\u0E35\u0E48
 page.error=\u0E21\u0E35\u0E02\u0E49\u0E2D\u0E1C\u0E34\u0E14\u0E1E\u0E25\u0E32\u0E14
 page.error.invalid-user=\u0E0A\u0E37\u0E48\u0E2D\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49\u0E2B\u0E23\u0E37\u0E2D\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19\u0E44\u0E21\u0E48\u0E16\u0E39\u0E01\u0E15\u0E49\u0E2D\u0E07
@@ -105,22 +104,3 @@ page.week.no=\u0E2A\u0E31\u0E1B\u0E14\u0E32\u0E2B\u0E4C\u0E17\u0E35\u0E48
 section.lab=\u0E1B\u0E0F\u0E34\u0E1A\u0E31\u0E15\u0E34
 section.lec=\u0E1A\u0E23\u0E23\u0E22\u0E32\u0E22
 status.save.success=\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E2A\u0E33\u0E40\u0E23\u0E47\u0E08
-# Course Management Messages
-course.created.success=Course {0} created successfully
-course.created.error=Error creating course
-course.updated.success=Course {0} updated successfully  
-course.updated.error=Error updating course
-course.deleted.success=Course deleted successfully
-course.deleted.error=Error deleting course
-
-section.created.success=Section {0} created successfully
-section.created.error=Error creating section
-section.updated.success=Section {0} updated successfully
-section.updated.error=Error updating section
-section.deleted.success=Section deleted successfully
-section.deleted.error=Error deleting section
-
-teacher.assigned.success=Teacher assigned to course successfully
-teacher.assigned.error=Error assigning teacher to course
-teacher.assignment.removed.success=Teacher assignment removed successfully
-teacher.assignment.removed.error=Error removing teacher assignment

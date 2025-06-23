@@ -13,7 +13,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 @Repository
@@ -27,16 +26,16 @@ public class UserDaoImpl<T extends User> implements UserDao<T> {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
 
-        // Change this to use the generic type parameter
-        Class<T> entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
-                .getActualTypeArguments()[0];
-
-        CriteriaQuery<T> criteria = builder.createQuery(entityClass);
-        Root<T> root = criteria.from(entityClass);
+        // Use User class and cast the result since we know T extends User
+        CriteriaQuery<User> criteria = builder.createQuery(User.class);
+        Root<User> root = criteria.from(User.class);
         criteria.select(root);
 
-        Query<T> query = session.createQuery(criteria);
-        return query.getResultList();
+        Query<User> query = session.createQuery(criteria);
+        List<User> users = query.getResultList();
+
+        // Cast to List<T> - this is safe since T extends User
+        return (List<T>) users;
     }
 
     @Override

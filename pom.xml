@@ -260,7 +260,8 @@
                     <artifactId>maven-war-plugin</artifactId>
                     <version>3.3.2</version>
                     <configuration>
-                        <outputDirectory>/home/itsci/workspace/docker-tomcat/webapps</outputDirectory>
+                        <outputDirectory>/app/webapps</outputDirectory>
+                        <warName>wsarachai</warName>
                     </configuration>
                 </plugin>
                 <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->

@@ -119,3 +119,53 @@ INSERT INTO `wsarachai_db`.`course_section_registrations` (`attendance`, `course
 
 #run debug
 C:\share\apache-tomcat-9.0.95\bin> .\catalina.bat jpda start
+
+## Email Tracking Feature
+
+### Overview
+
+The application includes an email tracking feature that allows you to monitor when recipients open emails by embedding a transparent tracking pixel.
+
+### How to Use
+
+1. Generate a unique tracking ID for each email recipient
+2. Include the tracking pixel URL in your HTML email:
+   ```
+   <img src="https://your-server.com/wsarachai/email/track?id=TRACKING_ID" width="1" height="1" alt="" />
+   ```
+   Replace `TRACKING_ID` with the unique ID for the recipient
+
+3. When the recipient opens the email, the tracking pixel will be loaded, and the open event will be recorded in the database with:
+   - Tracking ID
+   - IP address
+   - User agent (browser/email client)
+   - Timestamp
+
+### Example Integration with Google Apps Script
+
+```javascript
+function sendTrackedEmails() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const data = sheet.getDataRange().getValues();
+
+  for (let i = 1; i < data.length; i++) {
+    const firstName = data[i][0];
+    const lastName = data[i][1];
+    const email = data[i][2];
+    const trackingId = data[i][3]; // Unique tracking ID for each recipient
+
+    const subject = "Your Email Subject";
+    const trackingPixel = `<img src="https://your-server.com/wsarachai/email/track?id=${trackingId}" width="1" height="1" alt="" />`;
+
+    const body = `
+      Hello ${firstName} ${lastName},<br><br>
+      Your email content here.<br><br>
+      ${trackingPixel}
+    `;
+
+    GmailApp.sendEmail(email, subject, "", {
+      htmlBody: body
+    });
+  }
+}
+```

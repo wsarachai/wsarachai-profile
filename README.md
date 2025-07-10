@@ -105,6 +105,24 @@ INSERT INTO `wsarachai_db`.`users_courses` (`Teacher_id`, `courseSet_id`) VALUES
 INSERT INTO `wsarachai_db`.`course_section_registrations` (`attendance`, `course_section_id`, `student_id`) VALUES ('{\'lec\': [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], \'lab\': [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}', '1', '1');
 ```
 
+#### สำหรับตาราง email_tracking_logs
+
+```
+-- Create the email_tracking_logs table if it doesn't exist
+CREATE TABLE IF NOT EXISTS `wsarachai_db`.`email_tracking_logs` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `tracking_id` VARCHAR(255) NOT NULL,
+  `recipient_email` VARCHAR(255) NULL,
+  `ip_address` VARCHAR(50) NULL,
+  `user_agent` TEXT NULL,
+  `timestamp` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  INDEX `idx_tracking_id` (`tracking_id`),
+  INDEX `idx_recipient_email` (`recipient_email`),
+  INDEX `idx_timestamp` (`timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+
 ## start project
 
 - docker-compose up -d
@@ -119,6 +137,17 @@ INSERT INTO `wsarachai_db`.`course_section_registrations` (`attendance`, `course
 
 #run debug
 C:\share\apache-tomcat-9.0.95\bin> .\catalina.bat jpda start
+
+## Debugging with Remote Debugging
+
+To debug the application remotely:
+
+1. Start Tomcat with JPDA (Java Platform Debugger Architecture) enabled:
+   ```
+   C:\share\apache-tomcat-9.0.95\bin> .\catalina.bat jpda start
+   ```
+
+2. In your IDE, connect to the remote debugging port (default: 8000)
 
 ## Email Tracking Feature
 
@@ -140,6 +169,38 @@ The application includes an email tracking feature that allows you to monitor wh
    - IP address
    - User agent (browser/email client)
    - Timestamp
+
+### Checking Email Opens
+
+To check if recipients have opened your emails:
+
+1. **Through the Admin Interface**:
+   - Navigate to `/admin/email-tracking/logs` in your application
+   - View all email open events in the tracking logs table
+   - Search for specific tracking IDs to see if a particular email was opened
+   - Delete individual tracking logs or all logs for a specific tracking ID
+
+2. **Programmatically**:
+   - Query the `email_tracking_logs` table in your database
+   - Check for entries with your tracking ID
+   - Multiple entries indicate the email was opened multiple times
+
+3. **Creating SQL Queries**:
+   ```sql
+   -- Check if a specific email was opened
+   SELECT * FROM email_tracking_logs WHERE tracking_id = 'YOUR_TRACKING_ID';
+   
+   -- Get a count of opens for a specific email
+   SELECT COUNT(*) FROM email_tracking_logs WHERE tracking_id = 'YOUR_TRACKING_ID';
+   
+   -- Get list of all opens with timestamps
+   SELECT tracking_id, recipient_email, timestamp, ip_address 
+   FROM email_tracking_logs 
+   ORDER BY timestamp DESC;
+   
+   -- Delete all tracking logs for a specific tracking ID
+   DELETE FROM email_tracking_logs WHERE tracking_id = 'YOUR_TRACKING_ID';
+   ```
 
 ### Example Integration with Google Apps Script
 

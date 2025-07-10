@@ -45,4 +45,27 @@ public class EmailTrackingDaoImpl implements EmailTrackingDao {
         query.setParameter("email", email);
         return query.getResultList();
     }
+    
+    @Override
+    public List<EmailTrackingLog> findAll() {
+        return getCurrentSession().createQuery(
+                "from EmailTrackingLog order by timestamp desc", 
+                EmailTrackingLog.class).getResultList();
+    }
+    
+    @Override
+    public void deleteById(Long id) {
+        EmailTrackingLog log = getCurrentSession().get(EmailTrackingLog.class, id);
+        if (log != null) {
+            getCurrentSession().delete(log);
+        }
+    }
+    
+    @Override
+    public int deleteByTrackingId(String trackingId) {
+        Query<?> query = getCurrentSession().createQuery(
+                "delete from EmailTrackingLog where trackingId = :trackingId");
+        query.setParameter("trackingId", trackingId);
+        return query.executeUpdate();
+    }
 }

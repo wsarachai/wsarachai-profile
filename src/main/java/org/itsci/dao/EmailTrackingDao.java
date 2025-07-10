@@ -24,9 +24,28 @@ public interface EmailTrackingDao {
     List<EmailTrackingLog> findByTrackingId(String trackingId);
     
     /**
+     * Find all tracking logs
+     * @return list of all tracking logs
+     */
+    List<EmailTrackingLog> findAll();
+    
+    /**
      * Find tracking logs by recipient email
      * @param email the recipient email
      * @return list of tracking logs
      */
     List<EmailTrackingLog> findByEmail(String email);
+    
+    /**
+     * Delete a tracking log by its ID
+     * @param id the ID of the tracking log to delete
+     */
+    void deleteById(Long id);
+    
+    /**
+     * Delete all tracking logs with a specific tracking ID
+     * @param trackingId the tracking ID
+     * @return the number of logs deleted
+     */
+    int deleteByTrackingId(String trackingId);
 }

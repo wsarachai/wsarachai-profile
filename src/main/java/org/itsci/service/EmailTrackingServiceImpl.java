@@ -38,4 +38,30 @@ public class EmailTrackingServiceImpl implements EmailTrackingService {
     public List<EmailTrackingLog> getTrackingInfoByEmail(String email) {
         return emailTrackingDao.findByEmail(email);
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<EmailTrackingLog> getAllTrackingLogs() {
+        return emailTrackingDao.findAll();
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<EmailTrackingLog> getTrackingLogsByTrackingId(String trackingId) {
+        return emailTrackingDao.findByTrackingId(trackingId);
+    }
+    
+    @Override
+    @Transactional
+    public void deleteTrackingLog(Long id) {
+        logger.info("Deleting email tracking log with ID: " + id);
+        emailTrackingDao.deleteById(id);
+    }
+    
+    @Override
+    @Transactional
+    public int deleteTrackingLogsByTrackingId(String trackingId) {
+        logger.info("Deleting all email tracking logs with tracking ID: " + trackingId);
+        return emailTrackingDao.deleteByTrackingId(trackingId);
+    }
 }

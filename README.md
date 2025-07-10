@@ -170,6 +170,21 @@ The application includes an email tracking feature that allows you to monitor wh
    - User agent (browser/email client)
    - Timestamp
 
+4. To check if an email has been opened programmatically, use the status endpoint:
+   ```
+   GET https://your-server.com/wsarachai/email/opened?id=TRACKING_ID
+   ```
+   This returns a JSON response with the tracking status:
+   ```json
+   {
+     "trackingId": "TRACKING_ID",
+     "opened": true,
+     "openCount": 2,
+     "firstOpenedAt": "2025-07-10T14:30:45.123Z",
+     "lastOpenedAt": "2025-07-10T16:20:15.789Z"
+   }
+   ```
+
 ### Checking Email Opens
 
 To check if recipients have opened your emails:

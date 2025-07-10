@@ -5,6 +5,7 @@ import org.itsci.service.EmailTrackingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Controller for handling email tracking
@@ -65,5 +69,38 @@ public class EmailTrackingController {
 
     // Return the 1x1 transparent GIF
     return TRANSPARENT_GIF;
+  }
+  
+  /**
+   * Endpoint to check if an email has been opened
+   * 
+   * @param id the tracking ID
+   * @return JSON response with the tracking status
+   */
+  @GetMapping("/opened")
+  @ResponseBody
+  public ResponseEntity<Map<String, Object>> checkEmailOpened(@RequestParam("id") String id) {
+    List<EmailTrackingLog> logs = emailTrackingService.getTrackingLogsByTrackingId(id);
+    
+    Map<String, Object> response = new HashMap<>();
+    boolean isOpened = !logs.isEmpty();
+    
+    response.put("trackingId", id);
+    response.put("opened", isOpened);
+    response.put("openCount", logs.size());
+    
+    if (isOpened) {
+      // Get the first open timestamp
+      EmailTrackingLog firstOpen = logs.get(0);
+      response.put("firstOpenedAt", firstOpen.getTimestamp());
+      
+      // Get the most recent open timestamp if there are multiple opens
+      if (logs.size() > 1) {
+        EmailTrackingLog lastOpen = logs.get(logs.size() - 1);
+        response.put("lastOpenedAt", lastOpen.getTimestamp());
+      }
+    }
+    
+    return ResponseEntity.ok(response);
   }
 }

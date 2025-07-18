@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test IP Detection</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Test Email Tracking IP Detection</h1>
+    
+    <p>Click the button below to test the email tracking endpoint and check the server logs for IP detection debug information.</p>
+    
+    <button onclick="testTracking()">Test Tracking</button>
+    
+    <div id="result"></div>
+    
+    <script>
+        function testTracking() {
+            const testId = 'TEST-' + Date.now();
+            
+            // Create a test tracking pixel
+            const img = new Image();
+            img.onload = function() {
+                document.getElementById('result').innerHTML = 
+                    '<p style="color: green;">✓ Tracking pixel loaded successfully! Check server logs for IP detection debug info.</p>' +
+                    '<p>Test ID: ' + testId + '</p>';
+            };
+            img.onerror = function() {
+                document.getElementById('result').innerHTML = 
+                    '<p style="color: red;">✗ Failed to load tracking pixel.</p>';
+            };
+            
+            img.src = '/wsarachai/email/track?id=' + testId;
+        }
+    </script>
+</body>
+</html>

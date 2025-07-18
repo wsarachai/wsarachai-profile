@@ -51,16 +51,31 @@ public class EmailTrackingController {
       HttpServletRequest request,
       HttpServletResponse response) throws IOException {
 
-    // Log the tracking event with client information
-    EmailTrackingLog log = new EmailTrackingLog();
-    log.setTrackingId(id);
-    log.setIpAddress(request.getRemoteAddr());
-    log.setUserAgent(request.getHeader("User-Agent"));
-    log.setReferer(request.getHeader("Referer"));
-    log.setTimestamp(new java.util.Date());
-
-    // Save tracking information
-    emailTrackingService.logEmailOpened(log);
+    // Check if this tracking ID already exists
+    List<EmailTrackingLog> existingLogs = emailTrackingService.getTrackingLogsByTrackingId(id);
+    
+    if (!existingLogs.isEmpty()) {
+      // If tracking log exists, increment the opened count
+      EmailTrackingLog existingLog = existingLogs.get(0);
+      Integer currentCount = existingLog.getOpenedCount();
+      existingLog.setOpenedCount(currentCount + 1);
+      existingLog.setTimestamp(new java.util.Date()); // Update timestamp to latest open
+      
+      // Update the existing log
+      emailTrackingService.updateEmailTracking(existingLog);
+    } else {
+      // Create new tracking log for first time open
+      EmailTrackingLog log = new EmailTrackingLog();
+      log.setTrackingId(id);
+      log.setIpAddress(request.getRemoteAddr());
+      log.setUserAgent(request.getHeader("User-Agent"));
+      log.setReferer(request.getHeader("Referer"));
+      log.setTimestamp(new java.util.Date());
+      log.setOpenedCount(1); // First open
+      
+      // Save new tracking information
+      emailTrackingService.logEmailOpened(log);
+    }
 
     // Set the response headers
     response.setStatus(HttpStatus.OK.value());
@@ -87,18 +102,20 @@ public class EmailTrackingController {
     
     response.put("trackingId", id);
     response.put("opened", isOpened);
-    response.put("openCount", logs.size());
     
     if (isOpened) {
-      // Get the first open timestamp
-      EmailTrackingLog firstOpen = logs.get(0);
-      response.put("firstOpenedAt", firstOpen.getTimestamp());
+      EmailTrackingLog log = logs.get(0);
+      response.put("openCount", log.getOpenedCount());
+      response.put("firstOpenedAt", log.getTimestamp());
       
-      // Get the most recent open timestamp if there are multiple opens
+      // If there are multiple logs (shouldn't happen with the new approach), 
+      // we still show the total count from the single log's openedCount field
       if (logs.size() > 1) {
-        EmailTrackingLog lastOpen = logs.get(logs.size() - 1);
-        response.put("lastOpenedAt", lastOpen.getTimestamp());
+        EmailTrackingLog lastLog = logs.get(logs.size() - 1);
+        response.put("lastOpenedAt", lastLog.getTimestamp());
       }
+    } else {
+      response.put("openCount", 0);
     }
     
     return ResponseEntity.ok(response);

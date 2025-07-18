@@ -68,4 +68,10 @@ public class EmailTrackingDaoImpl implements EmailTrackingDao {
         query.setParameter("trackingId", trackingId);
         return query.executeUpdate();
     }
+    
+    @Override
+    public EmailTrackingLog update(EmailTrackingLog log) {
+        getCurrentSession().update(log);
+        return log;
+    }
 }

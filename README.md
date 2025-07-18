@@ -143,6 +143,7 @@ C:\share\apache-tomcat-9.0.95\bin> .\catalina.bat jpda start
 To debug the application remotely:
 
 1. Start Tomcat with JPDA (Java Platform Debugger Architecture) enabled:
+
    ```
    C:\share\apache-tomcat-9.0.95\bin> .\catalina.bat jpda start
    ```
@@ -159,12 +160,15 @@ The application includes an email tracking feature that allows you to monitor wh
 
 1. Generate a unique tracking ID for each email recipient
 2. Include the tracking pixel URL in your HTML email:
+
    ```
    <img src="https://your-server.com/wsarachai/email/track?id=TRACKING_ID" width="1" height="1" alt="" />
    ```
+
    Replace `TRACKING_ID` with the unique ID for the recipient
 
 3. When the recipient opens the email, the tracking pixel will be loaded, and the open event will be recorded in the database with:
+
    - Tracking ID
    - IP address
    - User agent (browser/email client)
@@ -190,29 +194,32 @@ The application includes an email tracking feature that allows you to monitor wh
 To check if recipients have opened your emails:
 
 1. **Through the Admin Interface**:
+
    - Navigate to `/admin/email-tracking/logs` in your application
    - View all email open events in the tracking logs table
    - Search for specific tracking IDs to see if a particular email was opened
    - Delete individual tracking logs or all logs for a specific tracking ID
 
 2. **Programmatically**:
+
    - Query the `email_tracking_logs` table in your database
    - Check for entries with your tracking ID
    - Multiple entries indicate the email was opened multiple times
 
 3. **Creating SQL Queries**:
+
    ```sql
    -- Check if a specific email was opened
    SELECT * FROM email_tracking_logs WHERE tracking_id = 'YOUR_TRACKING_ID';
-   
+
    -- Get a count of opens for a specific email
    SELECT COUNT(*) FROM email_tracking_logs WHERE tracking_id = 'YOUR_TRACKING_ID';
-   
+
    -- Get list of all opens with timestamps
-   SELECT tracking_id, recipient_email, timestamp, ip_address 
-   FROM email_tracking_logs 
+   SELECT tracking_id, recipient_email, timestamp, ip_address
+   FROM email_tracking_logs
    ORDER BY timestamp DESC;
-   
+
    -- Delete all tracking logs for a specific tracking ID
    DELETE FROM email_tracking_logs WHERE tracking_id = 'YOUR_TRACKING_ID';
    ```
@@ -225,23 +232,61 @@ function sendTrackedEmails() {
   const data = sheet.getDataRange().getValues();
 
   for (let i = 1; i < data.length; i++) {
-    const firstName = data[i][0];
-    const lastName = data[i][1];
-    const email = data[i][2];
-    const trackingId = data[i][3]; // Unique tracking ID for each recipient
+    const email = data[i][0];
+    const firstName = data[i][1];
+    const lastName = data[i][2];
+    const trackingId = data[i][3];
+    const status = data[i][4];
 
-    const subject = "Your Email Subject";
-    const trackingPixel = `<img src="https://your-server.com/wsarachai/email/track?id=${trackingId}" width="1" height="1" alt="" />`;
+    if (status === "") {
+      const subject =
+        "ยืนยันการลงทะเบียนอบรม n8n Starter Training - MJU Alumni (July 2025)";
+      const trackingPixel = `<img src="https://itscidev.mju.ac.th/wsarachai/email/track?id=${trackingId}" width="1" height="1" alt="" />`;
 
-    const body = `
-      Hello ${firstName} ${lastName},<br><br>
-      Your email content here.<br><br>
-      ${trackingPixel}
-    `;
+      const body = `
+        เรียนคุณ ${firstName} ${lastName},<br><br>
+        ขอขอบคุณที่ลงทะเบียนเข้าร่วมอบรม “n8n Starter Training - MJU Alumni” ซึ่งจะจัดขึ้นในวันที่ 19-20 กรกฎาคม 2568 เวลา 09:30 - 17:00 น. ณ ห้องปฏิบัติการคอมพิวเตอร์ Science Digital Lab ชั้น 1 อาคารแม่โจ้ 60 ปี คณะวิทยาศาสตร์ มหาวิทยาลัยแม่โจ้<br><br>
+        การลงทะเบียนของคุณได้รับการยืนยันเรียบร้อยแล้ว ทีมงานขอแจ้งรายละเอียดเบื้องต้นดังนี้:<br><br>
 
-    GmailApp.sendEmail(email, subject, "", {
-      htmlBody: body
-    });
+        <strong>สิ่งที่ต้องเตรียม:</strong><br>
+        <ul>
+          <li>คอมพิวเตอร์โน้ตบุ๊กที่สามารถเชื่อมต่ออินเทอร์เน็ต</li>
+          <li>ไม่จำเป็นต้องติดตั้งซอฟต์แวร์เพิ่มเติม ผู้จัดอบรมเตรียมระบบไว้ให้พร้อมใช้งาน</li>
+        </ul><br><br>
+
+        <strong>ติดต่อสอบถามเพิ่มเติม:</strong><br>
+        <ul>
+          <li>Facebook: IT.Major.MJU</li>
+          <li>อีเมล: infoitsci@mju.ac.th</li>
+          <li>โทร: 053-873900</li>
+        </ul><br><br>
+
+        หากคุณมีข้อสงสัยเพิ่มเติมหรือต้องการเปลี่ยนแปลงข้อมูลการลงทะเบียน กรุณาติดต่อทีมงานได้ทุกเมื่อ<br><br>
+
+        ขอแสดงความนับถือ<br>
+        ทีมงานจัดอบรม n8n Starter Training<br>
+        สาขาเทคโนโลยีสารสนเทศ คณะวิทยาศาสตร์ มหาวิทยาลัยแม่โจ้<br><br>
+
+        ${trackingPixel}
+      `;
+
+      GmailApp.sendEmail(email, subject, "", {
+        htmlBody: body,
+      });
+      sheet.getRange(i + 1, 5).setValue("EMAIL_SENT");
+    } else {
+      const response = UrlFetchApp.fetch(
+        `https://itscidev.mju.ac.th/wsarachai/email/opened?id=${trackingId}`
+      );
+      const data = JSON.parse(response.getContentText());
+      if (data.opened) {
+        console.log("Email was opened " + data.openCount + " times");
+        console.log("First opened at: " + new Date(data.firstOpenedAt));
+        sheet.getRange(i + 1, 5).setValue("EMAIL_OPENED");
+      } else {
+        console.log("Email has not been opened yet");
+      }
+    }
   }
 }
 ```

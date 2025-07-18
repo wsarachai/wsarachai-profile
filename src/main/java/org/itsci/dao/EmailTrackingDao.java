@@ -48,4 +48,11 @@ public interface EmailTrackingDao {
      * @return the number of logs deleted
      */
     int deleteByTrackingId(String trackingId);
+    
+    /**
+     * Update an existing tracking log
+     * @param log the tracking log to update
+     * @return the updated log
+     */
+    EmailTrackingLog update(EmailTrackingLog log);
 }

@@ -59,6 +59,7 @@
                             <th>Recipient Email</th>
                             <th>IP Address</th>
                             <th>User Agent</th>
+                            <th>Open Count</th>
                             <th>Timestamp</th>
                             <th>Actions</th>
                         </tr>
@@ -72,6 +73,7 @@
                             <td>
                                 <div style="max-width: 300px; word-wrap: break-word;" th:text="${log.userAgent}"></div>
                             </td>
+                            <td th:text="${log.openedCount}"></td>
                             <td th:text="${#dates.format(log.timestamp, 'yyyy-MM-dd HH:mm:ss')}"></td>
                             <td>
                                 <form th:action="@{/admin/email-tracking/delete}" method="post" class="d-inline"

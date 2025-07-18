@@ -55,4 +55,11 @@ public interface EmailTrackingService {
      * @return the number of logs deleted
      */
     int deleteTrackingLogsByTrackingId(String trackingId);
+    
+    /**
+     * Update an existing email tracking log
+     * @param log the tracking log to update
+     * @return the updated log
+     */
+    EmailTrackingLog updateEmailTracking(EmailTrackingLog log);
 }

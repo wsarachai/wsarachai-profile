@@ -64,4 +64,11 @@ public class EmailTrackingServiceImpl implements EmailTrackingService {
         logger.info("Deleting all email tracking logs with tracking ID: " + trackingId);
         return emailTrackingDao.deleteByTrackingId(trackingId);
     }
+    
+    @Override
+    @Transactional
+    public EmailTrackingLog updateEmailTracking(EmailTrackingLog log) {
+        logger.info("Updating email tracking log with tracking ID: " + log.getTrackingId());
+        return emailTrackingDao.update(log);
+    }
 }

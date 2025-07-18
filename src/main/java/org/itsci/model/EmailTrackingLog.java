@@ -35,6 +35,9 @@ public class EmailTrackingLog {
     @Column(name = "recipient_email")
     private String recipientEmail;
 
+    @Column(name = "opened_count")
+    private Integer openedCount = 0;
+
     public Long getId() {
         return id;
     }
@@ -99,6 +102,14 @@ public class EmailTrackingLog {
         this.recipientEmail = recipientEmail;
     }
 
+    public Integer getOpenedCount() {
+        return openedCount;
+    }
+
+    public void setOpenedCount(Integer openedCount) {
+        this.openedCount = openedCount;
+    }
+
     @Override
     public String toString() {
         return "EmailTrackingLog{" +
@@ -107,6 +118,7 @@ public class EmailTrackingLog {
                 ", ipAddress='" + ipAddress + '\'' +
                 ", timestamp=" + timestamp +
                 ", recipientEmail='" + recipientEmail + '\'' +
+                ", openedCount=" + openedCount +
                 '}';
     }
 }

@@ -89,8 +89,8 @@ public class EmailAuthAdminController {
   @GetMapping("/edit/{id}")
   public String showEditForm(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
     try {
-      // Get auth key by ID - we need to implement this method
-      List<EmailTrackingAuth> allKeys = emailTrackingAuthService.getAllActive();
+      // Get auth key by ID - use getAll to include inactive keys
+      List<EmailTrackingAuth> allKeys = emailTrackingAuthService.getAll();
       EmailTrackingAuth authKey = allKeys.stream()
           .filter(key -> key.getId().equals(id))
           .findFirst()
@@ -118,12 +118,11 @@ public class EmailAuthAdminController {
    */
   @PostMapping("/edit/{id}")
   public String updateAuthKey(@PathVariable("id") Long id,
-      @RequestParam(value = "description", required = false) String description,
-      @RequestParam(value = "isActive", required = false) Boolean isActive,
+      @ModelAttribute EmailTrackingAuth formAuthKey,
       RedirectAttributes redirectAttributes) {
     try {
       // Get auth key by ID
-      List<EmailTrackingAuth> allKeys = emailTrackingAuthService.getAllActive();
+      List<EmailTrackingAuth> allKeys = emailTrackingAuthService.getAll();
       EmailTrackingAuth authKey = allKeys.stream()
           .filter(key -> key.getId().equals(id))
           .findFirst()
@@ -135,12 +134,12 @@ public class EmailAuthAdminController {
       }
 
       // Update description and active status
-      authKey.setDescription(description);
-      authKey.setIsActive(isActive != null ? isActive : false);
+      authKey.setDescription(formAuthKey.getDescription());
+      authKey.setIsActive(formAuthKey.getIsActive() != null ? formAuthKey.getIsActive() : false);
 
       // We need to add an update method to the service
       // For now, we can only deactivate keys
-      if (isActive == null || !isActive) {
+      if (formAuthKey.getIsActive() == null || !formAuthKey.getIsActive()) {
         emailTrackingAuthService.deactivateAuthKey(authKey.getAuthKey());
         redirectAttributes.addFlashAttribute("success", "Authentication key deactivated successfully");
       } else {
@@ -162,7 +161,7 @@ public class EmailAuthAdminController {
   public String deleteAuthKey(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
     try {
       // Get auth key by ID to get the auth key string
-      List<EmailTrackingAuth> allKeys = emailTrackingAuthService.getAllActive();
+      List<EmailTrackingAuth> allKeys = emailTrackingAuthService.getAll();
       EmailTrackingAuth authKey = allKeys.stream()
           .filter(key -> key.getId().equals(id))
           .findFirst()
@@ -195,7 +194,7 @@ public class EmailAuthAdminController {
   public String regenerateAuthKey(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
     try {
       // Get auth key by ID
-      List<EmailTrackingAuth> allKeys = emailTrackingAuthService.getAllActive();
+      List<EmailTrackingAuth> allKeys = emailTrackingAuthService.getAll();
       EmailTrackingAuth authKey = allKeys.stream()
           .filter(key -> key.getId().equals(id))
           .findFirst()

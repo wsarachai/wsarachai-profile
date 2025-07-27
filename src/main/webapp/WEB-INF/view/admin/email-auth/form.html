@@ -12,6 +12,9 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
       .form-container {
         max-width: 800px;
@@ -94,6 +97,7 @@
                   class="form-control"
                   id="trackingId"
                   th:field="*{trackingId}"
+                  th:readonly="${isEdit}"
                   required
                   pattern="^[a-zA-Z0-9\-_]+$"
                   placeholder="Enter tracking ID (e.g., EMAIL-001, CAMPAIGN-123)"
@@ -123,8 +127,8 @@
                 </div>
               </div>
 
-              <!-- Expiration Days -->
-              <div class="form-group">
+              <!-- Expiration Days (Create mode only) -->
+              <div class="form-group" th:unless="${isEdit}">
                 <label for="expirationDays">
                   <i class="fas fa-calendar-alt"></i> Expiration (Days) *
                 </label>
@@ -132,7 +136,7 @@
                   class="form-control"
                   id="expirationDays"
                   name="expirationDays"
-                  required
+                  th:required="${!isEdit}"
                 >
                   <option value="">Select expiration period</option>
                   <option value="1" th:selected="${expirationDays == 1}">
@@ -200,7 +204,7 @@
                   <button
                     type="button"
                     class="btn btn-outline-secondary copy-btn ml-2"
-                    th:onclick="'copyToClipboard(\'' + ${authKey.authKey} + '\')'"
+                    onclick="copyToClipboard(this.previousElementSibling.textContent)"
                   >
                     <i class="fas fa-copy"></i> Copy
                   </button>
@@ -221,7 +225,7 @@
                   <button
                     type="button"
                     class="btn btn-outline-secondary copy-btn ml-2"
-                    th:onclick="'copyToClipboard(\'' + @{/email/track(id=${authKey.trackingId}, auth=${authKey.authKey})} + '\')'"
+                    onclick="copyToClipboard(this.previousElementSibling.textContent)"
                   >
                     <i class="fas fa-copy"></i> Copy
                   </button>
@@ -364,10 +368,6 @@
       </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     <script>
       function copyToClipboard(text) {
         if (navigator.clipboard) {
@@ -444,5 +444,6 @@
           }
         });
     </script>
+    <script th:src="@{'/assets/js/email.js'}"></script>
   </body>
 </html>

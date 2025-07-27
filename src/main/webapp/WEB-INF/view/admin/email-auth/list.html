@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${pageTitle}">Email Authentication Keys</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+      .auth-key {
+        font-family: monospace;
+        font-size: 0.9em;
+        background: #f8f9fa;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+      .tracking-url {
+        font-family: monospace;
+        font-size: 0.8em;
+        background: #e9ecef;
+        padding: 2px 4px;
+        border-radius: 3px;
+        word-break: break-all;
+      }
+      .status-active {
+        color: #28a745;
+      }
+      .status-inactive {
+        color: #dc3545;
+      }
+      .status-expired {
+        color: #fd7e14;
+      }
+      .copy-btn {
+        padding: 2px 6px;
+        font-size: 0.8em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid mt-4">
+      <div class="row">
+        <div class="col-12">
+          <h1 th:text="${pageTitle}">Email Authentication Keys</h1>
+
+          <!-- Alert messages -->
+          <div
+            class="alert alert-success"
+            th:if="${message}"
+            th:text="${message}"
+          ></div>
+          <div
+            class="alert alert-success"
+            th:if="${success}"
+            th:text="${success}"
+          ></div>
+          <div
+            class="alert alert-danger"
+            th:if="${error}"
+            th:text="${error}"
+          ></div>
+          <div class="alert alert-info" th:if="${info}" th:text="${info}"></div>
+
+          <!-- Action buttons -->
+          <div class="mb-4">
+            <a th:href="@{/admin/email-auth/create}" class="btn btn-primary">
+              <i class="fas fa-plus"></i> Create New Auth Key
+            </a>
+            <form
+              th:action="@{/admin/email-auth/cleanup}"
+              method="post"
+              class="d-inline ml-2"
+              onsubmit="return confirm('Are you sure you want to cleanup all expired authentication keys?');"
+            >
+              <button type="submit" class="btn btn-warning">
+                <i class="fas fa-broom"></i> Cleanup Expired
+              </button>
+            </form>
+            <a
+              th:href="@{/admin/email-tracking/logs}"
+              class="btn btn-outline-secondary ml-2"
+            >
+              <i class="fas fa-list"></i> View Tracking Logs
+            </a>
+          </div>
+
+          <!-- Search form -->
+          <div class="card mb-4">
+            <div class="card-header">
+              <h5><i class="fas fa-search"></i> Search Authentication Keys</h5>
+            </div>
+            <div class="card-body">
+              <form
+                th:action="@{/admin/email-auth/search}"
+                method="get"
+                class="form-inline"
+              >
+                <div class="form-group mr-2">
+                  <label for="trackingId" class="sr-only">Tracking ID</label>
+                  <input
+                    type="text"
+                    name="trackingId"
+                    id="trackingId"
+                    class="form-control"
+                    placeholder="Enter tracking ID"
+                    th:value="${searchTrackingId}"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary mr-2">
+                  <i class="fas fa-search"></i> Search
+                </button>
+                <a
+                  th:href="@{/admin/email-auth}"
+                  class="btn btn-outline-secondary"
+                >
+                  <i class="fas fa-times"></i> Clear
+                </a>
+              </form>
+            </div>
+          </div>
+
+          <!-- Filter notice -->
+          <div class="alert alert-info" th:if="${searchTrackingId != null}">
+            Showing results for tracking ID:
+            <strong th:text="${searchTrackingId}"></strong>
+          </div>
+
+          <!-- Results table -->
+          <div class="card">
+            <div class="card-header">
+              <h5><i class="fas fa-key"></i> Authentication Keys</h5>
+            </div>
+            <div class="card-body">
+              <div
+                th:if="${#lists.isEmpty(authKeys)}"
+                class="alert alert-warning"
+              >
+                <i class="fas fa-exclamation-triangle"></i> No authentication
+                keys found.
+              </div>
+
+              <div
+                th:if="${not #lists.isEmpty(authKeys)}"
+                class="table-responsive"
+              >
+                <table class="table table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Tracking ID</th>
+                      <th>Auth Key</th>
+                      <th>Status</th>
+                      <th>Created</th>
+                      <th>Expires</th>
+                      <th>Description</th>
+                      <th>Tracking URL</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="authKey : ${authKeys}">
+                      <td>
+                        <span th:text="${authKey.id}">?</span>
+                      </td>
+                      <td>
+                        <span
+                          class="badge badge-secondary"
+                          th:text="${authKey.trackingId}"
+                        ></span>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <span
+                            class="auth-key"
+                            th:text="${authKey.authKey}"
+                          ></span>
+                          <button
+                            class="btn btn-sm btn-outline-secondary copy-btn ml-1"
+                            onclick="copyToClipboard(this.previousElementSibling.textContent)"
+                          >
+                            <i class="fas fa-copy"></i>
+                          </button>
+                        </div>
+                      </td>
+                      <td>
+                        <!-- Simple status display for testing -->
+                        <span th:text="${authKey.isActive}"></span>
+                        <span
+                          th:if="${authKey.isActive}"
+                          class="badge badge-success"
+                          >✓ Active</span
+                        >
+                        <span
+                          th:unless="${authKey.isActive}"
+                          class="badge badge-secondary"
+                          >✗ Inactive</span
+                        >
+                      </td>
+                      <td>
+                        <span th:text="${authKey.createdAt}">N/A</span>
+                      </td>
+                      <td>
+                        <span th:text="${authKey.expiresAt}">N/A</span>
+                      </td>
+                      <td>
+                        <span th:text="${authKey.description}"
+                          >No description</span
+                        >
+                      </td>
+                      <td>
+                        <span
+                          th:text="'/email/track?id=' + ${authKey.trackingId} + '&auth=' + ${authKey.authKey}"
+                          >URL</span
+                        >
+                      </td>
+                      <td>
+                        <div class="btn-group" role="group">
+                          <a
+                            th:href="@{'/admin/email-auth/edit/' + ${authKey.id}}"
+                            class="btn btn-sm btn-outline-primary"
+                          >
+                            <i class="fas fa-edit"></i>
+                          </a>
+                          <form
+                            th:action="@{'/admin/email-auth/delete/' + ${authKey.id}}"
+                            method="post"
+                            class="d-inline"
+                            onsubmit="return confirm('Are you sure you want to deactivate this authentication key?');"
+                          >
+                            <button
+                              type="submit"
+                              class="btn btn-sm btn-outline-danger"
+                            >
+                              <i class="fas fa-ban"></i>
+                            </button>
+                          </form>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Test script to check if scripts are working -->
+    <script>
+      console.log("Scripts are loading correctly!");
+
+      // Simple test function
+      function testAlert() {
+        alert("JavaScript is working!");
+      }
+
+      // Run on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("DOM loaded, scripts active");
+
+        // Add click event to test if jQuery/Bootstrap is loaded
+        if (typeof $ !== "undefined") {
+          console.log("jQuery is loaded");
+        } else {
+          console.log("jQuery is NOT loaded");
+        }
+      });
+
+      function copyToClipboard(text) {
+        console.log("Copy function called with:", text);
+
+        if (navigator.clipboard) {
+          navigator.clipboard
+            .writeText(text)
+            .then(function () {
+              showToast("Copied to clipboard!", "success");
+            })
+            .catch(function (err) {
+              console.error("Failed to copy: ", err);
+              fallbackCopyTextToClipboard(text);
+            });
+        } else {
+          fallbackCopyTextToClipboard(text);
+        }
+      }
+
+      function fallbackCopyTextToClipboard(text) {
+        var textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.position = "fixed";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+          var successful = document.execCommand("copy");
+          if (successful) {
+            showToast("Copied to clipboard!", "success");
+          } else {
+            showToast("Failed to copy", "error");
+          }
+        } catch (err) {
+          console.error("Fallback: Oops, unable to copy", err);
+          showToast("Failed to copy", "error");
+        }
+
+        document.body.removeChild(textArea);
+      }
+
+      function showToast(message, type) {
+        var toast = document.createElement("div");
+        toast.className =
+          "alert alert-" +
+          (type === "success" ? "success" : "danger") +
+          " position-fixed";
+        toast.style.top = "20px";
+        toast.style.right = "20px";
+        toast.style.zIndex = "9999";
+        toast.style.minWidth = "200px";
+        toast.innerHTML = message;
+
+        document.body.appendChild(toast);
+
+        setTimeout(function () {
+          if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+          }
+        }, 3000);
+      }
+    </script>
+
+    <!-- Debug button to test JavaScript -->
+    <button
+      onclick="testAlert()"
+      style="position: fixed; bottom: 10px; right: 10px; z-index: 10000"
+    >
+      Test JS
+    </button>
+  </body>
+</html>

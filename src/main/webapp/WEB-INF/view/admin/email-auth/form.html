@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${pageTitle}">Email Authentication Key</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <style>
+      .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .auth-key-display {
+        font-family: monospace;
+        font-size: 0.9em;
+        background: #f8f9fa;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #dee2e6;
+        word-break: break-all;
+      }
+      .tracking-url-display {
+        font-family: monospace;
+        font-size: 0.8em;
+        background: #e9ecef;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #dee2e6;
+        word-break: break-all;
+      }
+      .copy-btn {
+        padding: 4px 8px;
+        font-size: 0.8em;
+      }
+      .help-text {
+        font-size: 0.9em;
+        color: #6c757d;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid mt-4">
+      <div class="form-container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h1 th:text="${pageTitle}">Create Authentication Key</h1>
+          <a th:href="@{/admin/email-auth}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> Back to List
+          </a>
+        </div>
+
+        <!-- Alert messages -->
+        <div
+          class="alert alert-success"
+          th:if="${message}"
+          th:text="${message}"
+        ></div>
+        <div
+          class="alert alert-success"
+          th:if="${success}"
+          th:text="${success}"
+        ></div>
+        <div
+          class="alert alert-danger"
+          th:if="${error}"
+          th:text="${error}"
+        ></div>
+        <div class="alert alert-info" th:if="${info}" th:text="${info}"></div>
+
+        <!-- Form -->
+        <div class="card">
+          <div class="card-header">
+            <h5><i class="fas fa-key"></i> Authentication Key Details</h5>
+          </div>
+          <div class="card-body">
+            <form
+              th:action="${isEdit} ? @{'/admin/email-auth/edit/' + ${authKey.id}} : @{/admin/email-auth/create}"
+              method="post"
+              th:object="${authKey}"
+            >
+              <!-- Tracking ID -->
+              <div class="form-group">
+                <label for="trackingId">
+                  <i class="fas fa-hashtag"></i> Tracking ID *
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="trackingId"
+                  th:field="*{trackingId}"
+                  required
+                  pattern="^[a-zA-Z0-9\-_]+$"
+                  placeholder="Enter tracking ID (e.g., EMAIL-001, CAMPAIGN-123)"
+                />
+                <div class="help-text">
+                  The tracking ID from the email_tracking_logs table that this
+                  authentication key will protect. Can contain letters, numbers,
+                  hyphens, and underscores.
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="form-group">
+                <label for="description">
+                  <i class="fas fa-comment"></i> Description
+                </label>
+                <textarea
+                  class="form-control"
+                  id="description"
+                  th:field="*{description}"
+                  rows="2"
+                  placeholder="Enter a description for this authentication key (optional)"
+                ></textarea>
+                <div class="help-text">
+                  Optional description to help identify the purpose of this
+                  authentication key.
+                </div>
+              </div>
+
+              <!-- Expiration Days -->
+              <div class="form-group">
+                <label for="expirationDays">
+                  <i class="fas fa-calendar-alt"></i> Expiration (Days) *
+                </label>
+                <select
+                  class="form-control"
+                  id="expirationDays"
+                  name="expirationDays"
+                  required
+                >
+                  <option value="">Select expiration period</option>
+                  <option value="1" th:selected="${expirationDays == 1}">
+                    1 Day
+                  </option>
+                  <option value="3" th:selected="${expirationDays == 3}">
+                    3 Days
+                  </option>
+                  <option value="7" th:selected="${expirationDays == 7}">
+                    1 Week
+                  </option>
+                  <option value="14" th:selected="${expirationDays == 14}">
+                    2 Weeks
+                  </option>
+                  <option value="30" th:selected="${expirationDays == 30}">
+                    1 Month
+                  </option>
+                  <option value="90" th:selected="${expirationDays == 90}">
+                    3 Months
+                  </option>
+                  <option value="180" th:selected="${expirationDays == 180}">
+                    6 Months
+                  </option>
+                  <option value="365" th:selected="${expirationDays == 365}">
+                    1 Year
+                  </option>
+                </select>
+                <div class="help-text">
+                  How long this authentication key should remain valid.
+                </div>
+              </div>
+
+              <!-- Active Status -->
+              <div class="form-group">
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="isActive"
+                    th:field="*{isActive}"
+                  />
+                  <label class="form-check-label" for="isActive">
+                    <i class="fas fa-toggle-on"></i> Active
+                  </label>
+                </div>
+                <div class="help-text">
+                  Whether this authentication key is currently active and can be
+                  used for tracking.
+                </div>
+              </div>
+
+              <!-- Current Authentication Key (Edit mode) -->
+              <div
+                th:if="${isEdit and authKey.authKey != null}"
+                class="form-group"
+              >
+                <label>
+                  <i class="fas fa-key"></i> Current Authentication Key
+                </label>
+                <div class="d-flex align-items-center">
+                  <div
+                    class="auth-key-display flex-grow-1"
+                    th:text="${authKey.authKey}"
+                  ></div>
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary copy-btn ml-2"
+                    th:onclick="'copyToClipboard(\'' + ${authKey.authKey} + '\')'"
+                  >
+                    <i class="fas fa-copy"></i> Copy
+                  </button>
+                </div>
+              </div>
+
+              <!-- Current Tracking URL (Edit mode) -->
+              <div
+                th:if="${isEdit and authKey.authKey != null}"
+                class="form-group"
+              >
+                <label> <i class="fas fa-link"></i> Tracking URL </label>
+                <div class="d-flex align-items-center">
+                  <div
+                    class="tracking-url-display flex-grow-1"
+                    th:text="@{/email/track(id=${authKey.trackingId}, auth=${authKey.authKey})}"
+                  ></div>
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary copy-btn ml-2"
+                    th:onclick="'copyToClipboard(\'' + @{/email/track(id=${authKey.trackingId}, auth=${authKey.authKey})} + '\')'"
+                  >
+                    <i class="fas fa-copy"></i> Copy
+                  </button>
+                </div>
+                <div class="help-text">
+                  The complete tracking URL that can be embedded in emails.
+                </div>
+              </div>
+
+              <!-- Timestamps (Edit mode) -->
+              <div th:if="${isEdit}" class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label><i class="fas fa-plus-circle"></i> Created At</label>
+                    <div
+                      class="form-control-plaintext"
+                      th:text="${#dates.format(authKey.createdAt, 'yyyy-MM-dd HH:mm:ss')}"
+                    ></div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label><i class="fas fa-clock"></i> Expires At</label>
+                    <div
+                      class="form-control-plaintext"
+                      th:text="${#dates.format(authKey.expiresAt, 'yyyy-MM-dd HH:mm:ss')}"
+                      th:class="${authKey.isExpired()} ? 'text-danger' : 'text-success'"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Expiration Status (Edit mode) -->
+              <div th:if="${isEdit}" class="form-group">
+                <label><i class="fas fa-info-circle"></i> Status</label>
+                <div>
+                  <span
+                    th:if="${authKey.isActive and !authKey.isExpired()}"
+                    class="badge badge-success"
+                  >
+                    <i class="fas fa-check-circle"></i> Active
+                  </span>
+                  <span
+                    th:if="${!authKey.isActive}"
+                    class="badge badge-secondary"
+                  >
+                    <i class="fas fa-times-circle"></i> Inactive
+                  </span>
+                  <span
+                    th:if="${authKey.isActive and authKey.isExpired()}"
+                    class="badge badge-warning"
+                  >
+                    <i class="fas fa-clock"></i> Expired
+                  </span>
+                </div>
+              </div>
+
+              <!-- Form Actions -->
+              <div class="form-group mt-4">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <button type="submit" class="btn btn-primary">
+                      <i
+                        th:class="${isEdit} ? 'fas fa-save' : 'fas fa-plus'"
+                      ></i>
+                      <span
+                        th:text="${isEdit} ? 'Update Authentication Key' : 'Create Authentication Key'"
+                      ></span>
+                    </button>
+                    <a
+                      th:href="@{/admin/email-auth}"
+                      class="btn btn-outline-secondary ml-2"
+                    >
+                      <i class="fas fa-times"></i> Cancel
+                    </a>
+                  </div>
+
+                  <!-- Generate New Key (Edit mode) -->
+                  <div th:if="${isEdit}">
+                    <form
+                      th:action="@{'/admin/email-auth/regenerate/' + ${authKey.id}}"
+                      method="post"
+                      class="d-inline"
+                      onsubmit="return confirm('Are you sure you want to generate a new authentication key? The old key will become invalid.');"
+                    >
+                      <button type="submit" class="btn btn-warning">
+                        <i class="fas fa-sync-alt"></i> Generate New Key
+                      </button>
+                    </form>
+                  </div>
+                </div>
+
+                <!-- Debug Information -->
+                <div class="mt-3 p-2 bg-light" style="font-size: 0.8em">
+                  <strong>Debug Info:</strong>
+                  isEdit: <span th:text="${isEdit}">false</span>, Action:
+                  <span th:text="${isEdit} ? 'Edit' : 'Create'">Create</span>,
+                  Form Action:
+                  <span
+                    th:text="${isEdit} ? @{'/admin/email-auth/edit/' + ${authKey.id}} : @{/admin/email-auth/create}"
+                    >create</span
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Help Information -->
+        <div class="card mt-4">
+          <div class="card-header">
+            <h5><i class="fas fa-question-circle"></i> Help & Information</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h6><i class="fas fa-info"></i> Authentication Keys</h6>
+                <ul class="help-text">
+                  <li>
+                    Authentication keys protect tracking URLs from unauthorized
+                    access
+                  </li>
+                  <li>Each key is tied to a specific tracking ID</li>
+                  <li>Keys automatically expire after the specified period</li>
+                  <li>Inactive keys cannot be used for tracking</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h6><i class="fas fa-shield-alt"></i> Security Features</h6>
+                <ul class="help-text">
+                  <li>Rate limiting: 60 requests per minute per IP</li>
+                  <li>Time-based expiration prevents indefinite access</li>
+                  <li>IP detection works with proxy environments</li>
+                  <li>Authentication required for all tracking requests</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+      function copyToClipboard(text) {
+        if (navigator.clipboard) {
+          navigator.clipboard
+            .writeText(text)
+            .then(function () {
+              showToast("Copied to clipboard!", "success");
+            })
+            .catch(function (err) {
+              console.error("Failed to copy: ", err);
+              fallbackCopyTextToClipboard(text);
+            });
+        } else {
+          fallbackCopyTextToClipboard(text);
+        }
+      }
+
+      function fallbackCopyTextToClipboard(text) {
+        var textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.position = "fixed";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+          var successful = document.execCommand("copy");
+          if (successful) {
+            showToast("Copied to clipboard!", "success");
+          } else {
+            showToast("Failed to copy", "error");
+          }
+        } catch (err) {
+          console.error("Fallback: Oops, unable to copy", err);
+          showToast("Failed to copy", "error");
+        }
+
+        document.body.removeChild(textArea);
+      }
+
+      function showToast(message, type) {
+        var toast = document.createElement("div");
+        toast.className =
+          "alert alert-" +
+          (type === "success" ? "success" : "danger") +
+          " position-fixed";
+        toast.style.top = "20px";
+        toast.style.right = "20px";
+        toast.style.zIndex = "9999";
+        toast.style.minWidth = "200px";
+        toast.innerHTML = message;
+
+        document.body.appendChild(toast);
+
+        setTimeout(function () {
+          if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+          }
+        }, 3000);
+      }
+
+      // Auto-fill description based on tracking ID
+      document
+        .getElementById("trackingId")
+        .addEventListener("change", function () {
+          var trackingId = this.value;
+          var description = document.getElementById("description");
+
+          if (trackingId && !description.value) {
+            description.value =
+              "Authentication key for tracking ID: " + trackingId;
+          }
+        });
+    </script>
+  </body>
+</html>

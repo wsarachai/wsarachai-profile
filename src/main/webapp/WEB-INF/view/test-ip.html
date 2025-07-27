@@ -1,36 +1,254 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Test IP Detection</title>
+  <head>
+    <title>Test IP Detection with Authentication</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
-    <h1>Test Email Tracking IP Detection</h1>
-    
-    <p>Click the button below to test the email tracking endpoint and check the server logs for IP detection debug information.</p>
-    
-    <button onclick="testTracking()">Test Tracking</button>
-    
-    <div id="result"></div>
-    
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .section {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      input,
+      button {
+        padding: 10px;
+        margin: 5px;
+      }
+      .result {
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 3px;
+      }
+      .success {
+        background-color: #d4edda;
+        color: #155724;
+      }
+      .error {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+      .info {
+        background-color: #d1ecf1;
+        color: #0c5460;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Test Email Tracking with Authentication</h1>
+      
+      <!-- Navigation Links -->
+      <div class="section" style="background-color: #f8f9fa;">
+        <h3>Admin Links</h3>
+        <p>
+          <a href="/wsarachai/admin/email-auth" target="_blank" style="margin-right: 15px;">
+            📋 Manage Authentication Keys
+          </a>
+          <a href="/wsarachai/admin/email-tracking/logs" target="_blank" style="margin-right: 15px;">
+            📊 View Tracking Logs
+          </a>
+          <a href="/wsarachai/admin/email-auth/create" target="_blank">
+            ➕ Create New Auth Key
+          </a>
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>Step 1: Generate Authentication Key</h2>
+        <p>First, generate an authentication key for your tracking ID:</p>
+
+        <input
+          type="text"
+          id="trackingId"
+          placeholder="Enter tracking ID (e.g., TEST-001)"
+          value="TEST-001"
+        />
+        <input
+          type="number"
+          id="expirationDays"
+          placeholder="Days until expiration"
+          value="7"
+          min="1"
+          max="365"
+        />
+        <input
+          type="text"
+          id="description"
+          placeholder="Description (optional)"
+          value="Test tracking"
+        />
+        <button onclick="generateAuthKey()">Generate Auth Key</button>
+
+        <div id="authResult"></div>
+      </div>
+
+      <div class="section">
+        <h2>Step 2: Test Tracking with Authentication</h2>
+        <p>Use the generated authentication key to test tracking:</p>
+
+        <input
+          type="text"
+          id="testTrackingId"
+          placeholder="Tracking ID"
+          readonly
+        />
+        <input
+          type="text"
+          id="testAuthKey"
+          placeholder="Authentication Key"
+          readonly
+        />
+        <button onclick="testTracking()" id="testButton" disabled>
+          Test Tracking
+        </button>
+
+        <div id="trackingResult"></div>
+      </div>
+
+      <div class="section">
+        <h2>Step 3: Validate Authentication Key</h2>
+        <button onclick="validateAuthKey()" id="validateButton" disabled>
+          Validate Auth Key
+        </button>
+
+        <div id="validateResult"></div>
+      </div>
+    </div>
+
     <script>
-        function testTracking() {
-            const testId = 'TEST-' + Date.now();
-            
-            // Create a test tracking pixel
-            const img = new Image();
-            img.onload = function() {
-                document.getElementById('result').innerHTML = 
-                    '<p style="color: green;">✓ Tracking pixel loaded successfully! Check server logs for IP detection debug info.</p>' +
-                    '<p>Test ID: ' + testId + '</p>';
-            };
-            img.onerror = function() {
-                document.getElementById('result').innerHTML = 
-                    '<p style="color: red;">✗ Failed to load tracking pixel.</p>';
-            };
-            
-            img.src = '/wsarachai/email/track?id=' + testId;
+      let currentAuthKey = "";
+      let currentTrackingId = "";
+
+      function generateAuthKey() {
+        const trackingId = document.getElementById("trackingId").value;
+        const days = document.getElementById("expirationDays").value;
+        const description = document.getElementById("description").value;
+
+        if (!trackingId) {
+          showResult("authResult", "Please enter a tracking ID", "error");
+          return;
         }
+
+        const url = `/wsarachai/email/generate-auth?trackingId=${encodeURIComponent(
+          trackingId
+        )}&days=${days}&description=${encodeURIComponent(description)}`;
+
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              currentAuthKey = data.authKey;
+              currentTrackingId = data.trackingId;
+
+              document.getElementById("testTrackingId").value =
+                currentTrackingId;
+              document.getElementById("testAuthKey").value = currentAuthKey;
+              document.getElementById("testButton").disabled = false;
+              document.getElementById("validateButton").disabled = false;
+
+              showResult(
+                "authResult",
+                `✓ Auth key generated successfully!<br>` +
+                  `<strong>Auth Key:</strong> ${data.authKey}<br>` +
+                  `<strong>Tracking ID:</strong> ${data.trackingId}<br>` +
+                  `<strong>Expires:</strong> ${new Date(
+                    data.expiresAt
+                  ).toLocaleString()}<br>` +
+                  `<strong>Tracking URL:</strong> ${data.trackingUrl}`,
+                "success"
+              );
+            } else {
+              showResult("authResult", `✗ Failed: ${data.error}`, "error");
+            }
+          })
+          .catch((error) => {
+            showResult("authResult", `✗ Error: ${error.message}`, "error");
+          });
+      }
+
+      function testTracking() {
+        if (!currentAuthKey || !currentTrackingId) {
+          showResult(
+            "trackingResult",
+            "Please generate an auth key first",
+            "error"
+          );
+          return;
+        }
+
+        const img = new Image();
+        img.onload = function () {
+          showResult(
+            "trackingResult",
+            "✓ Tracking pixel loaded successfully! Check server logs for IP detection debug info.",
+            "success"
+          );
+        };
+        img.onerror = function () {
+          showResult(
+            "trackingResult",
+            "✗ Failed to load tracking pixel.",
+            "error"
+          );
+        };
+
+        img.src = `/wsarachai/email/track?id=${currentTrackingId}&auth=${currentAuthKey}`;
+      }
+
+      function validateAuthKey() {
+        if (!currentAuthKey) {
+          showResult(
+            "validateResult",
+            "Please generate an auth key first",
+            "error"
+          );
+          return;
+        }
+
+        const url = `/wsarachai/email/validate-auth?authKey=${encodeURIComponent(
+          currentAuthKey
+        )}`;
+
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.valid) {
+              showResult(
+                "validateResult",
+                `✓ Auth key is valid!<br>` +
+                  `<strong>Tracking ID:</strong> ${data.trackingId}<br>` +
+                  `<strong>Expires:</strong> ${new Date(
+                    data.expiresAt
+                  ).toLocaleString()}<br>` +
+                  `<strong>Description:</strong> ${data.description || "None"}`,
+                "success"
+              );
+            } else {
+              showResult(
+                "validateResult",
+                "✗ Auth key is invalid or expired",
+                "error"
+              );
+            }
+          })
+          .catch((error) => {
+            showResult("validateResult", `✗ Error: ${error.message}`, "error");
+          });
+      }
+
+      function showResult(elementId, message, type) {
+        const element = document.getElementById(elementId);
+        element.innerHTML = `<div class="result ${type}">${message}</div>`;
+      }
     </script>
-</body>
+  </body>
 </html>

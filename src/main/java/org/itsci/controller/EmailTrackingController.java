@@ -2,6 +2,7 @@ package org.itsci.controller;
 
 import org.itsci.model.EmailTrackingLog;
 import org.itsci.service.EmailTrackingService;
+import org.itsci.service.EmailTrackingAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -45,6 +46,9 @@ public class EmailTrackingController {
   @Autowired
   private EmailTrackingService emailTrackingService;
 
+  @Autowired
+  private EmailTrackingAuthService emailTrackingAuthService;
+
   /**
    * Validate tracking ID format and check rate limiting
    * 
@@ -70,7 +74,8 @@ public class EmailTrackingController {
   }
 
   /**
-   * Get the real client IP address, considering proxies, load balancers, and Docker networking
+   * Get the real client IP address, considering proxies, load balancers, and
+   * Docker networking
    * 
    * @param request the HTTP request
    * @return the client IP address
@@ -79,17 +84,17 @@ public class EmailTrackingController {
     // List of headers to check for real client IP (in order of preference)
     String[] headerNames = {
         "X-Forwarded-For",
-        "X-Real-IP", 
+        "X-Real-IP",
         "X-Original-Forwarded-For",
-        "CF-Connecting-IP",        // Cloudflare
-        "True-Client-IP",          // Akamai, Cloudflare
+        "CF-Connecting-IP", // Cloudflare
+        "True-Client-IP", // Akamai, Cloudflare
         "X-Client-IP",
         "X-Forwarded",
         "X-Cluster-Client-IP",
         "Forwarded-For",
         "Forwarded"
     };
-    
+
     for (String headerName : headerNames) {
       String headerValue = request.getHeader(headerName);
       if (headerValue != null && !headerValue.isEmpty() && !"unknown".equalsIgnoreCase(headerValue)) {
@@ -104,10 +109,10 @@ public class EmailTrackingController {
         }
       }
     }
-    
+
     // Fallback to remote address if no valid IP found in headers
     String remoteAddr = request.getRemoteAddr();
-    
+
     // If we get a Docker internal IP (like 172.x.x.x), try to get a better IP
     if (isDockerInternalIP(remoteAddr)) {
       // Last resort: check if there's any forwarded header with ANY IP
@@ -124,12 +129,13 @@ public class EmailTrackingController {
         }
       }
     }
-    
+
     return remoteAddr;
   }
-  
+
   /**
    * Check if IP is a valid public IP address
+   * 
    * @param ip the IP address to check
    * @return true if valid public IP
    */
@@ -137,10 +143,10 @@ public class EmailTrackingController {
     if (!isValidIP(ip)) {
       return false;
     }
-    
+
     // Skip private IP ranges
-    if (ip.startsWith("10.") || 
-        ip.startsWith("192.168.") || 
+    if (ip.startsWith("10.") ||
+        ip.startsWith("192.168.") ||
         ip.matches("^172\\.(1[6-9]|2[0-9]|3[0-1])\\..*") ||
         ip.startsWith("127.") ||
         ip.equals("::1") ||
@@ -149,21 +155,23 @@ public class EmailTrackingController {
         ip.startsWith("fd00:")) {
       return false;
     }
-    
+
     return true;
   }
-  
+
   /**
    * Check if IP is a Docker internal IP
+   * 
    * @param ip the IP address to check
    * @return true if Docker internal IP
    */
   private boolean isDockerInternalIP(String ip) {
     return ip.startsWith("172.") && ip.matches("^172\\.(1[6-9]|2[0-9]|3[0-1])\\..*");
   }
-  
+
   /**
    * Basic IP address validation
+   * 
    * @param ip the IP address to validate
    * @return true if valid IP format
    */
@@ -171,17 +179,17 @@ public class EmailTrackingController {
     if (ip == null || ip.isEmpty()) {
       return false;
     }
-    
+
     // Basic IPv4 validation
     if (ip.matches("^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$")) {
       return true;
     }
-    
+
     // Basic IPv6 validation (simplified)
     if (ip.contains(":") && ip.length() > 2) {
       return true;
     }
-    
+
     return false;
   }
 
@@ -220,9 +228,10 @@ public class EmailTrackingController {
   }
 
   /**
-   * Endpoint for tracking email opens
+   * Endpoint for tracking email opens with authentication
    * 
    * @param id       the tracking ID
+   * @param auth     the authentication key
    * @param request  the HTTP request
    * @param response the HTTP response
    * @throws IOException if there is an error writing the response
@@ -230,6 +239,7 @@ public class EmailTrackingController {
   @GetMapping("/track")
   @ResponseBody
   public byte[] trackEmailOpen(@RequestParam("id") String id,
+      @RequestParam(value = "auth", required = false) String auth,
       HttpServletRequest request,
       HttpServletResponse response) throws IOException {
 
@@ -239,6 +249,18 @@ public class EmailTrackingController {
       response.setContentType(MediaType.IMAGE_GIF_VALUE);
       response.setContentLength(TRANSPARENT_GIF.length);
       return TRANSPARENT_GIF; // Return pixel even for invalid requests to avoid revealing tracking
+    }
+
+    // Authentication validation
+    if (auth == null || !emailTrackingAuthService.validateAuthKey(auth)) {
+      response.setStatus(HttpStatus.UNAUTHORIZED.value());
+      response.setContentType(MediaType.IMAGE_GIF_VALUE);
+      response.setContentLength(TRANSPARENT_GIF.length);
+      System.out.println("=== Authentication Failed ===");
+      System.out.println("Auth Key: " + auth);
+      System.out.println("Valid: " + (auth != null ? emailTrackingAuthService.validateAuthKey(auth) : "null"));
+      System.out.println("=============================");
+      return TRANSPARENT_GIF; // Return pixel even for invalid auth to avoid revealing tracking
     }
 
     try {
@@ -251,7 +273,7 @@ public class EmailTrackingController {
       System.out.println("X-Forwarded-Proto: " + request.getHeader("X-Forwarded-Proto"));
       System.out.println("Detected Client IP: " + clientIp);
       System.out.println("=========================");
-      
+
       // Check if this tracking ID already exists
       List<EmailTrackingLog> existingLogs = emailTrackingService.getTrackingLogsByTrackingId(id);
 
@@ -335,6 +357,89 @@ public class EmailTrackingController {
       }
     } else {
       response.put("openCount", 0);
+    }
+
+    return ResponseEntity.ok(response);
+  }
+
+  /**
+   * Endpoint to generate authentication key for tracking
+   * 
+   * @param trackingId  the tracking ID
+   * @param days        number of days until expiration (default: 7)
+   * @param description optional description
+   * @return JSON response with the generated auth key
+   */
+  @GetMapping("/generate-auth")
+  @ResponseBody
+  public ResponseEntity<Map<String, Object>> generateAuthKey(
+      @RequestParam("trackingId") String trackingId,
+      @RequestParam(value = "days", defaultValue = "7") int days,
+      @RequestParam(value = "description", required = false) String description) {
+
+    try {
+      // Validate tracking ID format
+      if (trackingId == null || trackingId.trim().isEmpty() || !trackingId.matches("^[a-zA-Z0-9\\-_]+$")) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("success", false);
+        errorResponse.put("error", "Invalid tracking ID format");
+        return ResponseEntity.badRequest().body(errorResponse);
+      }
+
+      // Validate expiration days (1-365 days)
+      if (days < 1 || days > 365) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("success", false);
+        errorResponse.put("error", "Expiration days must be between 1 and 365");
+        return ResponseEntity.badRequest().body(errorResponse);
+      }
+
+      // Generate auth key
+      var authRecord = emailTrackingAuthService.generateAuthKey(trackingId, days, description);
+
+      Map<String, Object> response = new HashMap<>();
+      response.put("success", true);
+      response.put("authKey", authRecord.getAuthKey());
+      response.put("trackingId", authRecord.getTrackingId());
+      response.put("expiresAt", authRecord.getExpiresAt());
+      response.put("createdAt", authRecord.getCreatedAt());
+      response.put("description", authRecord.getDescription());
+
+      // Generate complete tracking URL
+      response.put("trackingUrl", "/wsarachai/email/track?id=" + trackingId + "&auth=" + authRecord.getAuthKey());
+
+      return ResponseEntity.ok(response);
+
+    } catch (Exception e) {
+      Map<String, Object> errorResponse = new HashMap<>();
+      errorResponse.put("success", false);
+      errorResponse.put("error", "Failed to generate auth key: " + e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+  }
+
+  /**
+   * Endpoint to validate authentication key
+   * 
+   * @param authKey the authentication key to validate
+   * @return JSON response with validation result
+   */
+  @GetMapping("/validate-auth")
+  @ResponseBody
+  public ResponseEntity<Map<String, Object>> validateAuthKey(@RequestParam("authKey") String authKey) {
+    Map<String, Object> response = new HashMap<>();
+
+    boolean isValid = emailTrackingAuthService.validateAuthKey(authKey);
+    response.put("valid", isValid);
+    response.put("authKey", authKey);
+
+    if (isValid) {
+      var authRecord = emailTrackingAuthService.getByAuthKey(authKey);
+      if (authRecord != null) {
+        response.put("trackingId", authRecord.getTrackingId());
+        response.put("expiresAt", authRecord.getExpiresAt());
+        response.put("description", authRecord.getDescription());
+      }
     }
 
     return ResponseEntity.ok(response);

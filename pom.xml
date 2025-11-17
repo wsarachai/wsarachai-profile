@@ -235,6 +235,20 @@
             <version>2.1.214</version>
             <scope>test</scope>
         </dependency>
+	<!-- ZXing core: QR encoding/decoding, BitMatrix, BarcodeFormat -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.5.3</version>
+        </dependency>
+
+        <!-- ZXing javase: MatrixToImageWriter สำหรับบันทึก/แปลงภาพ -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.5.3</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -258,7 +272,7 @@
                 <version>3.3.2</version>
                 <configuration>
                     <!-- The output directory for the WAR file - can be absolute or relative path -->
-                    <outputDirectory>C:\share\apache-tomcat-9.0.95\webapps</outputDirectory>
+                    <outputDirectory>/home/itsci/workspace/docker-tomcat/webapps</outputDirectory>
                     <!-- The name of the WAR file (without the .war extension) -->
                     <warName>wsarachai</warName>
                 </configuration>

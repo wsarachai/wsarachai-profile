@@ -31,8 +31,7 @@ public class SecurityConfig {
                                     .antMatchers("/**").permitAll()
                                     .and().csrf()
                                     .ignoringAntMatchers("/api/**")
-                                    .ignoringAntMatchers("/system/**")
-                                    .ignoringAntMatchers("/pub/**");
+                                    .ignoringAntMatchers("/system/**");
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

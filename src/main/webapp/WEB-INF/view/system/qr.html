@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>QR Code Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .container {
+        max-width: 700px;
+        margin: 0 auto;
+      }
+      input[type="text"],
+      textarea {
+        width: 100%;
+        padding: 8px;
+        margin: 8px 0;
+      }
+      .qrcode {
+        margin-top: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>QR Code Generator</h1>
+
+      <form method="get" th:action="@{/system/qr}">
+        <label for="text">Text / URL</label>
+        <textarea id="text" name="text" rows="3" th:text="${text}"></textarea>
+
+        <label for="size">Size (px)</label>
+        <input type="text" id="size" name="size" th:value="${size}" />
+
+        <button type="submit">Generate</button>
+      </form>
+
+      <div class="qrcode" th:if="${qrcodeDataUri}">
+        <h2>Result</h2>
+        <img th:src="${qrcodeDataUri}" alt="QR Code" />
+        <p>Right-click the image -> Save as... to download the PNG.</p>
+      </div>
+
+      <div th:if="${error}">
+        <p style="color: red" th:text="${error}"></p>
+      </div>
+    </div>
+  </body>
+</html>

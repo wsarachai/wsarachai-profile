@@ -9,7 +9,6 @@ services:
       MYSQL_DATABASE: wsarachai_db
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./docker/mysql/init:/docker-entrypoint-initdb.d
     networks:
       - wsarachai-network
     healthcheck:
@@ -33,7 +32,7 @@ services:
       JPDA_ADDRESS: "0.0.0.0:8000"
       JPDA_TRANSPORT: "dt_socket"
       # suspend JVM until debugger attaches (useful for diagnosing attach issues)
-      #JPDA_SUSPEND: "y"
+      JPDA_SUSPEND: "y"
       CATALINA_OPTS: "-Dspring.profiles.active=docker -Xmx512m -Xms256m"
       DB_HOST: mysql
       DB_PORT: 3306

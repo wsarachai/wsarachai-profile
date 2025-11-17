@@ -37,9 +37,42 @@
         <div id="courses" class="tab-content active">
           <div class="course-header">
             <h3>Course Management</h3>
-            <button class="btn btn-primary" id="createCourseBtn">
-              <i class="fa-solid fa-plus"></i> Create New Course
-            </button>
+            <div style="display: flex; gap: 12px; align-items: center">
+              <form
+                method="get"
+                th:action="@{/admin/course-management}"
+                style="display: flex; gap: 8px; align-items: center"
+              >
+                <label for="term">Term</label>
+                <select id="term" name="term" class="form-control">
+                  <option value="">All</option>
+                  <option
+                    value="1"
+                    th:selected="${#strings.substring(filteredSemester,0,1) == '1'}"
+                  >
+                    1
+                  </option>
+                  <option
+                    value="2"
+                    th:selected="${#strings.substring(filteredSemester,0,1) == '2'}"
+                  >
+                    2
+                  </option>
+                </select>
+                <label for="year">Year</label>
+                <select id="year" name="year" class="form-control">
+                  <option value="">All</option>
+                  <option value="2565" th:selected="${filteredSemester != null and (#strings.substring(filteredSemester, filteredSemester.indexOf('/') + 1) == '2565')}">2565</option>
+                  <option value="2566" th:selected="${filteredSemester != null and (#strings.substring(filteredSemester, filteredSemester.indexOf('/') + 1) == '2566')}">2566</option>
+                  <option value="2567" th:selected="${filteredSemester != null and (#strings.substring(filteredSemester, filteredSemester.indexOf('/') + 1) == '2567')}">2567</option>
+                  <option value="2568" th:selected="${filteredSemester != null and (#strings.substring(filteredSemester, filteredSemester.indexOf('/') + 1) == '2568')}">2568</option>
+                </select>
+                <button type="submit" class="btn btn-secondary">Filter</button>
+              </form>
+              <button class="btn btn-primary" id="createCourseBtn">
+                <i class="fa-solid fa-plus"></i> Create New Course
+              </button>
+            </div>
           </div>
           <div th:if="${#lists.isEmpty(courses)}" class="course-body">
             <p>
@@ -239,7 +272,7 @@
           <h3>Assign Teacher to Course</h3>
         </div>
 
-        <form action="/admin/course-management/assign-teacher" method="post">
+        <form th:action="@{/admin/course-management/assign-teacher}" method="post">
           <div class="form-group">
             <label class="form-label">Course:</label>
             <select name="courseId" class="form-control" required>
@@ -440,7 +473,8 @@
         } else {
           console.error("Could not find content for:", tabName);
         }
-      }      function showCreateCourseModal() {
+      }
+      function showCreateCourseModal() {
         console.log("showCreateCourseModal called");
         window.location.href = "/wsarachai/admin/course-management/course/new";
       }

@@ -44,6 +44,12 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
   @Override
   @Transactional(readOnly = true)
+  public List<Course> findCoursesBySemester(String semester) {
+    return courseDao.findBySemester(semester);
+  }
+
+  @Override
+  @Transactional(readOnly = true)
   public Course findCourseById(Long id) {
     return courseDao.getCourseById(id);
   }

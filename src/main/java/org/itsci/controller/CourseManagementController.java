@@ -43,19 +43,31 @@ public class CourseManagementController {
    * Display the main course management page
    */
   @GetMapping("")
-  public String index(Model model, Authentication authentication) {
+  public String index(Model model, Authentication authentication,
+      @RequestParam(name = "term", required = false) String term,
+      @RequestParam(name = "year", required = false) String year) {
     try {
-      // Load all courses with their sections and teacher assignments
-      List<Course> courses = courseManagementService.findAllCoursesWithDetails();
+      // Determine if filtering by term/year is requested
+      List<Course> courses;
+      if (term != null && !term.isBlank() && year != null && !year.isBlank()) {
+        String semester = term + "/" + year;
+        courses = courseManagementService.findCoursesBySemester(semester);
+        model.addAttribute("filteredSemester", semester);
+      } else {
+        // Load all courses with their sections and teacher assignments
+        courses = courseManagementService.findAllCoursesWithDetails();
+      }
       List<Subject> subjects = courseManagementService.findAllSubjects();
       List<Teacher> teachers = courseManagementService.findAllTeachers();
       List<Room> rooms = courseManagementService.findAllRooms();
+      List<Curriculum> curriculums = courseManagementService.findAllCurriculums();
 
       model.addAttribute("courses", courses);
       model.addAttribute("subjects", subjects);
       model.addAttribute("teachers", teachers);
       model.addAttribute("rooms", rooms);
       model.addAttribute("courseManagementBean", new CourseManagementBean());
+      model.addAttribute("curriculums", curriculums);
 
       return "admin/course-management/index";
     } catch (Exception e) {

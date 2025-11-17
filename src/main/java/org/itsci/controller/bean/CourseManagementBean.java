@@ -1,11 +1,6 @@
 package org.itsci.controller.bean;
 
 import org.itsci.model.EDayOfWeek;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import java.util.Date;
 
 /**
@@ -16,23 +11,17 @@ public class CourseManagementBean {
   // Course fields
   private Long courseId;
 
-  @NotNull(message = "Subject is required")
   private Long subjectId;
 
-  @NotBlank(message = "Semester is required")
   private String semester;
 
-  @NotNull(message = "Start semester date is required")
-  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private Date startSemester;
 
   // Section fields
   private Long sectionId;
 
-  @NotBlank(message = "Group number is required")
   private String groupNumber;
 
-  @Positive(message = "Number of seats must be positive")
   private Integer numberOfSeat;
 
   private EDayOfWeek lecDay;

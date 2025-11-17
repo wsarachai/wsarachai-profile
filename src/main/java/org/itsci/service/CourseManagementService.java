@@ -12,6 +12,7 @@ public interface CourseManagementService {
 
   // Course operations
   List<Course> findAllCoursesWithDetails();
+  List<Course> findCoursesBySemester(String semester);
 
   Course findCourseById(Long id);
 

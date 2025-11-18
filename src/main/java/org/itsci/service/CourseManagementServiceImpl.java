@@ -117,9 +117,6 @@ public class CourseManagementServiceImpl implements CourseManagementService {
       section.setLabRoom(labRoom);
     }
 
-    section.setLatitue(bean.getLatitude());
-    section.setLongitude(bean.getLongitude());
-
     sectionDao.save(section);
 
     // Add section to course's sections
@@ -156,9 +153,6 @@ public class CourseManagementServiceImpl implements CourseManagementService {
       section.setLabRoom(null);
     }
 
-    section.setLatitue(bean.getLatitude());
-    section.setLongitude(bean.getLongitude());
-
     sectionDao.save(section);
     return section;
   }
@@ -171,7 +165,8 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
   @Override
   public TeacherCourse assignTeacherToCourse(Long teacherId, Long courseId, String status) {
-    TeacherCourse teacherCourse = new TeacherCourse();        Teacher teacher = teacherDao.getById(teacherId);
+    TeacherCourse teacherCourse = new TeacherCourse();
+    Teacher teacher = teacherDao.getById(teacherId);
     Course course = courseDao.getCourseById(courseId);
 
     teacherCourse.setTeacher(teacher);

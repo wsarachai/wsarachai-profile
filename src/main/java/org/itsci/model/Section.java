@@ -14,36 +14,32 @@ public class Section implements Comparable<Section> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
-    @Column(name="lec_day", columnDefinition = "VARCHAR(30)")
+    @Column(name = "lec_day", columnDefinition = "VARCHAR(30)")
     @Convert(converter = EDayOfWeekAttributeConverter.class)
     private EDayOfWeek lecDay;
-    @Column(name="lab_day", columnDefinition = "VARCHAR(30)")
+    @Column(name = "lab_day", columnDefinition = "VARCHAR(30)")
     @Convert(converter = EDayOfWeekAttributeConverter.class)
     private EDayOfWeek labDay;
-    @Column(name="group_number", length = 3)
+    @Column(name = "group_number", length = 3)
     private String groupNumber;
-    @Column(name="number_of_seat", length = 3)
+    @Column(name = "number_of_seat", length = 3)
     private int numberOfSeat;
-    @Column(name="start_lec_time", length = 6)
+    @Column(name = "start_lec_time", length = 6)
     private String startLectureTime;
-    @Column(name="end_lec_time", length = 6)
+    @Column(name = "end_lec_time", length = 6)
     private String endLectureTime;
-    @Column(name="start_lab_time", length = 6)
+    @Column(name = "start_lab_time", length = 6)
     private String startLabTime;
-    @Column(name="end_lab_time", length = 6)
+    @Column(name = "end_lab_time", length = 6)
     private String endLabTime;
     @ManyToOne
-    @JoinColumn(name="lec_room_id")
+    @JoinColumn(name = "lec_room_id")
     private Room lecRoom;
     @ManyToOne
-    @JoinColumn(name="lab_room_id")
+    @JoinColumn(name = "lab_room_id")
     private Room labRoom;
-    @Column(name="latitude")
-    private Double latitue;
-    @Column(name="longitude")
-    private Double longitude;
-    @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="course_id")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "course_id")
     private Course course;
     @OneToMany(mappedBy = "section", fetch = FetchType.LAZY)
     private Set<Enrollment> enrollments = new HashSet<>();
@@ -142,22 +138,6 @@ public class Section implements Comparable<Section> {
 
     public void setCourse(Course course) {
         this.course = course;
-    }
-
-    public Double getLatitue() {
-        return latitue;
-    }
-
-    public void setLatitue(Double latitue) {
-        this.latitue = latitue;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
     }
 
     public Set<Enrollment> getEnrollments() {

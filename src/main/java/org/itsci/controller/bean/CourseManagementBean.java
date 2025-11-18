@@ -35,9 +35,6 @@ public class CourseManagementBean {
   private Long lecRoomId;
   private Long labRoomId;
 
-  private Double latitude;
-  private Double longitude;
-
   // Teacher assignment fields
   private Long teacherId;
   private String assignmentStatus = "active";
@@ -165,22 +162,6 @@ public class CourseManagementBean {
 
   public void setLabRoomId(Long labRoomId) {
     this.labRoomId = labRoomId;
-  }
-
-  public Double getLatitude() {
-    return latitude;
-  }
-
-  public void setLatitude(Double latitude) {
-    this.latitude = latitude;
-  }
-
-  public Double getLongitude() {
-    return longitude;
-  }
-
-  public void setLongitude(Double longitude) {
-    this.longitude = longitude;
   }
 
   public Long getTeacherId() {

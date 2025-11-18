@@ -254,8 +254,6 @@ public class CourseManagementController {
     bean.setEndLabTime(section.getEndLabTime());
     bean.setLecRoomId(section.getLecRoom() != null ? section.getLecRoom().getId() : null);
     bean.setLabRoomId(section.getLabRoom() != null ? section.getLabRoom().getId() : null);
-    bean.setLatitude(section.getLatitue());
-    bean.setLongitude(section.getLongitude());
 
     model.addAttribute("courseManagementBean", bean);
     model.addAttribute("course", section.getCourse());

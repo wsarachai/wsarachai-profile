@@ -25,9 +25,6 @@
           <div class="tab active" data-tab="courses">
             <i class="fa-solid fa-book"></i> Courses
           </div>
-          <div class="tab" data-tab="sections">
-            <i class="fa-solid fa-users"></i> Sections
-          </div>
           <div class="tab" data-tab="assignments">
             <i class="fa-solid fa-chalkboard-user"></i> Teacher Assignments
           </div>
@@ -62,10 +59,30 @@
                 <label for="year">Year</label>
                 <select id="year" name="year" class="form-control">
                   <option value="">All</option>
-                  <option value="2565" th:selected="${filteredSemester != null and (#strings.substring(filteredSemester, filteredSemester.indexOf('/') + 1) == '2565')}">2565</option>
-                  <option value="2566" th:selected="${filteredSemester != null and (#strings.substring(filteredSemester, filteredSemester.indexOf('/') + 1) == '2566')}">2566</option>
-                  <option value="2567" th:selected="${filteredSemester != null and (#strings.substring(filteredSemester, filteredSemester.indexOf('/') + 1) == '2567')}">2567</option>
-                  <option value="2568" th:selected="${filteredSemester != null and (#strings.substring(filteredSemester, filteredSemester.indexOf('/') + 1) == '2568')}">2568</option>
+                  <option
+                    value="2565"
+                    th:selected="${filteredSemester != null and (#strings.substring(filteredSemester, filteredSemester.indexOf('/') + 1) == '2565')}"
+                  >
+                    2565
+                  </option>
+                  <option
+                    value="2566"
+                    th:selected="${filteredSemester != null and (#strings.substring(filteredSemester, filteredSemester.indexOf('/') + 1) == '2566')}"
+                  >
+                    2566
+                  </option>
+                  <option
+                    value="2567"
+                    th:selected="${filteredSemester != null and (#strings.substring(filteredSemester, filteredSemester.indexOf('/') + 1) == '2567')}"
+                  >
+                    2567
+                  </option>
+                  <option
+                    value="2568"
+                    th:selected="${filteredSemester != null and (#strings.substring(filteredSemester, filteredSemester.indexOf('/') + 1) == '2568')}"
+                  >
+                    2568
+                  </option>
                 </select>
                 <button type="submit" class="btn btn-secondary">Filter</button>
               </form>
@@ -187,48 +204,6 @@
           </div>
         </div>
 
-        <!-- Sections Tab -->
-        <div id="sections" class="tab-content">
-          <div class="course-header">
-            <h3>All Sections</h3>
-          </div>
-          <div class="course-body">
-            <div th:each="course : ${courses}">
-              <div th:each="section : ${course.sections}" class="section-item">
-                <div class="row">
-                  <div class="col">
-                    <strong
-                      th:text="${course.subject.code + ' - Group ' + section.groupNumber}"
-                    ></strong
-                    ><br />
-                    <span th:text="${course.subject.thaiName}"></span><br />
-                    <span th:if="${section.lecDay != null}">
-                      Lecture:
-                      <span
-                        th:text="${section.lecDay + ' ' + section.startLectureTime + '-' + section.endLectureTime}"
-                      ></span> </span
-                    ><br />
-                    <span th:if="${section.labDay != null}">
-                      Lab:
-                      <span
-                        th:text="${section.labDay + ' ' + section.startLabTime + '-' + section.endLabTime}"
-                      ></span>
-                    </span>
-                  </div>
-                  <div class="col-3">
-                    <a
-                      th:href="@{'/admin/course-management/section/edit/' + ${section.id}}"
-                      class="btn btn-warning"
-                    >
-                      <i class="fa-solid fa-edit"></i> Edit
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <!-- Teacher Assignments Tab -->
         <div id="assignments" class="tab-content">
           <div class="course-header">
@@ -272,7 +247,10 @@
           <h3>Assign Teacher to Course</h3>
         </div>
 
-        <form th:action="@{/admin/course-management/assign-teacher}" method="post">
+        <form
+          th:action="@{/admin/course-management/assign-teacher}"
+          method="post"
+        >
           <div class="form-group">
             <label class="form-label">Course:</label>
             <select name="courseId" class="form-control" required>

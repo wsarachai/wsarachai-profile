@@ -12,12 +12,16 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
-    @Column(name="room_id")
+    @Column(name = "room_id")
     private String roomId;
-    @Column(name="building_id")
+    @Column(name = "building_id")
     private String buildingId;
-    @Column(name="building_name")
+    @Column(name = "building_name")
     private String buildingName;
+    @Column(name = "latitude")
+    private Double latitue;
+    @Column(name = "longitude")
+    private Double longitude;
 
     public long getId() {
         return id;
@@ -49,5 +53,21 @@ public class Room {
 
     public void setBuildingName(String buildingName) {
         this.buildingName = buildingName;
+    }
+
+    public Double getLatitue() {
+        return latitue;
+    }
+
+    public void setLatitue(Double latitue) {
+        this.latitue = latitue;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 }

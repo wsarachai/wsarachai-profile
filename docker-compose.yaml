@@ -1,14 +1,17 @@
 services:
   # MySQL Database Service
   mysql:
-    image: mysql:8.0
+    image: mysql:9.5.0
     container_name: wsarachai-mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_USER: user1
+      MYSQL_PASSWORD: 1234
       MYSQL_DATABASE: wsarachai_db
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./dockers/mysql:/tmp
     networks:
       - wsarachai-network
     healthcheck:
@@ -60,7 +63,7 @@ services:
       PMA_PASSWORD: 1234
       MYSQL_ROOT_PASSWORD: 1234
     ports:
-      - "8081:80"
+      - "8082:80"
     depends_on:
       mysql:
         condition: service_healthy

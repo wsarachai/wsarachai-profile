@@ -186,55 +186,6 @@
             ></div>
           </div>
 
-          <!-- Section details (some fields are required for section creation) -->
-          <div class="form-header" style="margin-top: 20px">
-            <h3>Section Details (optional)</h3>
-          </div>
-
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-label" for="groupNumber"
-                  >Group Number *</label
-                >
-                <input
-                  type="text"
-                  th:field="*{groupNumber}"
-                  class="form-control"
-                  id="groupNumber"
-                  placeholder="e.g. A1"
-                  required
-                />
-                <div
-                  th:if="${#fields.hasErrors('groupNumber')}"
-                  th:errors="*{groupNumber}"
-                  class="error"
-                ></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-label" for="numberOfSeat"
-                  >Number Of Seats *</label
-                >
-                <input
-                  type="number"
-                  min="1"
-                  th:field="*{numberOfSeat}"
-                  class="form-control"
-                  id="numberOfSeat"
-                  placeholder="e.g. 40"
-                  required
-                />
-                <div
-                  th:if="${#fields.hasErrors('numberOfSeat')}"
-                  th:errors="*{numberOfSeat}"
-                  class="error"
-                ></div>
-              </div>
-            </div>
-          </div>
-
           <div class="form-actions">
             <button type="submit" class="btn btn-primary">
               <i class="fa-solid fa-save"></i>

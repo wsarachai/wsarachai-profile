@@ -37,11 +37,18 @@ public class DateUtils {
                 .atZone(timeZone)
                 .toLocalDate();
 
+        int year = startDate.getYear();
+        if (year < 2500) {
+            year += 543;
+        }
+
+        startDate = LocalDate.of(year, startDate.getMonth(), startDate.getDayOfMonth());
+
         ZonedDateTime startDateTime = startDate.atStartOfDay(timeZone);
 
         LocalDate endDate = LocalDate.now(timeZone);
 
-        int year = endDate.getYear();
+        year = endDate.getYear();
         if (year < 2500) {
             year += 543;
         }

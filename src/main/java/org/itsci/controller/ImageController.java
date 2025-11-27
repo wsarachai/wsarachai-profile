@@ -88,7 +88,22 @@ public class ImageController {
                     year + java.io.File.separator + month + java.io.File.separator + day + java.io.File.separator
                             + filename);
             if (!file.exists() || !file.isFile()) {
-                return org.springframework.http.ResponseEntity.notFound().build();
+                // Fallback to classpath unknown image when disk file missing
+                try {
+                    Resource unknownImage = resourceLoader.getResource("classpath:unknow.png");
+                    if (unknownImage != null && unknownImage.exists()) {
+                        try (InputStream is = unknownImage.getInputStream()) {
+                            byte[] bytes = is.readAllBytes();
+                                return org.springframework.http.ResponseEntity.ok()
+                                    .contentType(java.util.Objects.requireNonNull(org.springframework.http.MediaType.IMAGE_PNG)).body(bytes);
+                        }
+                    } else {
+                        return org.springframework.http.ResponseEntity.notFound().build();
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    return org.springframework.http.ResponseEntity.notFound().build();
+                }
             }
             byte[] bytes = Files.readAllBytes(file.toPath());
             String contentType = Files.probeContentType(file.toPath());
@@ -99,7 +114,7 @@ public class ImageController {
                 } catch (Exception ignored) {
                 }
             }
-            return org.springframework.http.ResponseEntity.ok().contentType(mediaType).body(bytes);
+            return org.springframework.http.ResponseEntity.ok().contentType(java.util.Objects.requireNonNull(mediaType)).body(bytes);
         } catch (Exception e) {
             e.printStackTrace();
             return org.springframework.http.ResponseEntity.status(500).build();

@@ -9,9 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import javax.servlet.http.HttpServletRequest;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 @Controller
 @RequestMapping("/pub/student")
@@ -84,7 +87,7 @@ public class StudentAttenController {
     }
 
     @GetMapping("/view/{enrollmentId}/{attenId}")
-    private String viewAttenuation(Model model, javax.servlet.http.HttpServletRequest request,
+    private String viewAttenuation(Model model, HttpServletRequest request,
             @PathVariable String enrollmentId, @PathVariable String attenId) {
         Enrollment enrollment = studentAttenService.findEnrollmentById(Long.parseLong(enrollmentId));
         Attendance attendance = studentAttenService.findAttendanceById(Long.parseLong(attenId));
@@ -96,23 +99,44 @@ public class StudentAttenController {
         model.addAttribute("enrollment", enrollment);
         model.addAttribute("attendance", attendance);
 
-        // Build image URLs for the view:
-        // - If the attendance has a disk path (image1_path/image2_path), expose a URL
-        // that maps to the disk-serving endpoint we provide under
-        // /pub/uploads/attendance/...
-        // - Otherwise fall back to the DB-served image endpoint /pub/images/{id}
         String image1Url = null;
         String image2Url = null;
         try {
             if (attendance != null) {
                 if (attendance.getImage1_path() != null && !attendance.getImage1_path().isEmpty()) {
-                    String p = attendance.getImage1_path().replace(java.io.File.separatorChar, '/');
-                    image1Url = request.getContextPath() + "/pub/uploads/attendance/" + p;
+                    String p = attendance.getImage1_path().replace(File.separatorChar, '/');
+                    String[] parts = p.split("/");
+                    if (parts.length >= 4) {
+                        String year = parts[0];
+                        String month = parts[1];
+                        String day = parts[2];
+                        String filename = parts[3];
+                        image1Url = MvcUriComponentsBuilder
+                                .fromMethodName(ImageController.class, "serveUploadedAttendanceImage", year, month, day,
+                                        filename)
+                                .build()
+                                .toUriString();
+                    } else {
+                        image1Url = request.getContextPath() + "/pub/images/unknown";
+                    }
                 }
 
                 if (attendance.getImage2_path() != null && !attendance.getImage2_path().isEmpty()) {
                     String p2 = attendance.getImage2_path().replace(java.io.File.separatorChar, '/');
-                    image2Url = request.getContextPath() + "/pub/uploads/attendance/" + p2;
+                    String[] parts2 = p2.split("/");
+                    if (parts2.length >= 4) {
+                        String year2 = parts2[0];
+                        String month2 = parts2[1];
+                        String day2 = parts2[2];
+                        String filename2 = parts2[3];
+                        image2Url = MvcUriComponentsBuilder
+                                .fromMethodName(ImageController.class, "serveUploadedAttendanceImage", year2, month2,
+                                        day2, filename2)
+                                .build()
+                                .toUriString();
+                    } else {
+                        image2Url = request.getContextPath() + "/pub/images/unknown";
+                    }
                 }
             }
         } catch (Exception ex) {
@@ -432,15 +456,6 @@ public class StudentAttenController {
             }
         }
         return attendance;
-    }
-
-    private Byte[] convertToBytes(MultipartFile file) throws IOException {
-        Byte[] byteObjects = new Byte[file.getBytes().length];
-        int i = 0;
-        for (byte b : file.getBytes()) {
-            byteObjects[i++] = b;
-        }
-        return byteObjects;
     }
 
     private String saveMultipartFile(MultipartFile file, java.io.File uploadFolder) {

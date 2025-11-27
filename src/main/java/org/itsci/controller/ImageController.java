@@ -59,13 +59,7 @@ public class ImageController {
         }
 
         if (images == null) {
-            Resource unknownImage = resourceLoader.getResource("classpath:unknow.png");
-            try {
-                File file = unknownImage.getFile();
-                outputs = Files.readAllBytes(file.toPath());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            outputs = loadUnknownImageBytes();
         } else {
             outputs = new byte[images.length];
             for (int i = 0; i < images.length; i++) {
@@ -74,6 +68,23 @@ public class ImageController {
         }
 
         return outputs;
+    }
+
+    @GetMapping(value = "/images/unknown")
+    public @ResponseBody org.springframework.http.ResponseEntity<byte[]> getUnknownImage() {
+        try {
+            byte[] bytes = loadUnknownImageBytes();
+            if (bytes != null) {
+                return org.springframework.http.ResponseEntity.ok()
+                        .contentType(java.util.Objects.requireNonNull(org.springframework.http.MediaType.IMAGE_PNG))
+                        .body(bytes);
+            } else {
+                return org.springframework.http.ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return org.springframework.http.ResponseEntity.status(500).build();
+        }
     }
 
     @GetMapping(value = "/uploads/attendance/{year}/{month}/{day}/{filename:.+}")
@@ -89,21 +100,13 @@ public class ImageController {
                             + filename);
             if (!file.exists() || !file.isFile()) {
                 // Fallback to classpath unknown image when disk file missing
-                try {
-                    Resource unknownImage = resourceLoader.getResource("classpath:unknow.png");
-                    if (unknownImage != null && unknownImage.exists()) {
-                        try (InputStream is = unknownImage.getInputStream()) {
-                            byte[] bytes = is.readAllBytes();
-                                return org.springframework.http.ResponseEntity.ok()
-                                    .contentType(java.util.Objects.requireNonNull(org.springframework.http.MediaType.IMAGE_PNG)).body(bytes);
-                        }
-                    } else {
-                        return org.springframework.http.ResponseEntity.notFound().build();
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    return org.springframework.http.ResponseEntity.notFound().build();
+                byte[] unknown = loadUnknownImageBytes();
+                if (unknown != null) {
+                    return org.springframework.http.ResponseEntity.ok()
+                            .contentType(java.util.Objects.requireNonNull(org.springframework.http.MediaType.IMAGE_PNG))
+                            .body(unknown);
                 }
+                return org.springframework.http.ResponseEntity.notFound().build();
             }
             byte[] bytes = Files.readAllBytes(file.toPath());
             String contentType = Files.probeContentType(file.toPath());
@@ -114,10 +117,25 @@ public class ImageController {
                 } catch (Exception ignored) {
                 }
             }
-            return org.springframework.http.ResponseEntity.ok().contentType(java.util.Objects.requireNonNull(mediaType)).body(bytes);
+            return org.springframework.http.ResponseEntity.ok().contentType(java.util.Objects.requireNonNull(mediaType))
+                    .body(bytes);
         } catch (Exception e) {
             e.printStackTrace();
             return org.springframework.http.ResponseEntity.status(500).build();
         }
+    }
+
+    private byte[] loadUnknownImageBytes() {
+        try {
+            Resource unknownImage = resourceLoader.getResource("classpath:unknow.png");
+            if (unknownImage != null && unknownImage.exists()) {
+                try (InputStream is = unknownImage.getInputStream()) {
+                    return is.readAllBytes();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.ResponseEntity;
 
+import java.util.Objects;
 import java.io.*;
 import java.nio.file.Files;
 
@@ -71,57 +73,56 @@ public class ImageController {
     }
 
     @GetMapping(value = "/images/unknown")
-    public @ResponseBody org.springframework.http.ResponseEntity<byte[]> getUnknownImage() {
+    public @ResponseBody ResponseEntity<byte[]> getUnknownImage() {
         try {
             byte[] bytes = loadUnknownImageBytes();
             if (bytes != null) {
-                return org.springframework.http.ResponseEntity.ok()
-                        .contentType(java.util.Objects.requireNonNull(org.springframework.http.MediaType.IMAGE_PNG))
+                return ResponseEntity.ok()
+                        .contentType(Objects.requireNonNull(MediaType.IMAGE_PNG))
                         .body(bytes);
             } else {
-                return org.springframework.http.ResponseEntity.notFound().build();
+                return ResponseEntity.notFound().build();
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return org.springframework.http.ResponseEntity.status(500).build();
+            return ResponseEntity.status(500).build();
         }
     }
 
     @GetMapping(value = "/uploads/attendance/{year}/{month}/{day}/{filename:.+}")
-    public @ResponseBody org.springframework.http.ResponseEntity<byte[]> serveUploadedAttendanceImage(
+    public @ResponseBody ResponseEntity<byte[]> serveUploadedAttendanceImage(
             @PathVariable("year") String year,
             @PathVariable("month") String month,
             @PathVariable("day") String day,
             @PathVariable("filename") String filename) {
         try {
             String uploadDir = System.getProperty("attendance.upload.dir", "uploads/attendance");
-            java.io.File file = new java.io.File(uploadDir,
-                    year + java.io.File.separator + month + java.io.File.separator + day + java.io.File.separator
-                            + filename);
+            File file = new File(uploadDir, year + File.separator + month + File.separator + day + File.separator
+                    + filename);
             if (!file.exists() || !file.isFile()) {
                 // Fallback to classpath unknown image when disk file missing
                 byte[] unknown = loadUnknownImageBytes();
                 if (unknown != null) {
-                    return org.springframework.http.ResponseEntity.ok()
-                            .contentType(java.util.Objects.requireNonNull(org.springframework.http.MediaType.IMAGE_PNG))
+                    return ResponseEntity.ok()
+                            .contentType(Objects.requireNonNull(MediaType.IMAGE_PNG))
                             .body(unknown);
                 }
-                return org.springframework.http.ResponseEntity.notFound().build();
+                return ResponseEntity.notFound().build();
             }
             byte[] bytes = Files.readAllBytes(file.toPath());
             String contentType = Files.probeContentType(file.toPath());
-            org.springframework.http.MediaType mediaType = org.springframework.http.MediaType.APPLICATION_OCTET_STREAM;
+            MediaType mediaType = MediaType.APPLICATION_OCTET_STREAM;
             if (contentType != null) {
                 try {
-                    mediaType = org.springframework.http.MediaType.parseMediaType(contentType);
+                    mediaType = MediaType.parseMediaType(contentType);
                 } catch (Exception ignored) {
                 }
             }
-            return org.springframework.http.ResponseEntity.ok().contentType(java.util.Objects.requireNonNull(mediaType))
+            return ResponseEntity.ok().contentType(Objects.requireNonNull(mediaType))
                     .body(bytes);
         } catch (Exception e) {
             e.printStackTrace();
-            return org.springframework.http.ResponseEntity.status(500).build();
+            return ResponseEntity.status(500).build();
         }
     }
 

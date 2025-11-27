@@ -29,6 +29,8 @@ services:
       - "8000:8000"
     volumes:
       - ./target/wsarachai.war:/usr/local/tomcat/webapps/wsarachai.war
+      # Persist uploaded attendance images on the host and expose them to the container
+      - ./uploads/attendance:/usr/local/tomcat/uploads/attendance
     # Environment variables for Tomcat
     environment:
       # bind JPDA to all interfaces so host debugger can attach

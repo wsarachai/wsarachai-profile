@@ -30,10 +30,12 @@
         <div class="flex-container-row">
             <div class="item4">
                 <div class="wrapper">
-                    <img th:src="@{'/pub/images/'+${attendance.getImage1_id()}}" alt="Your image" />
+                    <img th:if="${image1Url != null}" th:src="${image1Url}" alt="Your image" />
+                    <span th:if="${image1Url == null}">-</span>
                 </div>
                 <div class="wrapper">
-                    <img th:src="@{'/pub/images/'+${attendance.getImage2_id()}}" alt="Reference image" />
+                    <img th:if="${image2Url != null}" th:src="${image2Url}" alt="Reference image" />
+                    <span th:if="${image2Url == null}">-</span>
                 </div>
             </div>
         </div>

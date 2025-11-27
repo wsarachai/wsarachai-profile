@@ -84,7 +84,8 @@ public class StudentAttenController {
     }
 
     @GetMapping("/view/{enrollmentId}/{attenId}")
-    private String viewAttenuation(Model model, @PathVariable String enrollmentId, @PathVariable String attenId) {
+    private String viewAttenuation(Model model, javax.servlet.http.HttpServletRequest request,
+            @PathVariable String enrollmentId, @PathVariable String attenId) {
         Enrollment enrollment = studentAttenService.findEnrollmentById(Long.parseLong(enrollmentId));
         Attendance attendance = studentAttenService.findAttendanceById(Long.parseLong(attenId));
 
@@ -94,6 +95,32 @@ public class StudentAttenController {
 
         model.addAttribute("enrollment", enrollment);
         model.addAttribute("attendance", attendance);
+
+        // Build image URLs for the view:
+        // - If the attendance has a disk path (image1_path/image2_path), expose a URL
+        // that maps to the disk-serving endpoint we provide under
+        // /pub/uploads/attendance/...
+        // - Otherwise fall back to the DB-served image endpoint /pub/images/{id}
+        String image1Url = null;
+        String image2Url = null;
+        try {
+            if (attendance != null) {
+                if (attendance.getImage1_path() != null && !attendance.getImage1_path().isEmpty()) {
+                    String p = attendance.getImage1_path().replace(java.io.File.separatorChar, '/');
+                    image1Url = request.getContextPath() + "/pub/uploads/attendance/" + p;
+                }
+
+                if (attendance.getImage2_path() != null && !attendance.getImage2_path().isEmpty()) {
+                    String p2 = attendance.getImage2_path().replace(java.io.File.separatorChar, '/');
+                    image2Url = request.getContextPath() + "/pub/uploads/attendance/" + p2;
+                }
+            }
+        } catch (Exception ex) {
+            // non-fatal: leave URLs null if anything goes wrong
+        }
+
+        model.addAttribute("image1Url", image1Url);
+        model.addAttribute("image2Url", image2Url);
 
         return "view-each-student-atten";
     }
@@ -284,14 +311,19 @@ public class StudentAttenController {
     public String doAtten(Model model,
             @RequestParam("enrollmentId") String enrollmentId,
             @RequestParam("type") String type,
-            @RequestParam("latitude") String latitude,
-            @RequestParam("longitude") String longitude,
+            @RequestParam(value = "latitude", required = false) String latitude,
+            @RequestParam(value = "longitude", required = false) String longitude,
             @RequestParam("week") String week,
-            @RequestParam("image1") MultipartFile image1,
-            @RequestParam("image2") MultipartFile image2) throws IOException {
-        Image _image1 = null, _image2 = null;
-        Byte[] byteObjects1 = this.convertToBytes(image1);
-        Byte[] byteObjects2 = this.convertToBytes(image2);
+            @RequestParam(value = "image1", required = false) MultipartFile image1,
+            @RequestParam(value = "image2", required = false) MultipartFile image2) throws IOException {
+        // Save uploaded images to server storage and store file paths in Attendance
+        // Upload directory can be configured via system property
+        // 'attendance.upload.dir'
+        String uploadDir = System.getProperty("attendance.upload.dir", "uploads/attendance");
+        java.io.File uploadFolder = new java.io.File(uploadDir);
+        if (!uploadFolder.exists()) {
+            uploadFolder.mkdirs();
+        }
         Enrollment enrollment = studentAttenService.findEnrollmentById(Long.parseLong(enrollmentId));
         Attendance attendance = null;
 
@@ -311,17 +343,36 @@ public class StudentAttenController {
                     attendance.setWeekNo(Integer.parseInt(week));
                     lecAttendances.add(attendance);
                 }
-                attendance.setLatitude(Double.parseDouble(latitude));
-                attendance.setLongitude(Double.parseDouble(longitude));
+                try {
+                    if (latitude != null && !latitude.isEmpty()) {
+                        attendance.setLatitude(Double.parseDouble(latitude));
+                    }
+                } catch (Exception ex) {
+                    // ignore parse error
+                }
+                try {
+                    if (longitude != null && !longitude.isEmpty()) {
+                        attendance.setLongitude(Double.parseDouble(longitude));
+                    }
+                } catch (Exception ex) {
+                    // ignore parse error
+                }
                 attendance.setStatus(status);
-                _image1 = new Image();
-                _image2 = new Image();
-                _image1.setImage(byteObjects1);
-                _image2.setImage(byteObjects2);
-                studentAttenService.saveImage(_image1);
-                studentAttenService.saveImage(_image2);
-                attendance.setImage1_id(_image1.getId());
-                attendance.setImage2_id(_image2.getId());
+
+                // Save uploaded files (if any)
+                if (image1 != null && !image1.isEmpty()) {
+                    String saved = saveMultipartFile(image1, uploadFolder);
+                    if (saved != null) {
+                        attendance.setImage1_path(saved);
+                    }
+                }
+                if (image2 != null && !image2.isEmpty()) {
+                    String saved = saveMultipartFile(image2, uploadFolder);
+                    if (saved != null) {
+                        attendance.setImage2_path(saved);
+                    }
+                }
+
                 studentAttenService.saveEnrollment(enrollment);
             }
         } else if ("lab".equals(type)) {
@@ -339,24 +390,32 @@ public class StudentAttenController {
                 double iLongitude = 0.0;
 
                 try {
-                    iLatitude = Double.parseDouble(latitude);
-                    iLongitude = Double.parseDouble(longitude);
+                    if (latitude != null && !latitude.isEmpty()) {
+                        iLatitude = Double.parseDouble(latitude);
+                    }
+                    if (longitude != null && !longitude.isEmpty()) {
+                        iLongitude = Double.parseDouble(longitude);
+                    }
                 } catch (Exception e) {
-                    // TODO: handle exception
+                    // ignore parse errors
                 }
 
                 attendance.setLatitude(iLatitude);
                 attendance.setLongitude(iLongitude);
                 attendance.setStatus(status);
+                if (image1 != null && !image1.isEmpty()) {
+                    String saved = saveMultipartFile(image1, uploadFolder);
+                    if (saved != null) {
+                        attendance.setImage1_path(saved);
+                    }
+                }
+                if (image2 != null && !image2.isEmpty()) {
+                    String saved = saveMultipartFile(image2, uploadFolder);
+                    if (saved != null) {
+                        attendance.setImage2_path(saved);
+                    }
+                }
 
-                _image1 = new Image();
-                _image2 = new Image();
-                _image1.setImage(byteObjects1);
-                _image2.setImage(byteObjects2);
-                studentAttenService.saveImage(_image1);
-                studentAttenService.saveImage(_image2);
-                attendance.setImage1_id(_image1.getId());
-                attendance.setImage2_id(_image2.getId());
                 studentAttenService.saveEnrollment(enrollment);
             }
         }
@@ -382,5 +441,35 @@ public class StudentAttenController {
             byteObjects[i++] = b;
         }
         return byteObjects;
+    }
+
+    private String saveMultipartFile(MultipartFile file, java.io.File uploadFolder) {
+        if (file == null || file.isEmpty())
+            return null;
+        try {
+            String original = file.getOriginalFilename();
+            String ext = "";
+            if (original != null && original.contains(".")) {
+                ext = original.substring(original.lastIndexOf('.'));
+            }
+            String filename = System.currentTimeMillis() + "_" + java.util.UUID.randomUUID() + ext;
+            // create subfolder by year/month/day (year first, then month, then day)
+            java.time.LocalDate now = java.time.LocalDate.now();
+            String day = String.format("%02d", now.getDayOfMonth());
+            String month = String.format("%02d", now.getMonthValue());
+            String year = String.valueOf(now.getYear());
+            String datePath = year + java.io.File.separator + month + java.io.File.separator + day;
+            java.io.File datedFolder = new java.io.File(uploadFolder, datePath);
+            if (!datedFolder.exists()) {
+                datedFolder.mkdirs();
+            }
+            java.io.File dest = new java.io.File(datedFolder, filename);
+            file.transferTo(dest);
+            // return path relative to uploadFolder (e.g. "dd/MM/yyyy/filename")
+            return datePath + java.io.File.separator + filename;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

@@ -75,4 +75,34 @@ public class ImageController {
 
         return outputs;
     }
+
+    @GetMapping(value = "/uploads/attendance/{year}/{month}/{day}/{filename:.+}")
+    public @ResponseBody org.springframework.http.ResponseEntity<byte[]> serveUploadedAttendanceImage(
+            @PathVariable("year") String year,
+            @PathVariable("month") String month,
+            @PathVariable("day") String day,
+            @PathVariable("filename") String filename) {
+        try {
+            String uploadDir = System.getProperty("attendance.upload.dir", "uploads/attendance");
+            java.io.File file = new java.io.File(uploadDir,
+                    year + java.io.File.separator + month + java.io.File.separator + day + java.io.File.separator
+                            + filename);
+            if (!file.exists() || !file.isFile()) {
+                return org.springframework.http.ResponseEntity.notFound().build();
+            }
+            byte[] bytes = Files.readAllBytes(file.toPath());
+            String contentType = Files.probeContentType(file.toPath());
+            org.springframework.http.MediaType mediaType = org.springframework.http.MediaType.APPLICATION_OCTET_STREAM;
+            if (contentType != null) {
+                try {
+                    mediaType = org.springframework.http.MediaType.parseMediaType(contentType);
+                } catch (Exception ignored) {
+                }
+            }
+            return org.springframework.http.ResponseEntity.ok().contentType(mediaType).body(bytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return org.springframework.http.ResponseEntity.status(500).build();
+        }
+    }
 }

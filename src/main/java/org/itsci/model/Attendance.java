@@ -28,12 +28,10 @@ public class Attendance implements Comparable<Attendance> {
     private Double latitude;
     @Column(name = "longitude")
     private Double longitude;
-    @Column(name = "image1_id")
-    @ColumnDefault("-1")
-    private long image1_id;
-    @Column(name = "image2_id")
-    @ColumnDefault("-1")
-    private long image2_id;
+    @Column(name = "image1_path")
+    private String image1_path;
+    @Column(name = "image2_path")
+    private String image2_path;
 
     public long getId() {
         return id;
@@ -83,20 +81,20 @@ public class Attendance implements Comparable<Attendance> {
         this.longitude = longitude;
     }
 
-    public long getImage1_id() {
-        return image1_id;
+    public String getImage1_path() {
+        return image1_path;
     }
 
-    public void setImage1_id(long image1_id) {
-        this.image1_id = image1_id;
+    public void setImage1_path(String image1_path) {
+        this.image1_path = image1_path;
     }
 
-    public long getImage2_id() {
-        return image2_id;
+    public String getImage2_path() {
+        return image2_path;
     }
 
-    public void setImage2_id(long image2_id) {
-        this.image2_id = image2_id;
+    public void setImage2_path(String image2_path) {
+        this.image2_path = image2_path;
     }
 
     @Override

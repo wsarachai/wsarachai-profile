@@ -343,7 +343,7 @@ public class StudentAttenController {
         // Save uploaded images to server storage and store file paths in Attendance
         // Upload directory can be configured via system property
         // 'attendance.upload.dir'
-        String uploadDir = System.getProperty("attendance.upload.dir", "uploads/attendance");
+        String uploadDir = System.getProperty("attendance.upload.dir", "/usr/local/tomcat/uploads/attendance");
         java.io.File uploadFolder = new java.io.File(uploadDir);
         if (!uploadFolder.exists()) {
             uploadFolder.mkdirs();

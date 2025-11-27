@@ -96,7 +96,7 @@ public class ImageController {
             @PathVariable("day") String day,
             @PathVariable("filename") String filename) {
         try {
-            String uploadDir = System.getProperty("attendance.upload.dir", "uploads/attendance");
+            String uploadDir = System.getProperty("attendance.upload.dir", "/usr/local/tomcat/uploads/attendance");
             File file = new File(uploadDir, year + File.separator + month + File.separator + day + File.separator
                     + filename);
             if (!file.exists() || !file.isFile()) {

@@ -272,7 +272,7 @@
                 <version>3.3.2</version>
                 <configuration>
                     <!-- The output directory for the WAR file - can be absolute or relative path -->
-                    <outputDirectory>/home/itsci/workspace/docker-tomcat/webapps</outputDirectory>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
                     <!-- The name of the WAR file (without the .war extension) -->
                     <warName>wsarachai</warName>
                 </configuration>
